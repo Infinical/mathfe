@@ -1,0 +1,64 @@
+<section class="screenshots grey-bg" id="adminusers">
+
+<div class="container">
+  
+  <!-- SECTION HEADER -->
+  <div class="section-header wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
+    
+    <!-- SECTION TITLE -->
+    <h2 class="dark-text">All Users</h2>
+    
+    <div class="colored-line">
+    </div>
+    
+  </div>
+  <div *ngIf="status=='success'" class="alert alert-success" role="alert"> {{ message }} </div>
+  <div *ngIf="status=='error'" class="alert alert-danger" role="alert"> {{ message }} </div>
+  <div class="col-md-10 col-md-offset-1">
+    <div>
+      <a [routerLink]="['/admin/']" class="btn btn-default"> Back</a>
+      <!--a [routerLink]="['/admin/users/create']" class="btn btn-success"> New User</a-->
+    </div>
+  </div>
+
+  <div class="col-md-12">
+
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+        <tr>
+        	<th>User</th>
+          <th>Email</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Name</th>
+          <th>Admin?</th>
+          <th>Maxile Level</th>
+          <th>Game Level</th>
+          <th>Date of Birth</th>
+          <th>Last Test Date</th>
+          <th>Edit</th>
+        </tr>
+        </thead>
+        <tbody align="left">
+
+        <tr *ngFor="let user of users">
+          <td><img src="{{user.image}}" width="75"/></td>
+          <td>{{user.email}} </td>
+          <td>{{user.firstname}}</td>
+          <td>{{user.lastname}}</td>
+          <td>{{user.name}}</td>
+          <td *ngIf="user.is_admin; else no">Yes</td>
+          <ng-template #no><td>No</td></ng-template>
+          <td>{{user.maxile_level | number : 0-0 }}</td>
+          <td>{{user.game_level}}</td>
+          <td>{{user.date_of_birth}}</td>
+          <td>{{user.last_test_date}}</td>
+          <td><a [routerLink]="['/admin/users/edit', user.id]" class="btn btn-info"><i class="icon_pencil"></i></a></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</section>

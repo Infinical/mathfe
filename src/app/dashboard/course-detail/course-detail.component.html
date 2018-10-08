@@ -1,0 +1,26 @@
+<div *ngIf="selectedCourse">
+  <div class="container course-detail">
+    <div class="row">
+      <div class="col-sm-6 col-xs-12">
+        <img [src]="selectedCourse.image" class="img-responsive">
+      </div>
+      <div class="col-sm-6 col-xs-12">
+        <h3>{{selectedCourse.course | uppercase}}</h3>
+        <h4 class="main-color">Topics Covered</h4>
+        <div class="colored-line">
+        </div>
+        <p></p>
+        <ul class="package-feature">
+          <li *ngFor="let track of selectedCourse.tracks" class="col-sm-6"><p align="left">{{track.track}}</p></li>
+        </ul>
+      </div>
+    </div>
+    <div class="buttons wow fadeInRight animated" data-wow-offset="10" data-wow-duration="1.5s">
+      <h3>Classes available for Course: {{selectedCourse.course}}</h3>
+      <ul class="package-feature">
+        <li *ngFor="let house of selectedCourse.houses"><a href="" class="btn btn-default btn-lg standard-button">  Enrol in 
+          {{house.created_by.firstname}} {{house.created_by.lastname}}'s Class</a></li>
+      </ul>
+    </div>     
+  </div>
+</div>

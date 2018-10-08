@@ -1,0 +1,37 @@
+<section class="screenshots grey-bg" id="courses">
+
+<div class="container">
+  
+	<ag-userinfo [user]="user"></ag-userinfo>
+	<div class="container">
+		<ul class="nav nav-pills">
+			<li class="active"><a data-toggle="tab" href="#enrolled">Enrolled Classes</a></li>
+			<li><a data-toggle="tab" href="#teaching">Class Management</a></li>
+			<li><a data-toggle="tab" href="#recommendedcourses"> Recommended Courses</a></li>
+		</ul>
+	</div>
+	<div class="tab-content membercontent">
+	  <section class="enrolled" id="enrolled" class="tab-pane fade in active">
+	   	<ag-house-detail [selectedHouse] = "selectedHouse" (selectedEvent)="selectHouse($event)" (selectedVideo)= "selectSkill($event)"></ag-house-detail>
+		<ag-house-list (selectedEvent) = "selectHouse($event)"></ag-house-list>
+	  </section>
+	  <section class="enrolled" id="teaching" class="tab-pane fade in">
+	    <ag-teach-detail [user]="user" [selectedTeach] = "selectedTeach" (selectedEvent)="selectTeach($event)" (selectedVideo)= "selectSkill($event)"></ag-teach-detail>
+		<ag-teach-list (selectedEvent) = "selectTeach($event)"></ag-teach-list>
+	  </section>
+	   <section class="enrolled" id="recommendedcourses" class="tab-pane fade in">
+		<div class="container">
+			<div class="section-header wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
+				<h2 class="dark-text">Recommended Courses</h2>
+				<div class="colored-line">
+				</div><br />
+				<div class="row wow bounceIn animated" data-wow-offset="10" data-wow-duration="1.5s">
+					<ag-course-detail [selectedCourse]="selectedCourse"></ag-course-detail>				
+					<ag-course-list (selectedEvent)="selectCourse($event)"></ag-course-list>
+				</div>		
+			</div>
+		</div>
+	   </section>
+	</div>
+ </div>
+</section>
