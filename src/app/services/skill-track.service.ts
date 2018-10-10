@@ -12,17 +12,17 @@ export class SkillTrackService {
 
     getSkills():Observable<any> {
     	return this.http.get('http://devapi.pamelalim.me/skills')
-    	.map((response) => response)	      
+    	.map((response) => response)
     	.catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));;
     }
 
 	addSkill(skill: Skill, trackid: String): Observable<Skill[]> {
 	  const apiUrl = 'http://devapi.pamelalim.me/tracks';
 	  const url = `${apiUrl}/${trackid}/skills/${skill.id}`;
-	  return this.http.post(url, skill)
+	  return this.http.post<Skill[]>(url, skill)
 	    .map((response) => response)
 	    .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'}));
-	}	
+	}
 
 	getSkill(id: String): Observable<any> {
 	  return this.http.get('http://devapi.pamelalim.me/skills/' + id)
@@ -33,7 +33,7 @@ export class SkillTrackService {
 	updateSkill(skill: Object): Observable<Skill[]> {
 	  const apiUrl = 'http://devapi.pamelalim.me/skills';
 	  const url = `${apiUrl}/${skill['id']}`;
-	  return this.http.put(url, skill)
+	  return this.http.put<Skill[]>(url, skill)
 	    .map((response) => response)
 	    .catch((error: any) => Observable.throw(error.error || {message: 'Server Error'}));
 	}
@@ -41,10 +41,10 @@ export class SkillTrackService {
 	deleteSkill(trackid: String, skillid: String): Observable<Skill[]> {
 	  const apiUrl = 'http://devapi.pamelalim.me/tracks';
 	  const url = `${apiUrl}/${trackid}/skills/${skillid}`;
-	  return this.http.delete(url)
+	  return this.http.delete<Skill[]>(url)
 	    .map((response) => response)
 	    .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'}));
-	}	
+	}
 
 	createSkill():Observable<any> {
     	return this.http.get('http://devapi.pamelalim.me/skills/create')
