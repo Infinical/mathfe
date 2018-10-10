@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import * as auth0 from 'auth0-js';
-import {tokenNotExpired} from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class AuthService {
@@ -53,7 +53,9 @@ export class AuthService {
      this.refreshSubscription.unsubscribe();
   }
 
-  constructor(public router: Router) {}
+  constructor(
+    public router: Router,
+    private jwtHelper: JwtHelperService) {}
 
   public login(): void {
     this.auth0.authorize();
@@ -100,7 +102,7 @@ export class AuthService {
   }
   
   loggedIn() {
-    return tokenNotExpired();
+    return this.jwtHelper.isTokenExpired();
   }
 
   public renewToken() {
