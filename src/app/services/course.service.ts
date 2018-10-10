@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
-
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class CourseService {
@@ -12,29 +12,29 @@ export class CourseService {
     constructor(private http: HttpClient) { }
 
     getCourses():Observable<any[]> {
-    	return this.http.get<any[]>('http://localhost:8000/courses')
+    	return this.http.get<any[]>(`${environment.apiURL}/courses`)
     	.map((response) => response)
     	.catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));;
     }
 
     getOpenCourses():Observable<any[]> {
-    	return this.http.get<any[]>('http://localhost:8000/opencourses')
+    	return this.http.get<any[]>(`${environment.apiURL}/opencourses`)
     	.map((response) => response)
     	.catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));;
     }
 
 	addCourse(course: Object): Observable<Course[]> {
-	    return this.http.post<Course[]>('http://localhost:8000/courses', course)
+	    return this.http.post<Course[]>(`${environment.apiURL}/courses`, course)
 	      .map((response) => response)
 	      .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));
 	}
 	getCourse(id: String): Observable<any> {
-	  return this.http.get<any>('http://localhost:8000/courses/' + id)
+	  return this.http.get<any>(`${environment.apiURL}/courses/` + id)
 	    .map((response) => response['course'])
         .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));
 	}
 	updateCourse(course: Object): Observable<Course[]> {
-	  const apiUrl = 'http://localhost:8000/courses';
+	  const apiUrl = `${environment.apiURL}/courses`;
 	  const url = `${apiUrl}/${course['id']}`;
 	  return this.http.put<any>(url, course)
 	    .map((response) => response)
@@ -42,7 +42,7 @@ export class CourseService {
 	}
 
 	updateCourseImage(courseimage: Object, course_id: String): Observable<any[]> {
-	  const apiUrl = 'http://localhost:8000/courseimage';
+	  const apiUrl = `${environment.apiURL}/courseimage`;
 	  const url = `${apiUrl}/${course_id}`;
 	  return this.http.put<any>(url, courseimage)
 	    .map((response) => response)
@@ -50,10 +50,10 @@ export class CourseService {
 	}
 
 	deleteCourse(id: String): Observable<Course[]> {
-	  const apiUrl = 'http://localhost:8000/courses';
+	  const apiUrl = `${environment.apiURL}/courses`;
 	  const url = `${apiUrl}/${id}`;
 	  return this.http.delete<any>(url)
 	    .map((response) => response)
 	    .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'}));
-	}	
+	}
 }

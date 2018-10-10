@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
 import {Observable} from 'rxjs/Observable';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class SkillService {
@@ -11,25 +12,25 @@ export class SkillService {
     constructor(private http: HttpClient) { }
 
     getSkills():Observable<any> {
-    	return this.http.get('http://devapi.pamelalim.me/skills')
+    	return this.http.get(`${environment.apiURL}/skills`)
     	.map((response) => response)
     	.catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));;
     }
 
 	addSkill(skill: Object): Observable<Skill[]> {
-	    return this.http.post<Skill[]>('http://devapi.pamelalim.me/skills', skill)
+	    return this.http.post<Skill[]>(`${environment.apiURL}/skills`, skill)
 	      .map((response) => response)
 	      .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));
 	}
 
 	getSkill(id: String): Observable<any> {
-	  return this.http.get('http://devapi.pamelalim.me/skills/' + id)
+	  return this.http.get(`${environment.apiURL}/skills/` + id)
 	    .map((response) => response['skill'])
         .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));
 	}
 
 	updateSkill(skill: Object): Observable<Skill[]> {
-	  const apiUrl = 'http://devapi.pamelalim.me/skills';
+	  const apiUrl = `${environment.apiURL}/skills`;
 	  const url = `${apiUrl}/${skill['id']}`;
 	  return this.http.put<Skill[]>(url, skill)
 	    .map((response) => response)
@@ -37,7 +38,7 @@ export class SkillService {
 	}
 
 	deleteSkill(id: String): Observable<Skill[]> {
-	  const apiUrl = 'http://devapi.pamelalim.me/skills';
+	  const apiUrl = `${environment.apiURL}/skills`;
 	  const url = `${apiUrl}/${id}`;
 	  return this.http.delete<Skill[]>(url)
 	    .map((response) => response)
@@ -45,7 +46,7 @@ export class SkillService {
 	}
 
 	createSkill():Observable<any> {
-    	return this.http.get('http://devapi.pamelalim.me/skills/create')
+    	return this.http.get(`${environment.apiURL}/skills/create`)
     	.map((response) => response)
     	.catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));;
     }
