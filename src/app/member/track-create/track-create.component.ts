@@ -10,7 +10,7 @@ import { Field } from '../../models/field';
   styleUrls: ['./track-create.component.css']
 })
 
-export class TrackCreateComponent implements OnInit, Input {
+export class TrackCreateComponent implements OnInit {
 	@Input() house:House;
 	status: string;
 	message: string;

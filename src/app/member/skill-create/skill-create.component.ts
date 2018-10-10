@@ -10,7 +10,7 @@ import { Status } from '../../models/status';
   templateUrl: './skill-create.component.html',
   styleUrls: ['./skill-create.component.css']
 })
-export class SkillCreateComponent implements OnInit, Input {
+export class SkillCreateComponent implements OnInit {
 	@Input() track:Track;
 	status: Status;
 	message: string;
