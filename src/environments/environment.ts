@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiURL: 'http://api.pamelalim.me'
+  apiURL: 'http://devapi.pamelalim.me'
 };
