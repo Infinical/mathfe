@@ -827,3 +827,7 @@ footer .copyright {
     padding-top: 10px;
     margin-bottom: 50px;
 }
+
+.alert.alert-dismissible .close {
+    right: 0;
+}

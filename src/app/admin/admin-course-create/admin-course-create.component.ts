@@ -29,9 +29,8 @@ export class AdminCourseCreateComponent implements OnInit {
    this.courseService.addCourse(this.formData)
    .subscribe(
      course  => {
+       this.courseService.updateStatus = course['message'];
        this.router.navigate(['/admin/courses']);
-       this.status = 'success';
-       this.message = course['message'];
      },
      error => {
        console.log(<any>error);

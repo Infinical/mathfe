@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CourseService } from '../../services/course.service';
 import { Course } from '../../models/course';
 
@@ -15,22 +15,26 @@ export class AdminCourseEditComponent implements OnInit, OnDestroy {
   id: any;
   params: any;
   selectedFile: File = null;
-  imgURL :string = "images/upload.png";
+  imgURL: string = "images/upload.png";
   formData: FormData = new FormData();
 
 
   course = new Course('id', 'course', 'description', 'image', 'start_maxile_score', 'end_maxile_score');
 
-  constructor(private activatedRoute:ActivatedRoute, private courseService:CourseService) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private courseService: CourseService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
     this.courseService.getCourse(this.id).subscribe(
-	  data => {
-	    this.course = data;
-      this.imgURL = this.beURL+this.course.image;
-	  },
-	  error =>  console.log(<any>error));
+      data => {
+        this.course = data;
+        this.imgURL = this.beURL + this.course.image;
+      },
+      error => console.log(<any>error));
   }
 
   ngOnDestroy() {
@@ -38,15 +42,15 @@ export class AdminCourseEditComponent implements OnInit, OnDestroy {
   }
 
   updateCourse(course) {
-    if (course.image != this.imgURL){
+    if (course.image != this.imgURL) {
       this.formData.append('image_file', this.selectedFile);
       this.courseService.updateCourseImage(this.formData, course.id)
         .subscribe(
-          course  => {
+          course => {
             this.status = 'success';
             this.message = course['message'];
           },
-          error => { 
+          error => {
             console.log(<any>error);
             this.status = 'success';
             this.message = error['message'];
@@ -55,22 +59,24 @@ export class AdminCourseEditComponent implements OnInit, OnDestroy {
     }
     this.courseService.updateCourse(course)
       .subscribe(
-        course  => {
+        course => {
           this.status = 'success';
           this.message = course['message'];
+          this.courseService.updateStatus = this.message = course['message'];
+          this.router.navigate(['/admin/courses']);
         },
-        error => { 
+        error => {
           console.log(<any>error);
           this.status = 'success';
           this.message = error['message'];
         }
       );
-    }
+  }
 
-  onFileSelected(files: FileList){
+  onFileSelected(files: FileList) {
     this.selectedFile = files.item(0);
     var reader = new FileReader();
-    reader.onload = (event:any)=>{
+    reader.onload = (event: any) => {
       this.imgURL = event.target.result;
     }
     reader.readAsDataURL(this.selectedFile);

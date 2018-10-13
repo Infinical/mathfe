@@ -11,6 +11,8 @@ export class CourseService {
 
     constructor(private http: HttpClient) { }
 
+	updateStatus: string = "";
+
     getCourses():Observable<any[]> {
     	return this.http.get<any[]>(`${environment.apiURL}/courses`)
     	.map((response) => response)
