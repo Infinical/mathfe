@@ -13,10 +13,18 @@ export class AdminCourseListComponent implements OnInit {
 
   courses: Observable<Course[]>;
 
-  constructor(private courseService:CourseService) { }
+  constructor(private courseService: CourseService) { }
 
   ngOnInit() {
     this.courses = this.courseService.getCourses();
+  }
+
+  resetUpdateStatus() {
+    this.courseService.updateStatus = '';
+  }
+
+  get updateStatus(): string {
+    return this.courseService.updateStatus;
   }
 
 }
