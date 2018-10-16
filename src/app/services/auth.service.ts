@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
+import { Observable, of } from 'rxjs';
 import * as auth0 from 'auth0-js';
 import { JwtHelperService } from '@auth0/angular-jwt';
 

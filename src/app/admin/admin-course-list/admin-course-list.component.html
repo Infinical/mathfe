@@ -31,18 +31,46 @@
     <div class="table-responsive">
       <table class="table">
         <thead>
-        <tr>
-          <th>Course</th>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Start Maxile</th>
-          <th>End Maxile</th>
-          <th>Action</th>
-        </tr>
+          <tr>
+            <th class="admin-courses__table-head">Course</th>
+            <th
+              class="admin-courses__table-head admin-courses__table-head_clickable"
+              (click)="sortBy('title')">
+                Title
+                <div
+                  class="admin-courses__table-triangle"
+                  [class.admin-courses__table-triangle_up]="sortedByTitle"></div>
+            </th>
+            <th
+              class="admin-courses__table-head admin-courses__table-head_clickable"
+              (click)="sortBy('description')">
+                Description
+                <div
+                  class="admin-courses__table-triangle"
+                  [class.admin-courses__table-triangle_up]="sortedByDescription"></div>
+            </th>
+            <th
+              class="admin-courses__table-head admin-courses__table-head_clickable"
+              (click)="sortBy('start')">
+                Start Maxile
+                <div
+                  class="admin-courses__table-triangle"
+                  [class.admin-courses__table-triangle_up]="sortedByStart"></div>
+            </th>
+            <th
+              class="admin-courses__table-head admin-courses__table-head_clickable"
+              (click)="sortBy('end')">
+                End Maxile
+                <div
+                  class="admin-courses__table-triangle"
+                  [class.admin-courses__table-triangle_up]="sortedByEnd"></div>
+            </th>
+            <th class="admin-courses__table-head">Action</th>
+          </tr>
         </thead>
         <tbody>
 
-        <tr *ngFor="let course of courses | async">
+        <tr *ngFor="let course of courses">
           <td><img src="{{beURL}}{{course.image}}" width="200"/></td>
           <td>{{course.course}} </td>
           <td align="left">{{course.description}}</td>
