@@ -7,6 +7,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CourseListComponent } from './dashboard/course-list/course-list.component';
 import { CourseComponent } from './dashboard/course-list/course.component';
 import { CourseService } from './services/course.service';
+import { QuestionService } from './services/question.service';
 import { TrackService } from './services/track.service';
 import { SkillService } from './services/skill.service';
 import { HouseTrackService } from './services/house-track.service';
@@ -71,6 +72,20 @@ import { AdminTrackDeleteComponent } from './admin/admin-track-delete/admin-trac
 import { AdminQuestionCreateComponent } from './admin/admin-question-create/admin-question-create.component';
 import { AdminQuestionEditComponent } from './admin/admin-question-edit/admin-question-edit.component';
 import { AdminQuestionDeleteComponent } from './admin/admin-question-delete/admin-question-delete.component';
+
+//Angular Material
+import { 
+        MatTableModule,
+        MatPaginatorModule,
+        MatTooltipModule,
+        MatProgressSpinnerModule,
+        MatExpansionModule,
+        MatSelectModule,
+        MatSortModule
+       } from '@angular/material';
+import { CdkTableModule } from '@angular/cdk/table';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 export function tokenGetter() {
     return localStorage.getItem("token");
@@ -149,9 +164,18 @@ export function tokenGetter() {
         whitelistedDomains: [
         'localhost:4200', 'localhost',  'devapi.pamelalim.me', 'localhost:8000', 'quiz.pamelalim.me','api.pamelalim.me', 'math.pamelalim.me', 'quiz.all-gifted.com']
       }
-    })
+    }),
+    MatTableModule,
+    MatPaginatorModule,
+    CdkTableModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule,
+    MatExpansionModule,
+    MatSelectModule,
+    MatSortModule,
+    BrowserAnimationsModule
   ],
-  providers: [TrackService, CourseService, DashboardService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService],
+  providers: [TrackService, CourseService, QuestionService, DashboardService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService],
   bootstrap: [AppComponent]
 })
 

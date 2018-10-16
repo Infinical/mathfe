@@ -1,0 +1,10 @@
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+.correct-answer{
+	border-width: 2px;
+	border-style: solid;
+	border-color: green;
+	margin: 0.5rem;
+}
