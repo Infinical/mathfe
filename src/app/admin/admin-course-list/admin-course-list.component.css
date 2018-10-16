@@ -1,3 +1,32 @@
 tr {
 	background-color: white;
 }
+
+.table>thead>tr>th {
+  vertical-align: middle;
+}
+
+.admin-courses__table-head {
+  text-align: center;
+  cursor: default;
+}
+
+.admin-courses__table-head_clickable {
+  cursor: pointer;
+  position: relative;
+}
+
+.admin-courses__table-triangle {
+  position: absolute;
+  width: 0;
+  height: 0;
+  right: 0;
+  top: 40%;
+  border: 5px solid transparent;
+  border-top: 5px solid #555;
+}
+
+.admin-courses__table-triangle_up {
+  top: 35%;
+  transform: rotateX(180deg);
+}
