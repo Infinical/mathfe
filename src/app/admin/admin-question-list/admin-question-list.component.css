@@ -8,3 +8,7 @@ th.mat-sort-header-sorted {
 	border-color: green;
 	margin: 0.5rem;
 }
+
+.mat-row:nth-child(even){
+	background-color:#f2f2f2;
+}
