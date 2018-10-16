@@ -12,7 +12,7 @@ import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 })
 export class AdminQuestionListComponent implements OnInit {
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) topPaginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   questions: any;
   displayedColumns: string[] = ['question', 'answer', 'skill', 'track', 'field', 'level', 'difficulty', 'status', 'source', 'author', 'action'];
@@ -28,19 +28,19 @@ export class AdminQuestionListComponent implements OnInit {
 
   }
 
-  onPaginateChange(e: any){
+  onPaginateChange(e: any, origin?: string){
     this.currentPage = e.pageIndex;
     this.questionService.getQuestions(this.currentPage).subscribe((data) => {
       this.questions = data.questions;
       this.dataSource = new MatTableDataSource<any>(data.questions);
       this.dataSource.sort = this.sort;
-      this.updatePaginator();
+      this.updatePaginator(origin);
     });
   }
 
-  updatePaginator(){
-    this.paginator.length = ((this.currentPage + 2) * this.questions.length);
+  updatePaginator(origin: string){
+    this.topPaginator.length = ((this.currentPage + 2) * this.questions.length);
     const dom: any = document.querySelector('.mat-paginator-range-label');
-    if (dom) dom.style.display = 'none';
+    if (dom) dom.style.display = 'none';    
   }
 }
