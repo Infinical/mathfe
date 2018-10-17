@@ -19,6 +19,8 @@ export class AdminQuestionListComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   beURL = "http://localhost:8000";
   currentPage = 0;
+  selectedQuestion: any;
+  deleteResult: any;
 
   constructor(private http: HttpClient, private questionService: QuestionService) { 
     this.onPaginateChange({pageIndex: 0});    
@@ -43,4 +45,57 @@ export class AdminQuestionListComponent implements OnInit {
     const dom: any = document.querySelector('.mat-paginator-range-label');
     if (dom) dom.style.display = 'none';    
   }
+
+  removeModal(){
+    let dom: any = document.querySelector('#modal-container');    
+    dom.classList.add('hidden');
+    
+    dom = document.querySelector('#overlay');
+    dom.classList.add('hidden');
+
+    //set modal default values
+    dom = document.querySelector('#deleteButton');    
+    dom.classList.remove('hidden');
+
+    dom = document.querySelector('#cancelButton');    
+    dom.innerHTML = "Cancel";
+
+    this.deleteResult = null;
+  }
+
+  confirmDelete(question: any){
+    this.selectedQuestion = question;
+
+    let dom: any = document.querySelector('#modal-container');    
+    dom.classList.remove('hidden');
+
+    dom = document.querySelector('#overlay');
+    dom.classList.remove('hidden');
+  }
+
+  deleteQuestion(){
+
+    this.questionService.deleteQuestion(this.selectedQuestion.id)
+      .subscribe(res => {
+
+        this.onPaginateChange({pageIndex: this.currentPage});
+
+        this.deleteResult = {
+          status: 'success',
+          message: res["message"]
+        };
+
+        let dom: any = document.querySelector('#deleteButton');    
+        dom.classList.add('hidden');
+
+        dom = document.querySelector('#cancelButton');    
+        dom.innerHTML = "Close";
+
+      }, error => {
+        this.deleteResult = {
+          status: 'error',
+          message: error["message"]
+        };
+      });
+    }
 }
