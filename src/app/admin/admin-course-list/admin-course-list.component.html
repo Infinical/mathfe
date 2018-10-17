@@ -87,7 +87,7 @@
           <td>
             <div class="btn-group" role="group" aria-label="First group">
               <a [routerLink]="['/admin/courses/edit', course.id]" class="btn btn-info"><i class="icon_pencil"></i></a>
-             <a [routerLink]="['/admin/courses/delete', course.id]" class="btn btn-danger"><i class="icon_minus_alt2"></i></a>
+              <a (click)="openDialog(course.id)" class="btn btn-danger"><i class="icon_minus_alt2"></i></a>
            </div>
           </td>
         </tr>

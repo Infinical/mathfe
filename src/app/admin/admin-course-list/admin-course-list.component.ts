@@ -1,17 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { environment } from '../../../environments/environment';
 import { CourseService } from '../../services/course.service';
 import { Course } from '../../models/course';
+
+export interface DialogData { id: number }
+
+// course-list component
 
 @Component({
   selector: 'ag-admin-course-list',
   templateUrl: './admin-course-list.component.html',
   styleUrls: ['./admin-course-list.component.css']
 })
-export class AdminCourseListComponent implements OnInit {
-  beURL = environment.apiURL + '/';
 
+export class AdminCourseListComponent implements OnInit {
+
+  beURL = environment.apiURL + '/';
   courses: Course[];
 
   // sort block
@@ -26,9 +33,10 @@ export class AdminCourseListComponent implements OnInit {
   public reversedByStart: boolean = false;
   public reversedByEnd: boolean = false;
 
-  // end sort block
-
-  constructor(private courseService: CourseService) { }
+  constructor(
+    private courseService: CourseService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.courseService.getCourses()
@@ -41,6 +49,15 @@ export class AdminCourseListComponent implements OnInit {
 
   get updateStatus(): string {
     return this.courseService.updateStatus;
+  }
+  
+  // open dialog block
+
+  public openDialog(id: number): void {
+    const dialogRef = this.dialog.open(DialogDeleteCourse, {
+      width: '250px',
+      data: { id: id }
+    });
   }
 
   // sort block
@@ -171,6 +188,30 @@ export class AdminCourseListComponent implements OnInit {
     this.reversedByEnd = false;
   }
 
-  //end sort block
+}
+
+// dialog component
+
+@Component({
+  selector: 'dialog-delete-course',
+  templateUrl: 'dialog-delete-course.html',
+})
+
+export class DialogDeleteCourse {
+
+  constructor(
+    private _router: Router,
+    public dialogRef: MatDialogRef<DialogDeleteCourse>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {}
+
+  public onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  public onYesClick(): void {
+    this.dialogRef.close();
+    this._router.navigate(['/admin/courses/delete', this.data.id]);
+  }
 
 }
