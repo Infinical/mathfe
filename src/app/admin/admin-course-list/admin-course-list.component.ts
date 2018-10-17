@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { environment } from '../../../environments/environment';
 import { CourseService } from '../../services/course.service';
 import { Course } from '../../models/course';
 
@@ -9,7 +10,7 @@ import { Course } from '../../models/course';
   styleUrls: ['./admin-course-list.component.css']
 })
 export class AdminCourseListComponent implements OnInit {
-  beURL = window.location.origin + '/';
+  beURL = environment.apiURL + '/';
 
   courses: Course[];
 
