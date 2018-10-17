@@ -16,4 +16,12 @@ export class QuestionService {
     	.map((response) => response)
     	.catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));
     }
+
+    deleteQuestion(id: String): Observable<any[]> {
+	  const apiUrl = `${environment.apiURL}/questions`;
+	  const url = `${apiUrl}/${id}`;
+	  return this.http.delete<any>(url)
+	    .map((response) => response)
+	    .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'}));
+	}
 }
