@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 import { CourseService } from '../../services/course.service';
 import { Course } from '../../models/course';
 
@@ -9,7 +10,7 @@ import { Course } from '../../models/course';
   styleUrls: ['./admin-course-edit.component.css']
 })
 export class AdminCourseEditComponent implements OnInit, OnDestroy {
-  beURL = "http://localhost:8000/";
+  beURL = environment.apiURL + '/';
   status: string;
   message: string;
   id: any;

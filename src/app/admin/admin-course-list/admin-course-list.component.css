@@ -1,3 +1,30 @@
 tr {
 	background-color: white;
 }
+
+.table>thead>tr>th {
+  vertical-align: middle;
+}
+
+.admin-courses__table-head {
+  text-align: center;
+  cursor: default;
+  background: no-repeat 100% 45%;
+}
+
+.admin-courses__table-head_clickable {
+  cursor: pointer;
+  position: relative;
+}
+
+.admin-courses__table-head_inactive:hover {
+  background: url(../../../images/arrow_up.png) no-repeat 100% 45%;
+}
+
+.admin-courses__table-head_active {
+  background: url(../../../images/arrow_up.png) no-repeat 100% 45%;
+}
+
+.admin-courses__table-head_reversed {
+  background: url(../../../images/arrow_down.png) no-repeat 100% 45%;
+}
