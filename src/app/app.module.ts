@@ -72,6 +72,7 @@ import { AdminTrackDeleteComponent } from './admin/admin-track-delete/admin-trac
 import { AdminQuestionCreateComponent } from './admin/admin-question-create/admin-question-create.component';
 import { AdminQuestionEditComponent } from './admin/admin-question-edit/admin-question-edit.component';
 import { AdminQuestionDeleteComponent } from './admin/admin-question-delete/admin-question-delete.component';
+import { DynamicContentComponent } from './admin/admin-question-list/dynamicContent/dynamicContent.component';
 
 //Angular Material
 import { 
@@ -149,6 +150,7 @@ export function tokenGetter() {
     AdminQuestionCreateComponent,
     AdminQuestionEditComponent,
     AdminQuestionDeleteComponent,
+    DynamicContentComponent,
   ],
   imports: [
     routes,
