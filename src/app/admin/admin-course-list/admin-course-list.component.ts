@@ -20,6 +20,11 @@ export class AdminCourseListComponent implements OnInit {
   public sortedByStart: boolean = false;
   public sortedByEnd: boolean = false;
 
+  public reversedByTitle: boolean = false;
+  public reversedByDescription: boolean = false;
+  public reversedByStart: boolean = false;
+  public reversedByEnd: boolean = false;
+
   // end sort block
 
   constructor(private courseService: CourseService) { }
@@ -43,20 +48,52 @@ export class AdminCourseListComponent implements OnInit {
     if (this.courses && this.courses.length) {
       switch (str) {
         case 'title':
-          this.sortedByTitle ? this.courses.reverse() : this.courses.sort(this._sortByTitle); 
-          this.sortedByTitle = !this.sortedByTitle;
+          if (this.sortedByTitle) {
+            this.courses.reverse();
+            this._resetSort();
+            this.reversedByTitle = true;
+          }
+          else {
+            this.courses.sort(this._sortByTitle);
+            this._resetSort();
+            this.sortedByTitle = true;
+          }
           break;
         case 'description':
-          this.sortedByDescription ? this.courses.reverse() : this.courses.sort(this._sortByDescription); 
-          this.sortedByDescription = !this.sortedByDescription;
+          if (this.sortedByDescription) {
+            this.courses.reverse();
+            this._resetSort();
+            this.reversedByDescription = true;
+          }
+          else {
+            this.courses.sort(this._sortByDescription);
+            this._resetSort();
+            this.sortedByDescription = true;
+          }
           break;
         case 'start':
-          this.sortedByStart ? this.courses.reverse() : this.courses.sort(this._sortByStart); 
-          this.sortedByStart = !this.sortedByStart;
+          if (this.sortedByStart) {
+            this.courses.reverse();
+            this._resetSort();
+            this.reversedByStart = true;
+          }
+          else {
+            this.courses.sort(this._sortByStart);
+            this._resetSort();
+            this.sortedByStart = true;
+          }
           break;
         case 'end':
-          this.sortedByEnd ? this.courses.reverse() : this.courses.sort(this._sortByEnd); 
-          this.sortedByEnd = !this.sortedByEnd;
+          if (this.sortedByEnd) {
+            this.courses.reverse();
+            this._resetSort();
+            this.reversedByEnd = true;
+          }
+          else {
+            this.courses.sort(this._sortByEnd);
+            this._resetSort();
+            this.sortedByEnd = true;
+          }
           break;
       }
     }
@@ -120,6 +157,17 @@ export class AdminCourseListComponent implements OnInit {
     else {
       return 0;
     }
+  }
+
+  private _resetSort(): void {
+    this.sortedByTitle = false;
+    this.sortedByDescription = false;
+    this.sortedByStart = false;
+    this.sortedByEnd = false;
+    this.reversedByTitle = false;
+    this.reversedByDescription = false;
+    this.reversedByStart = false;
+    this.reversedByEnd = false;
   }
 
   //end sort block

@@ -9,6 +9,7 @@ tr {
 .admin-courses__table-head {
   text-align: center;
   cursor: default;
+  background: no-repeat 100% 45%;
 }
 
 .admin-courses__table-head_clickable {
@@ -16,17 +17,14 @@ tr {
   position: relative;
 }
 
-.admin-courses__table-triangle {
-  position: absolute;
-  width: 0;
-  height: 0;
-  right: 0;
-  top: 40%;
-  border: 5px solid transparent;
-  border-top: 5px solid #555;
+.admin-courses__table-head_inactive:hover {
+  background: url(../../../images/arrow_up.png) no-repeat 100% 45%;
 }
 
-.admin-courses__table-triangle_up {
-  top: 35%;
-  transform: rotateX(180deg);
+.admin-courses__table-head_active {
+  background: url(../../../images/arrow_up.png) no-repeat 100% 45%;
+}
+
+.admin-courses__table-head_reversed {
+  background: url(../../../images/arrow_down.png) no-repeat 100% 45%;
 }
