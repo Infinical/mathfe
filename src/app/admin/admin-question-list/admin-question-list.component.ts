@@ -17,7 +17,7 @@ export class AdminQuestionListComponent implements OnInit {
   questions: any;
   displayedColumns: string[] = ['question', 'answer', 'skill', 'track', 'field', 'level', 'difficulty', 'status', 'source', 'author', 'action'];
   dataSource = new MatTableDataSource<any>();
-  beURL = "http://localhost:8000";
+  beURL = environment.apiURL;
   currentPage = 0;
   selectedQuestion: any;
   deleteResult: any;

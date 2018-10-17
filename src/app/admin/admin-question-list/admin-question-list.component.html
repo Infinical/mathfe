@@ -51,54 +51,38 @@
 			<ng-container matColumnDef="answer">
 			  	<th mat-header-cell *matHeaderCellDef>Answer</th>
 			  	<td mat-cell *matCellDef="let question">
-			  		<div *ngIf="question.type.type === 'MCQ' || question.type.type === 'Number'">
-			  			<div *ngIf="question.answer0" [ngClass]="{'correct-answer': question.correct_answer === 0, 'row': true}">
-			  				<div *ngIf="question.answer0" class="col-sm-12">
-		  						{{question.answer0}}
-			  				</div>		
-			  				<div class="col-sm-12">
-			  					<img *ngIf="question.answer0_image" src="{{beURL}}{{question.answer0_image}}" width="150"/>
-			  				</div>			  					  				
-			  			</div>
-			  			<div *ngIf="question.answer1" [ngClass]="{'correct-answer': question.correct_answer === 1, 'row': true}">
-			  				<div *ngIf="question.answer1" class="col-sm-12">
-		  						{{question.answer1}}
-			  				</div>	
-			  				<div class="col-sm-12">
-			  					<img *ngIf="question.answer1_image" src="{{beURL}}{{question.answer1_image}}" width="150"/>
-			  				</div>			  						  				
-			  			</div>
-			  			<div *ngIf="question.answer2" [ngClass]="{'correct-answer': question.correct_answer === 2, 'row': true}">
-		  					<div *ngIf="question.answer2" class="col-sm-12">
-		  						{{question.answer2}}
-			  				</div>		
-			  				<div class="col-sm-12">
-			  					<img *ngIf="question.answer2_image" src="{{beURL}}{{question.answer2_image}}" width="150"/>
-			  				</div>			  					  				
-			  			</div>
-			  			<div *ngIf="question.answer3" [ngClass]="{'correct-answer': question.correct_answer === 3, 'row': true}">
-		  					<div *ngIf="question.answer3" class="col-sm-12">
-		  						{{question.answer3}}
-			  				</div>	
-			  				<div class="col-sm-12">
-			  					<img *ngIf="question.answer3_image" src="{{beURL}}{{question.answer3_image}}" width="150"/>
-			  				</div>			  						  				
-			  			</div>
-			  		</div>
-			  		<div *ngIf="question.type.type !== 'MCQ' && question.type.type !== 'Number'">
-			  			<div *ngIf="question.correct_answer === 0" class="col-sm-12">
+		  			<div [ngClass]="{'correct-answer': question.correct_answer === 0 && question.type.type === 'MCQ', 'row': true}">
+		  				<div *ngIf="question.answer0" class="col-sm-12">
 	  						{{question.answer0}}
-		  				</div>	
-		  				<div *ngIf="question.correct_answer === 1" class="col-sm-12">
+		  				</div>		
+		  				<div class="col-sm-12">
+		  					<img *ngIf="question.answer0_image" src="{{beURL}}{{question.answer0_image}}" width="150"/>
+		  				</div>			  					  				
+		  			</div>
+		  			<div [ngClass]="{'correct-answer': question.correct_answer === 1  && question.type.type === 'MCQ', 'row': true}">
+		  				<div *ngIf="question.answer1" class="col-sm-12">
 	  						{{question.answer1}}
 		  				</div>	
-		  				<div *ngIf="question.correct_answer === 2" class="col-sm-12">
+		  				<div class="col-sm-12">
+		  					<img *ngIf="question.answer1_image" src="{{beURL}}{{question.answer1_image}}" width="150"/>
+		  				</div>			  						  				
+		  			</div>
+		  			<div [ngClass]="{'correct-answer': question.correct_answer === 2  && question.type.type === 'MCQ', 'row': true}">
+	  					<div *ngIf="question.answer2" class="col-sm-12">
 	  						{{question.answer2}}
-		  				</div>
-		  				<div *ngIf="question.correct_answer === 3" class="col-sm-12">
+		  				</div>		
+		  				<div class="col-sm-12">
+		  					<img *ngIf="question.answer2_image" src="{{beURL}}{{question.answer2_image}}" width="150"/>
+		  				</div>			  					  				
+		  			</div>
+		  			<div [ngClass]="{'correct-answer': question.correct_answer === 3  && question.type.type === 'MCQ', 'row': true}">
+	  					<div *ngIf="question.answer3" class="col-sm-12">
 	  						{{question.answer3}}
 		  				</div>	
-			  		</div>
+		  				<div class="col-sm-12">
+		  					<img *ngIf="question.answer3_image" src="{{beURL}}{{question.answer3_image}}" width="150"/>
+		  				</div>			  						  				
+		  			</div>
 			  	</td>
 			</ng-container>
 
