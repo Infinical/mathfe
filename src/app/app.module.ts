@@ -72,6 +72,7 @@ import { AdminTrackDeleteComponent } from './admin/admin-track-delete/admin-trac
 import { AdminQuestionCreateComponent } from './admin/admin-question-create/admin-question-create.component';
 import { AdminQuestionEditComponent } from './admin/admin-question-edit/admin-question-edit.component';
 import { AdminQuestionDeleteComponent } from './admin/admin-question-delete/admin-question-delete.component';
+import { DialogDeleteCourse } from './admin/admin-course-list/admin-course-list.component';
 
 //Angular Material
 import { 
@@ -81,7 +82,9 @@ import {
         MatProgressSpinnerModule,
         MatExpansionModule,
         MatSelectModule,
-        MatSortModule
+        MatSortModule,
+        MatDialogModule,
+        MatButtonModule
        } from '@angular/material';
 import { CdkTableModule } from '@angular/cdk/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -149,6 +152,7 @@ export function tokenGetter() {
     AdminQuestionCreateComponent,
     AdminQuestionEditComponent,
     AdminQuestionDeleteComponent,
+    DialogDeleteCourse
   ],
   imports: [
     routes,
@@ -173,8 +177,11 @@ export function tokenGetter() {
     MatExpansionModule,
     MatSelectModule,
     MatSortModule,
+    MatDialogModule,
+    MatButtonModule,
     BrowserAnimationsModule
   ],
+  entryComponents: [DialogDeleteCourse],
   providers: [TrackService, CourseService, QuestionService, DashboardService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService],
   bootstrap: [AppComponent]
 })
