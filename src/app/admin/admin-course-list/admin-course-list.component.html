@@ -35,35 +35,43 @@
             <th class="admin-courses__table-head">Course</th>
             <th
               class="admin-courses__table-head admin-courses__table-head_clickable"
+              [ngClass]="{
+                'admin-courses__table-head_active': sortedByTitle,
+                'admin-courses__table-head_reversed': reversedByTitle,
+                'admin-courses__table-head_inactive': !reversedByTitle && !sortedByTitle
+              }"
               (click)="sortBy('title')">
                 Title
-                <div
-                  class="admin-courses__table-triangle"
-                  [class.admin-courses__table-triangle_up]="sortedByTitle"></div>
             </th>
             <th
               class="admin-courses__table-head admin-courses__table-head_clickable"
+              [ngClass]="{
+                'admin-courses__table-head_active': sortedByDescription,
+                'admin-courses__table-head_reversed': reversedByDescription,
+                'admin-courses__table-head_inactive': !reversedByDescription && !sortedByDescription
+              }"
               (click)="sortBy('description')">
                 Description
-                <div
-                  class="admin-courses__table-triangle"
-                  [class.admin-courses__table-triangle_up]="sortedByDescription"></div>
             </th>
             <th
               class="admin-courses__table-head admin-courses__table-head_clickable"
+              [ngClass]="{
+                'admin-courses__table-head_active': sortedByStart,
+                'admin-courses__table-head_reversed': reversedByStart,
+                'admin-courses__table-head_inactive': !reversedByStart && !sortedByStart
+              }"
               (click)="sortBy('start')">
                 Start Maxile
-                <div
-                  class="admin-courses__table-triangle"
-                  [class.admin-courses__table-triangle_up]="sortedByStart"></div>
             </th>
             <th
               class="admin-courses__table-head admin-courses__table-head_clickable"
+              [ngClass]="{
+                'admin-courses__table-head_active': sortedByEnd,
+                'admin-courses__table-head_reversed': reversedByEnd,
+                'admin-courses__table-head_inactive': !reversedByEnd && !sortedByEnd
+              }"
               (click)="sortBy('end')">
                 End Maxile
-                <div
-                  class="admin-courses__table-triangle"
-                  [class.admin-courses__table-triangle_up]="sortedByEnd"></div>
             </th>
             <th class="admin-courses__table-head">Action</th>
           </tr>
