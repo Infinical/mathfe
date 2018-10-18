@@ -64,4 +64,8 @@ export class AdminQuestionCreateComponent implements OnInit {
   			break;
   	}
   }
+
+  createQuestion(form: any){
+    console.log(form);
+  }
 }
