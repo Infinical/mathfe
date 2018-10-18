@@ -67,9 +67,9 @@ export class AdminQuestionListComponent implements OnInit {
 <div style="margin-top: 0.5rem;" *ngIf="deleteResult && deleteResult.status ==='error'" class="alert alert-danger" role="alert"> {{ deleteResult.message }} </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close>No</button>
+  <button id="closeButton" mat-button mat-dialog-close>No</button>
   <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-  <button mat-button (click)="onYesClick()">Yes</button>
+  <button id="yesButton" mat-button (click)="onYesClick()">Yes</button>
 </mat-dialog-actions>`,
   selector: 'dialog-delete-question'
 })
@@ -97,6 +97,12 @@ export class DialogDeleteQuestion {
           status: 'success',
           message: res["message"]
         };
+
+        let dom: any = document.querySelector('#closeButton');    
+        dom.innerHTML = "Close"
+
+        dom = document.querySelector('#yesButton');
+        dom.style.display = 'none';
 
       }, error => {
         this.deleteResult = {
