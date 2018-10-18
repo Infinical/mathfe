@@ -4,6 +4,8 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { QuestionService } from '../../services/question.service';
 import { ActivatedRoute } from '@angular/router';
+import { Question } from '../../models/question';
+import { FormControl, FormGroup, Validators, FormBuilder, AbstractControl  } from '@angular/forms';
 
 @Component({
   selector: 'ag-admin-question-form',
@@ -12,6 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AdminQuestionFormComponent implements OnInit {
 
+  QuestionForm: FormGroup;
   selectedFile: File = null;
   imgURL :string = "images/upload.png";
   answerOneImg: File = null;
@@ -25,36 +28,63 @@ export class AdminQuestionFormComponent implements OnInit {
   selectedLevel: any;
   selectedTrack: any;
   selectedSkill: any;
-  question: any;
+  question: Question = new Question();
+  editMode = false;
   
   ngOnInit() {
-  }
-
-  constructor(private http: HttpClient, 
-              private questionService: QuestionService,
-              private route: ActivatedRoute) { 
-
-  	questionService.getQuestionOptions().subscribe((data) => {
-      this.difficulties = data.difficulties;
-      this.levels = data.skills;
-      this.statuses = data.statuses;
-      this.types = data.type;
-    });
-
     this.route.params.subscribe((params) => {
-      const id = String(params['id']);
+      const id = params['id'];
       
-      if (id) {
+      if (id != undefined) {
+        this.editMode = true;
         this.questionService.getQuestion(id)
           .subscribe((data) => {
-            console.log(data);
-            this.question = data;
+            if (data.question_image) this.imgURL = environment.apiURL + data.question_image;
+            data.question_image = '';
+            data.answer0_image = '';
+            data.answer1_image = '';
+            data.answer2_image = '';
+            data.answer3_image = '';
+
+            this.question = data;            
+            
           }, error => {
 
           });
       }
-
     });
+  }
+
+  constructor(private http: HttpClient, 
+              private questionService: QuestionService,
+              private route: ActivatedRoute,
+              private formBuilder: FormBuilder) {
+
+    this.QuestionForm = this.formBuilder.group({
+
+        answer0: [''],
+        answer0_image: [''],
+        answer1: [''],
+        answer1_image: [''],
+        answer2: [''],
+        answer2_image: [''],
+        answer3: [''],
+        answer3_image: [''],
+        correct_answer: ['', Validators.required],
+        difficulty_id: ['', Validators.required],
+        question: ['', Validators.required],
+        question_image: ['', Validators.required],
+        skill_id: ['', Validators.required],
+        status_id: ['', Validators.required],
+        type_id: ['', Validators.required],
+    });
+
+    questionService.getQuestionOptions().subscribe((data) => {
+      this.difficulties = data.difficulties;
+      this.levels = data.skills;
+      this.statuses = data.statuses;
+      this.types = data.type;
+    });    
   }
 
   onFileSelected(files: FileList){
