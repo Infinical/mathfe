@@ -86,11 +86,12 @@ import {
         MatSelectModule,
         MatSortModule,
         MatDialogModule,
-        MatButtonModule
+        MatButtonModule,
        } from '@angular/material';
 import { CdkTableModule } from '@angular/cdk/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { SelectModule } from 'ng2-select';
 
 export function tokenGetter() {
     return localStorage.getItem("token");
@@ -183,7 +184,8 @@ export function tokenGetter() {
     MatSortModule,
     MatDialogModule,
     MatButtonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    SelectModule
   ],
   entryComponents: [DialogDeleteCourse, DialogDeleteQuestion],
   providers: [TrackService, CourseService, QuestionService, DashboardService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService],
