@@ -74,6 +74,7 @@ import { AdminQuestionEditComponent } from './admin/admin-question-edit/admin-qu
 import { AdminQuestionDeleteComponent } from './admin/admin-question-delete/admin-question-delete.component';
 import { DynamicContentComponent } from './admin/admin-question-list/dynamicContent/dynamicContent.component';
 import { DialogDeleteCourse } from './admin/admin-course-list/admin-course-list.component';
+import { DialogDeleteQuestion } from './admin/admin-question-list/admin-question-list.component';
 
 //Angular Material
 import { 
@@ -154,7 +155,8 @@ export function tokenGetter() {
     AdminQuestionEditComponent,
     AdminQuestionDeleteComponent,
     DynamicContentComponent,
-    DialogDeleteCourse
+    DialogDeleteCourse,
+    DialogDeleteQuestion
   ],
   imports: [
     routes,
@@ -183,7 +185,7 @@ export function tokenGetter() {
     MatButtonModule,
     BrowserAnimationsModule
   ],
-  entryComponents: [DialogDeleteCourse],
+  entryComponents: [DialogDeleteCourse, DialogDeleteQuestion],
   providers: [TrackService, CourseService, QuestionService, DashboardService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService],
   bootstrap: [AppComponent]
 })

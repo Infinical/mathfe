@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
+import { throwError } from 'rxjs';
 
 @Injectable()
 export class QuestionService {
@@ -21,7 +22,7 @@ export class QuestionService {
 	  const apiUrl = `${environment.apiURL}/questions`;
 	  const url = `${apiUrl}/${id}`;
 	  return this.http.delete<any>(url)
-	    .map((response) => response)
-	    .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'}));
+	    .map((response) => response);
+	    //.catch((error: any) =>  Observable.throw({message: 'Server Error'}));
 	}
 }
