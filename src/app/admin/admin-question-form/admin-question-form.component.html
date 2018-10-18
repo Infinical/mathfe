@@ -7,7 +7,8 @@
     
     <!-- SECTION TITLE -->
     <img [src]="imgURL" style="width:250px;" /><br/>
-    <h2 class="dark-text">Add a New Question</h2>
+    <h2 *ngIf="!editMode" class="dark-text">Add a New Question</h2>
+    <h2 *ngIf="editMode" class="dark-text">Edit Question</h2>
     
     <div class="colored-line">
     </div>
@@ -24,7 +25,7 @@
 
   <div class="col-md-10 col-md-offset-1" style="margin-top: 0.5rem;">
     <div class="well well bs-component">
-      <form class="form-horizontal" (ngSubmit)="createQuestion(createQuestionForm.value)" [formGroup]="QuestionForm">
+      <form class="form-horizontal" (ngSubmit)="createQuestion()" [formGroup]="QuestionForm">
         <fieldset>
 
           <div class="form-group">
@@ -313,7 +314,7 @@
           <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">
               <a [routerLink]="['/admin/questions']" class="btn btn-default"> Cancel</a>
-              <button style="margin-left: 0.5rem;" type="submit" class="btn btn-primary" [disabled]="QuestionForm.status !== 'VALID'">Create</button>
+              <button style="margin-left: 0.5rem;" type="submit" class="btn btn-primary" [disabled]="QuestionForm.status !== 'VALID'">{{editMode? 'Update': 'Create'}}</button>
             </div>
           </div>
         </fieldset>

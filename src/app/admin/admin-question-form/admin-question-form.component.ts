@@ -121,9 +121,9 @@ export class AdminQuestionFormComponent implements OnInit {
   	}
   }
 
-  createQuestion(form: any){
-    console.log(form);
-    this.questionService.addQuestion(form).subscribe(res => {
+  createQuestion(){
+    console.log(this.question);
+    this.questionService.addQuestion(this.question).subscribe(res => {
       console.log(res);
     }, error => {
       console.log(error);
