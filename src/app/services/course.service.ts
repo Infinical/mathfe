@@ -9,21 +9,21 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class CourseService {
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
 	updateStatus: string = "";
 
-    getCourses():Observable<any[]> {
-    	return this.http.get<any[]>(`${environment.apiURL}/courses`)
-    	.map((response) => response)
-    	.catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));;
-    }
+  getCourses():Observable<any[]> {
+    return this.http.get<any[]>(`${environment.apiURL}/courses`)
+    .map((response) => response)
+    .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));;
+  }
 
-    getOpenCourses():Observable<any[]> {
-    	return this.http.get<any[]>(`${environment.apiURL}/opencourses`)
-    	.map((response) => response)
-    	.catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));;
-    }
+  getOpenCourses():Observable<any[]> {
+    return this.http.get<any[]>(`${environment.apiURL}/opencourses`)
+    .map((response) => response)
+    .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));;
+  }
 
 	addCourse(course: Object): Observable<Course[]> {
 	    return this.http.post<Course[]>(`${environment.apiURL}/courses`, course)
