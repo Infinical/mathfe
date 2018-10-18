@@ -25,7 +25,7 @@ export class QuestionService {
 	    .map((response) => response);
 	}
 
-	createQuestionOptions():Observable<any> {
+	getQuestionOptions():Observable<any> {
     	return this.http.get<any>(environment.apiURL + '/questions/create')
     	.map((response) => response);
     }
@@ -35,4 +35,8 @@ export class QuestionService {
 	      .map((response) => response);
 	}
 
+	getQuestion(id: String): Observable<any> {
+	  return this.http.get<any>(`${environment.apiURL}/questions/` + id)
+	    .map((response) => response['question']);
+	}
 }
