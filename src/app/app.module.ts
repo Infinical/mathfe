@@ -162,9 +162,8 @@ export function tokenGetter() {
     routes,
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
     HttpClientModule,
-    FormsModule,
     ChartsModule,
     JwtModule.forRoot({
       config: {
