@@ -13,7 +13,7 @@ export class QuestionService {
 	constructor(private http: HttpClient){}
 
 	getQuestions(currentPage):Observable<any> {
-    	return this.http.get<any>(environment.apiURL + '/questions?page=' + currentPage)
+		return this.http.get<any>(environment.apiURL + '/questions?page=' + currentPage)
     	.map((response) => response)
     	.catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));
     }
@@ -23,6 +23,11 @@ export class QuestionService {
 	  const url = `${apiUrl}/${id}`;
 	  return this.http.delete<any>(url)
 	    .map((response) => response);
-	    //.catch((error: any) =>  Observable.throw({message: 'Server Error'}));
 	}
+
+	createQuestionOptions():Observable<any> {
+    	return this.http.get<any>(environment.apiURL + '/questions/create')
+    	.map((response) => response);
+    }
+
 }
