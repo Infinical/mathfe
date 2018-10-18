@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { QuestionService } from '../../services/question.service';
 
 @Component({
   selector: 'ag-admin-question-create',
@@ -15,34 +16,24 @@ export class AdminQuestionCreateComponent implements OnInit {
   answerOneImg: File = null;
   answerTwoImg: File = null;
   answerThreeImg: File = null;
-  skills = [
-    {
-      id: 1,
-      skill: "Reading and Writing Numbers"
-    },
-    {
-      id: 2,
-      skill: "Ordering"
-    },
-  ];
+  skills: any;
+  difficulties: any;
+  statuses: any;
+  types: any;
 
-  difficulties = [
-    {
-      id: 1,
-      short_description: "1 - Knowledge and Comprehension"
-    },
-    {
-      id: 2,
-      short_description: "2 - Application and Analysis"
-    },
-    {
-      id: 3,
-      short_description: "3 - Synthesis and evaluation"
-    },
-  ];
+  constructor(private http: HttpClient, private questionService: QuestionService) { 
+  	questionService.createQuestionOptions().subscribe((data) => {
+      this.difficulties = data.difficulties;
 
-  constructor(private http: HttpClient) { 
-  	
+      let skills = new Array();
+      data.skills.forEach(function (skill) {
+        skills.push({id: skill.id, text: skill.skill});
+      }); 
+
+      this.skills = skills;
+      this.statuses = data.statuses;
+      this.types = data.type;
+    });
   }
 
   ngOnInit() {
