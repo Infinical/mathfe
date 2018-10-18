@@ -16,27 +16,25 @@ export class AdminQuestionCreateComponent implements OnInit {
   answerOneImg: File = null;
   answerTwoImg: File = null;
   answerThreeImg: File = null;
-  skills: any;
+  answerFourImg: File = null;
+  levels: any;
   difficulties: any;
   statuses: any;
   types: any;
+  selectedLevel: any;
+  selectedTrack: any;
+  selectedSkill: any;
+
+  ngOnInit() {
+  }
 
   constructor(private http: HttpClient, private questionService: QuestionService) { 
   	questionService.createQuestionOptions().subscribe((data) => {
       this.difficulties = data.difficulties;
-
-      let skills = new Array();
-      data.skills.forEach(function (skill) {
-        skills.push({id: skill.id, text: skill.skill});
-      }); 
-
-      this.skills = skills;
+      this.levels = data.skills;
       this.statuses = data.statuses;
       this.types = data.type;
     });
-  }
-
-  ngOnInit() {
   }
 
   onFileSelected(files: FileList){
@@ -46,6 +44,11 @@ export class AdminQuestionCreateComponent implements OnInit {
       this.imgURL = event.target.result;
     }
     reader.readAsDataURL(this.selectedFile);
+  }
+
+  levelChange(e: any){
+    this.selectedTrack = null;
+    this.selectedSkill = null;
   }
 
   answerImageSelected(files: FileList, option: number){
@@ -59,6 +62,9 @@ export class AdminQuestionCreateComponent implements OnInit {
   		case 3:
   			this.answerThreeImg = files.item(0);
   			break;
+      case 4:
+        this.answerFourImg = files.item(0);
+        break;
   		default:
   			// code...
   			break;
