@@ -3,13 +3,14 @@ import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { QuestionService } from '../../services/question.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'ag-admin-question-create',
-  templateUrl: './admin-question-create.component.html',
-  styleUrls: ['./admin-question-create.component.css']
+  selector: 'ag-admin-question-form',
+  templateUrl: './admin-question-form.component.html',
+  styleUrls: ['./admin-question-form.component.css']
 })
-export class AdminQuestionCreateComponent implements OnInit {
+export class AdminQuestionFormComponent implements OnInit {
 
   selectedFile: File = null;
   imgURL :string = "images/upload.png";
@@ -24,16 +25,35 @@ export class AdminQuestionCreateComponent implements OnInit {
   selectedLevel: any;
   selectedTrack: any;
   selectedSkill: any;
-
+  question: any;
+  
   ngOnInit() {
   }
 
-  constructor(private http: HttpClient, private questionService: QuestionService) { 
-  	questionService.createQuestionOptions().subscribe((data) => {
+  constructor(private http: HttpClient, 
+              private questionService: QuestionService,
+              private route: ActivatedRoute) { 
+
+  	questionService.getQuestionOptions().subscribe((data) => {
       this.difficulties = data.difficulties;
       this.levels = data.skills;
       this.statuses = data.statuses;
       this.types = data.type;
+    });
+
+    this.route.params.subscribe((params) => {
+      const id = String(params['id']);
+      
+      if (id) {
+        this.questionService.getQuestion(id)
+          .subscribe((data) => {
+            console.log(data);
+            this.question = data;
+          }, error => {
+
+          });
+      }
+
     });
   }
 
@@ -66,12 +86,17 @@ export class AdminQuestionCreateComponent implements OnInit {
         this.answerFourImg = files.item(0);
         break;
   		default:
-  			// code...
+  			
   			break;
   	}
   }
 
   createQuestion(form: any){
     console.log(form);
+    this.questionService.addQuestion(form).subscribe(res => {
+      console.log(res);
+    }, error => {
+      console.log(error);
+    });
   }
 }

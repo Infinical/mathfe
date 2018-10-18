@@ -28,10 +28,10 @@
         <fieldset>
 
           <div class="form-group">
-            <label for="image" class="col-lg-2 control-label">Question Image</label>
+            <label for="question_image" class="col-lg-2 control-label">Question Image</label>
             <div class="col-lg-10">
-              <input type="file" class="form-control" id="image" name="image" ngModel #image="ngModel" minlength="3" accept="image/*" (change)="onFileSelected($event.target.files)" placeholder="Question Image">
-              <div *ngIf="image.errors?.minlength && image.touched" class="alert alert-danger">
+              <input type="file" class="form-control" id="question_image" name="question_image" ngModel #question_image="ngModel" minlength="3" accept="image/*" (change)="onFileSelected($event.target.files)" placeholder="Question Image">
+              <div *ngIf="question_image.errors?.minlength && question_image.touched" class="alert alert-danger">
                 Minimum of 3 characters
               </div>
             </div>
@@ -54,10 +54,10 @@
 	      				<small id="firstAnswer_help" class="form-text text-muted text-success">
 				      	  First Answer
 				  	    </small>
-	      				<input type="file" class="form-control" id="imageAnswerOne" name="imageAnswerOne" ngModel #imageAnswerOne="ngModel" minlength="3" accept="image/*" (change)="answerImageSelected($event.target.files, 1)" placeholder="First Answer Image">
+	      				<input type="file" class="form-control" id="answer0_image" name="answer0_image" ngModel #answer0_image="ngModel" minlength="3" accept="image/*" (change)="answerImageSelected($event.target.files, 1)" placeholder="First Answer Image">
 	      			</div>
 	      			<div class="col-sm-12 answer-row"> 
-	      				<input type="text" class="form-control" id="firstAnswer" name="firstAnswer" placeholder="First Answer" ngModel #firstAnswer="ngModel" aria-describedby="firstAnswer_help">
+	      				<input type="text" class="form-control" id="answer0" name="answer0" placeholder="First Answer" ngModel #answer0="ngModel" aria-describedby="firstAnswer_help">
 	      			</div>	      	
 	          	</div>
 	          	<div class="col-sm-6">
@@ -65,10 +65,10 @@
 		  				<small id="secondAnswer_help" class="form-text text-muted text-success">
 				      	  Second Answer
 				  	    </small>
-		  				<input type="file" class="form-control" id="imageAnswerTwo" name="imageAnswerTwo" ngModel #imageAnswerTwo="ngModel" minlength="3" accept="image/*" (change)="answerImageSelected($event.target.files, 2)" placeholder="Second Answer Image">
+		  				<input type="file" class="form-control" id="answer1_image" name="answer1_image" ngModel #answer1_image="ngModel" minlength="3" accept="image/*" (change)="answerImageSelected($event.target.files, 2)" placeholder="Second Answer Image">
 		  			</div>
 		  			<div class="col-sm-12 answer-row"> 
-		  				<input type="text" class="form-control" id="secondAnswer" name="secondAnswer" placeholder="Second Answer" ngModel #secondAnswer="ngModel" aria-describedby="secondAnswer_help">
+		  				<input type="text" class="form-control" id="answer1" name="answer1" placeholder="Second Answer" ngModel #answer1="ngModel" aria-describedby="secondAnswer_help">
 		  			</div>	       
 	          	</div>
           	</div>          	
@@ -81,10 +81,10 @@
 	      				<small id="thirdAnswer_help" class="form-text text-muted text-success">
 				      	  Third Answer
 				  	    </small>
-	      				<input type="file" class="form-control" id="imageAnswerThree" name="imageAnswerThree" ngModel #imageAnswerThree="ngModel" minlength="3" accept="image/*" (change)="answerImageSelected($event.target.files, 3)" placeholder="Third Answer Image">
+	      				<input type="file" class="form-control" id="answer2_image" name="answer2_image" ngModel #answer2_image="ngModel" minlength="3" accept="image/*" (change)="answerImageSelected($event.target.files, 3)" placeholder="Third Answer Image">
 	      			</div>
 	      			<div class="col-sm-12 answer-row">
-	      				<input type="text" class="form-control" id="thirdAnswer" name="thirdAnswer" placeholder="Third Answer" ngModel #thirdAnswer="ngModel" aria-describedby="thirdAnswer_help">
+	      				<input type="text" class="form-control" id="answer2" name="answer2" placeholder="Third Answer" ngModel #answer2="ngModel" aria-describedby="thirdAnswer_help">
 	      			</div>	          
           		</div>
           		<div class="col-sm-6">
@@ -92,10 +92,10 @@
 	      				<small id="fourthAnswer_help" class="form-text text-muted text-success">
 				      	  Fourth Answer
 				  	    </small>
-	      				<input type="file" class="form-control" id="imageAnswerFour" name="imageAnswerFour" ngModel #imageAnswerFour="ngModel" minlength="3" accept="image/*" (change)="answerImageSelected($event.target.files, 4)" placeholder="Fourth Answer Image">
+	      				<input type="file" class="form-control" id="answer3_image" name="answer3_image" ngModel #answer3_image="ngModel" minlength="3" accept="image/*" (change)="answerImageSelected($event.target.files, 4)" placeholder="Fourth Answer Image">
 	      			</div>
 	      			<div class="col-sm-12 answer-row">
-	      				<input type="text" class="form-control" id="fourthAnswer" name="fourthAnswer" placeholder="Fourth Answer" ngModel #fourthAnswer="ngModel" aria-describedby="fourthAnswer_help">
+	      				<input type="text" class="form-control" id="answer3" name="answer3" placeholder="Fourth Answer" ngModel #answer3="ngModel" aria-describedby="fourthAnswer_help">
 	      			</div>	       
           		</div>
           	</div>
@@ -104,7 +104,7 @@
           <div class="row">
           	<div class="form-group col-sm-12">  
                 <mat-form-field>
-                  <mat-select required ngModel #difficulty="ngModel" id="difficulty" name="difficulty" placeholder="Difficulty" >
+                  <mat-select required ngModel #difficulty_id="ngModel" id="difficulty_id" name="difficulty_id" placeholder="Difficulty" >
                       <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty.id">
                         {{difficulty.description}}
                       </mat-option>
@@ -138,8 +138,8 @@
               </div>
               <div *ngIf="selectedTrack && selectedLevel.tracks.length > 0" class="col-sm-6">
                 <mat-form-field>
-                  <mat-select [(value)]="selectedSkill" required ngModel #skill="ngModel" id="skill" name="skill" placeholder="Skill" >
-                      <mat-option *ngFor="let skill of selectedTrack.skills" [value]="skill">
+                  <mat-select required ngModel #skill_id="ngModel" id="skill_id" name="skill_id" placeholder="Skill" >
+                      <mat-option *ngFor="let skill of selectedTrack.skills" [value]="skill.id">
                         {{skill.skill}}
                       </mat-option>
                   </mat-select>
@@ -152,7 +152,7 @@
             <div class="form-group col-sm-12">            
             <div class="col-sm-6">
                 <mat-form-field>
-                  <mat-select required ngModel #difficulty="ngModel" id="type" name="type" placeholder="Type" >
+                  <mat-select required ngModel #type_id="ngModel" id="type_id" name="type_id" placeholder="Type" >
                       <mat-option *ngFor="let type of types" [value]="type.id">
                         {{type.type}}
                       </mat-option>
@@ -161,7 +161,7 @@
               </div>
               <div class="col-sm-6">
                 <mat-form-field>
-                  <mat-select required ngModel #difficulty="ngModel" id="status" name="status" placeholder="Status" >
+                  <mat-select required ngModel #status_id="ngModel" id="status_id" name="status_id" placeholder="Status" >
                       <mat-option *ngFor="let status of statuses" [value]="status.id">
                         {{status.status}}
                       </mat-option>
@@ -174,8 +174,8 @@
           <div class="form-group">
             <label for="correctAnwer" class="col-sm-2 control-label">Correct Answer</label>
             <div class="col-sm-4">
-              <input type="number" class="form-control" id="correctAnwer" name="correctAnwer" placeholder="Correct Answer" ngModel #correctAnwer="ngModel" required>
-              <div *ngIf="correctAnwer.errors?.required && correctAnwer.touched" class="alert alert-danger">
+              <input type="number" class="form-control" id="correct_answer" name="correct_answer" placeholder="Correct Answer" ngModel #correct_answer="ngModel" required>
+              <div *ngIf="correct_answer.errors?.required && correct_answer.touched" class="alert alert-danger">
                 Correct Answer is required
               </div>
             </div>

@@ -69,7 +69,7 @@ import { AdminSkillListComponent } from './admin/admin-skill-list/admin-skill-li
 import { AdminQuestionListComponent } from './admin/admin-question-list/admin-question-list.component';
 import { AdminSkillDeleteComponent } from './admin/admin-skill-delete/admin-skill-delete.component';
 import { AdminTrackDeleteComponent } from './admin/admin-track-delete/admin-track-delete.component';
-import { AdminQuestionCreateComponent } from './admin/admin-question-create/admin-question-create.component';
+import { AdminQuestionFormComponent } from './admin/admin-question-form/admin-question-form.component';
 import { AdminQuestionEditComponent } from './admin/admin-question-edit/admin-question-edit.component';
 import { AdminQuestionDeleteComponent } from './admin/admin-question-delete/admin-question-delete.component';
 import { DynamicContentComponent } from './admin/admin-question-list/dynamicContent/dynamicContent.component';
@@ -151,7 +151,7 @@ export function tokenGetter() {
     AdminQuestionListComponent,
     AdminSkillDeleteComponent,
     AdminTrackDeleteComponent,
-    AdminQuestionCreateComponent,
+    AdminQuestionFormComponent,
     AdminQuestionEditComponent,
     AdminQuestionDeleteComponent,
     DynamicContentComponent,
