@@ -16,15 +16,16 @@ export class AdminQuestionListComponent implements OnInit {
 
   @ViewChild(MatPaginator) topPaginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  questions: any;
+  gridData: any;
   displayedColumns: string[] = ['question', 'answer', 'skill', 'track', 'field', 'level', 'difficulty', 'status', 'source', 'author', 'action'];
   dataSource = new MatTableDataSource<any>();
   beURL = environment.apiURL;
-  currentPage = 0;
+  currentPage = 1;
   selectedQuestion: any; 
+  loading = false;
 
   constructor(private http: HttpClient, private questionService: QuestionService, public dialog: MatDialog) { 
-    this.onPaginateChange({pageIndex: 0});    
+    this.onPaginateChange({pageIndex: this.currentPage});    
   }
 
   ngOnInit() {
@@ -32,17 +33,20 @@ export class AdminQuestionListComponent implements OnInit {
   }
 
   onPaginateChange(e: any, origin?: string){
-    this.currentPage = e.pageIndex;
+    this.loading = true;
+    this.currentPage = (e.pageIndex === 0) ? 1 : e.pageIndex;
     this.questionService.getQuestions(this.currentPage).subscribe((data) => {
-      this.questions = data.questions;
-      this.dataSource = new MatTableDataSource<any>(data.questions);
+      this.gridData = data;
+      this.dataSource = new MatTableDataSource<any>(this.gridData.questions);
       this.dataSource.sort = this.sort;
       this.updatePaginator(origin);
+      this.loading = false;
     });
   }
 
   updatePaginator(origin: string){
-    this.topPaginator.length = ((this.currentPage + 2) * this.questions.length);
+    this.topPaginator.length = ((this.currentPage + 2) * this.gridData.questions.length);
+    this.topPaginator.pageIndex = this.currentPage;
     const dom: any = document.querySelector('.mat-paginator-range-label');
     if (dom) dom.style.display = 'none';    
   }
