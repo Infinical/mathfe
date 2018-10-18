@@ -18,6 +18,7 @@ export class AdminCourseDeleteComponent implements OnInit, OnDestroy {
   	this.courseService.deleteCourse(this.id).subscribe(
   	data => {
       this.courseService.updateStatus = data['message'];
+      setTimeout(() => this.courseService.updateStatus = '', 2000);
   	  this.router.navigate(['/admin/courses']);
       },
   	error =>  console.log(<any>error));

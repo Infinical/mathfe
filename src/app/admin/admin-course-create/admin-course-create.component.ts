@@ -30,6 +30,7 @@ export class AdminCourseCreateComponent implements OnInit {
    .subscribe(
      course  => {
        this.courseService.updateStatus = course['message'];
+       setTimeout(() => this.courseService.updateStatus = '', 2000);
        this.router.navigate(['/admin/courses']);
      },
      error => {

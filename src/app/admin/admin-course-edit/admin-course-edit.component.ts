@@ -64,6 +64,7 @@ export class AdminCourseEditComponent implements OnInit, OnDestroy {
           this.status = 'success';
           this.message = course['message'];
           this.courseService.updateStatus = this.message = course['message'];
+          setTimeout(() => this.courseService.updateStatus = '', 2000);
           this.router.navigate(['/admin/courses']);
         },
         error => {
