@@ -43,7 +43,7 @@ export class AdminCourseEditComponent implements OnInit, OnDestroy {
   }
 
   updateCourse(course) {
-    if (course.image != this.imgURL) {
+    if (!this.imgURL.includes(course.image)) {
       this.formData.append('image_file', this.selectedFile);
       this.courseService.updateCourseImage(this.formData, course.id)
         .subscribe(
