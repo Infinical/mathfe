@@ -8,7 +8,7 @@ export class Question {
 	public answer2_image: string;
 	public answer3: string;
 	public answer3_image: string;
-	public correct_answer: number;
+	public correct_answer: string;
 	public difficulty_id: number;
 	public id: number;
 	public question: string;
@@ -18,6 +18,21 @@ export class Question {
 	public type_id: number;
 
 	constructor() {
-
+		this.answer0 = '';
+		this.answer0_image = '';
+		this.answer1 = '';
+		this.answer1_image = '';
+		this.answer2 = '';
+		this.answer2_image = '';
+		this.answer3 = '';
+		this.answer3_image = '';
+		this.correct_answer = '';
+		this.difficulty_id = -1;
+		this.id = -1;
+		this.question = '';
+		this.question_image = '';
+		this.skill_id = -1;
+		this.status_id = -1;
+		this.type_id = -1;
 	}
 }
