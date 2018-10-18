@@ -30,4 +30,9 @@ export class QuestionService {
     	.map((response) => response);
     }
 
+    addQuestion(question: Object): Observable<any> {
+	    return this.http.post<any>(`${environment.apiURL}/questions`, question)
+	      .map((response) => response);
+	}
+
 }
