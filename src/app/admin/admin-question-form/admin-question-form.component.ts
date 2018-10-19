@@ -190,7 +190,7 @@ export class AdminQuestionFormComponent implements OnInit {
       correct_answer: this.question.correct_answer,
       difficulty_id: this.question.difficulty_id,
       question: questionValue,
-      //question_image: this.selectedFile,
+      question_image: this.selectedFile,
       skill_id: this.question.skill_id,
       status_id: this.question.status_id,
       type_id: this.question.type_id
