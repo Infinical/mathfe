@@ -5,3 +5,15 @@
 .mat-form-field{
 	width: 92%;
 }
+
+.angular-editor-textarea{
+	background-color: white !important;
+}
+
+.form-group {
+    margin-bottom: 0.2rem;
+}
+
+.row {
+    margin-bottom: 0.2rem;
+}

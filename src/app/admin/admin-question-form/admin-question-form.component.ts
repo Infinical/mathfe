@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -6,11 +6,13 @@ import { QuestionService } from '../../services/question.service';
 import { ActivatedRoute } from '@angular/router';
 import { Question } from '../../models/question';
 import { FormControl, FormGroup, Validators, FormBuilder, AbstractControl  } from '@angular/forms';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
   selector: 'ag-admin-question-form',
   templateUrl: './admin-question-form.component.html',
-  styleUrls: ['./admin-question-form.component.css']
+  styleUrls: ['./admin-question-form.component.css'],
+  encapsulation : ViewEncapsulation.None
 })
 export class AdminQuestionFormComponent implements OnInit {
 
@@ -31,6 +33,21 @@ export class AdminQuestionFormComponent implements OnInit {
   question: Question = new Question();
   editMode = false;
   formResponse: any;
+
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '10rem',
+    minHeight: '5rem',
+    placeholder: 'Question',
+    translate: 'no',
+    customClasses: [ // optional
+      {
+        name: "white",
+        class: "white",
+      },
+    ]
+  };
   
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -40,10 +57,8 @@ export class AdminQuestionFormComponent implements OnInit {
         this.editMode = true;
         this.questionService.getQuestion(id)
           .subscribe((data) => {
-            console.log(data);
             if (data.question_image) this.imgURL = environment.apiURL + data.question_image;
-            
-            this.question = data;                
+            this.question = data;                         
             
           }, error => {
 
@@ -151,7 +166,9 @@ export class AdminQuestionFormComponent implements OnInit {
 
     const fileName = this.selectedFile.name.substring(0, this.selectedFile.name.indexOf('.'));
     const imageURL = '/images/questions/imp1_question_image/';
-    console.log(imageURL);
+    const questionValue = (this.question.question.indexOf('&lt;') >= 0) ? 
+                          this.question.question.replace(/&lt;/g, '<').replace(/&gt;/g, '>') :
+                          this.question.question;
 
     const form = {
       answer0: this.question.answer0,
@@ -172,9 +189,8 @@ export class AdminQuestionFormComponent implements OnInit {
       //answer3_image: this.answerFourImg,
       correct_answer: this.question.correct_answer,
       difficulty_id: this.question.difficulty_id,
-      question: this.question.question,
-      question_image: imageURL + this.selectedFile.name,
-      image: this.selectedFile,
+      question: questionValue,
+      question_image: this.selectedFile,
       skill_id: this.question.skill_id,
       status_id: this.question.status_id,
       type_id: this.question.type_id
@@ -198,6 +214,9 @@ export class AdminQuestionFormComponent implements OnInit {
 
   updateQuestion(){
     console.log(this.question);
+    this.question.question = (this.question.question.indexOf('&lt;') >= 0) ? 
+                             this.question.question.replace(/&lt;/g, '<').replace(/&gt;/g, '>') :
+                             this.question.question;
     this.questionService.updateQuestion(this.question).subscribe(res => {
       this.formResponse = {
           status: 'success',
