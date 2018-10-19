@@ -57,10 +57,8 @@ export class AdminQuestionFormComponent implements OnInit {
         this.editMode = true;
         this.questionService.getQuestion(id)
           .subscribe((data) => {
-            console.log(data);
             if (data.question_image) this.imgURL = environment.apiURL + data.question_image;
-            
-            this.question = data;                
+            this.question = data;                         
             
           }, error => {
 
@@ -168,7 +166,9 @@ export class AdminQuestionFormComponent implements OnInit {
 
     const fileName = this.selectedFile.name.substring(0, this.selectedFile.name.indexOf('.'));
     const imageURL = '/images/questions/imp1_question_image/';
-    console.log(imageURL);
+    const questionValue = (this.question.question.indexOf('&lt;') >= 0) ? 
+                          this.question.question.replace(/&lt;/g, '<').replace(/&gt;/g, '>') :
+                          this.question.question;
 
     const form = {
       answer0: this.question.answer0,
@@ -189,8 +189,8 @@ export class AdminQuestionFormComponent implements OnInit {
       //answer3_image: this.answerFourImg,
       correct_answer: this.question.correct_answer,
       difficulty_id: this.question.difficulty_id,
-      question: this.question.question,
-      question_image: this.selectedFile,
+      question: questionValue,
+      //question_image: this.selectedFile,
       skill_id: this.question.skill_id,
       status_id: this.question.status_id,
       type_id: this.question.type_id
@@ -214,6 +214,9 @@ export class AdminQuestionFormComponent implements OnInit {
 
   updateQuestion(){
     console.log(this.question);
+    this.question.question = (this.question.question.indexOf('&lt;') >= 0) ? 
+                             this.question.question.replace(/&lt;/g, '<').replace(/&gt;/g, '>') :
+                             this.question.question;
     this.questionService.updateQuestion(this.question).subscribe(res => {
       this.formResponse = {
           status: 'success',
