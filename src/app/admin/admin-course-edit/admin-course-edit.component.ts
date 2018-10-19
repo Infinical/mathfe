@@ -43,22 +43,15 @@ export class AdminCourseEditComponent implements OnInit, OnDestroy {
   }
 
   updateCourse(course) {
+    this.formData.append('_method', 'PATCH');
     if (!this.imgURL.includes(course.image)) {
-      this.formData.append('image_file', this.selectedFile);
-      this.courseService.updateCourseImage(this.formData, course.id)
-        .subscribe(
-          course => {
-            this.status = 'success';
-            this.message = course['message'];
-          },
-          error => {
-            console.log(<any>error);
-            this.status = 'success';
-            this.message = error['message'];
-          }
-        );
+      this.formData.append('image', this.selectedFile);
     }
-    this.courseService.updateCourse(course)
+    this.formData.append('description', course.description);
+    this.formData.append('course', course.course);
+    this.formData.append('start_maxile_score', course.start_maxile_score);
+    this.formData.append('end_maxile_score', course.end_maxile_score);
+    this.courseService.updateCourse(this.formData, course.id)
       .subscribe(
         course => {
           this.status = 'success';
