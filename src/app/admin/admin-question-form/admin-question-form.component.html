@@ -28,6 +28,45 @@
       <form class="form-horizontal" (ngSubmit)="submitForm()" [formGroup]="QuestionForm">
         <fieldset>
 
+          <div class="row">
+            <div class="form-group col-sm-12">            
+            <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-select required 
+                              id="type_id" 
+                              name="type_id" 
+                              placeholder="Type" 
+                              formControlName="type_id"
+                              [(ngModel)]="question.type_id" >
+                      <mat-option *ngFor="let type of types" [value]="type.id">
+                        {{type.type}}
+                      </mat-option>
+                  </mat-select>
+                  <div *ngIf="QuestionForm['controls'].type_id.errors?.required && QuestionForm['controls'].type_id.touched" class="alert alert-danger">
+                    Type is required
+                  </div>   
+                </mat-form-field>                
+              </div>
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-select required 
+                              id="status_id" 
+                              name="status_id" 
+                              placeholder="Status" 
+                              formControlName="status_id"
+                              [(ngModel)]="question.status_id" >
+                      <mat-option *ngFor="let status of statuses" [value]="status.id">
+                        {{status.status}}
+                      </mat-option>
+                  </mat-select>
+                  <div *ngIf="QuestionForm['controls'].status_id.errors?.required && QuestionForm['controls'].status_id.touched" class="alert alert-danger">
+                    Status is required
+                  </div>  
+                </mat-form-field>                
+              </div>    
+            </div>
+          </div>
+
           <div class="form-group">
             <label for="question_image" class="col-lg-2 control-label">Question Image</label>
             <div class="col-lg-10">
@@ -49,13 +88,12 @@
           <div class="form-group">
             <label for="question" class="col-lg-2 control-label">Question</label>
             <div class="col-lg-10">
-              <textarea class="form-control" 
-                        rows="3" id="question" 
-                        name="question" 
-                        [(ngModel)]="question.question" 
-                        placeholder="Question" 
-                        required
-                        formControlName="question"></textarea>
+              <angular-editor formControlName="question" 
+                              [config]="editorConfig"
+                              name="question" 
+                              [(ngModel)]="question.question" 
+                              required
+                              style="text-align: left!important;"></angular-editor>
               <div *ngIf="QuestionForm['controls'].question.errors?.required && QuestionForm['controls'].question.touched" class="alert alert-danger">
                 Question is required
               </div>
@@ -175,119 +213,7 @@
 	      			</div>	       
           		</div>
           	</div>
-          </div>
-
-          <div class="row">
-          	<div class="form-group col-sm-12">  
-                <mat-form-field>
-                  <mat-select required 
-                              id="difficulty_id" 
-                              name="difficulty_id" 
-                              placeholder="Difficulty"
-                              formControlName="difficulty_id"
-                              [(ngModel)]="question.difficulty_id" >
-                      <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty.id">
-                        {{difficulty.description}}
-                      </mat-option>
-                  </mat-select>
-                  <div *ngIf="QuestionForm['controls'].difficulty_id.errors?.required && QuestionForm['controls'].difficulty_id.touched" class="alert alert-danger">
-                    Difficulty is required
-                  </div>   
-                </mat-form-field>                          	
-	          </div>
-          </div>
-
-          <div class="row">
-            <div class="form-group col-sm-12">
-                <mat-form-field>
-                  <mat-select aria-describedby="level_help" 
-                              [(value)]="selectedLevel" 
-                              (selectionChange)="levelChange($event)" 
-                              required 
-                              id="level" 
-                              name="level" 
-                              placeholder="Level">
-                      <mat-option *ngFor="let level of levels" [value]="level">
-                        {{level.description}}
-                      </mat-option>
-                  </mat-select>
-                </mat-form-field>                
-            </div>
-          </div>
-
-          <div *ngIf="selectedLevel && selectedLevel.tracks.length > 0" class="row">
-            <div class="form-group col-sm-12">            
-              <div class="col-sm-6">
-                <mat-form-field>
-                  <mat-select [(value)]="selectedTrack" 
-                              required 
-                              id="track" 
-                              name="track" 
-                              placeholder="Track">
-                      <mat-option *ngFor="let track of selectedLevel.tracks" [value]="track">
-                        {{track.description}}
-                      </mat-option>
-                  </mat-select>
-                </mat-form-field>                
-              </div>
-              <div *ngIf="((selectedTrack && selectedTrack.skills.length > 0))" class="col-sm-6">
-                <mat-form-field>
-                  <mat-select required 
-                              id="skill_id" 
-                              name="skill_id" 
-                              placeholder="Skill" 
-                              formControlName="skill_id"
-                              [(ngModel)]="question.skill_id" >
-                      <mat-option *ngFor="let skill of selectedTrack.skills" [value]="skill.id">
-                        {{skill.skill}}
-                      </mat-option>
-                  </mat-select>
-                  <div *ngIf="QuestionForm['controls'].skill_id.errors?.required && QuestionForm['controls'].skill_id.touched" class="alert alert-danger">
-                    Skill is required
-                  </div>   
-                </mat-form-field>                
-              </div>      
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="form-group col-sm-12">            
-            <div class="col-sm-6">
-                <mat-form-field>
-                  <mat-select required 
-                              id="type_id" 
-                              name="type_id" 
-                              placeholder="Type" 
-                              formControlName="type_id"
-                              [(ngModel)]="question.type_id" >
-                      <mat-option *ngFor="let type of types" [value]="type.id">
-                        {{type.type}}
-                      </mat-option>
-                  </mat-select>
-                  <div *ngIf="QuestionForm['controls'].type_id.errors?.required && QuestionForm['controls'].type_id.touched" class="alert alert-danger">
-                    Type is required
-                  </div>   
-                </mat-form-field>                
-              </div>
-              <div class="col-sm-6">
-                <mat-form-field>
-                  <mat-select required 
-                              id="status_id" 
-                              name="status_id" 
-                              placeholder="Status" 
-                              formControlName="status_id"
-                              [(ngModel)]="question.status_id" >
-                      <mat-option *ngFor="let status of statuses" [value]="status.id">
-                        {{status.status}}
-                      </mat-option>
-                  </mat-select>
-                  <div *ngIf="QuestionForm['controls'].status_id.errors?.required && QuestionForm['controls'].status_id.touched" class="alert alert-danger">
-                    Status is required
-                  </div>  
-                </mat-form-field>                
-              </div>    
-            </div>
-          </div>
+          </div>     
 
           <div class="form-group">
             <label for="correctAnwer" class="col-sm-2 control-label">Correct Answer</label>
@@ -304,7 +230,79 @@
                 Correct Answer is required
               </div>
             </div>
-          </div>       
+          </div>           
+
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <div class="col-sm-4">
+                <mat-form-field>
+                  <mat-select aria-describedby="level_help" 
+                              [(value)]="selectedLevel" 
+                              (selectionChange)="levelChange($event)" 
+                              required 
+                              id="level" 
+                              name="level" 
+                              placeholder="Level">
+                      <mat-option *ngFor="let level of levels" [value]="level">
+                        {{level.description}}
+                      </mat-option>
+                  </mat-select>
+                </mat-form-field>                
+              </div>
+              <div *ngIf="selectedLevel && selectedLevel.tracks.length > 0" class="col-sm-4">
+                  <mat-form-field>
+                    <mat-select [(value)]="selectedTrack" 
+                                required 
+                                id="track" 
+                                name="track" 
+                                placeholder="Track">
+                        <mat-option *ngFor="let track of selectedLevel.tracks" [value]="track">
+                          {{track.description}}
+                        </mat-option>
+                    </mat-select>
+                  </mat-form-field>                
+              </div>
+              <div *ngIf="((selectedTrack && selectedTrack.skills.length > 0))" class="col-sm-4">
+                <mat-form-field>
+                  <mat-select required 
+                              id="skill_id" 
+                              name="skill_id" 
+                              placeholder="Skill" 
+                              formControlName="skill_id"
+                              [(ngModel)]="question.skill_id" >
+                      <mat-option *ngFor="let skill of selectedTrack.skills" [value]="skill.id">
+                        {{skill.skill}}
+                      </mat-option>
+                  </mat-select>
+                  <div *ngIf="QuestionForm['controls'].skill_id.errors?.required && QuestionForm['controls'].skill_id.touched" class="alert alert-danger">
+                    Skill is required
+                  </div>   
+                </mat-form-field>                
+              </div>  
+            </div>                
+          </div>          
+
+          <div class="form-group row">
+            <div class="col-sm-12">
+              <div class="col-sm-4">  
+                <mat-form-field>
+                  <mat-select required 
+                              id="difficulty_id" 
+                              name="difficulty_id" 
+                              placeholder="Difficulty"
+                              formControlName="difficulty_id"
+                              [(ngModel)]="question.difficulty_id" >
+                      <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty.id">
+                        {{difficulty.difficulty}}
+                      </mat-option>
+                  </mat-select>
+                  <div *ngIf="QuestionForm['controls'].difficulty_id.errors?.required && QuestionForm['controls'].difficulty_id.touched" class="alert alert-danger">
+                    Difficulty is required
+                  </div>   
+                </mat-form-field>                           
+              </div>
+            </div>            
+          </div>          
 
           <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">
