@@ -36,6 +36,7 @@ export class AdminQuestionListComponent implements OnInit {
     this.loading = true;
     this.currentPage = (e.pageIndex === 0) ? 1 : e.pageIndex;
     this.questionService.getQuestions(this.currentPage).subscribe((data) => {
+      console.log(data);
       this.gridData = data;
       this.dataSource = new MatTableDataSource<any>(this.gridData.questions);
       this.dataSource.sort = this.sort;

@@ -40,14 +40,10 @@ export class AdminQuestionFormComponent implements OnInit {
         this.editMode = true;
         this.questionService.getQuestion(id)
           .subscribe((data) => {
+            console.log(data);
             if (data.question_image) this.imgURL = environment.apiURL + data.question_image;
-            data.question_image = '';
-            data.answer0_image = '';
-            data.answer1_image = '';
-            data.answer2_image = '';
-            data.answer3_image = '';
-
-            this.question = data;                  
+            
+            this.question = data;                
             
           }, error => {
 
@@ -110,6 +106,7 @@ export class AdminQuestionFormComponent implements OnInit {
 
   onFileSelected(files: FileList){
     this.selectedFile = files.item(0);
+    console.log(this.selectedFile);
     var reader = new FileReader();
     reader.onload = (event:any)=>{
       this.imgURL = event.target.result;
@@ -151,12 +148,47 @@ export class AdminQuestionFormComponent implements OnInit {
   }
 
   createQuestion(){
-    this.questionService.addQuestion(this.question).subscribe(res => {
+
+    const fileName = this.selectedFile.name.substring(0, this.selectedFile.name.indexOf('.'));
+    const imageURL = '/images/questions/imp1_question_image/';
+    console.log(imageURL);
+
+    const form = {
+      answer0: this.question.answer0,
+      //image0: this.answerOneImg,
+      //answer0_image: (this.answerOneImg) ? imageURL + this.answerOneImg.name : '',
+      answer0_image: this.answerOneImg,
+      answer1: this.question.answer1,
+      //image1: this.answerTwoImg,
+      //answer1_image: (this.answerTwoImg) ? imageURL + this.answerTwoImg.name : '',
+      answer1_image: this.answerTwoImg,
+      answer2: this.question.answer2,
+      //image2: this.answerThreeImg,
+      //answer2_image: (this.answerThreeImg) ? imageURL + this.answerThreeImg.name : '',
+      answer2_image: this.answerThreeImg,
+      answer3: this.question.answer3,
+      //image3: this.answerFourImg,
+      //answer3_image: (this.answerFourImg) ? imageURL + this.answerFourImg.name : '',
+      answer3_image: this.answerFourImg,
+      correct_answer: this.question.correct_answer,
+      difficulty_id: this.question.difficulty_id,
+      question: this.question.question,
+      question_image: imageURL + this.selectedFile.name,
+      image: this.selectedFile,
+      skill_id: this.question.skill_id,
+      status_id: this.question.status_id,
+      type_id: this.question.type_id
+    };
+
+    this.questionService.addQuestion(form).subscribe(res => {
+      console.log(res);
       this.formResponse = {
-          status: 'success',
-          message: res["message"]
-        };
+        status: 'success',
+        message: res["message"]
+      };
+
     }, error => {
+      console.log(error);
       this.formResponse = {
           status: 'error',
           message: 'Server Error'

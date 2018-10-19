@@ -35,7 +35,6 @@
                      class="form-control" 
                      id="question_image" 
                      name="question_image" 
-                     [(ngModel)]="question.question_image" 
                      formControlName="question_image" 
                      minlength="3" 
                      accept="image/*" 
@@ -79,8 +78,7 @@
                        accept="image/*" 
                        (change)="answerImageSelected($event.target.files, 1)" 
                        placeholder="First Answer Image"
-                       formControlName="answer0_image"
-                       [(ngModel)]="question.answer0_image">
+                       formControlName="answer0_image">
 	      			</div>
 	      			<div class="col-sm-12 answer-row"> 
 	      				<input type="text" 
@@ -106,8 +104,7 @@
                      accept="image/*" 
                      (change)="answerImageSelected($event.target.files, 2)" 
                      placeholder="Second Answer Image"
-                     formControlName="answer1_image"
-                     [(ngModel)]="question.answer1_image">
+                     formControlName="answer1_image">
 		  			</div>
 		  			<div class="col-sm-12 answer-row"> 
 		  				<input type="text" 
@@ -138,8 +135,7 @@
                        accept="image/*" 
                        (change)="answerImageSelected($event.target.files, 3)" 
                        placeholder="Third Answer Image"
-                       formControlName="answer2_image"
-                       [(ngModel)]="question.answer2_image">
+                       formControlName="answer2_image">
 	      			</div>
 	      			<div class="col-sm-12 answer-row">
 	      				<input type="text" 
@@ -165,8 +161,7 @@
                        accept="image/*" 
                        (change)="answerImageSelected($event.target.files, 4)" 
                        placeholder="Fourth Answer Image"
-                       formControlName="answer3_image"
-                       [(ngModel)]="question.answer3_image">
+                       formControlName="answer3_image">
 	      			</div>
 	      			<div class="col-sm-12 answer-row">
 	      				<input type="text" 
