@@ -19,9 +19,10 @@ export class AdminCourseDeleteComponent implements OnInit, OnDestroy {
   	data => {
       this.courseService.updateStatus = data['message'];
       setTimeout(() => this.courseService.updateStatus = '', 2000);
-  	  this.router.navigate(['/admin/courses']);
+      this.router.navigate(['/admin/courses']);
+      setTimeout(() => window.scrollTo(0, 0), 0);
       },
-  	error =>  console.log(<any>error));
+  	error => console.log(<any>error));
     }
     ngOnDestroy() {
       this.params.unsubscribe();
