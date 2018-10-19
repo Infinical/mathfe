@@ -46,7 +46,7 @@ export class AdminQuestionFormComponent implements OnInit {
             data.answer2_image = '';
             data.answer3_image = '';
 
-            this.question = data;            
+            this.question = data;                  
             
           }, error => {
 
@@ -84,6 +84,23 @@ export class AdminQuestionFormComponent implements OnInit {
       this.levels = data.skills;
       this.statuses = data.statuses;
       this.types = data.type;
+
+      if (this.editMode){
+
+        this.selectedLevel = this.levels.find((level) => 
+          level.tracks.find((track) => 
+            track.skills.find((skill) => 
+              skill.id == this.question.skill_id))
+          );
+
+        if (this.selectedLevel){
+          this.selectedTrack = this.selectedLevel.tracks.find((track) => track.skills.find((skill) => skill.id == this.question.skill_id));
+        }
+
+        if (this.selectedTrack){
+          this.selectedTrack.skills.find((skill) => skill.id == this.question.skill_id);
+        }
+      }      
     });    
   }
 
