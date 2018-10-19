@@ -94,11 +94,14 @@ export class AdminQuestionFormComponent implements OnInit {
           );
 
         if (this.selectedLevel){
-          this.selectedTrack = this.selectedLevel.tracks.find((track) => track.skills.find((skill) => skill.id == this.question.skill_id));
+          this.selectedTrack = this.selectedLevel.tracks.find((track) => 
+            track.skills.find((skill) => 
+              skill.id == this.question.skill_id));
         }
 
         if (this.selectedTrack){
-          this.selectedTrack.skills.find((skill) => skill.id == this.question.skill_id);
+          this.selectedTrack.skills.find((skill) => 
+            skill.id == this.question.skill_id);
         }
       }      
     });    
