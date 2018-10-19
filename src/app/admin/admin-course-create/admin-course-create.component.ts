@@ -1,50 +1,53 @@
 import { Component, OnInit } from '@angular/core';
-import { CourseService} from '../../services/course.service';
 import { Router} from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { CourseService} from '../../services/course.service';
 
 @Component({
   selector: 'ag-admin-course-create',
   templateUrl: './admin-course-create.component.html',
   styleUrls: ['./admin-course-create.component.css']
 })
+
 export class AdminCourseCreateComponent implements OnInit {
-  status: string;
-  message: string;
-  selectedFile: File = null;
-  formData: FormData = new FormData();
-  imgURL :string = "images/upload.png";
+  public status: string;
+  public message: string;
+  public selectedFile: File = null;
+  public imgURL: string = 'images/upload.png';
 
-  constructor(private courseService: CourseService, private router:Router, private http:HttpClient) { }
+  constructor(
+    private courseService: CourseService,
+    private router: Router) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  public createCourse(course): void {
+    const formData: FormData = new FormData();
+
+    formData.append('image', this.selectedFile);
+    formData.append('course', course.course);
+    formData.append('description', course.description);
+    formData.append('start_maxile_score', course.start_maxile_score);
+    formData.append('end_maxile_score', course.end_maxile_score);
+
+    this.courseService.addCourse(formData)
+      .subscribe(
+        course => {
+          this.courseService.updateStatus = course['message'];
+          setTimeout(() => this.courseService.updateStatus = '', 2000);
+          this.router.navigate(['/admin/courses']);
+          setTimeout(() => window.scrollTo(0, 0), 0);
+        },
+        error => {
+          console.log(<any>error);
+          this.status = 'success';
+          this.message = error['message'];
+        }
+      );
   }
 
-  createCourse(course) {
-   this.formData.append("description", course.description);
-   this.formData.append("course", course.course);
-   this.formData.append('image', this.selectedFile);
-   this.formData.append('start_maxile_score', course.start_maxile_score);
-   this.formData.append('end_maxile_score', course.end_maxile_score);
-   this.courseService.addCourse(this.formData)
-   .subscribe(
-     course  => {
-       this.courseService.updateStatus = course['message'];
-       setTimeout(() => this.courseService.updateStatus = '', 2000);
-       this.router.navigate(['/admin/courses']);
-       setTimeout(() => window.scrollTo(0, 0), 0);
-     },
-     error => {
-       console.log(<any>error);
-       this.status = 'success';
-       this.message = error['message'];
-     }
-   );
-  }
-
-  onFileSelected(files: FileList){
+  public onFileSelected(files: FileList): void {
     this.selectedFile = files.item(0);
-    var reader = new FileReader();
+    let reader = new FileReader();
     reader.onload = (event:any)=>{
       this.imgURL = event.target.result;
     }
