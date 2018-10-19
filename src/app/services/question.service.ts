@@ -39,4 +39,9 @@ export class QuestionService {
 	  return this.http.get<any>(`${environment.apiURL}/questions/` + id)
 	    .map((response) => response['question']);
 	}
+
+	updateQuestion(question: any): Observable<any> {
+	  return this.http.put<any>(`${environment.apiURL}/questions/` + question.id, question)
+	    .map((response) => response);
+	}
 }
