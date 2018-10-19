@@ -91,6 +91,7 @@ import {
 import { CdkTableModule } from '@angular/cdk/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 export function tokenGetter() {
     return localStorage.getItem("token");
@@ -182,7 +183,8 @@ export function tokenGetter() {
     MatSortModule,
     MatDialogModule,
     MatButtonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AngularEditorModule
   ],
   entryComponents: [DialogDeleteCourse, DialogDeleteQuestion],
   providers: [TrackService, CourseService, QuestionService, DashboardService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService],
