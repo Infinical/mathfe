@@ -15,9 +15,9 @@
     
   </div>
 
-  <div *ngIf="status=='success'" class="alert alert-success" role="alert"> {{ message }} </div>
-    <div *ngIf="status=='error'" class="alert alert-danger" role="alert"> {{ message }} </div>
-    <div class="col-md-10 col-md-offset-1">
+  <div *ngIf="formResponse && formResponse.status=='success'" class="alert alert-success" role="alert"> {{ formResponse.message }} </div>
+  <div *ngIf="formResponse && formResponse.status=='error'" class="alert alert-danger" role="alert"> {{ formResponse.message }} </div>
+  <div class="col-md-10 col-md-offset-1">
     <div>
       <a [routerLink]="['/admin/questions']" class="btn btn-default"> Back</a>
     </div>
@@ -25,7 +25,7 @@
 
   <div class="col-md-10 col-md-offset-1" style="margin-top: 0.5rem;">
     <div class="well well bs-component">
-      <form class="form-horizontal" (ngSubmit)="createQuestion()" [formGroup]="QuestionForm">
+      <form class="form-horizontal" (ngSubmit)="submitForm()" [formGroup]="QuestionForm">
         <fieldset>
 
           <div class="form-group">

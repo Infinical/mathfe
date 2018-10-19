@@ -30,6 +30,7 @@ export class AdminQuestionFormComponent implements OnInit {
   selectedSkill: any;
   question: Question = new Question();
   editMode = false;
+  formResponse: any;
   
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -141,12 +142,40 @@ export class AdminQuestionFormComponent implements OnInit {
   	}
   }
 
+  submitForm(){
+    if (!this.editMode){
+      this.createQuestion();
+    }else{
+      this.updateQuestion();
+    }
+  }
+
   createQuestion(){
-    console.log(this.question);
     this.questionService.addQuestion(this.question).subscribe(res => {
-      console.log(res);
+      this.formResponse = {
+          status: 'success',
+          message: res["message"]
+        };
     }, error => {
-      console.log(error);
+      this.formResponse = {
+          status: 'error',
+          message: 'Server Error'
+        };
+    });
+  }
+
+  updateQuestion(){
+    console.log(this.question);
+    this.questionService.updateQuestion(this.question).subscribe(res => {
+      this.formResponse = {
+          status: 'success',
+          message: res["message"]
+        };
+    }, error => {
+      this.formResponse = {
+          status: 'error',
+          message: 'Server Error'
+        };
     });
   }
 }
