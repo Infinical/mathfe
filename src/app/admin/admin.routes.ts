@@ -15,7 +15,7 @@ import {AdminSkillCreateComponent} from './admin-skill-create/admin-skill-create
 import {AdminSkillEditComponent} from './admin-skill-edit/admin-skill-edit.component';
 import {AdminSkillDeleteComponent} from './admin-skill-delete/admin-skill-delete.component';
 import { AdminQuestionListComponent } from "./admin-question-list/admin-question-list.component";
-import {AdminQuestionCreateComponent} from './admin-question-create/admin-question-create.component';
+import {AdminQuestionFormComponent} from './admin-question-form/admin-question-form.component';
 import {AdminQuestionEditComponent} from './admin-question-edit/admin-question-edit.component';
 import {AdminQuestionDeleteComponent} from './admin-question-delete/admin-question-delete.component';
 
@@ -34,8 +34,8 @@ export const adminRoutes: Routes = [
   { path: 'skills/edit/:id', component: AdminSkillEditComponent },
   { path: 'skills/delete/:id', component: AdminSkillDeleteComponent },
   { path: 'questions', component: AdminQuestionListComponent},
-  { path: 'questions/create', component: AdminQuestionCreateComponent},
-  { path: 'questions/edit/:id', component: AdminQuestionEditComponent },
+  { path: 'questions/create', component: AdminQuestionFormComponent},
+  { path: 'questions/edit/:id', component: AdminQuestionFormComponent },
   { path: 'questions/delete/:id', component: AdminQuestionDeleteComponent },
   { path: 'users', component: AdminUserListComponent},
   { path: 'users/edit/:id', component: AdminUserEditComponent },
