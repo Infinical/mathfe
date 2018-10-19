@@ -35,10 +35,10 @@ export class CourseService {
 	    .map((response) => response['course'])
         .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));
 	}
-	updateCourse(course: Object): Observable<Course[]> {
+	updateCourse(course: FormData, id: number): Observable<Course[]> {
 	  const apiUrl = `${environment.apiURL}/courses`;
-	  const url = `${apiUrl}/${course['id']}`;
-	  return this.http.put<any>(url, course)
+	  const url = `${apiUrl}/${id}`;
+	  return this.http.post<any>(url, course)
 	    .map((response) => response)
 	    .catch((error: any) => Observable.throw(error.error || {message: 'Server Error'}));
 	}
