@@ -79,14 +79,14 @@
         <tbody>
 
         <tr *ngFor="let course of courses">
-          <td><img src="{{beURL}}{{course.image}}" width="200"/></td>
-          <td>{{course.course}} </td>
-          <td align="left">{{course.description}}</td>
-          <td>{{course.start_maxile_score}}</td>
-          <td>{{course.end_maxile_score}}</td>
+          <td><img src="{{ imageUrl(course.image) }}" width="200" /></td>
+          <td>{{ course.course }}</td>
+          <td align="left">{{ course.description }}</td>
+          <td>{{ course.start_maxile_score }}</td>
+          <td>{{ course.end_maxile_score }}</td>
           <td>
             <div class="btn-group" role="group" aria-label="First group">
-              <a [routerLink]="['/admin/courses/edit', course.id]" class="btn btn-info"><i class="icon_pencil"></i></a>
+              <a (click)="editCourse(course.id)" class="btn btn-info"><i class="icon_pencil"></i></a>
               <a (click)="openDialog(course.id)" class="btn btn-danger"><i class="icon_minus_alt2"></i></a>
            </div>
           </td>

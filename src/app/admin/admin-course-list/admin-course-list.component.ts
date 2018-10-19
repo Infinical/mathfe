@@ -19,7 +19,7 @@ export interface DialogData { id: number }
 export class AdminCourseListComponent implements OnInit {
 
   beURL = environment.apiURL + '/';
-  courses: Course[];
+  public courses: Course[];
 
   // sort block
 
@@ -34,6 +34,7 @@ export class AdminCourseListComponent implements OnInit {
   public reversedByEnd: boolean = false;
 
   constructor(
+    private _router: Router,
     private courseService: CourseService,
     public dialog: MatDialog
   ) {}
@@ -49,6 +50,15 @@ export class AdminCourseListComponent implements OnInit {
 
   get updateStatus(): string {
     return this.courseService.updateStatus;
+  }
+
+  public imageUrl(url: string): string {
+    return this.beURL + url;
+  }
+
+  public editCourse(id: number): void {
+    this._router.navigate(['/admin/courses/edit', id]);
+    setTimeout(() => window.scrollTo(0, 0), 0);
   }
   
   // open dialog block

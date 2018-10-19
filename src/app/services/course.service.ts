@@ -43,14 +43,6 @@ export class CourseService {
 	    .catch((error: any) => Observable.throw(error.error || {message: 'Server Error'}));
 	}
 
-	updateCourseImage(courseimage: Object, course_id: String): Observable<any[]> {
-	  const apiUrl = `${environment.apiURL}/courseimage`;
-	  const url = `${apiUrl}/${course_id}`;
-	  return this.http.put<any>(url, courseimage)
-	    .map((response) => response)
-	    .catch((error: any) => Observable.throw(error.error || {message: 'Server Error'}));
-	}
-
 	deleteCourse(id: String): Observable<Course[]> {
 	  const apiUrl = `${environment.apiURL}/courses`;
 	  const url = `${apiUrl}/${id}`;
