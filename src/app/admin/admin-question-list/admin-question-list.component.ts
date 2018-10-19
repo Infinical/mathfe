@@ -22,7 +22,7 @@ export class AdminQuestionListComponent implements OnInit {
   beURL = environment.apiURL;
   currentPage = 1;
   selectedQuestion: any; 
-  loading = false;
+  loading = true;
 
   constructor(private http: HttpClient, private questionService: QuestionService, public dialog: MatDialog) { 
     this.onPaginateChange({pageIndex: this.currentPage});    
