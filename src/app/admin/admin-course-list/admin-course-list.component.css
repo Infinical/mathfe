@@ -28,3 +28,11 @@ tr {
 .admin-courses__table-head_reversed {
   background: url(../../../images/arrow_down.png) no-repeat 100% 45%;
 }
+
+.admin-courses__spinner-wrapper {
+  background-color: transparent;
+}
+
+.admin-courses__spinner {
+  padding: 30px;
+}

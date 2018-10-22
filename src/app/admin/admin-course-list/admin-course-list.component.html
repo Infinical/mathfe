@@ -76,21 +76,27 @@
             <th class="admin-courses__table-head">Action</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="admin-courses__table-body">
 
-        <tr *ngFor="let course of courses">
-          <td><img src="{{ imageUrl(course.image) }}" width="200" /></td>
-          <td>{{ course.course }}</td>
-          <td align="left">{{ course.description }}</td>
-          <td>{{ course.start_maxile_score }}</td>
-          <td>{{ course.end_maxile_score }}</td>
-          <td>
-            <div class="btn-group" role="group" aria-label="First group">
-              <a (click)="editCourse(course.id)" class="btn btn-info"><i class="icon_pencil"></i></a>
-              <a (click)="openDialog(course.id)" class="btn btn-danger"><i class="icon_minus_alt2"></i></a>
-           </div>
-          </td>
-        </tr>
+          <tr *ngIf="loading" class="admin-courses__spinner-wrapper">
+            <td colspan="6" align="center" class="admin-courses__spinner">
+              <mat-spinner color="#960000"></mat-spinner>
+            </td>
+          </tr>
+
+          <tr *ngFor="let course of courses">
+            <td><img src="{{ imageUrl(course.image) }}" width="200" /></td>
+            <td>{{ course.course }}</td>
+            <td align="left">{{ course.description }}</td>
+            <td>{{ course.start_maxile_score }}</td>
+            <td>{{ course.end_maxile_score }}</td>
+            <td>
+              <div class="btn-group" role="group" aria-label="First group">
+                <a (click)="editCourse(course.id)" class="btn btn-info"><i class="icon_pencil"></i></a>
+                <a (click)="openDialog(course.id)" class="btn btn-danger"><i class="icon_minus_alt2"></i></a>
+            </div>
+            </td>
+          </tr>
 
         </tbody>
       </table>
