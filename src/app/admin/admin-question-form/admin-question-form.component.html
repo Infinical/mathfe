@@ -201,6 +201,9 @@
                        aria-describedby="firstAnswer_help"
                        formControlName="answer0"
                        [(ngModel)]="question.answer0">
+                 <div *ngIf="QuestionForm['controls'].answer0.touched && question.type_id == 2 && !isNumeric(question.answer1)" class="alert alert-danger">
+                  For type 'Number' all answers must be numeric
+                 </div>
               </div>          
               </div>
               <div class="col-sm-6">
@@ -227,6 +230,9 @@
                      aria-describedby="secondAnswer_help"
                      formControlName="answer1"
                      [(ngModel)]="question.answer1">
+               <div *ngIf="QuestionForm['controls'].answer1.touched && question.type_id == 2 && !isNumeric(question.answer1)" class="alert alert-danger">
+                  For type 'Number' all answers must be numeric
+               </div>
             </div>         
               </div>
             </div>            
@@ -258,6 +264,9 @@
                        aria-describedby="thirdAnswer_help"
                        formControlName="answer2"
                        [(ngModel)]="question.answer2">
+                 <div *ngIf="QuestionForm['controls'].answer2.touched && question.type_id == 2 && !isNumeric(question.answer2)" class="alert alert-danger">
+                  For type 'Number' all answers must be numeric
+                 </div>
               </div>            
               </div>
               <div class="col-sm-6">
@@ -284,6 +293,9 @@
                        aria-describedby="fourthAnswer_help"
                        formControlName="answer3"
                        [(ngModel)]="question.answer3">
+                 <div *ngIf="QuestionForm['controls'].answer3.touched && question.type_id == 2 && !isNumeric(question.answer3)" class="alert alert-danger">
+                  For type 'Number' all answers must be numeric
+                 </div>
               </div>         
               </div>
             </div>
@@ -308,7 +320,7 @@
           <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">
               <a [routerLink]="['/admin/questions']" class="btn btn-default"> Cancel</a>
-              <button style="margin-left: 0.5rem;" type="submit" class="btn btn-primary" [disabled]="((QuestionForm.status !== 'VALID') || (question.type_id == 1 && question.correct_answer === null))">{{editMode? 'Update': 'Create'}}</button>
+              <button style="margin-left: 0.5rem;" type="submit" class="btn btn-primary" [disabled]="validForm()">{{editMode? 'Update': 'Create'}}</button>
             </div>
           </div>
         </fieldset>

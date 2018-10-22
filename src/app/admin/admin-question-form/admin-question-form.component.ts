@@ -65,12 +65,6 @@ export class AdminQuestionFormComponent implements OnInit {
           });
       }
     });
-  }
-
-  constructor(private http: HttpClient, 
-              private questionService: QuestionService,
-              private route: ActivatedRoute,
-              private formBuilder: FormBuilder) {
 
     this.QuestionForm = this.formBuilder.group({
 
@@ -90,6 +84,12 @@ export class AdminQuestionFormComponent implements OnInit {
         status_id: ['', Validators.required],
         type_id: ['', Validators.required],
     });
+  }
+
+  constructor(private http: HttpClient, 
+              private questionService: QuestionService,
+              private route: ActivatedRoute,
+              private formBuilder: FormBuilder) {
 
     questionService.getQuestionOptions().subscribe((data) => {
       this.difficulties = data.difficulties;
@@ -228,5 +228,24 @@ export class AdminQuestionFormComponent implements OnInit {
           message: 'Server Error'
         };
     });
+  }
+
+  validForm(){
+    return (
+              (this.QuestionForm.status !== 'VALID') || 
+              (this.question.type_id == 1 && this.question.correct_answer === null) ||
+              (this.question.type_id == 2 && 
+                (
+                  isNaN(Number(this.question.answer0)) ||
+                  isNaN(Number(this.question.answer1)) ||
+                  isNaN(Number(this.question.answer2)) ||
+                  isNaN(Number(this.question.answer3))
+                )
+              )
+            );
+  }
+
+  isNumeric(value: String){
+    return isNaN(Number(value)) ? false : true;
   }
 }
