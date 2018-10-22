@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Course } from '../../models/course'
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'ag-course',
@@ -22,6 +23,7 @@ import { Course } from '../../models/course'
   `]
 })
 export class CourseComponent implements OnInit {
+  beURL = environment.apiURL + '/';
   @Input() course: Course;
 
   constructor() { }
