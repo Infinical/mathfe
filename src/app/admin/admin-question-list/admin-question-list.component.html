@@ -26,11 +26,11 @@
 
   		<mat-paginator #topPaginator [pageSizeOptions]="[20]" (page)="pageEvent = $event; onPaginateChange($event, 'top')"></mat-paginator>
 
-  		<div class="spinner-container row" *ngIf="loading">
-	        <mat-spinner style="margin:auto"></mat-spinner>
+  		<div class="spinner-container" *ngIf="dataSource.loading$ | async">
+	        <mat-spinner></mat-spinner>
 		</div>
 
-  		<table *ngIf="!loading" mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="col-sm-12 mat-elevation-z8 table-condensed">
+  		<table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="col-sm-12 mat-elevation-z8 table-condensed">
   			<ng-container matColumnDef="question">
 			  	<th mat-header-cell *matHeaderCellDef>Question</th>
 			  	<td mat-cell *matCellDef="let question">
@@ -201,3 +201,17 @@
 <!-- /END CONTAINER -->
 
 </section>
+
+
+<div id="modal-container" class="hidden">
+	<div *ngIf="selectedQuestion" class="row delete-confirmation">
+		Are you sure you want to delete question {{selectedQuestion.id}}
+	</div>
+	<div style="margin-top: 0.5rem;" *ngIf="deleteResult && deleteResult.status ==='success'" class="alert alert-success" role="alert"> {{ deleteResult.message }} </div>
+    <div style="margin-top: 0.5rem;" *ngIf="deleteResult && deleteResult.status ==='error'" class="alert alert-danger" role="alert"> {{ deleteResult.message }} </div>
+	<div class="row" style="margin-top: 1.5rem;">
+	    <a (click)="removeModal()" id="cancelButton" class="btn btn-default float-right">Cancel</a>
+        <a (click)="deleteQuestion()" id="deleteButton" style="margin-left: 0.5rem;" class="btn btn-danger float-right">Delete</a>
+    </div>
+</div>
+<div id="overlay" (click)="removeModal()" class="hidden"></div>

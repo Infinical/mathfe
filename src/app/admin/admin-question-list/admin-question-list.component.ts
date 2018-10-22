@@ -22,7 +22,7 @@ export class AdminQuestionListComponent implements OnInit {
   beURL = environment.apiURL;
   currentPage = 1;
   selectedQuestion: any; 
-  loading = true;
+  loading = false;
 
   constructor(private http: HttpClient, private questionService: QuestionService, public dialog: MatDialog) { 
     this.onPaginateChange({pageIndex: this.currentPage});    
@@ -36,7 +36,6 @@ export class AdminQuestionListComponent implements OnInit {
     this.loading = true;
     this.currentPage = (e.pageIndex === 0) ? 1 : e.pageIndex;
     this.questionService.getQuestions(this.currentPage).subscribe((data) => {
-      console.log(data);
       this.gridData = data;
       this.dataSource = new MatTableDataSource<any>(this.gridData.questions);
       this.dataSource.sort = this.sort;

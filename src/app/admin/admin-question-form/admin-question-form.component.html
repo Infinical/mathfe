@@ -67,6 +67,79 @@
             </div>
           </div>
 
+          <div class="row">
+            <div class="form-group col-sm-12">
+                <mat-form-field>
+                  <mat-select aria-describedby="level_help" 
+                              [(value)]="selectedLevel" 
+                              (selectionChange)="levelChange($event)" 
+                              required 
+                              id="level" 
+                              name="level" 
+                              placeholder="Level">
+                      <mat-option *ngFor="let level of levels" [value]="level">
+                        {{level.description}}
+                      </mat-option>
+                  </mat-select>
+                </mat-form-field>                
+            </div>
+          </div>
+
+          <div *ngIf="selectedLevel && selectedLevel.tracks.length > 0" class="row">
+            <div class="form-group col-sm-12">            
+              <div class="col-sm-6">
+                <mat-form-field>
+                  <mat-select [(value)]="selectedTrack" 
+                              required 
+                              id="track" 
+                              name="track" 
+                              placeholder="Track">
+                      <mat-option *ngFor="let track of selectedLevel.tracks" [value]="track">
+                        {{track.description}}
+                      </mat-option>
+                  </mat-select>
+                </mat-form-field>                
+              </div>
+              <div *ngIf="((selectedTrack && selectedTrack.skills.length > 0))" class="col-sm-6">
+                <mat-form-field>
+                  <mat-select required 
+                              id="skill_id" 
+                              name="skill_id" 
+                              placeholder="Skill" 
+                              formControlName="skill_id"
+                              [(ngModel)]="question.skill_id" >
+                      <mat-option *ngFor="let skill of selectedTrack.skills" [value]="skill.id">
+                        {{skill.skill}}
+                      </mat-option>
+                  </mat-select>
+                  <div *ngIf="QuestionForm['controls'].skill_id.errors?.required && QuestionForm['controls'].skill_id.touched" class="alert alert-danger">
+                    Skill is required
+                  </div>   
+                </mat-form-field>                
+              </div>      
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-sm-12">  
+                <mat-form-field>
+                  <mat-select required 
+                              id="difficulty_id" 
+                              name="difficulty_id" 
+                              placeholder="Difficulty"
+                              formControlName="difficulty_id"
+                              [(ngModel)]="question.difficulty_id" >
+                      <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty.id">
+                        {{difficulty.difficulty}} - {{difficulty.description}}
+                      </mat-option>
+                  </mat-select>
+                  <div *ngIf="QuestionForm['controls'].difficulty_id.errors?.required && QuestionForm['controls'].difficulty_id.touched" class="alert alert-danger">
+                    Difficulty is required
+                  </div>   
+                </mat-form-field>                           
+            </div>
+          </div>
+
           <div class="form-group">
             <label for="question_image" class="col-lg-2 control-label">Question Image</label>
             <div class="col-lg-10">
@@ -88,12 +161,13 @@
           <div class="form-group">
             <label for="question" class="col-lg-2 control-label">Question</label>
             <div class="col-lg-10">
-              <angular-editor formControlName="question" 
-                              [config]="editorConfig"
-                              name="question" 
-                              [(ngModel)]="question.question" 
-                              required
-                              style="text-align: left!important;"></angular-editor>
+              <textarea class="form-control" 
+                        rows="3" id="question" 
+                        name="question" 
+                        [(ngModel)]="question.question" 
+                        placeholder="Question" 
+                        required
+                        formControlName="question"></textarea>
               <div *ngIf="QuestionForm['controls'].question.errors?.required && QuestionForm['controls'].question.touched" class="alert alert-danger">
                 Question is required
               </div>
@@ -101,13 +175,13 @@
           </div>
 
           <div class="row">
-          	<div class="form-group col-sm-12">
-          		<div class="col-sm-6">
-	      			<div class="col-sm-12">
-	      				<small id="firstAnswer_help" class="form-text text-muted text-success">
-				      	  First Answer
-				  	    </small>
-	      				<input type="file" 
+            <div class="form-group col-sm-12">
+              <div class="col-sm-6">
+              <div class="col-sm-12">
+                <small id="firstAnswer_help" class="form-text text-muted text-success">
+                  First Answer
+                </small>
+                <input type="file" 
                        class="form-control" 
                        id="answer0_image" 
                        name="answer0_image" 
@@ -117,9 +191,9 @@
                        (change)="answerImageSelected($event.target.files, 1)" 
                        placeholder="First Answer Image"
                        formControlName="answer0_image">
-	      			</div>
-	      			<div class="col-sm-12 answer-row"> 
-	      				<input type="text" 
+              </div>
+              <div class="col-sm-12 answer-row"> 
+                <input type="text" 
                        class="form-control" 
                        id="answer0" 
                        name="answer0" 
@@ -127,14 +201,14 @@
                        aria-describedby="firstAnswer_help"
                        formControlName="answer0"
                        [(ngModel)]="question.answer0">
-	      			</div>	      	
-	          	</div>
-	          	<div class="col-sm-6">
-	      			<div class="col-sm-12"> 
-		  				<small id="secondAnswer_help" class="form-text text-muted text-success">
-				      	  Second Answer
-				  	    </small>
-		  				<input type="file" 
+              </div>          
+              </div>
+              <div class="col-sm-6">
+              <div class="col-sm-12"> 
+              <small id="secondAnswer_help" class="form-text text-muted text-success">
+                  Second Answer
+                </small>
+              <input type="file" 
                      class="form-control" 
                      id="answer1_image" 
                      name="answer1_image" 
@@ -143,9 +217,9 @@
                      (change)="answerImageSelected($event.target.files, 2)" 
                      placeholder="Second Answer Image"
                      formControlName="answer1_image">
-		  			</div>
-		  			<div class="col-sm-12 answer-row"> 
-		  				<input type="text" 
+            </div>
+            <div class="col-sm-12 answer-row"> 
+              <input type="text" 
                      class="form-control" 
                      id="answer1" 
                      name="answer1" 
@@ -153,19 +227,19 @@
                      aria-describedby="secondAnswer_help"
                      formControlName="answer1"
                      [(ngModel)]="question.answer1">
-		  			</div>	       
-	          	</div>
-          	</div>          	
+            </div>         
+              </div>
+            </div>            
           </div>
 
           <div class="row">
-          	<div class="form-group col-sm-12">
-          		<div class="col-sm-6">
-      				<div class="col-sm-12">
-	      				<small id="thirdAnswer_help" class="form-text text-muted text-success">
-				      	  Third Answer
-				  	    </small>
-	      				<input type="file" 
+            <div class="form-group col-sm-12">
+              <div class="col-sm-6">
+              <div class="col-sm-12">
+                <small id="thirdAnswer_help" class="form-text text-muted text-success">
+                  Third Answer
+                </small>
+                <input type="file" 
                        class="form-control" 
                        id="answer2_image" 
                        name="answer2_image" 
@@ -174,9 +248,9 @@
                        (change)="answerImageSelected($event.target.files, 3)" 
                        placeholder="Third Answer Image"
                        formControlName="answer2_image">
-	      			</div>
-	      			<div class="col-sm-12 answer-row">
-	      				<input type="text" 
+              </div>
+              <div class="col-sm-12 answer-row">
+                <input type="text" 
                        class="form-control" 
                        id="answer2" 
                        name="answer2" 
@@ -184,14 +258,14 @@
                        aria-describedby="thirdAnswer_help"
                        formControlName="answer2"
                        [(ngModel)]="question.answer2">
-	      			</div>	          
-          		</div>
-          		<div class="col-sm-6">
-          			<div class="col-sm-12">
-	      				<small id="fourthAnswer_help" class="form-text text-muted text-success">
-				      	  Fourth Answer
-				  	    </small>
-	      				<input type="file" 
+              </div>            
+              </div>
+              <div class="col-sm-6">
+                <div class="col-sm-12">
+                <small id="fourthAnswer_help" class="form-text text-muted text-success">
+                  Fourth Answer
+                </small>
+                <input type="file" 
                        class="form-control" 
                        id="answer3_image" 
                        name="answer3_image" 
@@ -200,9 +274,9 @@
                        (change)="answerImageSelected($event.target.files, 4)" 
                        placeholder="Fourth Answer Image"
                        formControlName="answer3_image">
-	      			</div>
-	      			<div class="col-sm-12 answer-row">
-	      				<input type="text" 
+              </div>
+              <div class="col-sm-12 answer-row">
+                <input type="text" 
                        class="form-control" 
                        id="answer3" 
                        name="answer3" 
@@ -210,15 +284,15 @@
                        aria-describedby="fourthAnswer_help"
                        formControlName="answer3"
                        [(ngModel)]="question.answer3">
-	      			</div>	       
-          		</div>
-          	</div>
-          </div>     
+              </div>         
+              </div>
+            </div>
+          </div>
 
           <div class="form-group">
             <label for="correctAnwer" class="col-sm-2 control-label">Correct Answer</label>
             <div class="col-sm-4">
-              <input type="number" 
+              <input question.type_id type="number" 
                      class="form-control" 
                      id="correct_answer" 
                      name="correct_answer" 
@@ -230,79 +304,7 @@
                 Correct Answer is required
               </div>
             </div>
-          </div>           
-
-          <div class="form-group row">
-            <div class="col-sm-12">
-              <div class="col-sm-4">
-                <mat-form-field>
-                  <mat-select aria-describedby="level_help" 
-                              [(value)]="selectedLevel" 
-                              (selectionChange)="levelChange($event)" 
-                              required 
-                              id="level" 
-                              name="level" 
-                              placeholder="Level">
-                      <mat-option *ngFor="let level of levels" [value]="level">
-                        {{level.description}}
-                      </mat-option>
-                  </mat-select>
-                </mat-form-field>                
-              </div>
-              <div *ngIf="selectedLevel && selectedLevel.tracks.length > 0" class="col-sm-4">
-                  <mat-form-field>
-                    <mat-select [(value)]="selectedTrack" 
-                                required 
-                                id="track" 
-                                name="track" 
-                                placeholder="Track">
-                        <mat-option *ngFor="let track of selectedLevel.tracks" [value]="track">
-                          {{track.description}}
-                        </mat-option>
-                    </mat-select>
-                  </mat-form-field>                
-              </div>
-              <div *ngIf="((selectedTrack && selectedTrack.skills.length > 0))" class="col-sm-4">
-                <mat-form-field>
-                  <mat-select required 
-                              id="skill_id" 
-                              name="skill_id" 
-                              placeholder="Skill" 
-                              formControlName="skill_id"
-                              [(ngModel)]="question.skill_id" >
-                      <mat-option *ngFor="let skill of selectedTrack.skills" [value]="skill.id">
-                        {{skill.skill}}
-                      </mat-option>
-                  </mat-select>
-                  <div *ngIf="QuestionForm['controls'].skill_id.errors?.required && QuestionForm['controls'].skill_id.touched" class="alert alert-danger">
-                    Skill is required
-                  </div>   
-                </mat-form-field>                
-              </div>  
-            </div>                
-          </div>          
-
-          <div class="form-group row">
-            <div class="col-sm-12">
-              <div class="col-sm-4">  
-                <mat-form-field>
-                  <mat-select required 
-                              id="difficulty_id" 
-                              name="difficulty_id" 
-                              placeholder="Difficulty"
-                              formControlName="difficulty_id"
-                              [(ngModel)]="question.difficulty_id" >
-                      <mat-option *ngFor="let difficulty of difficulties" [value]="difficulty.id">
-                        {{difficulty.difficulty}}
-                      </mat-option>
-                  </mat-select>
-                  <div *ngIf="QuestionForm['controls'].difficulty_id.errors?.required && QuestionForm['controls'].difficulty_id.touched" class="alert alert-danger">
-                    Difficulty is required
-                  </div>   
-                </mat-form-field>                           
-              </div>
-            </div>            
-          </div>          
+          </div>       
 
           <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">
