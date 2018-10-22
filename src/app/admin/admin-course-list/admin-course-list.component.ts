@@ -18,8 +18,9 @@ export interface DialogData { id: number }
 
 export class AdminCourseListComponent implements OnInit {
 
-  beURL = environment.apiURL + '/';
+  private _beURL = environment.apiURL + '/';
   public courses: Course[];
+  public loading: boolean = true;
 
   // sort block
 
@@ -41,7 +42,14 @@ export class AdminCourseListComponent implements OnInit {
 
   ngOnInit() {
     this.courseService.getCourses()
-      .subscribe(items => this.courses = items.sort(this._sortById));
+      .subscribe(items => {
+        this.courses = items.sort(this._sortById);
+        this._updateloading(false);
+      });
+  }
+
+  private _updateloading(status: boolean): void {
+    this.loading = status;
   }
 
   resetUpdateStatus() {
@@ -53,7 +61,7 @@ export class AdminCourseListComponent implements OnInit {
   }
 
   public imageUrl(url: string): string {
-    return this.beURL + url;
+    return this._beURL + url;
   }
 
   public editCourse(id: number): void {
