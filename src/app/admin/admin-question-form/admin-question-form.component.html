@@ -297,10 +297,9 @@
                      id="correct_answer" 
                      name="correct_answer" 
                      placeholder="Correct Answer"
-                     required
                      formControlName="correct_answer"
                      [(ngModel)]="question.correct_answer" >
-              <div *ngIf="QuestionForm['controls'].correct_answer.errors?.required && QuestionForm['controls'].correct_answer.touched" class="alert alert-danger">
+              <div *ngIf="QuestionForm['controls'].correct_answer.touched && question.type_id == 1 && question.correct_answer === null" class="alert alert-danger">
                 Correct Answer is required
               </div>
             </div>
@@ -309,7 +308,7 @@
           <div class="form-group">
             <div class="col-lg-10 col-lg-offset-2">
               <a [routerLink]="['/admin/questions']" class="btn btn-default"> Cancel</a>
-              <button style="margin-left: 0.5rem;" type="submit" class="btn btn-primary" [disabled]="QuestionForm.status !== 'VALID'">{{editMode? 'Update': 'Create'}}</button>
+              <button style="margin-left: 0.5rem;" type="submit" class="btn btn-primary" [disabled]="((QuestionForm.status !== 'VALID') || (question.type_id == 1 && question.correct_answer === null))">{{editMode? 'Update': 'Create'}}</button>
             </div>
           </div>
         </fieldset>
