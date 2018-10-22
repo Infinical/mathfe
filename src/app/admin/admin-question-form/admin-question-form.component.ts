@@ -33,6 +33,7 @@ export class AdminQuestionFormComponent implements OnInit {
   question: Question = new Question();
   editMode = false;
   formResponse: any;
+  apiURL: string = environment.apiURL;
 
   editorConfig: AngularEditorConfig = {
     editable: true,
