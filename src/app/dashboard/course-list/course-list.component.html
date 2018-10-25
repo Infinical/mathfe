@@ -1,10 +1,17 @@
 <div *ngIf="selectedCourse">
-   <ag-course-detail [selectedCourse]= "selectedCourse"></ag-course-detail>
+	<ag-course-detail [selectedCourse]="selectedCourse"></ag-course-detail>
 </div>
 <div class="container">
 	<div class="row">
-		<ag-course *ngFor="let course of courses | async" [course]="course" (click)="onSelect(course)"></ag-course>
-    </div>
+		<!-- Masonry grid Container -->
+		<ng-masonry-grid [masonryOptions]="{ transitionDuration: '0.8s', gutter: 0 }" [useAnimation]="true" [useImagesLoaded]="true"
+		 [scrollAnimationOptions]="{ animationEffect: 'effect-4', minDuration : 0.4, maxDuration : 0.7 }">
+			<!-- Masonry Grid Item -->
+			<ng-masonry-grid-item id="{{'masonry-item-'+i}}" class="col-md-3 col-sm-4 col-xs-6" *ngFor="let course of courses | async; let i = index;" (click)="onSelect(course)">
+				<ag-course [course]="course" (click)="onSelect(course)"></ag-course>
+			</ng-masonry-grid-item>
+		</ng-masonry-grid>
+	</div>
 </div>
 <!-- if got time, do this carousel thingy
 		<div id="screenshots" class="owl-carousel owl-theme">
@@ -42,4 +49,4 @@
 			</div>
 			
 		</div-->
-		<!-- /END SCREENSHOTS -->
+<!-- /END SCREENSHOTS -->
