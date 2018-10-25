@@ -81,6 +81,8 @@ import { AngularMaterialModule } from './angularmaterial.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { NgMasonryGridModule } from 'ng-masonry-grid';
+
 
 export function tokenGetter() {
     return localStorage.getItem("token");
@@ -164,7 +166,8 @@ export function tokenGetter() {
     }),
     AngularMaterialModule,
     BrowserAnimationsModule,
-    AngularEditorModule
+    AngularEditorModule,
+    NgMasonryGridModule
   ],
   entryComponents: [DialogDeleteCourse, DialogDeleteQuestion],
   providers: [TrackService, CourseService, QuestionService, DashboardService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService],
