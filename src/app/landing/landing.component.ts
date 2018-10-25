@@ -27,7 +27,7 @@ export class LandingComponent implements OnInit {
 	=================================== */
 	$(document).ready(function () {
 
-	    $("#feedbacks").owlCarousel({
+	    $("#feedbacks").owlCarousel({ 
 
 	        navigation: false, // Show next and prev buttons
 	        slideSpeed: 800,
@@ -59,8 +59,13 @@ export class LandingComponent implements OnInit {
 	});
   }
 
-   selectCourse(course: Course) {
-     this.selectedCourse = course;
+   selectCourse(course: Course) { 
+	 this.selectedCourse = course;
+	 //scroll to the course details 
+	 let element: HTMLElement = document.getElementById("course-detail") as HTMLElement;
+	 element.scrollIntoView(true);
+	 window.scrollBy(0, -70);
+
    }
 
    public isAuthenticated(): boolean {
