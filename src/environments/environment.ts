@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiURL: 'http://devapi.pamelalim.me'
+  apiURL: 'http://localhost:8000'
 };
