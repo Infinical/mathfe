@@ -173,21 +173,13 @@ export class AdminQuestionFormComponent implements OnInit {
 
     const form = {
       answer0: this.question.answer0,
-      //image0: this.answerOneImg,
-      answer0_image: (this.answerOneImg) ? imageURL + this.answerOneImg.name : '',
-      //answer0_image: this.answerOneImg,
+      answer0_image: (this.answerOneImg) ? this.answerOneImg : '',
       answer1: this.question.answer1,
-      //image1: this.answerTwoImg,
-      answer1_image: (this.answerTwoImg) ? imageURL + this.answerTwoImg.name : '',
-      //answer1_image: this.answerTwoImg,
+      answer1_image: (this.answerTwoImg) ? this.answerTwoImg : '',
       answer2: this.question.answer2,
-      //image2: this.answerThreeImg,
-      answer2_image: (this.answerThreeImg) ? imageURL + this.answerThreeImg.name : '',
-      //answer2_image: this.answerThreeImg,
+      answer2_image: (this.answerThreeImg) ? this.answerThreeImg : '',
       answer3: this.question.answer3,
-      //image3: this.answerFourImg,
-      answer3_image: (this.answerFourImg) ? imageURL + this.answerFourImg.name : '',
-      //answer3_image: this.answerFourImg,
+      answer3_image: (this.answerFourImg) ? this.answerFourImg : '',
       correct_answer: this.question.correct_answer,
       difficulty_id: this.question.difficulty_id,
       question: questionValue,
@@ -205,7 +197,6 @@ export class AdminQuestionFormComponent implements OnInit {
       };
 
     }, error => {
-      console.log(error);
       this.formResponse = {
           status: 'error',
           message: 'Server Error'
@@ -214,11 +205,12 @@ export class AdminQuestionFormComponent implements OnInit {
   }
 
   updateQuestion(){
-    console.log(this.question);
     this.question.question = (this.question.question.indexOf('&lt;') >= 0) ? 
                              this.question.question.replace(/&lt;/g, '<').replace(/&gt;/g, '>') :
                              this.question.question;
+                             
     this.questionService.updateQuestion(this.question).subscribe(res => {
+      this.question = res.question;
       this.formResponse = {
           status: 'success',
           message: res["message"]
