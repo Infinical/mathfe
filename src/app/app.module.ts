@@ -164,8 +164,7 @@ export function tokenGetter() {
     }),
     AngularMaterialModule,
     BrowserAnimationsModule,
-    AngularEditorModule,
-    MatFileUploadModule
+    AngularEditorModule
   ],
   entryComponents: [DialogDeleteCourse, DialogDeleteQuestion],
   providers: [TrackService, CourseService, QuestionService, DashboardService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService],
