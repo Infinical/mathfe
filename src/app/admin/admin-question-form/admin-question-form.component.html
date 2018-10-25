@@ -142,7 +142,7 @@
 
           <div class="form-group">
             <label for="question_image" class="col-lg-2 control-label">Question Image</label>
-            <div class="col-lg-4">
+            <div class="col-lg-10">
               <input type="file" 
                      class="form-control" 
                      id="question_image" 
@@ -156,15 +156,17 @@
                 Minimum of 3 characters
               </div>
             </div>
-            <label for="question" class="col-lg-1 control-label">Question</label>
-            <div class="col-lg-5">
-              <textarea class="form-control" 
-                        rows="3" id="question" 
-                        name="question" 
-                        [(ngModel)]="question.question" 
-                        placeholder="Question" 
-                        required
-                        formControlName="question"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="question" class="col-lg-2 control-label">Question</label>
+            <div class="col-lg-10">
+              <angular-editor formControlName="question" 
+                              [config]="editorConfig"
+                              name="question" 
+                              [(ngModel)]="question.question" 
+                              required
+                              style="text-align: left!important;">
+              </angular-editor>
               <div *ngIf="QuestionForm['controls'].question.errors?.required && QuestionForm['controls'].question.touched" class="alert alert-danger">
                 Question is required
               </div>
@@ -172,148 +174,163 @@
           </div>
 
           <div class="row">
-            <div class="form-group col-sm-12">
-              <div class="col-sm-6">
-                <div class="col-sm-8">
-                  <small id="firstAnswer_help" class="form-text text-muted text-success">
-                    First Answer
-                  </small>
-                  <input type="file" 
-                         class="form-control" 
-                         id="answer0_image" 
-                         name="answer0_image" 
-                         ngModel 
-                         minlength="3" 
-                         accept="image/*" 
-                         (change)="answerImageSelected($event.target.files, 1)" 
-                         placeholder="First Answer Image"
-                         formControlName="answer0_image">
-                </div>
-                <div *ngIf="question.answer0_image" class="col-sm-4 answer-row"> 
-                  <img [src]="apiURL + question.answer0_image" alt="" style="width:100px;" />
-                </div>  
-                <div class="col-sm-12 answer-row"> 
-                  <input type="text" 
-                         class="form-control" 
-                         id="answer0" 
-                         name="answer0" 
-                         placeholder="First Answer" 
-                         aria-describedby="firstAnswer_help"
-                         formControlName="answer0"
-                         [(ngModel)]="question.answer0">
-                   <div *ngIf="QuestionForm['controls'].answer0.touched && question.type_id == 2 && !isNumeric(question.answer1)" class="alert alert-danger">
-                    For type 'Number' all answers must be numeric
-                   </div>
-                </div>          
-                        
-              </div>
-              <div class="col-sm-6">
-              <div class="col-sm-8"> 
-              <small id="secondAnswer_help" class="form-text text-muted text-success">
-                  Second Answer
-                </small>
-              <input type="file" 
-                     class="form-control" 
-                     id="answer1_image" 
-                     name="answer1_image" 
-                     minlength="3" 
-                     accept="image/*" 
-                     (change)="answerImageSelected($event.target.files, 2)" 
-                     placeholder="Second Answer Image"
-                     formControlName="answer1_image">
-            </div>
-            <div *ngIf="question.answer1_image" class="col-sm-4 answer-row"> 
-              <img [src]="apiURL + question.answer1_image" alt="" style="width:100px;" />
-            </div>    
-            <div class="col-sm-12 answer-row"> 
-              <input type="text" 
-                     class="form-control" 
-                     id="answer1" 
-                     name="answer1" 
-                     placeholder="Second Answer"
-                     aria-describedby="secondAnswer_help"
-                     formControlName="answer1"
-                     [(ngModel)]="question.answer1">
-               <div *ngIf="QuestionForm['controls'].answer1.touched && question.type_id == 2 && !isNumeric(question.answer1)" class="alert alert-danger">
-                  For type 'Number' all answers must be numeric
-               </div>
+            <div class="card">
+              <div class="card-body">
+                <mat-accordion style="margin:0.5rem;">
+                  <mat-expansion-panel [expanded]="false">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title style="color:white;font-weight: bold">
+                        Answers                
+                      </mat-panel-title>             
+                    </mat-expansion-panel-header>
 
-            </div>
-               
-              </div>
-            </div>            
-          </div>
+                      <div class="form-group col-sm-12" style="margin-top: 1rem; margin-bottom: 1rem;">
+                        <div class="col-sm-3">
+                          <div class="row">
+                            <div *ngIf="question.answer0_image" class="col align-self-center"> 
+                              <img [src]="apiURL + question.answer0_image" alt="" style="width:100px;" />
+                            </div>
+                          </div>
+                          <div class="col-sm-12">
+                            <small id="firstAnswer_help" class="form-text text-muted">
+                              First Answer
+                            </small>
+                            <input type="file" 
+                                   class="form-control" 
+                                   id="answer0_image" 
+                                   name="answer0_image" 
+                                   ngModel 
+                                   minlength="3" 
+                                   accept="image/*" 
+                                   (change)="answerImageSelected($event.target.files, 1)" 
+                                   placeholder="First Answer Image"
+                                   formControlName="answer0_image">
+                          </div>
+                          <div class="col-sm-12 answer-row"> 
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="answer0" 
+                                   name="answer0" 
+                                   placeholder="First Answer" 
+                                   aria-describedby="firstAnswer_help"
+                                   formControlName="answer0"
+                                   [(ngModel)]="question.answer0">
+                             <div *ngIf="QuestionForm['controls'].answer0.touched && question.type_id == 2 && !isNumeric(question.answer1)" class="alert alert-danger">
+                              For type 'Number' all answers must be numeric
+                             </div>
+                          </div>                                         
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="row">
+                            <div *ngIf="question.answer1_image" class="col align-self-center"> 
+                              <img [src]="apiURL + question.answer1_image" alt="" style="width:100px;" />
+                            </div>
+                          </div>                
+                          <div class="col-sm-12"> 
+                            <small id="secondAnswer_help" class="form-text text-muted">
+                                Second Answer
+                              </small>
+                            <input type="file" 
+                                   class="form-control" 
+                                   id="answer1_image" 
+                                   name="answer1_image" 
+                                   minlength="3" 
+                                   accept="image/*" 
+                                   (change)="answerImageSelected($event.target.files, 2)" 
+                                   placeholder="Second Answer Image"
+                                   formControlName="answer1_image">
+                          </div>                      
+                          <div class="col-sm-12 answer-row"> 
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="answer1" 
+                                   name="answer1" 
+                                   placeholder="Second Answer"
+                                   aria-describedby="secondAnswer_help"
+                                   formControlName="answer1"
+                                   [(ngModel)]="question.answer1">
+                             <div *ngIf="QuestionForm['controls'].answer1.touched && question.type_id == 2 && !isNumeric(question.answer1)" class="alert alert-danger">
+                                For type 'Number' all answers must be numeric
+                             </div>
+                          </div>  
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="row">
+                            <div *ngIf="question.answer2_image" class="col-sm-4 answer-row"> 
+                              <img [src]="apiURL + question.answer2_image" alt="" style="width:100px;" />
+                            </div>
 
-          <div class="row">
-            <div class="form-group col-sm-12">
-              <div class="col-sm-6">
-              <div class="col-sm-8">
-                <small id="thirdAnswer_help" class="form-text text-muted text-success">
-                  Third Answer
-                </small>
-                <input type="file" 
-                       class="form-control" 
-                       id="answer2_image" 
-                       name="answer2_image" 
-                       minlength="3" 
-                       accept="image/*" 
-                       (change)="answerImageSelected($event.target.files, 3)" 
-                       placeholder="Third Answer Image"
-                       formControlName="answer2_image">
-              </div>
-              <div *ngIf="question.answer2_image" class="col-sm-4 answer-row"> 
-                <img [src]="apiURL + question.answer2_image" alt="" style="width:100px;" />
-              </div> 
-              <div class="col-sm-12 answer-row">
-                <input type="text" 
-                       class="form-control" 
-                       id="answer2" 
-                       name="answer2" 
-                       placeholder="Third Answer" 
-                       aria-describedby="thirdAnswer_help"
-                       formControlName="answer2"
-                       [(ngModel)]="question.answer2">
-                 <div *ngIf="QuestionForm['controls'].answer2.touched && question.type_id == 2 && !isNumeric(question.answer2)" class="alert alert-danger">
-                  For type 'Number' all answers must be numeric
-                 </div>
-              </div>    
-                        
-              </div>
-              <div class="col-sm-6">
-                <div class="col-sm-8">
-                <small id="fourthAnswer_help" class="form-text text-muted text-success">
-                  Fourth Answer
-                </small>
-                <input type="file" 
-                       class="form-control" 
-                       id="answer3_image" 
-                       name="answer3_image" 
-                       minlength="3" 
-                       accept="image/*" 
-                       (change)="answerImageSelected($event.target.files, 4)" 
-                       placeholder="Fourth Answer Image"
-                       formControlName="answer3_image">
+                          </div>
+                          <div class="col-sm-12">
+                            <small id="thirdAnswer_help" class="form-text text-muted">
+                              Third Answer
+                            </small>
+                            <input type="file" 
+                                   class="form-control" 
+                                   id="answer2_image" 
+                                   name="answer2_image" 
+                                   minlength="3" 
+                                   accept="image/*" 
+                                   (change)="answerImageSelected($event.target.files, 3)" 
+                                   placeholder="Third Answer Image"
+                                   formControlName="answer2_image">
+                          </div>
+                          <div class="col-sm-12 answer-row">
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="answer2" 
+                                   name="answer2" 
+                                   placeholder="Third Answer" 
+                                   aria-describedby="thirdAnswer_help"
+                                   formControlName="answer2"
+                                   [(ngModel)]="question.answer2">
+                             <div *ngIf="QuestionForm['controls'].answer2.touched && question.type_id == 2 && !isNumeric(question.answer2)" class="alert alert-danger">
+                              For type 'Number' all answers must be numeric
+                             </div>
+                          </div>    
+                        </div>
+                        <div class="col-sm-3">
+                          <div class="row">
+                            <div *ngIf="question.answer3_image" class="col-sm-4 answer-row"> 
+                              <img [src]="apiURL + question.answer3_image" alt="" style="width:100px;" />
+                            </div> 
+                          </div>
+                          <div class="col-sm-12">
+                            <small id="fourthAnswer_help" class="form-text text-muted">
+                              Fourth Answer
+                            </small>
+                            <input type="file" 
+                                   class="form-control" 
+                                   id="answer3_image" 
+                                   name="answer3_image" 
+                                   minlength="3" 
+                                   accept="image/*" 
+                                   (change)="answerImageSelected($event.target.files, 4)" 
+                                   placeholder="Fourth Answer Image"
+                                   formControlName="answer3_image">
+                          </div>
+                          <div class="col-sm-12 answer-row">
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="answer3" 
+                                   name="answer3" 
+                                   placeholder="Fourth Answer" 
+                                   aria-describedby="fourthAnswer_help"
+                                   formControlName="answer3"
+                                   [(ngModel)]="question.answer3">
+                             <div *ngIf="QuestionForm['controls'].answer3.touched && question.type_id == 2 && !isNumeric(question.answer3)" class="alert alert-danger">
+                              For type 'Number' all answers must be numeric
+                             </div>
+                          </div>   
+                        </div>              
+                      </div>    
 
-              </div>
-              <div *ngIf="question.answer3_image" class="col-sm-4 answer-row"> 
-                <img [src]="apiURL + question.answer3_image" alt="" style="width:100px;" />
-              </div> 
-              <div class="col-sm-12 answer-row">
-                <input type="text" 
-                       class="form-control" 
-                       id="answer3" 
-                       name="answer3" 
-                       placeholder="Fourth Answer" 
-                       aria-describedby="fourthAnswer_help"
-                       formControlName="answer3"
-                       [(ngModel)]="question.answer3">
-                 <div *ngIf="QuestionForm['controls'].answer3.touched && question.type_id == 2 && !isNumeric(question.answer3)" class="alert alert-danger">
-                  For type 'Number' all answers must be numeric
-                 </div>
-              </div>                     
+
+                  </mat-expansion-panel>
+                </mat-accordion>      
               </div>
             </div>
-          </div>
+          </div>     
 
           <div class="form-group">
             <label for="correctAnwer" class="col-sm-2 control-label">Correct Answer</label>
@@ -341,5 +358,6 @@
       </form>
     </div>
   </div>
+
 </div>
 </section>

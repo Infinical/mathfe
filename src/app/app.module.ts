@@ -77,18 +77,7 @@ import { DialogDeleteCourse } from './admin/admin-course-list/admin-course-list.
 import { DialogDeleteQuestion } from './admin/admin-question-list/admin-question-list.component';
 
 //Angular Material
-import { 
-        MatTableModule,
-        MatPaginatorModule,
-        MatTooltipModule,
-        MatProgressSpinnerModule,
-        MatExpansionModule,
-        MatSelectModule,
-        MatSortModule,
-        MatDialogModule,
-        MatButtonModule
-       } from '@angular/material';
-import { CdkTableModule } from '@angular/cdk/table';
+import { AngularMaterialModule } from './angularmaterial.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AngularEditorModule } from '@kolkov/angular-editor';
@@ -173,16 +162,7 @@ export function tokenGetter() {
         'localhost:4200', 'localhost',  'devapi.pamelalim.me', 'localhost:8000', 'quiz.pamelalim.me','api.pamelalim.me', 'math.pamelalim.me', 'quiz.all-gifted.com']
       }
     }),
-    MatTableModule,
-    MatPaginatorModule,
-    CdkTableModule,
-    MatTooltipModule,
-    MatProgressSpinnerModule,
-    MatExpansionModule,
-    MatSelectModule,
-    MatSortModule,
-    MatDialogModule,
-    MatButtonModule,
+    AngularMaterialModule,
     BrowserAnimationsModule,
     AngularEditorModule
   ],
