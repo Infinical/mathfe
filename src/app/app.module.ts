@@ -92,6 +92,8 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { NgMasonryGridModule } from 'ng-masonry-grid';
+
 
 export function tokenGetter() {
     return localStorage.getItem("token");
@@ -184,7 +186,8 @@ export function tokenGetter() {
     MatDialogModule,
     MatButtonModule,
     BrowserAnimationsModule,
-    AngularEditorModule
+    AngularEditorModule,
+    NgMasonryGridModule
   ],
   entryComponents: [DialogDeleteCourse, DialogDeleteQuestion],
   providers: [TrackService, CourseService, QuestionService, DashboardService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService],
