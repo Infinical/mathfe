@@ -142,7 +142,7 @@
 
           <div class="form-group">
             <label for="question_image" class="col-lg-2 control-label">Question Image</label>
-            <div class="col-lg-4">
+            <div class="col-lg-10">
               <input type="file" 
                      class="form-control" 
                      id="question_image" 
@@ -156,15 +156,17 @@
                 Minimum of 3 characters
               </div>
             </div>
-            <label for="question" class="col-lg-1 control-label">Question</label>
-            <div class="col-lg-5">
-              <textarea class="form-control" 
-                        rows="3" id="question" 
-                        name="question" 
-                        [(ngModel)]="question.question" 
-                        placeholder="Question" 
-                        required
-                        formControlName="question"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="question" class="col-lg-2 control-label">Question</label>
+            <div class="col-lg-10">
+              <angular-editor formControlName="question" 
+                              [config]="editorConfig"
+                              name="question" 
+                              [(ngModel)]="question.question" 
+                              required
+                              style="text-align: left!important;">
+              </angular-editor>
               <div *ngIf="QuestionForm['controls'].question.errors?.required && QuestionForm['controls'].question.touched" class="alert alert-danger">
                 Question is required
               </div>
@@ -341,5 +343,6 @@
       </form>
     </div>
   </div>
+  
 </div>
 </section>
