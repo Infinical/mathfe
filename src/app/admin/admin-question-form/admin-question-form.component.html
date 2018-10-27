@@ -31,13 +31,13 @@
           <div class="form-group">
             <label for="question" class="col-lg-1 control-label">Question</label>
             <div class="col-lg-5">
-              <textarea class="form-control" 
-                        rows="3" id="question" 
-                        name="question" 
-                        [(ngModel)]="question.question" 
-                        placeholder="Question" 
-                        required
-                        formControlName="question"></textarea>
+              <angular-editor formControlName="question" 
+                              [config]="editorConfig"
+                              name="question" 
+                              [(ngModel)]="question.question" 
+                              required
+                              style="text-align: left!important;">
+              </angular-editor>
               <div *ngIf="QuestionForm['controls'].question.errors?.required && QuestionForm['controls'].question.touched" class="alert alert-danger">
                 Question is required
               </div>
