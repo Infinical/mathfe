@@ -122,7 +122,6 @@ export class AdminQuestionFormComponent implements OnInit {
 
   onFileSelected(files: FileList){
     this.selectedFile = files.item(0);
-    console.log(this.selectedFile);
     var reader = new FileReader();
     reader.onload = (event:any)=>{
       this.imgURL = event.target.result;
@@ -208,8 +207,25 @@ export class AdminQuestionFormComponent implements OnInit {
     this.question.question = (this.question.question.indexOf('&lt;') >= 0) ? 
                              this.question.question.replace(/&lt;/g, '<').replace(/&gt;/g, '>') :
                              this.question.question;
-                             
-    this.questionService.updateQuestion(this.question).subscribe(res => {
+    var form = new FormData();
+    form.append('_method', 'PATCH');
+    form.append('answer0', this.question.answer0);
+    form.append('answer0_image', (this.answerOneImg) ? this.answerOneImg : '');
+    form.append('answer1', this.question.answer1);
+    form.append('answer1_image', (this.answerTwoImg) ? this.answerTwoImg : '');
+    form.append('answer2', this.question.answer2);
+    form.append('answer2_image', (this.answerThreeImg) ? this.answerThreeImg : '');
+    form.append('answer3', this.question.answer3);
+    form.append('answer3_image', (this.answerFourImg) ? this.answerFourImg : '');
+    form.append('correct_answer', this.question.correct_answer);
+    form.append('difficulty_id', String(this.question.difficulty_id));
+    form.append('question', this.question.question);
+    form.append('question_image', this.selectedFile);
+    form.append('skill_id', String(this.question.skill_id));
+    form.append('status_id', String(this.question.status_id));
+    form.append('type_id', String(this.question.type_id));
+
+    this.questionService.updateQuestion(form, this.question.id).subscribe(res => {
       this.question = res.question;
       this.formResponse = {
           status: 'success',
