@@ -19,6 +19,10 @@ export class AdminQuestionFormComponent implements OnInit {
   QuestionForm: FormGroup;
   selectedFile: File = null;
   imgURL :string = "images/upload.png";
+  img0URL: string = "";
+  img1URL: string = "";
+  img2URL: string = "";
+  img3URL: string = "";
   answerOneImg: File = null;
   answerTwoImg: File = null;
   answerThreeImg: File = null;
@@ -49,6 +53,15 @@ export class AdminQuestionFormComponent implements OnInit {
       },
     ]
   };
+
+  refreshImages(data: any){
+    console.log(data);
+    if (data.question_image) this.imgURL = environment.apiURL + data.question_image;
+    this.img0URL = (data.answer0_image) ? this.apiURL + data.answer0_image : this.img0URL;
+    this.img1URL = (data.answer1_image) ? this.apiURL + data.answer1_image : this.img1URL;
+    this.img2URL = (data.answer2_image) ? this.apiURL + data.answer2_image : this.img2URL;
+    this.img3URL = (data.answer3_image) ? this.apiURL + data.answer3_image : this.img3URL;
+  }
   
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -58,9 +71,8 @@ export class AdminQuestionFormComponent implements OnInit {
         this.editMode = true;
         this.questionService.getQuestion(id)
           .subscribe((data) => {
-            if (data.question_image) this.imgURL = environment.apiURL + data.question_image;
-            this.question = data;                         
-            
+            this.question = data;
+            this.refreshImages(data);
           }, error => {
 
           });
@@ -118,6 +130,11 @@ export class AdminQuestionFormComponent implements OnInit {
         }
       }      
     });    
+  } 
+
+  levelChange(e: any){
+    this.selectedTrack = null;
+    this.selectedSkill = null;
   }
 
   onFileSelected(files: FileList){
@@ -129,29 +146,40 @@ export class AdminQuestionFormComponent implements OnInit {
     reader.readAsDataURL(this.selectedFile);
   }
 
-  levelChange(e: any){
-    this.selectedTrack = null;
-    this.selectedSkill = null;
+  answerOneImageSelected(files: FileList){
+    this.answerOneImg = files.item(0);
+    var reader = new FileReader();
+    reader.onload = (event:any)=>{
+      this.img0URL = event.target.result;
+    }
+    reader.readAsDataURL(this.answerOneImg);
   }
 
-  answerImageSelected(files: FileList, option: number){
-  	switch (option) {
-  		case 1:
-  			this.answerOneImg = files.item(0);
-  			break;
-  		case 2:
-  			this.answerTwoImg = files.item(0);
-  			break;
-  		case 3:
-  			this.answerThreeImg = files.item(0);
-  			break;
-      case 4:
-        this.answerFourImg = files.item(0);
-        break;
-  		default:
-  			
-  			break;
-  	}
+  answerTwoImageSelected(files: FileList){
+    this.answerTwoImg = files.item(0);
+    var reader = new FileReader();
+    reader.onload = (event:any)=>{
+      this.img1URL = event.target.result;
+    }
+    reader.readAsDataURL(this.answerTwoImg);
+  }
+
+  answerThreeImageSelected(files: FileList){
+    this.answerThreeImg = files.item(0);
+    var reader = new FileReader();
+    reader.onload = (event:any)=>{
+      this.img2URL = event.target.result;
+    }
+    reader.readAsDataURL(this.answerThreeImg);
+  }
+
+  answerFourImageSelected(files: FileList){
+    this.answerFourImg = files.item(0);
+    var reader = new FileReader();
+    reader.onload = (event:any)=>{
+      this.img3URL = event.target.result;
+    }
+    reader.readAsDataURL(this.answerFourImg);
   }
 
   submitForm(){
@@ -189,7 +217,8 @@ export class AdminQuestionFormComponent implements OnInit {
     };
 
     this.questionService.addQuestion(form).subscribe(res => {
-      console.log(res);
+      this.question = res.question;
+      this.refreshImages(res.question);
       this.formResponse = {
         status: 'success',
         message: res["message"]
@@ -227,6 +256,7 @@ export class AdminQuestionFormComponent implements OnInit {
 
     this.questionService.updateQuestion(form, this.question.id).subscribe(res => {
       this.question = res.question;
+      this.refreshImages(res.question);
       this.formResponse = {
           status: 'success',
           message: res["message"]
