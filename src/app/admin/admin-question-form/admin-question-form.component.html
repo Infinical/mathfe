@@ -6,7 +6,6 @@
   <div class="section-header wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
     
     <!-- SECTION TITLE -->
-    <img [src]="imgURL" style="width:250px;" /><br/>
     <h2 *ngIf="!editMode" class="dark-text">Add a New Question</h2>
     <h2 *ngIf="editMode" class="dark-text">Edit Question</h2>
     
@@ -43,19 +42,22 @@
               </div>
             </div>
             <label for="question_image" class="col-lg-2 control-label">Question Image</label>
-            <div class="col-lg-12">
-              <input type="file" 
-                     class="form-control" 
-                     id="question_image" 
-                     name="question_image" 
-                     formControlName="question_image" 
-                     minlength="3" 
-                     accept="image/*" 
-                     (change)="onFileSelected($event.target.files)" 
-                     placeholder="Question Image">
-              <div *ngIf="QuestionForm['controls'].question_image.errors?.minlength && QuestionForm['controls'].question_image.touched" class="alert alert-danger">
-                Minimum of 3 characters
-              </div>
+            <div class="row">
+              <div class="col-lg-4">
+                <input type="file" 
+                       class="form-control" 
+                       id="question_image" 
+                       name="question_image" 
+                       formControlName="question_image" 
+                       minlength="3" 
+                       accept="image/*" 
+                       (change)="onFileSelected($event.target.files)" 
+                       placeholder="Question Image">
+                <div *ngIf="QuestionForm['controls'].question_image.errors?.minlength && QuestionForm['controls'].question_image.touched" class="alert alert-danger">
+                  Minimum of 3 characters
+                </div>
+              </div>     
+              <div class="col-lg-5"><img [src]="imgURL" style="width:250px;" /><br/></div>
             </div>
           </div>
 

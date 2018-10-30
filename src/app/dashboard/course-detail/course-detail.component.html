@@ -17,10 +17,30 @@
     </div>
     <div class="buttons wow fadeInRight animated" data-wow-offset="10" data-wow-duration="1.5s">
       <h3>Classes available for Course: {{selectedCourse.course}}</h3>
-      <ul class="package-feature">
-        <li *ngFor="let house of selectedCourse.houses"><a href="" class="btn btn-default btn-lg standard-button">  Enrol in 
-          {{house.created_by.firstname}} {{house.created_by.lastname}}'s Class</a></li>
-      </ul>
+<table class="table table-striped" *ngFor="let house of selectedCourse.houses">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">Class</th>
+      <th scope="col">Teacher</th>
+      <th scope="col">Course</th>
+      <th scope="col">Start Date</th>
+      <th scope="col">End Date</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row"></th>
+      <td><img src="{{beURL}}{{house.image}}" width="150"></td>
+      <td><img *ngIf="house.created_by.image" src="{{house.created_by.image}}" width="120"><br>{{house.created_by.firstname}} {{house.created_by.lastname}}</td>
+      <td>{{selectedCourse.course}}</td>
+      <td>{{house.start_date}}</td>
+      <td>{{house.end_date}}</td>
+      <td><a href=" "></a>Enrol</td>
+    </tr>
+  </tbody>
+</table>
     </div>     
   </div>
 </div>
