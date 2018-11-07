@@ -92,7 +92,7 @@ export class AdminQuestionFormComponent implements OnInit {
         correct_answer: [''],
         difficulty_id: ['', Validators.required],
         question: ['', Validators.required],
-        question_image: ['', Validators.required],
+        question_image: [''],
         skill_id: ['', Validators.required],
         status_id: ['', Validators.required],
         type_id: ['', Validators.required],
