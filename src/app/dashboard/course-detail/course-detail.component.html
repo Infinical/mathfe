@@ -16,8 +16,11 @@
       </div>
     </div>
     <div class="buttons wow fadeInRight animated" data-wow-offset="10" data-wow-duration="1.5s">
-      <h3>Classes available for Course: {{selectedCourse.course}}</h3>
-<table class="table table-striped" *ngFor="let house of selectedCourse.houses">
+      <h3 *ngIf="(selectedCourse.houses.length > 0); else emptyHouse">Classes available for Course: {{selectedCourse.course}}</h3>
+      <ng-template #emptyHouse>
+          <h3>There is no class available for this course.</h3>
+      </ng-template>
+    <table class="table table-striped" *ngFor="let house of selectedCourse.houses">
   <thead>
     <tr>
       <th scope="col"></th>
@@ -37,7 +40,7 @@
       <td>{{selectedCourse.course}}</td>
       <td>{{house.start_date}}</td>
       <td>{{house.end_date}}</td>
-      <td><a href=" "></a>Enrol</td>
+      <td><a (click)="login(house)">Enrol</a></td>
     </tr>
   </tbody>
 </table>
