@@ -38,14 +38,14 @@
 					     MAILCHIMP FORM STARTS 
 					     ===================== -->
 					
-					<form class="subscription-form mailchimp form-inline wow fadeInRight animated" data-wow-offset="10" data-wow-duration="1.5s" role="form">
+					<form #subscribeForm="ngForm" (ngSubmit)="onSubmit(subscribeForm)" class="subscription-form mailchimp form-inline wow fadeInRight animated" data-wow-offset="10" data-wow-duration="1.5s" role="form">
 						
 						<!-- SUBSCRIPTION SUCCESSFUL OR ERROR MESSAGES -->
 						<h4 class="subscription-success"></h4>
 						<h4 class="subscription-error"></h4>
 						
 						<!-- EMAIL INPUT BOX -->
-						<input type="email" name="email" id="subscriber-email" placeholder="Your Email" class="form-control input-box">
+						<input ngModel type="email" name="email" id="subscriber-email" placeholder="Your Email" class="form-control input-box">
 						
 						<!-- SUBSCRIBE BUTTON -->
 						<button type="submit" id="subscribe-button" class="btn btn-default standard-button">Subscribe</button>

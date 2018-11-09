@@ -1,3 +1,6 @@
 .course-detail {
   margin: 20px auto;
 }
+a {
+  cursor: pointer;
+}

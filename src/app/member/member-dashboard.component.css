@@ -1,3 +1,80 @@
-#videoplayer {
-	
+/* MODAL STYLES
+-------------------------------*/
+jw-modal {
+    display: block;
+    width: 55%;
+    height: 77%;
+    margin: auto;
+    background: #ddd;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-top: 20px;
+}
+.jw-modal-container {
+    width: 75%;
+    margin: auto;
+    border-style: ridge;
+    padding: 10px;
+}
+.second-container {
+    margin-top: 50px;
+    padding: 25px;
+}
+.third-container {
+    border: 0;
+    margin-top: 50px;
+}
+.jw-modal-row {
+    text-align: left;
+}
+.jw-modal-row label {
+    font-size: 13px;
+    font-weight: normal;
+}
+.enrol-parent-field {
+    padding-left: 20px;
+}
+.student-mail {
+    margin-left: 25px;
+    width: 70%;
+}
+.student-mail-disable {
+    margin-left: 25px;
+    width: 70%;
+    background: round;
+}
+.number-place {
+    margin-left: 5px;
+    width: 70%;
+}
+.number-place-disable {
+    margin-left: 5px;
+    width: 70%;
+    background: round;
+}
+.price, .currency, .description {
+    width: 80%;
+    background: round;
+}
+.currency {
+    margin-left: 20px;
+}
+.price {
+    margin-left: 43px;
+}
+.description {
+    margin-left: 8px;
+}
+.modal-btn {
+    width: 100px;
+}
+span {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: large;
 }
