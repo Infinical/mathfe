@@ -83,15 +83,14 @@
                          class="form-control" 
                          id="answer0_image" 
                          name="answer0_image" 
-                         ngModel 
                          minlength="3" 
                          accept="image/*" 
-                         (change)="answerImageSelected($event.target.files, 1)" 
+                         (change)="answerOneImageSelected($event.target.files)" 
                          placeholder="First Answer Image"
                          formControlName="answer0_image">
                 </div>
-                <div *ngIf="question.answer0_image" class="col-sm-4 answer-row"> 
-                  <img [src]="apiURL + question.answer0_image" alt="" style="width:100px;" />
+                <div *ngIf="img0URL" class="col-sm-4 answer-row"> 
+                  <img [src]="img0URL" alt="" style="width:100px;" />
                 </div>                          
               </div>
               <div class="col-sm-6">
@@ -116,12 +115,12 @@
                      name="answer1_image" 
                      minlength="3" 
                      accept="image/*" 
-                     (change)="answerImageSelected($event.target.files, 2)" 
+                     (change)="answerTwoImageSelected($event.target.files)" 
                      placeholder="Second Answer Image"
                      formControlName="answer1_image">
             </div>
-            <div *ngIf="question.answer1_image" class="col-sm-4 answer-row"> 
-              <img [src]="apiURL + question.answer1_image" alt="" style="width:100px;" />
+            <div *ngIf="img1URL" class="col-sm-4 answer-row"> 
+              <img [src]="img1URL" alt="" style="width:100px;" />
             </div>    
               
               </div>
@@ -152,12 +151,12 @@
                        name="answer2_image" 
                        minlength="3" 
                        accept="image/*" 
-                       (change)="answerImageSelected($event.target.files, 3)" 
+                       (change)="answerThreeImageSelected($event.target.files)" 
                        placeholder="Third Answer Image"
                        formControlName="answer2_image">
               </div>
-              <div *ngIf="question.answer2_image" class="col-sm-4 answer-row"> 
-                <img [src]="apiURL + question.answer2_image" alt="" style="width:100px;" />
+              <div *ngIf="img2URL" class="col-sm-4 answer-row"> 
+                <img [src]="img2URL" alt="" style="width:100px;" />
               </div>                      
               </div>
               <div class="col-sm-6">
@@ -182,13 +181,13 @@
                        name="answer3_image" 
                        minlength="3" 
                        accept="image/*" 
-                       (change)="answerImageSelected($event.target.files, 4)" 
+                       (change)="answerFourImageSelected($event.target.files)" 
                        placeholder="Fourth Answer Image"
                        formControlName="answer3_image">
 
               </div>
-              <div *ngIf="question.answer3_image" class="col-sm-4 answer-row"> 
-                <img [src]="apiURL + question.answer3_image" alt="" style="width:100px;" />
+              <div *ngIf="img3URL" class="col-sm-4 answer-row"> 
+                <img [src]="img3URL" alt="" style="width:100px;" />
               </div> 
               </div>
             </div>

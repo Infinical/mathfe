@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   }
 
   public login(){
-    this.authService.login();
+  	this.authService.login();
   }
 
   public isAuthenticated(): boolean {
