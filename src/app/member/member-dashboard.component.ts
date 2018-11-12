@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  } from '@angular/core';
 import { DashboardService } from '../services/dashboard.service';
 import { Course } from '../models/course';
 import { House } from '../models/house';
@@ -10,6 +10,7 @@ import { of } from 'rxjs';
 import { PayPalConfig, PayPalEnvironment, PayPalIntegrationType } from 'ngx-paypal';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
+import { AlertsService } from 'angular-alert-module';
 
 @Component({
   selector: 'ag-member-dashboard',
@@ -31,19 +32,25 @@ export class MemberDashboardComponent implements OnInit {
   user: Observable<any>;
   modalRadio
   isModal: boolean;
+  email_value = [];
+  place_value;
+  amount_due;
+  numbers;
+  price_value;
+  currency_value;
 
   public payPalConfig?: PayPalConfig;
 
   constructor(private dashboardService: DashboardService, private modalService: ModalService, public http: HttpClient) { }
 
-  currency_value = "USD";
-  price_value = 100;
   houseObj = JSON.parse(localStorage.getItem('house'));
-  description = this.houseObj.description;
-  
+  description = this.houseObj ? this.houseObj.description : '';
+  emails = [];
   ngOnInit() {
     if (localStorage.getItem('house')) {
       this.isModal = true;
+      this.price_value = this.houseObj.price;
+      this.currency_value = this.houseObj.currency;
     } else {
       this.isModal = false;
     }
@@ -52,13 +59,30 @@ export class MemberDashboardComponent implements OnInit {
         this.user = data;
       },
       error =>  console.log(<any>error));
-    this.initConfig();
+    if (this.price_value != 0) {
+      this.initConfig();
+    }
+  }
+
+  onChange(event: any) {
+    this.place_value = event.target.value;
+    if (this.place_value > 10) {
+      alert("Value can be not more than 10");
+    } else {
+      this.amount_due = this.price_value * this.place_value;
+      this.numbers = Array(Number(this.place_value)).fill(0).map((x,i)=>i);
+    }
+  }
+
+
+  emailChange(index, event: any) {
+    this.email_value[index] = event.target.value;
   }
 
   openModal(id: string) {
     this.modalService.open(id);
   }
-
+  
   closeModal(id: string) {
     this.isModal = false;
     // this.modalService.close(id);
@@ -114,7 +138,6 @@ export class MemberDashboardComponent implements OnInit {
         onPaymentComplete: (data, actions) => {
           console.log('OnPaymentComplete');
           console.log("data", data);
-          console.log("accesstoken", localStorage.getItem('access_token'));
           var httpOptions = {
             headers: new HttpHeaders (
               {
@@ -129,9 +152,13 @@ export class MemberDashboardComponent implements OnInit {
             transaction_id: data.paymentID,
             places_alloted: 123,
             amount_paid: this.price_value,
-            currency_code: "USD",
+            currency_code: this.currency_value,
             house_id: this.houseObj.id
           };
+          for(let index in this.email_value) {
+            param['student_email' + index] = this.email_value[index];
+          }
+          console.log("newparam", param);
           this.http.post(
             'http://devapi.pamelalim.me/enrolments', 
             param,
@@ -148,6 +175,14 @@ export class MemberDashboardComponent implements OnInit {
         },
         onClick: () => {
           console.log('onClick');
+          const validEmailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          if (this.modalRadio == 'parent') {
+            for (let index in this.email_value) {
+              if (!validEmailRegEx.test(this.email_value[index])) {
+                alert(index + 'rd' + ' email is invalid');
+              }
+            }
+          }
         },
         validate: (actions) => {
           console.log(actions);

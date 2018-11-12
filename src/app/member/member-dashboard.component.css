@@ -3,7 +3,7 @@
 jw-modal {
     display: block;
     width: 55%;
-    height: 77%;
+    height: fit-content;
     margin: auto;
     background: #ddd;
     position: fixed;
@@ -37,6 +37,10 @@ jw-modal {
 .enrol-parent-field {
     padding-left: 20px;
 }
+.student-mail-group {
+    max-height: 148px;
+    overflow-y: scroll;
+}
 .student-mail {
     margin-left: 25px;
     width: 70%;
@@ -47,26 +51,29 @@ jw-modal {
     background: round;
 }
 .number-place {
-    margin-left: 5px;
+    margin-left: 15px;
     width: 70%;
 }
 .number-place-disable {
-    margin-left: 5px;
+    margin-left: 15px;
     width: 70%;
     background: round;
 }
-.price, .currency, .description {
+.price, .currency, .description, .amount {
     width: 80%;
     background: round;
 }
 .currency {
-    margin-left: 20px;
+    margin-left: 25px;
 }
 .price {
-    margin-left: 43px;
+    margin-left: 48px;
 }
 .description {
-    margin-left: 8px;
+    margin-left: 13px;
+}
+.amount {
+    margin-left: 5px;
 }
 .modal-btn {
     width: 100px;
