@@ -177,10 +177,14 @@ export class MemberDashboardComponent implements OnInit {
           console.log('onClick');
           const validEmailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
           if (this.modalRadio == 'parent') {
-            for (let index in this.email_value) {
-              if (!validEmailRegEx.test(this.email_value[index])) {
-                alert(index + 'rd' + ' email is invalid');
+            if (this.email_value.length == this.place_value) {
+              for (let index in this.email_value) {
+                if (!validEmailRegEx.test(this.email_value[index])) {
+                  alert(parseInt(index) + 1 + 'rd' + ' email is invalid');
+                }
               }
+            } else {
+              alert('All email is required');
             }
           }
         },

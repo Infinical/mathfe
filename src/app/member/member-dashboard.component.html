@@ -45,7 +45,7 @@
         <div class="student-mail-group">
           <div class="mail" *ngFor="let number of numbers; let i = index">
             <label>Student Email {{number+1}}</label>
-            <input *ngIf="modalRadio == 'parent'" class="student-mail" type="email" name="student_mail" (change)="emailChange(i, $event)" [(ngModel)]="email_value[i]">
+            <input *ngIf="modalRadio == 'parent'" class="student-mail" type="email" name="student_mail" (change)="emailChange(i, $event)" [(ngModel)]="email_value[i]" required>
             <input *ngIf="modalRadio != 'parent'" class="student-mail-disable" type="text" name="student_mail" disabled>
           </div>
         </div>
