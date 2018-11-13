@@ -10,7 +10,6 @@ import { of } from 'rxjs';
 import { PayPalConfig, PayPalEnvironment, PayPalIntegrationType } from 'ngx-paypal';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-import { AlertsService } from 'angular-alert-module';
 
 @Component({
   selector: 'ag-member-dashboard',

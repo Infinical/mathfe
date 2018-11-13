@@ -86,7 +86,6 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { NgMasonryGridModule } from 'ng-masonry-grid';
 import { NgxPayPalModule } from 'ngx-paypal';
-import { AlertsModule } from 'angular-alert-module';
 
 
 
@@ -168,7 +167,6 @@ export function tokenGetter() {
     HttpModule,
     ChartsModule,
     NgxPayPalModule,
-    AlertsModule.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
