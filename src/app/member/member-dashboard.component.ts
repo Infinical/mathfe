@@ -5,6 +5,12 @@ import { House } from '../models/house';
 import { Skill } from '../models/skill';
 import {Observable} from 'rxjs/Observable';
 
+import { ModalService } from '../services/modal.service';
+import { of } from 'rxjs';
+import { PayPalConfig, PayPalEnvironment, PayPalIntegrationType } from 'ngx-paypal';
+import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
+
 @Component({
   selector: 'ag-member-dashboard',
   templateUrl: './member-dashboard.component.html',
@@ -23,8 +29,6 @@ export class MemberDashboardComponent implements OnInit {
   selectedVideo: Skill;
   videolink:any;
   user: Observable<any>;
-<<<<<<< HEAD
-=======
   modalRadio
   isModal: boolean;
   email_value = [];
@@ -35,18 +39,9 @@ export class MemberDashboardComponent implements OnInit {
   currency_value;
 
   public payPalConfig?: PayPalConfig;
->>>>>>> f40822d8ae496af5645f08f365e577f210711623
 
-  constructor(private dashboardService: DashboardService) { }
+  constructor(private dashboardService: DashboardService, private modalService: ModalService, public http: HttpClient) { }
 
-<<<<<<< HEAD
-  ngOnInit() {
-  this.dashboardService.getUser().subscribe(
-    data => {
-      this.user = data;
-    },
-    error =>  console.log(<any>error));
-=======
   houseObj = JSON.parse(localStorage.getItem('house'));
   description = this.houseObj ? this.houseObj.description : '';
   emails = [];
@@ -84,13 +79,12 @@ export class MemberDashboardComponent implements OnInit {
   }
 
   openModal(id: string) {
-    this.modalService.open(id);
+    // this.modalService.open(id);
   }
   
   closeModal(id: string) {
     this.isModal = false;
     // this.modalService.close(id);
->>>>>>> f40822d8ae496af5645f08f365e577f210711623
   }
 
   selectCourse(course: Course) {
@@ -122,8 +116,6 @@ export class MemberDashboardComponent implements OnInit {
     return new Date().getTime() < expiresAt;
   }
 
-<<<<<<< HEAD
-=======
   private initConfig(): void {
     this.payPalConfig = new PayPalConfig(
       PayPalIntegrationType.ClientSideREST,
@@ -247,5 +239,4 @@ export class MemberDashboardComponent implements OnInit {
     );
   }
 
->>>>>>> f40822d8ae496af5645f08f365e577f210711623
 }
