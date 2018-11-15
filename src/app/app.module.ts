@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -76,8 +75,6 @@ import { AdminQuestionDeleteComponent } from './admin/admin-question-delete/admi
 import { DynamicContentComponent } from './admin/admin-question-list/dynamicContent/dynamicContent.component';
 import { DialogDeleteCourse } from './admin/admin-course-list/admin-course-list.component';
 import { DialogDeleteQuestion } from './admin/admin-question-list/admin-question-list.component';
-import { ModalComponent } from './member/modal.component';
-import { ModalService } from './services/modal.service';
 
 //Angular Material
 import { AngularMaterialModule } from './angularmaterial.module';
@@ -85,10 +82,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { NgMasonryGridModule } from 'ng-masonry-grid';
-import { NgxPayPalModule } from 'ngx-paypal';
-
-
-
 
 
 export function tokenGetter() {
@@ -155,8 +148,7 @@ export function tokenGetter() {
     AdminQuestionDeleteComponent,
     DynamicContentComponent,
     DialogDeleteCourse,
-    DialogDeleteQuestion,
-    ModalComponent
+    DialogDeleteQuestion
   ],
   imports: [
     routes,
@@ -164,9 +156,7 @@ export function tokenGetter() {
     FormsModule,
     ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
     HttpClientModule,
-    HttpModule,
     ChartsModule,
-    NgxPayPalModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -180,7 +170,7 @@ export function tokenGetter() {
     NgMasonryGridModule
   ],
   entryComponents: [DialogDeleteCourse, DialogDeleteQuestion],
-  providers: [TrackService, CourseService, QuestionService, DashboardService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService, ModalService],
+  providers: [TrackService, CourseService, QuestionService, DashboardService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService],
   bootstrap: [AppComponent]
 })
 

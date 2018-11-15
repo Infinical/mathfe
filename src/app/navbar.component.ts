@@ -32,10 +32,10 @@ export class NavbarComponent implements OnInit {
     })
 
     function mainNav() {
-      // var top = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-      // if (top > 40) $('.sticky-navigation').stop().animate({"top": '0'});
+      var top = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+      if (top > 40) $('.sticky-navigation').stop().animate({"top": '0'});
 
-      // else $('.sticky-navigation').stop().animate({"top": '-60'});
+      else $('.sticky-navigation').stop().animate({"top": '-60'});
     }
 
   }
@@ -45,8 +45,7 @@ export class NavbarComponent implements OnInit {
   }
 
   public logout(){
-    this.authService.logout();
-    localStorage.clear();
+  	this.authService.logout();
   }
 
   public isAuthenticated(): boolean {

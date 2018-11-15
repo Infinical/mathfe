@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'ag-about',
@@ -8,13 +7,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AboutComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor() { }
 
   ngOnInit() {
-  }
-
-  onSubmit(data) {
-    console.log(data.value);
   }
 
 }
