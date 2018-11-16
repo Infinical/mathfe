@@ -234,6 +234,8 @@ export class AdminQuestionFormComponent implements OnInit {
         };
       this.loading = false;
     });
+
+    window.scrollTo(0, 0);
   }
 
   updateQuestion(){
@@ -273,6 +275,8 @@ export class AdminQuestionFormComponent implements OnInit {
         };
       this.loading = false;
     });
+
+    window.scrollTo(0, 0);
   }
 
   validForm(){
