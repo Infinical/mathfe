@@ -38,6 +38,7 @@ export class AdminQuestionFormComponent implements OnInit {
   editMode = false;
   formResponse: any;
   apiURL: string = environment.apiURL;
+  loading = false;
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -55,7 +56,6 @@ export class AdminQuestionFormComponent implements OnInit {
   };
 
   refreshImages(data: any){
-    console.log(data);
     if (data.question_image) this.imgURL = environment.apiURL + data.question_image;
     this.img0URL = (data.answer0_image) ? this.apiURL + data.answer0_image : this.img0URL;
     this.img1URL = (data.answer1_image) ? this.apiURL + data.answer1_image : this.img1URL;
@@ -68,9 +68,11 @@ export class AdminQuestionFormComponent implements OnInit {
       const id = params['id'];
       
       if (id != undefined) {
+        this.loading = true;
         this.editMode = true;
         this.questionService.getQuestion(id)
           .subscribe((data) => {
+            this.loading = false;
             this.question = data;
             this.refreshImages(data);
           }, error => {
@@ -183,6 +185,7 @@ export class AdminQuestionFormComponent implements OnInit {
   }
 
   submitForm(){
+    this.loading = true;
     if (!this.editMode){
       this.createQuestion();
     }else{
@@ -223,12 +226,13 @@ export class AdminQuestionFormComponent implements OnInit {
         status: 'success',
         message: res["message"]
       };
-
+      this.loading = false;
     }, error => {
       this.formResponse = {
           status: 'error',
           message: 'Server Error'
         };
+      this.loading = false;
     });
   }
 
@@ -261,11 +265,13 @@ export class AdminQuestionFormComponent implements OnInit {
           status: 'success',
           message: res["message"]
         };
+      this.loading = false;
     }, error => {
       this.formResponse = {
           status: 'error',
           message: 'Server Error'
         };
+      this.loading = false;
     });
   }
 

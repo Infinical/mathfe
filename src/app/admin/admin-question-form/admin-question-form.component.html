@@ -22,7 +22,11 @@
     </div>
   </div>
 
-  <div class="col-md-10 col-md-offset-1" style="margin-top: 0.5rem;">
+  <div class="spinner-container row" *ngIf="loading">
+      <mat-spinner style="margin:auto"></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading" class="col-md-10 col-md-offset-1" style="margin-top: 0.5rem;">
     <div class="well well bs-component">
       <form class="form-horizontal" (ngSubmit)="submitForm()" [formGroup]="QuestionForm">
         <fieldset>
