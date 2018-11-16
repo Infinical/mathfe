@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { DashboardService } from '../services/dashboard.service';
 import { Course } from '../models/course';
 import { House } from '../models/house';
@@ -73,9 +73,16 @@ export class MemberDashboardComponent implements OnInit {
     }
   }
 
-
   emailChange(index, event: any) {
     this.email_value[index] = event.target.value;
+  }
+
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    console.log(event);
+    if (event.keyCode === 27) {
+      this.isModal = false;
+    }
   }
 
   openModal(id: string) {
@@ -190,10 +197,10 @@ export class MemberDashboardComponent implements OnInit {
         validate: (actions) => {
           console.log(actions);
         },
-        experience: {
-          noShipping: true,
-          brandName: 'PayPal'
-        },
+        // experience: {
+        //   noShipping: true,
+        //   brandName: 'PayPal'
+        // },
         transactions: [
           {
             amount: {
@@ -221,16 +228,16 @@ export class MemberDashboardComponent implements OnInit {
             //       sku: 'product34',
             //       currency: 'USD'
             //     }],
-              shipping_address: {
-                recipient_name: 'Brian Robinson',
-                line1: '4th Floor',
-                line2: 'Unit #34',
-                city: 'San Jose',
-                country_code: 'US',
-                postal_code: '95131',
-                phone: '011862212345678',
-                state: 'CA'
-              },
+              // shipping_address: {
+              //   recipient_name: 'Brian Robinson',
+              //   line1: '4th Floor',
+              //   line2: 'Unit #34',
+              //   city: 'San Jose',
+              //   country_code: 'US',
+              //   postal_code: '95131',
+              //   phone: '011862212345678',
+              //   state: 'CA'
+              // },
             },
           }
         ],

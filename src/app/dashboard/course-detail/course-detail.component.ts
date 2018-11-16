@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Router } from '@angular/router';
 import { Course } from '../../models/course';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../services/auth.service';
@@ -11,7 +12,7 @@ import { AuthService } from '../../services/auth.service';
 export class CourseDetailComponent implements OnInit, OnChanges {
   beURL = environment.apiURL + '/';
   @Input() selectedCourse: Course;
-  constructor(private authService:AuthService) { }
+  constructor(private authService:AuthService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -22,6 +23,10 @@ export class CourseDetailComponent implements OnInit, OnChanges {
 
   public login(obj) {
     this.authService.login();
+    localStorage.setItem('house', JSON.stringify(obj));
+  }
+
+  public directEnrol(obj) {
     localStorage.setItem('house', JSON.stringify(obj));
   }
 
