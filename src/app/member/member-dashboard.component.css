@@ -1,7 +1,3 @@
-#videoplayer {
-	
-}
-
 /* MODAL STYLES
 -------------------------------*/
 jw-modal {
@@ -24,12 +20,12 @@ jw-modal {
     padding: 10px;
 }
 .second-container {
-    margin-top: 50px;
+    margin-top: 10px;
     padding: 25px;
 }
 .third-container {
     border: 0;
-    margin-top: 50px;
+    margin-top: 10px;
 }
 .jw-modal-row {
     text-align: left;

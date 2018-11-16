@@ -40,7 +40,8 @@
       <td>{{selectedCourse.course}}</td>
       <td>{{house.start_date}}</td>
       <td>{{house.end_date}}</td>
-      <td><a (click)="login(house)">Enrol</a></td>
+      <td><a *ngIf="!isAuthenticated()" (click)="login(house)">Enrol</a></td>
+      <td><a *ngIf="isAuthenticated()" href="/member" (click)="directEnrol(house)">Enrol</a></td>
     </tr>
   </tbody>
 </table>
