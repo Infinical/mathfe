@@ -2,7 +2,7 @@
 -------------------------------*/
 jw-modal {
     display: block;
-    width: 55%;
+    width: 44%;
     height: fit-content;
     margin: auto;
     background: #ddd;
@@ -12,6 +12,56 @@ jw-modal {
     right: 0;
     bottom: 0;
     padding-top: 20px;
+}
+@media screen and (max-width: 1400px) {
+    jw-modal {
+        width: 47%;
+    }
+}
+@media screen and (max-width: 1300px) {
+    jw-modal {
+        width: 51%;
+    }
+}
+@media screen and (max-width: 1280px) {
+    jw-modal {
+        width: 53%;
+    }
+}
+@media screen and (max-width: 1200px) {
+    jw-modal {
+        width: 54%;
+    }
+}
+@media screen and (max-width: 1100px) {
+    jw-modal {
+        width: 57%;
+    }
+}
+@media screen and (max-width: 1020px) {
+    jw-modal {
+        width: 60%;
+    }
+}
+@media screen and (max-width: 970px) {
+    jw-modal {
+        width: 63%;
+    }
+}
+@media screen and (max-width: 870px) {
+    jw-modal {
+        width: 70%;
+    }
+}
+@media screen and (max-width: 800px) {
+    jw-modal {
+        width: 86%;
+    }
+}
+@media screen and (max-width: 670px) {
+    jw-modal {
+        width: 94%;
+    }
 }
 .jw-modal-container {
     width: 75%;
