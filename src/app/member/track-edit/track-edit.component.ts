@@ -35,6 +35,10 @@ export class TrackEditComponent implements OnInit {
   }
 
   updateTrack(track) {
+    track.field = this.fields.filter((f) => { return f.id == track.field_id })[0];
+    track.level = this.levels.filter((f) => { return f.id == track.level_id })[0];
+    track.status = this.statuses.filter((f) => { return f.id == track.status_id })[0];
+	 
 	  this.trackService.updateTrack(track)
 	    .subscribe(
 	      track  => {

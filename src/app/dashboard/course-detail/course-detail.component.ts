@@ -18,7 +18,7 @@ export class CourseDetailComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes) {
-    console.log(changes.selectedCourse);
+   // console.log(changes.selectedCourse);
   }
 
   public login(obj) {
