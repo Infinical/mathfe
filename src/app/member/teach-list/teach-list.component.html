@@ -1,4 +1,5 @@
-<div class="container" *ngIf =" (houses | async)?.length>0">
+
+<div class="container" *ngIf =" isDataLoaded((houses | async))">
 	
 	<!-- SECTION HEADER -->
 	<div class="section-header wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
@@ -19,6 +20,6 @@
 	<!-- /END SECTION HEADER -->	
 </div>
 <!-- /END CONTAINER -->
-<div class="container" *ngIf ="(houses | async)?.length<1">
+<div class="container" *ngIf ="isNoDataExists((houses | async))">
 	<p>You are not teaching any class.</p>
 </div>

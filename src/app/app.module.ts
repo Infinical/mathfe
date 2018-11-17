@@ -79,6 +79,15 @@ import { DialogDeleteQuestion } from './admin/admin-question-list/admin-question
 import { ModalComponent } from './member/modal.component';
 import { ModalService } from './services/modal.service';
 
+import { LandingPageComponent } from './member/landing-page/landing-page.component';
+import { ClassManagementComponent } from './member/class-management/class-management.component';
+import { StudentManagementComponent } from './member/student-management/student-management.component';
+import { CourseManagementComponent } from './member/course-management/course-management.component';
+import { TeachDetailStudentComponent } from './member/teach-list/teach-detail-student/teach-detail-student.component';
+import { TeachDetailCourseComponent } from './member/teach-list/teach-detail-course/teach-detail-course.component';
+import { RecommendedCoursesComponent } from './member/recommended-courses/recommended-courses.component';
+
+
 //Angular Material
 import { AngularMaterialModule } from './angularmaterial.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -86,7 +95,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { NgMasonryGridModule } from 'ng-masonry-grid';
 import { NgxPayPalModule } from 'ngx-paypal';
-
+import { DataTableModule } from "angular-6-datatable";
 
 
 
@@ -156,7 +165,14 @@ export function tokenGetter() {
     DynamicContentComponent,
     DialogDeleteCourse,
     DialogDeleteQuestion,
-    ModalComponent
+    ModalComponent,
+    LandingPageComponent,
+    ClassManagementComponent,
+    StudentManagementComponent,
+    CourseManagementComponent,
+    TeachDetailStudentComponent,
+    TeachDetailCourseComponent,
+    RecommendedCoursesComponent
   ],
   imports: [
     routes,
@@ -177,7 +193,8 @@ export function tokenGetter() {
     AngularMaterialModule,
     BrowserAnimationsModule,
     AngularEditorModule,
-    NgMasonryGridModule
+    NgMasonryGridModule,
+    DataTableModule
   ],
   entryComponents: [DialogDeleteCourse, DialogDeleteQuestion],
   providers: [TrackService, CourseService, QuestionService, DashboardService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService, ModalService],

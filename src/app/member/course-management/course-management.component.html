@@ -1,0 +1,14 @@
+<div class="screenshots grey-bg">
+  <div class="container">
+    <div class="membercontent">
+      <div class="col-xs-12">
+        <a class="btn btn-default pull-left" routerLink="/member/class-management">Back to Class Management</a>
+      </div>
+        <section id="teaching" class="enrolled tab-pane fade in">
+
+          <ag-teach-detail-course [user]="user" [selectedTeach]="selectedTeach" (selectedEvent)="selectTeach($event)" (selectedVideo)="selectSkill($event)"></ag-teach-detail-course>
+          <ag-teach-list (selectedEvent)="selectTeach($event)"></ag-teach-list>
+        </section>
+      </div>
+  </div>
+</div>
