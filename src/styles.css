@@ -99,15 +99,17 @@ progress {
   .progress.m-progress--lg .progress-bar {
     border-radius: 4px; }
 
-    .spinner-footer-envelope {
-      top: 4% !important;
-      left: 4% !important;
-      height: 70px !important;
-      width: 70px !important;
-      display: none;
-    }
+.spinner-footer-envelope {
+  top: 4% !important;
+  left: 4% !important;
+  height: 70px !important;
+  width: 70px !important;
+  display: none;
+}
     
-    .ul-center {
-      display: inline-flex;
-    }
-    
+.ul-center {
+  display: inline-flex;
+}
+.m-b-10 {
+margin-bottom:10px;
+}

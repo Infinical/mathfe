@@ -17,7 +17,7 @@ export const memberRoutes: Routes = [
   { path: 'video/:id', component: VideoComponent},
   { path: 'enrolled-classes', component: MemberDashboardComponent },
   { path: 'class-management', component: ClassManagementComponent },
-  { path: 'student-management', component: StudentManagementComponent },
-  { path: 'course-management', component: CourseManagementComponent },
+  { path: 'student-management/:id', component: StudentManagementComponent },
+  { path: 'course-management/:id', component: CourseManagementComponent },
   { path: 'recommended-courses', component: RecommendedCoursesComponent }
 ];

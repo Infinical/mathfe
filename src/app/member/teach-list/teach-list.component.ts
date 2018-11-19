@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { DashboardService } from '../../services/dashboard.service';
 import { House } from '../../models/house';
 declare var $: any;
@@ -12,14 +13,15 @@ export class TeachListComponent implements OnInit {
   selectedTeach: House;
 
   @Output() selectedEvent: EventEmitter<House> = new EventEmitter<House>();
-  constructor(private dashboardService: DashboardService) { }
+  constructor(private dashboardService: DashboardService, private router: Router) { }
 
   ngOnInit() {
-    this.houses = this.dashboardService.getTeach();
+    this.houses = this.dashboardService.getTeach();   
   }
 
   onSelect(house: House) {
-    this.selectedEvent.emit(house);
+    this.router.navigate(["/member/student-management",house.id]);
+   // this.selectedEvent.emit(house);
   }
   isDataLoaded(d) {
     if (!d) {

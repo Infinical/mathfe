@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy,Output,EventEmitter } from '@angular/core';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 
@@ -13,6 +13,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   message: string;
   id: any;
   params: any;
+  @Output() editingmode= new EventEmitter<boolean>();
 
   constructor(private userService:UserService) { }
 
@@ -29,6 +30,9 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       user  => {
         this.status = 'success';
         this.message = user['message'];
+        setTimeout(() => {    //<<<---    using ()=> syntax
+          this.editingmode.emit(false);
+        }, 3000);
       },
       error => { 
         console.log(<any>error);

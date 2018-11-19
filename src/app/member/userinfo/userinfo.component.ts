@@ -29,5 +29,8 @@ export class UserinfoComponent implements OnInit {
   userprof() {
     this.editing = this.editing ? false : true;
   }
+  updateEditMode(iseditmode: boolean) {   
+    this.editing = iseditmode;
+  }
 
 }

@@ -56,7 +56,8 @@
         <div class="form-group">
           <label for="date_of_birth" class="col-lg-3 control-label">Date of Birth</label>
           <div class="col-lg-9">
-            <input type="text" class="form-control" id="user_date_of_birth" name="user_date_of_birth" placeholder="YYYY-MM-DD" [(ngModel)]="user.date_of_birth" #user_date_of_birth="ngModel" required>
+            <!--<input type="text" class="form-control" id="user_date_of_birth" name="user_date_of_birth" placeholder="YYYY-MM-DD" [(ngModel)]="user.date_of_birth" #user_date_of_birth="ngModel" required>-->
+            <input type="date" class="form-control" id="user_date_of_birth" name="user_date_of_birth" placeholder="YYYY-MM-DD" [ngModel]="user.date_of_birth | date:'yyyy-MM-dd'" (ngModelChange)="user.date_of_birth = $event" #user_date_of_birth="ngModel" required>
             <div *ngIf="user_date_of_birth.errors?.required && user_date_of_birth.dirty" class="alert alert-danger">
               User Birth Date is required
             </div>
