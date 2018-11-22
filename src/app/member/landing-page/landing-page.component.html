@@ -1,6 +1,9 @@
 <section class="screenshots grey-bg" id="courses">
   <div class="container">
-
+    <div class="alert alert-success" *ngIf="enrolSuccessMessageStatus">
+      <a href="javascript:" class="close" (click)="enrolSuccessMessageStatus = false;" aria-label="close">×</a>
+      <p>{{enrolSuccessMessage}}</p>
+    </div>
     <ag-userinfo [user]="user"></ag-userinfo>
     <div class="container">
       <ul class="nav nav-pills">
@@ -10,18 +13,18 @@
       </ul>
     </div>
     <div class="tab-content membercontent">
-      <section class="enrolled" id="enrolled" class="tab-pane fade in active" [class.active]="activeTab==1">       
+      <section class="enrolled" id="enrolled" class="tab-pane fade in active" [class.active]="activeTab==1">
         <ag-house-detail [selectedHouse]="selectedHouse" (selectedEvent)="selectHouse($event)" (selectedVideo)="selectSkill($event)"></ag-house-detail>
         <ag-house-list (selectedEvent)="selectHouse($event)"></ag-house-list>
       </section>
       <section class="enrolled" id="teaching" class="tab-pane fade in" [class.active]="activeTab==2">
         <ag-teach-list (selectedEvent)="selectTeach($event)"></ag-teach-list>
         <!--<ul class="nav nav-pills ul-center">
-          <li><a routerLink="/member/student-management">Student Management</a></li>
-          <li><a routerLink="/member/course-management"> Course Management</a></li>
-        </ul>-->
+        <li><a routerLink="/member/student-management">Student Management</a></li>
+        <li><a routerLink="/member/course-management"> Course Management</a></li>
+      </ul>-->
         <!--<ag-teach-detail [user]="user" [selectedTeach]="selectedTeach" (selectedEvent)="selectTeach($event)" (selectedVideo)="selectSkill($event)"></ag-teach-detail>
-  <ag-teach-list (selectedEvent)="selectTeach($event)"></ag-teach-list>-->
+      <ag-teach-list (selectedEvent)="selectTeach($event)"></ag-teach-list>-->
       </section>
       <section class="enrolled" id="recommendedcourses" class="tab-pane fade in" [class.active]="activeTab==3">
         <div class="container">
@@ -40,28 +43,38 @@
   </div>
 </section>
 <jw-modal *ngIf="isModal" id="enrollment-modal">
-  <span (click)="closeModal()">&times;</span>
-  <h3>Enrol Info</h3>
+  <div>
+    <span class="jw-title">Enrol Info</span>
+    <span class="jw-close" (click)="closeModal()">&times;</span>
+  </div>
+
+
   <div class="jw-modal-container">
     <div class="jw-modal-row">
-      <input class="enrol-parent" type="radio" name="enrol_radio" value="parent" [(ngModel)]="modalRadio"> Parent
+      <input class="enrol-parent" (click)="validatePaypalButton()" type="radio" name="enrol_radio" value="parent"
+        [(ngModel)]="modalRadio"> Parent
       <div class="enrol-parent-field">
         <div class="student-mail-group">
           <div class="mail" *ngFor="let number of numbers; let i = index">
             <label>Student Email {{number+1}}</label>
-            <input *ngIf="modalRadio == 'parent'" class="student-mail" type="email" name="student_mail" (change)="emailChange(i, $event)" [(ngModel)]="email_value[i]" required>
+            <input *ngIf="modalRadio == 'parent'" class="student-mail" type="email" name="student_mail" (change)="validatePaypalButton()"
+              [(ngModel)]="email_value[i]" required>
+            <p class="red txt-center" *ngIf="email_errors[i]">Please enter a vaild email address.</p>
             <input *ngIf="modalRadio != 'parent'" class="student-mail-disable" type="text" name="student_mail" disabled>
           </div>
+          <p class="red txt-center" *ngIf="allEmailsRequired">All Emails Required</p>
         </div>
         <div class="number">
           <label>Number of places</label>
-          <input *ngIf="modalRadio == 'parent'" class="number-place" type="number" name="number_place" [(ngModel)]="place_value" (change)="onChange($event)">
+          <input *ngIf="modalRadio == 'parent'" minvalue="1" maxvalue="10" class="number-place" type="number" name="number_place"
+            [(ngModel)]="place_value" (change)="onChange($event)">
           <input *ngIf="modalRadio != 'parent'" class="number-place-disable" type="number" name="number_place" disabled>
         </div>
       </div>
     </div>
     <div class="jw-modal-row">
-      <input class="enrol-student" type="radio" name="enrol_radio" value="student" [(ngModel)]="modalRadio"> Student
+      <input class="enrol-student" type="radio" name="enrol_radio" value="student" (click)="validatePaypalButton()"
+        [(ngModel)]="modalRadio"> Student
     </div>
   </div>
   <div class="jw-modal-container second-container">
@@ -85,6 +98,7 @@
     </div>
   </div>
   <div class="jw-modal-container third-container">
+    <div [title]="getInVaildFormTitle()" [class.is-form-invaild]="isFormInvaild"></div>
     <ngx-paypal [config]="payPalConfig"></ngx-paypal>
   </div>
 </jw-modal>

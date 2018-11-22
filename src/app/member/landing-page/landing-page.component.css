@@ -11,7 +11,20 @@ jw-modal {
   left: 0;
   right: 0;
   bottom: 0;
-  padding-top: 20px;
+  padding-top: 12px;
+  z-index:9999;
+}
+.jw-close{
+  float:right;
+  padding-right: 15px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+.jw-title{
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 300
 }
 @media screen and (max-width: 1400px) {
   jw-modal {
@@ -135,17 +148,22 @@ input:required:hover {
 .modal-btn {
   width: 100px;
 }
-span {
-  cursor: pointer;
-  position: absolute;
-  top: 0;
-  right: 10px;
-  font-size: large;
-}
+
 .nav.nav-pills li {
   margin-bottom: 5px;
 }
 
 .nav.nav-pills li:hover {
   background-color: #960000 !important;
+}
+
+.is-form-invaild{
+  position: absolute;
+    height: 130px;
+    width: 100%;
+    cursor: not-allowed;
+    z-index: 999;
+}
+.txt-center{
+  text-align: center;
 }

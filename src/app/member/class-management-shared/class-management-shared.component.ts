@@ -26,7 +26,7 @@ export class ClassManagementSharedComponent implements OnInit {
   houseid: any;
   constructor(private dashboardService: DashboardService, private route: ActivatedRoute) { }
 
-  ngOnInit() {    
+  ngOnInit() {
     $('.spinner-footer-envelope').show();
     this.houseid = this.route.snapshot.paramMap.get("id");
     this.dashboardService.getUser().subscribe(
@@ -34,14 +34,13 @@ export class ClassManagementSharedComponent implements OnInit {
         this.user = data;
       },
       error => console.log(<any>error));
-   
-    this.dashboardService.getTeach().subscribe(
-      data => {
-        $('.spinner-footer-envelope').hide();
-        this.selectedTeach = data.filter((d) => d.id == this.houseid)[0];
-      },
-      error => console.log(<any>error));
-    // .map((f) => { debugger; this.selectedTeach = f.filter((g) => g.id == 1)[0] });
+
+    var houses = localStorage.getItem('teachListSelectedHouses');
+    if (houses) {
+      this.selectedTeach = JSON.parse(houses).filter((d) => d.id == this.houseid)[0];
+    }
+    $('.spinner-footer-envelope').hide();
+
   }
   selectCourse(course: Course) {
     this.selectedCourse = course;

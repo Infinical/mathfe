@@ -16,12 +16,20 @@ export class TeachListComponent implements OnInit {
   constructor(private dashboardService: DashboardService, private router: Router) { }
 
   ngOnInit() {
-    this.houses = this.dashboardService.getTeach();   
+    this.houses = this.dashboardService.getTeach(); 
+    this.houses
+      .subscribe(
+        houses => {
+          localStorage.setItem("teachListSelectedHouses", JSON.stringify(houses));
+        },
+        error => {
+          console.log(<any>error); 
+        }
+      );
   }
 
-  onSelect(house: House) {
-    this.router.navigate(["/member/student-management",house.id]);
-   // this.selectedEvent.emit(house);
+  onSelect(house: House) {   
+    this.router.navigate(["/member/student-management",house.id]); 
   }
   isDataLoaded(d) {
     if (!d) {
@@ -39,4 +47,4 @@ export class TeachListComponent implements OnInit {
       return d.length < 1;
     }
   }
-}
+} 
