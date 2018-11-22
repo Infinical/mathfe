@@ -11,7 +11,7 @@ export class DashboardService {
 
   getHouses(): Observable<any> {
     return this.http.get(`${environment.apiURL}/enrols/users`)
-    .map((response) => response['houses'])
+      .map((response) =>  response['houses'])
     .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));;
   }
   getCourses(): Observable<any> {

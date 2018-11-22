@@ -10,7 +10,7 @@ import { of } from 'rxjs';
 import { PayPalConfig, PayPalEnvironment, PayPalIntegrationType } from 'ngx-paypal';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-
+declare var $: any;
 @Component({
   selector: 'ag-landing-page',
   templateUrl: './landing-page.component.html',
@@ -21,23 +21,27 @@ export class LandingPageComponent implements OnInit {
   selectedHouse: House;
 
   dashboard: any;
-
   houses: any;
-
   courses: any;
   selectedCourse: Course;
   selectedTeach: House;
   selectedVideo: Skill;
   videolink: any;
   user: Observable<any>;
-  modalRadio
+  modalRadio = "";
   isModal: boolean;
   email_value = [];
+  email_errors = [];
   place_value;
   amount_due;
   numbers;
   price_value;
   currency_value;
+  isFormInvaild = true;
+  isEnrollmentValidationError = false;
+  allEmailsRequired = false;
+  enrolSuccessMessage: any;
+  enrolSuccessMessageStatus = false;
 
   public payPalConfig?: PayPalConfig;
 
@@ -49,6 +53,7 @@ export class LandingPageComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('house')) {
       this.isModal = true;
+      this.isFormInvaild = true;
       this.price_value = this.houseObj.price;
       this.currency_value = this.houseObj.currency;
     } else {
@@ -66,6 +71,10 @@ export class LandingPageComponent implements OnInit {
 
   onChange(event: any) {
     this.place_value = event.target.value;
+    if (this.place_value < this.email_value.length) {
+      this.email_value = this.email_value.slice(0, this.place_value);
+      this.validatePaypalButton();
+    }
     if (this.place_value > 10) {
       alert("Value can be not more than 10");
     } else {
@@ -73,7 +82,16 @@ export class LandingPageComponent implements OnInit {
       this.numbers = Array(Number(this.place_value)).fill(0).map((x, i) => i);
     }
   }
-
+  getInVaildFormTitle() {
+    if (!this.modalRadio) {
+      return "Please select either student or parent!!"
+    } else {
+      if (this.isFormInvaild) {
+        return "Please complete above form or fix above error before proceed!!";
+      }
+    }
+    return "";
+  }
 
   emailChange(index, event: any) {
     this.email_value[index] = event.target.value;
@@ -85,6 +103,7 @@ export class LandingPageComponent implements OnInit {
 
   closeModal(id: string) {
     this.isModal = false;
+    localStorage.removeItem('house');
     // this.modalService.close(id);
   }
 
@@ -116,8 +135,45 @@ export class LandingPageComponent implements OnInit {
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     return new Date().getTime() < expiresAt;
   }
+  public validatePaypalButton() {
 
-  private initConfig(): void {
+    setTimeout(() => {
+
+      this.email_errors = [];
+      const validEmailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (this.modalRadio == 'parent') {
+        for (let index in this.email_value) {
+          if (!validEmailRegEx.test(this.email_value[index])) {
+            this.email_errors[index] = true;
+          }
+        }
+      }
+      var selectedValue = this.modalRadio;
+      this.allEmailsRequired = false;
+      this.isFormInvaild = true;
+      this.amount_due = '';
+      if (selectedValue == "parent") {
+        if (!this.place_value || this.place_value == "0") {
+          this.isFormInvaild = true;
+        } else {
+          if (this.email_value.length != this.place_value) {
+            this.allEmailsRequired = true;
+          }
+          this.amount_due = this.price_value * this.place_value;
+          if (this.email_errors.length == 0 && !this.allEmailsRequired) {
+            this.isFormInvaild = false;
+          }
+        }
+      } else if (selectedValue == "student") {
+        this.isFormInvaild = false;
+        this.amount_due = this.price_value;
+      }
+
+    }, 100)
+
+  }
+
+  public initConfig(): void {
     this.payPalConfig = new PayPalConfig(
       PayPalIntegrationType.ClientSideREST,
       PayPalEnvironment.Sandbox,
@@ -125,7 +181,7 @@ export class LandingPageComponent implements OnInit {
         commit: true,
         client: {
           sandbox:
-          'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R'
+            'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R'
         },
         button: {
           label: 'paypal',
@@ -136,8 +192,7 @@ export class LandingPageComponent implements OnInit {
           return of(undefined);
         },
         onPaymentComplete: (data, actions) => {
-          console.log('OnPaymentComplete');
-          console.log("data", data);
+
           var httpOptions = {
             headers: new HttpHeaders(
               {
@@ -147,7 +202,7 @@ export class LandingPageComponent implements OnInit {
             )
           };
           var param = {
-            role: 0,
+            role: this.modalRadio,
             user_id: this.houseObj.user_id,
             transaction_id: data.paymentID,
             places_alloted: 123,
@@ -158,13 +213,19 @@ export class LandingPageComponent implements OnInit {
           for (let index in this.email_value) {
             param['student_email' + index] = this.email_value[index];
           }
-          console.log("newparam", param);
+
           this.http.post(
             'http://devapi.pamelalim.me/enrolments',
             param,
             httpOptions
           ).subscribe(data => {
             console.log("response", data);
+            this.enrolSuccessMessage = data['message'];
+            this.enrolSuccessMessageStatus = true;
+            this.isModal = false;
+            localStorage.removeItem('house');
+          }, error => {
+            console.log("Rrror", error);
           });
         },
         onCancel: (data, actions) => {
@@ -174,23 +235,10 @@ export class LandingPageComponent implements OnInit {
           console.log('OnError');
         },
         onClick: () => {
-          console.log('onClick');
-          const validEmailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          if (this.modalRadio == 'parent') {
-            if (this.email_value.length == this.place_value) {
-              for (let index in this.email_value) {
-                if (!validEmailRegEx.test(this.email_value[index])) {
-                  alert(parseInt(index) + 1 + 'rd' + ' email is invalid');
-                }
-              }
-            } else {
-              alert('All email is required');
-            }
-          }
+
         },
-        validate: (actions) => {
-          console.log(actions);
-        },
+        // validate: (actions) => { 
+        // },
         experience: {
           noShipping: true,
           brandName: 'PayPal'
