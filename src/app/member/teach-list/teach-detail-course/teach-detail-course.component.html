@@ -28,25 +28,25 @@
             <p>Click on the collapsible panel to open and close tracks / manage skills.</p>
             <div class="panel-group">
               <div class="table-responsive">
-                <table class="table table-striped table-condensed">
+                <table class="table table-striped table-condensed" [mfData]="selectedTeach.tracks" #mf="mfDataTable" [mfRowsOnPage]="50">
                   <thead>
                     <tr>
                       <th>
-                        Track
+                        <mfDefaultSorter by="id">Track</mfDefaultSorter>
                         <button type="button" *ngIf="!addTrackOn" (click)="createTrack()" class="m-btn btn">+</button>
                         <button type="button" *ngIf="addTrackOn" (click)="createTrack()" class="m-btn btn">-</button>
                       </th>
-                      <th *ngIf="!editTrackOn">Description</th>
-                      <th>Status</th>
-                      <th>Field</th>
-                      <th>Level</th>
+                      <th *ngIf="!editTrackOn"><mfDefaultSorter by="description">Description</mfDefaultSorter></th>
+                      <th><mfDefaultSorter by="status.status">Status</mfDefaultSorter></th>
+                      <th><mfDefaultSorter by="field.field">Field</mfDefaultSorter></th>
+                      <th><mfDefaultSorter by="level.level">Level</mfDefaultSorter></th>
                       <th>Action</th>
                     </tr>
                     <tr>
                       <td colspan="6"><ag-track-create *ngIf="addTrackOn" [house]="selectedTeach"></ag-track-create></td>
                     </tr>
                   </thead>
-                  <tbody *ngFor="let track of selectedTeach.tracks">
+                  <tbody *ngFor="let track of mf.data">
                     <tr>
                       <td class="panel-heading">
                         <a data-toggle="collapse" href="#collapse{{track.id}}" align="left">{{track.track}}</a>
@@ -105,6 +105,13 @@
                       </td>
                     </tr>
                   </tbody>
+                  <tfoot>
+                    <tr>
+                      <td colspan="6">
+                        <mfBootstrapPaginator [rowsOnPageSet]="[50,100,500]"></mfBootstrapPaginator>
+                      </td>
+                    </tr>
+                  </tfoot>
                 </table>
               </div>
             </div>

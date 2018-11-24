@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 import { User } from '../models/user';
 import { environment } from '../../environments/environment';
+import { throwError } from 'rxjs';
 
 @Injectable()
 export class DashboardService {
@@ -12,24 +13,24 @@ export class DashboardService {
   getHouses(): Observable<any> {
     return this.http.get(`${environment.apiURL}/enrols/users`)
       .map((response) =>  response['houses'])
-    .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));;
+    .catch((error: any) => throwError(error.json().error || {message: 'Server Error'} ));;
   }
   getCourses(): Observable<any> {
     return this.http.get(`${environment.apiURL}/courses`)
     .map((response) => response['courses'])
-    .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));;
+    .catch((error: any) => throwError(error.json().error || {message: 'Server Error'} ));;
   }
 
   getLeaders(): Observable<any> {
     return this.http.get(`${environment.apiURL}/leaders`)
     .map((response) => response)
-    .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));;
+    .catch((error: any) => throwError(error.json().error || {message: 'Server Error'} ));;
   }
 
   getTeach(): Observable<any> {
     return this.http.get(`${environment.apiURL}/enrols/teachers`)
     .map((response) => response['houses'])
-    .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));;
+    .catch((error: any) => throwError(error.json().error || {message: 'Server Error'} ));;
   }
 
   getUser(): Observable<any> {
@@ -40,6 +41,6 @@ export class DashboardService {
   getDashboard(): Observable<any> {
     return this.http.get(`${environment.apiURL}/api/protected`)
     .map((response) => response['data'])
-    .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));;
+    .catch((error: any) => throwError(error.json().error || {message: 'Server Error'} ));;
   }
 }

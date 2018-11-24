@@ -3,36 +3,37 @@ import { User } from '../models/user';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
-import {Observable} from 'rxjs/Observable';
-import { environment } from '../../environments/environment';
-
+import { throwError } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import { environment } from '../../environments/environment'; 
 @Injectable()
 export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers():Observable<any> {
+  getUsers(): Observable<any> {
     return this.http.get(`${environment.apiURL}/users`)
-    .map((response) => response)
-    .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));;
+      .map((response) => response)
+      .catch((error: any) => throwError(error.json().error || { message: 'Server Error' }));;
   }
   getUser(id: String): Observable<any> {
     return this.http.get(`${environment.apiURL}/users/` + id)
       .map((response) => response['user'])
-        .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));
+      .catch((error: any) => throwError(error.json().error || { message: 'Server Error' }));
   }
-  updateUser(user: Object): Observable<User[]> {
+  updateUser(user: Object, userId: any): Observable<User[]> {
+    debugger;
     const apiUrl = `${environment.apiURL}/users`
-    const url = `${apiUrl}/${user['id']}`;
-    return this.http.put<User[]>(url, user)
+    const url = `${apiUrl}/${userId}`;
+    return this.http.put<any[]>(url, user)
       .map((response) => response)
-      .catch((error: any) => Observable.throw(error.error || {message: 'Server Error'}));
+      .catch((error: any) => throwError(error.error || { message: 'Server Error' }));
   }
   deleteUser(id: String): Observable<User[]> {
     const apiUrl = `${environment.apiURL}/users`
     const url = `${apiUrl}/${id}`;
     return this.http.delete<User[]>(url)
       .map((response) => response)
-      .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'}));
+      .catch((error: any) => throwError(error.json().error || { message: 'Server Error' }));
   }
 }
