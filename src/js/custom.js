@@ -2,11 +2,11 @@
    LOADER                     
 =================================== */
 // makes sure the whole site is loaded
-jQuery(window).load(function() {
-        // will first fade out the loading animation
-	jQuery(".status").fadeOut();
-        // will fade out the whole DIV that covers the website.
-	jQuery(".preloader").delay(1000).fadeOut("slow");
+jQuery(window).on('load', function () {
+    // will first fade out the loading animation
+    jQuery(".status").fadeOut();
+    // will fade out the whole DIV that covers the website.
+    jQuery(".preloader").delay(1000).fadeOut("slow");
 })
 
 /* =================================
@@ -20,33 +20,36 @@ $(".video-container").fitVids();
 /* =================================
 ===  MAILCHIMP                 ====
 =================================== */
+if ($('.mailchimp').length > 0) {
 
-$('.mailchimp').ajaxChimp({
-    callback: mailchimpCallback,
-    url: "http://webdesign7.us6.list-manage.com/subscribe/post?u=9445a2e155b82208d73433060&amp;id=16dc80e353" //Replace this with your own mailchimp post URL. Don't remove the "". Just paste the url inside "".  
-});
+    $('.mailchimp').ajaxChimp({
+        callback: mailchimpCallback,
+        url: "http://webdesign7.us6.list-manage.com/subscribe/post?u=9445a2e155b82208d73433060&amp;id=16dc80e353" //Replace this with your own mailchimp post URL. Don't remove the "". Just paste the url inside "".  
+    });
 
-function mailchimpCallback(resp) {
-     if (resp.result === 'success') {
-        $('.subscription-success').html('<i class="icon_check_alt2"></i><br/>' + resp.msg).fadeIn(1000);
-        $('.subscription-error').fadeOut(500);
-        
-    } else if(resp.result === 'error') {
-        $('.subscription-error').html('<i class="icon_close_alt2"></i><br/>' + resp.msg).fadeIn(1000);
-    }  
+    function mailchimpCallback(resp) {
+        if (resp.result === 'success') {
+            $('.subscription-success').html('<i class="icon_check_alt2"></i><br/>' + resp.msg).fadeIn(1000);
+            $('.subscription-error').fadeOut(500);
+
+        } else if (resp.result === 'error') {
+            $('.subscription-error').html('<i class="icon_close_alt2"></i><br/>' + resp.msg).fadeIn(1000);
+        }
+    }
+
 }
 
 /* =================================
 ===  STICKY NAV                 ====
 =================================== */
 
-$(document).ready(function() {
-  $('.main-navigation').onePageNav({
-    scrollThreshold: 0.2, // Adjust if Navigation highlights too early or too late
-    filter: ':not(.external)',
-    changeHash: true
-  });
-  
+$(document).ready(function () {
+    $('.main-navigation').onePageNav({
+        scrollThreshold: 0.2, // Adjust if Navigation highlights too early or too late
+        filter: ':not(.external)',
+        changeHash: true
+    });
+
 });
 
 
@@ -70,20 +73,20 @@ $(window).scroll(function () {
 });
 
 if (matchMedia('(min-width: 992px), (max-width: 767px)').matches) {
-  function mainNav() {
+    function mainNav() {
         var top = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-        if (top > 40) $('.sticky-navigation').stop().animate({"top": '0'});
+        if (top > 40) $('.sticky-navigation').stop().animate({ "top": '0' });
 
-        else $('.sticky-navigation').stop().animate({"top": '-60'});
+        else $('.sticky-navigation').stop().animate({ "top": '-60' });
     }
 }
 
 if (matchMedia('(min-width: 768px) and (max-width: 991px)').matches) {
-  function mainNav() {
+    function mainNav() {
         var top = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-        if (top > 40) $('.sticky-navigation').stop().animate({"top": '0'});
+        if (top > 40) $('.sticky-navigation').stop().animate({ "top": '0' });
 
-        else $('.sticky-navigation').stop().animate({"top": '-120'});
+        else $('.sticky-navigation').stop().animate({ "top": '-120' });
     }
 }
 
@@ -92,27 +95,29 @@ if (matchMedia('(min-width: 768px) and (max-width: 991px)').matches) {
 /* =================================
 ===  DOWNLOAD BUTTON CLICK SCROLL ==
 =================================== */
-jQuery(function( $ ){
-			$('#download-button').localScroll({
-				duration:1000
-			});
-		});
+jQuery(function ($) {
+    $('#download-button').localScroll({
+        duration: 1000
+    });
+});
 
 /* =================================
 ===  VIDEO BACKGROUND           ====
 =================================== */
 if (matchMedia('(min-width: 640px)').matches) {
-   
-   $(document).ready(function() {
-    var videobackground = new $.backgroundVideo($('body'), {
-      "align": "centerXY",
-      "width": 1280,
-      "height": 720,
-      "path": "video/",
-      "filename": "video",
-      "types": ["mp4","ogg","webm"]
+
+    $(document).ready(function () {
+        if ($.backgroundVideo) {
+            var videobackground = new $.backgroundVideo($('body'), {
+                "align": "centerXY",
+                "width": 1280,
+                "height": 720,
+                "path": "video/",
+                "filename": "video",
+                "types": ["mp4", "ogg", "webm"]
+            });
+        }
     });
-  });
 
 }
 
@@ -121,14 +126,14 @@ if (matchMedia('(min-width: 640px)').matches) {
 ===  FULL SCREEN HEADER         ====
 =================================== */
 function alturaMaxima() {
-  var altura = $(window).height();
-  $(".full-screen").css('min-height',altura); 
-  
+    var altura = $(window).height();
+    $(".full-screen").css('min-height', altura);
+
 }
 
-$(document).ready(function() {
-  alturaMaxima();
-  $(window).bind('resize', alturaMaxima);
+$(document).ready(function () {
+    alturaMaxima();
+    $(window).bind('resize', alturaMaxima);
 });
 
 
@@ -152,9 +157,9 @@ $('a.scrollto').bind('click.smoothscroll', function (event) {
 ===  WOW ANIMATION             ====
 =================================== */
 wow = new WOW(
-  {
-    mobile: false
-  });
+    {
+        mobile: false
+    });
 wow.init();
 
 
@@ -194,7 +199,7 @@ $(document).ready(function () {
     $('#screenshots a').nivoLightbox({
         effect: 'fadeScale',
     });
-
+    $('[data-toggle="tooltip"]').tooltip();
 });
 
 
@@ -232,11 +237,11 @@ $("#subscribe").submit(function (e) {
 ===  Bootstrap Internet Explorer 10 in Windows 8 and Windows Phone 8 FIX
 =================================== */
 if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
-  var msViewportStyle = document.createElement('style')
-  msViewportStyle.appendChild(
-    document.createTextNode(
-      '@-ms-viewport{width:auto!important}'
+    var msViewportStyle = document.createElement('style')
+    msViewportStyle.appendChild(
+        document.createTextNode(
+            '@-ms-viewport{width:auto!important}'
+        )
     )
-  )
-  document.querySelector('head').appendChild(msViewportStyle)
+    document.querySelector('head').appendChild(msViewportStyle)
 }

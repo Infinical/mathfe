@@ -34,6 +34,7 @@
               "src/css/styles.css"
             ],
             "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
               "src/js/bootstrap.min.js",
               "src/js/jquery.fitvids.js",
               "src/js/jquery.localScroll.min.js",
@@ -47,6 +48,7 @@
               "src/js/simple-expand.min.js",
               "src/js/smoothscroll.js",
               "src/js/wow.min.js",
+              "src/js/jquery.ajaxchimp.js",
               "src/js/custom.js",
               "src/js/charts.js"
             ]

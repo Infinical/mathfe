@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
 import { environment } from '../../environments/environment';
-
+import { throwError } from 'rxjs';
 @Injectable()
 export class CourseService {
 
@@ -16,31 +16,31 @@ export class CourseService {
   getCourses():Observable<any[]> {
     return this.http.get<any[]>(`${environment.apiURL}/courses`)
     .map((response) => response)
-    .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));;
+    .catch((error: any) => throwError(error.json().error || {message: 'Server Error'} ));;
   }
 
   getOpenCourses():Observable<any[]> {
     return this.http.get<any[]>(`${environment.apiURL}/opencourses`)
     .map((response) => response)
-    .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));;
+    .catch((error: any) => throwError(error.json().error || {message: 'Server Error'} ));;
   }
 
 	addCourse(course: Object): Observable<Course[]> {
 	    return this.http.post<Course[]>(`${environment.apiURL}/courses`, course)
 	      .map((response) => response)
-	      .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));
+	      .catch((error: any) => throwError(error.json().error || {message: 'Server Error'} ));
 	}
 	getCourse(id: String): Observable<any> {
 	  return this.http.get<any>(`${environment.apiURL}/courses/` + id)
 	    .map((response) => response['course'])
-        .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'} ));
+        .catch((error: any) => throwError(error.json().error || {message: 'Server Error'} ));
 	}
 	updateCourse(course: FormData, id: number): Observable<Course[]> {
 	  const apiUrl = `${environment.apiURL}/courses`;
 	  const url = `${apiUrl}/${id}`;
 	  return this.http.post<any>(url, course)
 	    .map((response) => response)
-	    .catch((error: any) => Observable.throw(error.error || {message: 'Server Error'}));
+	    .catch((error: any) => throwError(error.error || {message: 'Server Error'}));
 	}
 
 	deleteCourse(id: String): Observable<Course[]> {
@@ -48,6 +48,6 @@ export class CourseService {
 	  const url = `${apiUrl}/${id}`;
 	  return this.http.delete<any>(url)
 	    .map((response) => response)
-	    .catch((error: any) => Observable.throw(error.json().error || {message: 'Server Error'}));
+	    .catch((error: any) => throwError(error.json().error || {message: 'Server Error'}));
 	}
 }

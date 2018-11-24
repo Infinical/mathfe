@@ -3,6 +3,8 @@
     <div class="alert alert-success" *ngIf="enrolSuccessMessageStatus">
       <a href="javascript:" class="close" (click)="enrolSuccessMessageStatus = false;" aria-label="close">×</a>
       <p>{{enrolSuccessMessage}}</p>
+      <p>Code - {{mastercode}}</p>
+      <p>Placed allocated - {{places_allocated}}</p>
     </div>
     <ag-userinfo [user]="user"></ag-userinfo>
     <div class="container">
@@ -19,12 +21,6 @@
       </section>
       <section class="enrolled" id="teaching" class="tab-pane fade in" [class.active]="activeTab==2">
         <ag-teach-list (selectedEvent)="selectTeach($event)"></ag-teach-list>
-        <!--<ul class="nav nav-pills ul-center">
-        <li><a routerLink="/member/student-management">Student Management</a></li>
-        <li><a routerLink="/member/course-management"> Course Management</a></li>
-      </ul>-->
-        <!--<ag-teach-detail [user]="user" [selectedTeach]="selectedTeach" (selectedEvent)="selectTeach($event)" (selectedVideo)="selectSkill($event)"></ag-teach-detail>
-      <ag-teach-list (selectedEvent)="selectTeach($event)"></ag-teach-list>-->
       </section>
       <section class="enrolled" id="recommendedcourses" class="tab-pane fade in" [class.active]="activeTab==3">
         <div class="container">

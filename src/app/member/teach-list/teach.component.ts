@@ -13,5 +13,8 @@ export class TeachComponent implements OnInit {
 
   ngOnInit() {
   }
+  handleImageLoadError = (event) => {
+    event.target.src = "/assets/images/noImage.png";
+  }
 
 }

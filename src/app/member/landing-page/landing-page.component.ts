@@ -42,7 +42,8 @@ export class LandingPageComponent implements OnInit {
   allEmailsRequired = false;
   enrolSuccessMessage: any;
   enrolSuccessMessageStatus = false;
-
+  placed_allocated: any;
+  mastercode: any;
   public payPalConfig?: PayPalConfig;
 
   constructor(private dashboardService: DashboardService, private modalService: ModalService, public http: HttpClient) { }
@@ -223,6 +224,8 @@ export class LandingPageComponent implements OnInit {
             this.enrolSuccessMessage = data['message'];
             this.enrolSuccessMessageStatus = true;
             this.isModal = false;
+            this.placed_allocated = data['placed_allocated'];;
+            this.mastercode = data['code'];
             localStorage.removeItem('house');
           }, error => {
             console.log("Rrror", error);
