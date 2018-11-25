@@ -40,7 +40,7 @@ export class TeachDetailStudentComponent implements OnInit {
 
   ngOnInit() {
   }
-  unSelect(house: House) {
-    this.selectedEvent.emit(null);
-  }
+  // unSelect(house: House) {
+  //   this.selectedEvent.emit(null);
+  // }
 }

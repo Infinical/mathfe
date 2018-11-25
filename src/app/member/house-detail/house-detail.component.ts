@@ -20,9 +20,9 @@ export class HouseDetailComponent implements OnInit {
   ngOnInit() {
   }
 
-  unSelect(house: House) {
-  	this.selectedEvent.emit(null);
-  }
+  // unSelect(house: House) {
+  // 	this.selectedEvent.emit(null);
+  // }
 
   onVideo(skill: Skill) {
   	this.selectedVideo.emit(skill);

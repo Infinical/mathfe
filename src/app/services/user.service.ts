@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
 import { throwError } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
-import { environment } from '../../environments/environment'; 
+import { environment } from '../../environments/environment';
 @Injectable()
 export class UserService {
 
@@ -21,11 +21,10 @@ export class UserService {
       .map((response) => response['user'])
       .catch((error: any) => throwError(error.json().error || { message: 'Server Error' }));
   }
-  updateUser(user: Object, userId: any): Observable<User[]> {
-    debugger;
+  updateUser(user: FormData, userId: Number): Observable<User[]> {
     const apiUrl = `${environment.apiURL}/users`
     const url = `${apiUrl}/${userId}`;
-    return this.http.put<any[]>(url, user)
+    return this.http.post<any[]>(url, user)
       .map((response) => response)
       .catch((error: any) => throwError(error.error || { message: 'Server Error' }));
   }

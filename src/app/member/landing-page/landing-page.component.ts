@@ -149,6 +149,7 @@ export class LandingPageComponent implements OnInit {
           }
         }
       }
+
       var selectedValue = this.modalRadio;
       this.allEmailsRequired = false;
       this.isFormInvaild = true;
@@ -174,6 +175,10 @@ export class LandingPageComponent implements OnInit {
 
   }
 
+  public enrolZeroCoast() {
+    this.saveToEnrolments(9999);
+  }
+
   public initConfig(): void {
     this.payPalConfig = new PayPalConfig(
       PayPalIntegrationType.ClientSideREST,
@@ -193,43 +198,7 @@ export class LandingPageComponent implements OnInit {
           return of(undefined);
         },
         onPaymentComplete: (data, actions) => {
-
-          var httpOptions = {
-            headers: new HttpHeaders(
-              {
-                'Content-Type': 'application/json',
-                'Authorization': localStorage.getItem('access_token')
-              }
-            )
-          };
-          var param = {
-            role: this.modalRadio,
-            user_id: this.houseObj.user_id,
-            transaction_id: data.paymentID,
-            places_alloted: 123,
-            amount_paid: this.price_value,
-            currency_code: this.currency_value,
-            house_id: this.houseObj.id
-          };
-          for (let index in this.email_value) {
-            param['student_email' + index] = this.email_value[index];
-          }
-
-          this.http.post(
-            'http://devapi.pamelalim.me/enrolments',
-            param,
-            httpOptions
-          ).subscribe(data => {
-            console.log("response", data);
-            this.enrolSuccessMessage = data['message'];
-            this.enrolSuccessMessageStatus = true;
-            this.isModal = false;
-            this.placed_allocated = data['placed_allocated'];;
-            this.mastercode = data['code'];
-            localStorage.removeItem('house');
-          }, error => {
-            console.log("Rrror", error);
-          });
+          this.saveToEnrolments(data.paymentID);
         },
         onCancel: (data, actions) => {
           console.log('OnCancel');
@@ -291,4 +260,43 @@ export class LandingPageComponent implements OnInit {
     );
   }
 
+  saveToEnrolments(transaction_id) {
+
+    var httpOptions = {
+      headers: new HttpHeaders(
+        {
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('access_token')
+        }
+      )
+    };
+    var param = {
+      role: this.modalRadio,
+      user_id: this.houseObj.user_id,
+      transaction_id: transaction_id,
+      places_alloted: this.modalRadio == "parent" ? this.place_value : 1,
+      amount_paid: this.price_value,
+      currency_code: this.currency_value,
+      house_id: this.houseObj.id
+    };
+    for (let index in this.email_value) {
+      param['student_email' + index] = this.email_value[index];
+    }
+
+    this.http.post(
+      'http://devapi.pamelalim.me/enrolments',
+      param,
+      httpOptions
+    ).subscribe(data => {
+      console.log("response", data);
+      this.enrolSuccessMessage = data['message'];
+      this.enrolSuccessMessageStatus = true;
+      this.isModal = false;
+      this.placed_allocated = data['places_alloted'];;
+      this.mastercode = data['code'];
+      localStorage.removeItem('house');
+    }, error => {
+      console.log("Rrror", error);
+    });
+  }
 }

@@ -1,11 +1,5 @@
 <section class="screenshots grey-bg" id="courses">
   <div class="container">
-    <div class="alert alert-success" *ngIf="enrolSuccessMessageStatus">
-      <a href="javascript:" class="close" (click)="enrolSuccessMessageStatus = false;" aria-label="close">×</a>
-      <p>{{enrolSuccessMessage}}</p>
-      <p>Code - {{mastercode}}</p>
-      <p>Placed allocated - {{places_allocated}}</p>
-    </div>
     <ag-userinfo [user]="user"></ag-userinfo>
     <div class="container">
       <ul class="nav nav-pills">
@@ -38,63 +32,77 @@
     </div>
   </div>
 </section>
+
 <jw-modal *ngIf="isModal" id="enrollment-modal">
   <div>
     <span class="jw-title">Enrol Info</span>
     <span class="jw-close" (click)="closeModal()">&times;</span>
   </div>
-
-
-  <div class="jw-modal-container">
-    <div class="jw-modal-row">
-      <input class="enrol-parent" (click)="validatePaypalButton()" type="radio" name="enrol_radio" value="parent"
-        [(ngModel)]="modalRadio"> Parent
-      <div class="enrol-parent-field">
-        <div class="student-mail-group">
-          <div class="mail" *ngFor="let number of numbers; let i = index">
-            <label>Student Email {{number+1}}</label>
-            <input *ngIf="modalRadio == 'parent'" class="student-mail" type="email" name="student_mail" (change)="validatePaypalButton()"
-              [(ngModel)]="email_value[i]" required>
-            <p class="red txt-center" *ngIf="email_errors[i]">Please enter a vaild email address.</p>
-            <input *ngIf="modalRadio != 'parent'" class="student-mail-disable" type="text" name="student_mail" disabled>
+  <div *ngIf="enrolSuccessMessageStatus">
+    <div class="alert alert-success">
+      <p>{{enrolSuccessMessage}}</p>
+      <p>Code - {{mastercode}}</p>
+      <p>Placed allocated - {{placed_allocated}}</p>
+    </div>
+    <button class="btn btn-primary" (click)="closeModal()" type="button">Close</button>
+  </div>
+  <div *ngIf="!enrolSuccessMessageStatus">
+    <div class="jw-modal-container">
+      <div class="jw-modal-row">
+        <input class="enrol-parent" (click)="validatePaypalButton()" type="radio" name="enrol_radio" value="parent"
+          [(ngModel)]="modalRadio"> Parent
+        <div class="enrol-parent-field">
+          <div class="student-mail-group">
+            <div class="mail" *ngFor="let number of numbers; let i = index">
+              <label>Student Email {{number+1}}</label>
+              <input *ngIf="modalRadio == 'parent'" class="student-mail" type="email" name="student_mail" (change)="validatePaypalButton()"
+                [(ngModel)]="email_value[i]" required>
+              <p class="red txt-center" *ngIf="email_errors[i]">Please enter a vaild email address.</p>
+              <input *ngIf="modalRadio != 'parent'" class="student-mail-disable" type="text" name="student_mail"
+                disabled>
+            </div>
+            <p class="red txt-center" *ngIf="allEmailsRequired">All Emails Required</p>
           </div>
-          <p class="red txt-center" *ngIf="allEmailsRequired">All Emails Required</p>
+          <div class="number">
+            <label>Number of places</label>
+            <input *ngIf="modalRadio == 'parent'" minvalue="1" maxvalue="10" class="number-place" type="number" name="number_place"
+              [(ngModel)]="place_value" (change)="onChange($event)">
+            <input *ngIf="modalRadio != 'parent'" class="number-place-disable" type="number" name="number_place"
+              disabled>
+          </div>
         </div>
-        <div class="number">
-          <label>Number of places</label>
-          <input *ngIf="modalRadio == 'parent'" minvalue="1" maxvalue="10" class="number-place" type="number" name="number_place"
-            [(ngModel)]="place_value" (change)="onChange($event)">
-          <input *ngIf="modalRadio != 'parent'" class="number-place-disable" type="number" name="number_place" disabled>
+      </div>
+      <div class="jw-modal-row">
+        <input class="enrol-student" type="radio" name="enrol_radio" value="student" (click)="validatePaypalButton()"
+          [(ngModel)]="modalRadio"> Student
+      </div>
+    </div>
+    <div class="jw-modal-container second-container">
+      <div class="jw-modal-row">
+        <div class="currency-text">
+          <label>Currency</label>
+          <input class="currency" type="text" [(ngModel)]="currency_value" name="currency" disabled>
+        </div>
+        <div class="price-text">
+          <label>Price</label>
+          <input class="price" type="text" name="price" [(ngModel)]="price_value" disabled>
+        </div>
+        <div class="description-text">
+          <label>Description</label>
+          <input class="description" type="text" name="description" [(ngModel)]="description" disabled>
+        </div>
+        <div class="amount-text">
+          <label>Amount Due</label>
+          <input class="amount" type="text" name="amount" [(ngModel)]="amount_due" disabled>
         </div>
       </div>
     </div>
-    <div class="jw-modal-row">
-      <input class="enrol-student" type="radio" name="enrol_radio" value="student" (click)="validatePaypalButton()"
-        [(ngModel)]="modalRadio"> Student
+    <div class="jw-modal-container third-container">
+      <div [title]="getInVaildFormTitle()" [class.is-form-invaild]="isFormInvaild"></div>
+      <div *ngIf="price_value==0">
+        <button class="btn btn-primary" (click)="enrolZeroCoast()" type="button">Enroll</button>
+      </div>
+      <ngx-paypal *ngIf="price_value>0" [config]="payPalConfig"></ngx-paypal>
     </div>
-  </div>
-  <div class="jw-modal-container second-container">
-    <div class="jw-modal-row">
-      <div class="currency-text">
-        <label>Currency</label>
-        <input class="currency" type="text" [(ngModel)]="currency_value" name="currency" disabled>
-      </div>
-      <div class="price-text">
-        <label>Price</label>
-        <input class="price" type="text" name="price" [(ngModel)]="price_value" disabled>
-      </div>
-      <div class="description-text">
-        <label>Description</label>
-        <input class="description" type="text" name="description" [(ngModel)]="description" disabled>
-      </div>
-      <div class="amount-text">
-        <label>Amount Due</label>
-        <input class="amount" type="text" name="amount" [(ngModel)]="amount_due" disabled>
-      </div>
-    </div>
-  </div>
-  <div class="jw-modal-container third-container">
-    <div [title]="getInVaildFormTitle()" [class.is-form-invaild]="isFormInvaild"></div>
-    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
   </div>
 </jw-modal>
