@@ -17,39 +17,32 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   constructor(private userService: UserService) { }
   fileToUplaod: File = null;
-  savedImageUrl = "";
   ngOnInit() {
     this.params = this.user['id'];
-    this.savedImageUrl = this.user['image'];
   }
 
   ngOnDestroy() {
-   // this.params.unsubscribe();
+    // this.params.unsubscribe();
   }
   handelFileInput(file: FileList) {
     this.fileToUplaod = file.item(0);
-    let reader = new FileReader();
-    reader.onload = (event: any) => {
-      this.savedImageUrl = event.target.result;
-    }
-    reader.readAsDataURL(this.fileToUplaod)
   }
   updateUser(user) {
-    debugger;
+
     const fData: FormData = new FormData();
+    fData.append('_method', 'PUT');
     for (let key in user) {
       if (key != "image")
         fData.append(key, user[key]);
     }
     if (this.fileToUplaod != null) {
-      fData.append("image", this.fileToUplaod, this.fileToUplaod.name);
+      fData.append("image", this.fileToUplaod);
     } else {
       fData.append("image", user.image);
     }
     this.userService.updateUser(fData, user.id)
       .subscribe(
         (user: any) => {
-
           this.user = user.user;
           this.status = 'success';
           this.message = user['message'];
@@ -60,7 +53,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         error => {
           console.log(<any>error);
           this.status = 'error';
-          this.message = error['message'] || 'No allow';
+          this.message = error['message'] || 'Not allowed';
         }
       );
   }

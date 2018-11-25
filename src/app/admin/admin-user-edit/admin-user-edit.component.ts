@@ -17,7 +17,7 @@ export class AdminUserEditComponent implements OnInit, OnDestroy {
   user = new User('id', 'name', 'firstname', 'lastname', 'contact', 'email', 0, 'maxile_level', 'game_level', 'date_of_birth', 'last_test_date', 'next_test_date', 'image');
 
   constructor(private activatedRoute: ActivatedRoute, private userService: UserService) { }
-
+  fileToUplaod: File = null; 
   ngOnInit() {
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
     this.userService.getUser(this.id).subscribe(
@@ -26,13 +26,26 @@ export class AdminUserEditComponent implements OnInit, OnDestroy {
       },
       error => console.log(<any>error));
   }
-
+  handelFileInput(file: FileList) {
+    this.fileToUplaod = file.item(0); 
+  }
   ngOnDestroy() {
     this.params.unsubscribe();
   }
 
   updateUser(user) {
-    this.userService.updateUser(user, user.id)
+    const fData: FormData = new FormData();
+    fData.append('_method', 'PUT');
+    for (let key in user) {
+      if (key != "image")
+        fData.append(key, user[key]);
+    }
+    if (this.fileToUplaod != null) {
+      fData.append("image", this.fileToUplaod);
+    } else {
+      fData.append("image", user.image);
+    }
+    this.userService.updateUser(fData, user.id)
       .subscribe(
         user => {
           this.status = 'success';
