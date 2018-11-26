@@ -98,7 +98,7 @@ import { NgMasonryGridModule } from 'ng-masonry-grid';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { DataTableModule } from "angular-6-datatable";
 
-
+import { KatexModule } from 'ng-katex';
 
 
 export function tokenGetter() {
@@ -196,7 +196,8 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     AngularEditorModule,
     NgMasonryGridModule,
-    DataTableModule
+    DataTableModule,
+    KatexModule
   ],
   entryComponents: [DialogDeleteCourse, DialogDeleteQuestion],
   providers: [TrackService, CourseService, QuestionService, DashboardService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService, ModalService],
@@ -204,3 +205,5 @@ export function tokenGetter() {
 })
 
 export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);

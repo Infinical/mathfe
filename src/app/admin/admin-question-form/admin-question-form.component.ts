@@ -7,6 +7,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Question } from '../../models/question';
 import { FormControl, FormGroup, Validators, FormBuilder, AbstractControl  } from '@angular/forms';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { KatexOptions } from 'ng-katex';
+import katex from 'katex';
 
 @Component({
   selector: 'ag-admin-question-form',
@@ -39,6 +41,11 @@ export class AdminQuestionFormComponent implements OnInit {
   formResponse: any;
   apiURL: string = environment.apiURL;
   loading = false;
+  equation = "";
+  options: KatexOptions = {
+    displayMode: true
+  };
+  displayKatex = false;
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -47,12 +54,6 @@ export class AdminQuestionFormComponent implements OnInit {
     minHeight: '5rem',
     placeholder: 'Question',
     translate: 'no',
-    customClasses: [ // optional
-      {
-        name: "white",
-        class: "white",
-      },
-    ]
   };
 
   refreshImages(data: any){
@@ -61,6 +62,46 @@ export class AdminQuestionFormComponent implements OnInit {
     this.img1URL = (data.answer1_image) ? this.apiURL + data.answer1_image : this.img1URL;
     this.img2URL = (data.answer2_image) ? this.apiURL + data.answer2_image : this.img2URL;
     this.img3URL = (data.answer3_image) ? this.apiURL + data.answer3_image : this.img3URL;
+  }
+
+  isKatex(question){
+  	var isKatex = false;
+
+    if (question === "<br>") {
+      this.question.question = "";
+      question = "";
+    };
+    if (question.length <= 0) isKatex = false;
+    
+    const mathSymbols = [
+      "+","-","=","!","/","(",")","[", "]", "<", ">", "|","'",":","*", "^", "{", "}"
+    ];
+    
+    mathSymbols.forEach(function(symbol){
+      if (question.indexOf(symbol, 0) >= 0) isKatex = true;
+    });
+
+    if (question.indexOf("</") >= 0) isKatex = false;
+    if (question.indexOf("class") >= 0) isKatex = false;
+    if (question.indexOf("input") >= 0) isKatex = false;
+    if (question.indexOf("<br>") >= 0) isKatex = false;
+
+    return isKatex;
+  }
+
+  katexClick(){
+    this.displayKatex = !this.displayKatex;
+
+    if (this.displayKatex) this.equation = this.question.question;
+  }
+
+  equationChange(event){
+
+    const katexDiv: any = document.getElementById('katex');
+    var html = katex.renderToString(event, {
+        throwOnError: false
+    });
+    katexDiv.innerHTML = html;    
   }
   
   ngOnInit() {
@@ -74,6 +115,7 @@ export class AdminQuestionFormComponent implements OnInit {
           .subscribe((data) => {
             this.loading = false;
             this.question = data;
+            this.displayKatex = this.isKatex(this.question.question);        
             this.refreshImages(data);
           }, error => {
 
@@ -131,7 +173,7 @@ export class AdminQuestionFormComponent implements OnInit {
             skill.id == this.question.skill_id);
         }
       }      
-    });    
+    });
   } 
 
   levelChange(e: any){
@@ -200,7 +242,7 @@ export class AdminQuestionFormComponent implements OnInit {
     const questionValue = (this.question.question.indexOf('&lt;') >= 0) ? 
                           this.question.question.replace(/&lt;/g, '<').replace(/&gt;/g, '>') :
                           this.question.question;
-
+    
     const form = {
       answer0: this.question.answer0,
       answer0_image: (this.answerOneImg) ? this.answerOneImg : '',
@@ -242,6 +284,7 @@ export class AdminQuestionFormComponent implements OnInit {
     this.question.question = (this.question.question.indexOf('&lt;') >= 0) ? 
                              this.question.question.replace(/&lt;/g, '<').replace(/&gt;/g, '>') :
                              this.question.question;
+
     var form = new FormData();
     form.append('_method', 'PATCH');
     form.append('answer0', this.question.answer0);
