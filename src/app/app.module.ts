@@ -89,7 +89,6 @@ import { RecommendedCoursesComponent } from './member/recommended-courses/recomm
 import { ClassManagementSharedComponent } from './member/class-management-shared/class-management-shared.component';
 import { EnrolledClassComponent } from './member/enrolled-class/enrolled-class.component'
 
-
 //Angular Material
 import { AngularMaterialModule } from './angularmaterial.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -99,11 +98,11 @@ import { NgMasonryGridModule } from 'ng-masonry-grid';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { DataTableModule } from "angular-6-datatable";
 
-
+import { KatexModule } from 'ng-katex';
 
 
 export function tokenGetter() {
-    return localStorage.getItem("token");
+  return localStorage.getItem("token");
 }
 
 @NgModule({
@@ -182,7 +181,7 @@ export function tokenGetter() {
     routes,
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
+    ReactiveFormsModule.withConfig({ warnOnNgModelWithFormControl: 'never' }),
     HttpClientModule,
     HttpModule,
     ChartsModule,
@@ -191,14 +190,15 @@ export function tokenGetter() {
       config: {
         tokenGetter: tokenGetter,
         whitelistedDomains: [
-        'localhost:4200', 'localhost',  'devapi.pamelalim.me', 'localhost:8000', 'quiz.pamelalim.me','api.pamelalim.me', 'math.pamelalim.me', 'quiz.all-gifted.com']
+          'localhost:4200', 'localhost', 'devapi.pamelalim.me', 'localhost:8000', 'quiz.pamelalim.me', 'api.pamelalim.me', 'math.pamelalim.me', 'quiz.all-gifted.com']
       }
     }),
     AngularMaterialModule,
     BrowserAnimationsModule,
     AngularEditorModule,
     NgMasonryGridModule,
-    DataTableModule
+    DataTableModule,
+    KatexModule
   ],
   entryComponents: [DialogDeleteCourse, DialogDeleteQuestion],
   providers: [TrackService, CourseService, QuestionService, DashboardService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService, ModalService],
@@ -206,3 +206,6 @@ export function tokenGetter() {
 })
 
 export class AppModule { }
+
+
+

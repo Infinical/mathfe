@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
 import { QuestionService } from '../../services/question.service';
 import { MatPaginator, MatTableDataSource, MatSort, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'; 
+import { KatexOptions } from 'ng-katex';
 
 export interface DialogData { id: string }
 
@@ -23,13 +24,34 @@ export class AdminQuestionListComponent implements OnInit {
   currentPage = 1;
   selectedQuestion: any; 
   loading = true;
-
+  options: KatexOptions = {
+    displayMode: true
+  };
+  
   constructor(private http: HttpClient, private questionService: QuestionService, public dialog: MatDialog) { 
     this.onPaginateChange({pageIndex: this.currentPage});    
   }
 
   ngOnInit() {
 
+  }
+
+  displayKatex(question: string){
+    var isKatex = false;
+    if (question.length <= 0) isKatex = false;
+    
+    const mathSymbols = [
+      "+","-","=","!","/","(",")","[", "]", "<", ">", "|","'",":","*", "^", "{", "}"
+    ];
+    
+    mathSymbols.forEach(function(symbol){
+      if (question.indexOf(symbol, 0) >= 0) isKatex = true;
+    });
+
+    if (question.indexOf("</") >= 0) isKatex = false;
+    if (question.indexOf("class") >= 0) isKatex = false;
+    if (question.indexOf("input") >= 0) isKatex = false;
+    return isKatex;
   }
 
   onPaginateChange(e: any, origin?: string){
