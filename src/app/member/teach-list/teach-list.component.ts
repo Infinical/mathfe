@@ -16,7 +16,7 @@ export class TeachListComponent implements OnInit {
   constructor(private dashboardService: DashboardService, private router: Router) { }
 
   ngOnInit() {
-    this.houses = this.dashboardService.getTeach(); 
+    this.houses = this.dashboardService.getTeach();
     this.houses
       .subscribe(
         houses => {
@@ -28,7 +28,7 @@ export class TeachListComponent implements OnInit {
       );
   }
 
-  onSelect(house: House) {   
+  onSelect(house: House) {
     this.router.navigate(["/member/student-management",house.id]); 
   }
   isDataLoaded(d) {

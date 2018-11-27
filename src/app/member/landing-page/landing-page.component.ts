@@ -170,9 +170,7 @@ export class LandingPageComponent implements OnInit {
         this.isFormInvaild = false;
         this.amount_due = this.price_value;
       }
-
     }, 100)
-
   }
 
   public enrolZeroCoast() {
@@ -291,7 +289,7 @@ export class LandingPageComponent implements OnInit {
       console.log("response", data);
       this.enrolSuccessMessage = data['message'];
       this.enrolSuccessMessageStatus = true;
-      this.isModal = false;
+      //this.isModal = false;
       this.placed_allocated = data['places_alloted'];;
       this.mastercode = data['code'];
       localStorage.removeItem('house');

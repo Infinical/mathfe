@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { House } from '../../models/house';
 import { DashboardService } from '../../services/dashboard.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ag-house-list',
@@ -12,14 +13,24 @@ export class HouseListComponent implements OnInit {
   selectedHouse: House;
   @Output() selectedEvent: EventEmitter<House> = new EventEmitter<House>();
 
-  constructor(private dashboardService: DashboardService) { }
+  constructor(private dashboardService: DashboardService, private router: Router) { }
 
   ngOnInit() {
     this.houses = this.dashboardService.getHouses();
+    this.houses
+      .subscribe(
+      houses => {
+        localStorage.setItem("enrolledClassSelectedHouse", JSON.stringify(houses));
+      },
+      error => {
+        console.log(<any>error);
+      }
+      );
   }
 
   onSelect(house: House) {
-  	this.selectedEvent.emit(house);
+  	//this.selectedEvent.emit(house);
+    this.router.navigate(["/member/enrolled-class", house.id]); 
   }
 
 }
