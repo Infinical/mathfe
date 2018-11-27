@@ -1,3 +1,11 @@
 .house-detail {
   margin: 20px auto;
 }
+
+tr.row-green, tr.row-green>td {
+  background-color: #a2f4a2 !important;
+}
+
+tr.row-yellow, tr.row-yellow>td {
+  background-color: #fbd136ed !important
+}

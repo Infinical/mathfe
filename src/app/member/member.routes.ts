@@ -9,6 +9,7 @@ import { ClassManagementComponent } from "./class-management/class-management.co
 import { StudentManagementComponent } from "./student-management/student-management.component";
 import { CourseManagementComponent } from "./course-management/course-management.component";
 import { RecommendedCoursesComponent } from "./recommended-courses/recommended-courses.component";
+import { EnrolledClassComponent } from "./enrolled-class/enrolled-class.component";
 
 export const memberRoutes: Routes = [
   { path: '', component: MemberDashboardComponent},
@@ -19,5 +20,6 @@ export const memberRoutes: Routes = [
   { path: 'class-management', component: ClassManagementComponent },
   { path: 'student-management/:id', component: StudentManagementComponent },
   { path: 'course-management/:id', component: CourseManagementComponent },
-  { path: 'recommended-courses', component: RecommendedCoursesComponent }
+  { path: 'recommended-courses', component: RecommendedCoursesComponent },
+  { path: 'enrolled-class/:id',component:EnrolledClassComponent}
 ];

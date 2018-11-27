@@ -87,6 +87,7 @@ import { TeachDetailStudentComponent } from './member/teach-list/teach-detail-st
 import { TeachDetailCourseComponent } from './member/teach-list/teach-detail-course/teach-detail-course.component';
 import { RecommendedCoursesComponent } from './member/recommended-courses/recommended-courses.component';
 import { ClassManagementSharedComponent } from './member/class-management-shared/class-management-shared.component';
+import { EnrolledClassComponent } from './member/enrolled-class/enrolled-class.component'
 
 
 //Angular Material
@@ -174,7 +175,8 @@ export function tokenGetter() {
     TeachDetailStudentComponent,
     TeachDetailCourseComponent,
     RecommendedCoursesComponent,
-    ClassManagementSharedComponent
+    ClassManagementSharedComponent,
+    EnrolledClassComponent
   ],
   imports: [
     routes,
