@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
-declare var jQuery:any;
-declare var $ :any;
+import { Router } from "@angular/router";
+declare var $: any;
+
 
 @Component({
   selector: 'ag-navbar',
@@ -10,41 +11,56 @@ declare var $ :any;
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private authService:AuthService) { }
-  
+  constructor(private authService: AuthService, public router: Router) { }
+  isHomeActive = false;
   ngOnInit() {
-
+    this.router.events.subscribe((r: any) => {
+      if (r.url == "/" || r.url == "/member") {
+        this.isHomeActive = true;
+      } else {
+        this.isHomeActive = false;
+      }
+    });
+    
     $(document).ready(function () {
-        mainNav();
+      mainNav();
     });
 
     $(window).scroll(function () {
-        mainNav();
+      mainNav();
     });
 
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('.main-navigation').onePageNav({
         scrollThreshold: 0.2, // Adjust if Navigation highlights too early or too late
         filter: ':not(.external)',
         changeHash: true
       });
-      
+
     })
 
     function mainNav() {
-      // var top = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-      // if (top > 40) $('.sticky-navigation').stop().animate({"top": '0'});
+      if (matchMedia('(min-width: 768px) and (max-width: 991px)').matches) {
+        var top = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+        if (top > 40) $('.sticky-navigation').stop().animate({ "top": '0' });
 
-      // else $('.sticky-navigation').stop().animate({"top": '-60'});
+        else $('.sticky-navigation').stop().animate({ "top": '-120' });
+      }
+      if (matchMedia('(min-width: 992px), (max-width: 767px)').matches) {
+        var top = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+        if (top > 40) $('.sticky-navigation').stop().animate({ "top": '0' });
+
+        else $('.sticky-navigation').stop().animate({ "top": '-60' });
+      }
     }
 
   }
 
-  public login(){
-  	this.authService.login();
+  public login() {
+    this.authService.login();
   }
 
-  public logout(){
+  public logout() {
     this.authService.logout();
     localStorage.clear();
   }
@@ -54,5 +70,11 @@ export class NavbarComponent implements OnInit {
     // access token's expiry time
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     return new Date().getTime() < expiresAt;
+  }
+
+  public collapseMenuOnMobile() {
+    if (matchMedia('(max-width: 480px)').matches) {
+      $(".navbar-toggle").click();
+    }
   }
 }

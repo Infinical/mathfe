@@ -1,9 +1,8 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { House } from '../../../models/house';
-import { Chart } from 'chart.js';
+
 import { Skill } from '../../../models/skill';
-declare var jQuery:any;
-declare var $ :any;
+ 
 import { TrackService } from '../../../services/track.service';
 import { SkillService } from '../../../services/skill.service';
 

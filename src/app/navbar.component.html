@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#kane-navigation">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -14,29 +14,27 @@
     <!-- Navbar Right -->
     <div class="collapse navbar-collapse" id="kane-navigation" *ngIf="!isAuthenticated()">
       <ul class="nav navbar-nav navbar-right main-navigation">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#howitworks">How it Works</a></li>
-        <li><a href="#courses">Courses</a></li>
-        <li><a href="#ourprograms">Programs</a></li>
-        <li><a href="#pedagogy">Pedagogy</a></li>
-        <li><a href="#philosophy">Teaching Philosophy</a></li>
-        <li><a href="#aboutus">About Us</a></li>
-        <li *ngIf="isAuthenticated()"><a class="external" (click)="logout()">Logout</a></li>
-        <li *ngIf="!isAuthenticated()"><a class="external" (click)="login()">Login</a></li>
+        <li><a (click)="collapseMenuOnMobile()" href="#home">Home</a></li>
+        <li><a (click)="collapseMenuOnMobile()" href="#howitworks">How it Works</a></li>
+        <li><a (click)="collapseMenuOnMobile()" href="#courses">Courses</a></li>
+        <li><a (click)="collapseMenuOnMobile()" href="#ourprograms">Programs</a></li>
+        <li><a (click)="collapseMenuOnMobile()" href="#pedagogy">Pedagogy</a></li>
+        <li><a (click)="collapseMenuOnMobile()" href="#philosophy">Teaching Philosophy</a></li>
+        <li><a (click)="collapseMenuOnMobile()" href="#aboutus">About Us</a></li>
+        <li (click)="collapseMenuOnMobile()"><a class="external" (click)="login()">Login</a></li>
       </ul>
     </div>
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2" *ngIf="isAuthenticated()">
+    <div class="collapse navbar-collapse" id="kane-navigation" *ngIf="isAuthenticated()">
       <ul class="nav navbar-nav navbar-right">
-        <li [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active"><a [routerLink]="['']"><i class="icon_house_alt"></i></a></li>
-        <li routerLinkActive="active"><a [routerLink]="['/leader']"><i class="icon_star_alt"></i></a></li>
-        <li routerLinkActive="active"><a [routerLink]="['/admin']"><i class="icon_pencil-edit"></i></a></li>
+        <li [class.active]="isHomeActive"><a (click)="collapseMenuOnMobile()" [routerLink]="['']"><i class="icon_house_alt"></i></a></li>
+        <li routerLinkActive="active"><a (click)="collapseMenuOnMobile()" [routerLink]="['/leader']"><i class="icon_star_alt"></i></a></li>
+        <li routerLinkActive="active"><a (click)="collapseMenuOnMobile()" [routerLink]="['/admin']"><i class="icon_pencil-edit"></i></a></li>
         <li class="dropdown" ngDropdown>
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="icon_profile"></i>
             <span class="caret"></span></a>
 
           <ul class="dropdown-menu" role="menu">
-            <li *ngIf="isAuthenticated()"><a (click)="logout()">Logout</a></li>
-            <li *ngIf="!isAuthenticated()"><a (click)="login()">Login</a></li>
+            <li (click)="collapseMenuOnMobile()"><a (click)="logout()">Logout</a></li>
           </ul>
         </li>
       </ul>

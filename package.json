@@ -41,6 +41,7 @@
     "core-js": "^2.4.1",
     "imagesloaded": "^4.1.4",
     "jquery": "^3.3.1",
+    "katex": "^0.10.0",
     "masonry-layout": "^4.2.2",
     "ng-auto-complete": "^2.7.14",
     "ng-katex": "^1.0.3",
@@ -50,8 +51,7 @@
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
     "save": "^2.3.2",
-    "zone.js": "0.8.14",
-    "katex": "^0.10.0"
+    "zone.js": "0.8.14"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.6.0",
