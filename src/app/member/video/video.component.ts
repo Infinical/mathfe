@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Skill } from '../../models/skill';
-declare var jQuery:any;
+import { ActivatedRoute } from '@angular/router'; 
+
 declare var $ :any;
 
 @Component({

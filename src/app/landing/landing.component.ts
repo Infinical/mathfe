@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Course } from '../models/course';
-import { CourseService } from '../services/course.service';
-declare var jQuery:any;
+import { CourseService } from '../services/course.service'; 
 declare var $ :any;
 
 @Component({

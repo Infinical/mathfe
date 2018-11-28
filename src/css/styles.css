@@ -13,7 +13,7 @@ html {
 }
 
 body {
-    background:grey;
+    background: grey;
     font-family: 'Raleway', sans-serif;
     font-size: 16px;
     font-weight: 300;
@@ -23,7 +23,6 @@ body {
     overflow-x: hidden !important;
     margin: auto !important;
 }
-
 
 /* Internet Explorer 10 in Windows 8 and Windows Phone 8 Bug fix */
 
@@ -49,31 +48,26 @@ body {
 
 a {
     -webkit-transition: all ease 0.25s;
-            transition: all ease 0.25s;
+    transition: all ease 0.25s;
 }
 
 a:hover {
     text-decoration: none;
 }
 
-.btn:focus,
-.btn:active {
+.btn:focus, .btn:active {
     outline: inherit;
 }
 
-
 /* Other fixes*/
 
-*,
-*:before,
-*:after {
+*, *:before, *:after {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
-            box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-ul,
-ol {
+ul, ol {
     padding-left: 0 !important;
 }
 
@@ -81,9 +75,10 @@ li {
     list-style: none;
 }
 
-
 /* PRE LOADER */
+
 .preloader {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -96,6 +91,10 @@ li {
     overflow: hidden !important;
 }
 
+ag-root:empty+.preloader {
+    display: block;
+}
+
 .status {
     width: 40px;
     height: 40px;
@@ -106,16 +105,16 @@ li {
     background-repeat: no-repeat;
     background-position: center;
     -webkit-background-size: cover;
-            background-size: cover;
+    background-size: cover;
     margin: -20px 0 0 -20px;
 }
-
 
 /*---------------------------------------
    Typography                
 -----------------------------------------*/
 
 /* FONT FACE LOADER */
+
 @font-face {
     font-family: 'Lane';
     src: url('../fonts/lanenar_Lane.eot');
@@ -125,7 +124,6 @@ li {
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
- 
     @font-face {
         font-family: 'Lane';
         src: url('../fonts/lanenar_Lane.svg#Lane') format('svg');
@@ -134,8 +132,7 @@ li {
 
 /* HEADINGS */
 
-h1,
-h2 {
+h1, h2 {
     font-family: 'Lane', sans-serif;
     font-weight: normal;
 }
@@ -171,8 +168,7 @@ h5 {
    CUSTOM BUTTON              
 -----------------------------------------*/
 
-.standard-button,
-.standard-button2 {
+.standard-button, .standard-button2 {
     font-size: 18px;
     font-weight: 400 !important;
     border-radius: 4px !important;
@@ -183,21 +179,18 @@ h5 {
     padding: 16px 25px 16px 25px;
     margin: 5px;
     -webkit-transition: all ease 0.25s;
-            transition: all ease 0.25s;
+    transition: all ease 0.25s;
 }
 
-.standard-button:hover,
-.standard-button2:hover {
+.standard-button:hover, .standard-button2:hover {
     border: none;
 }
 
-.standard-button i,
-.standard-button2 i {
+.standard-button i, .standard-button2 i {
     vertical-align: inherit;
     margin-right: 8px;
     font-size: 20px;
 }
-
 
 /*---------------------------------------
    TEXTS               
@@ -214,7 +207,6 @@ h5 {
 .grey-bg {
     background: #F7F8FA !important;
 }
-
 
 /*---------------------------------------
    SECTIONS          
@@ -272,11 +264,13 @@ h5 {
 /*---------------------------------------
    SECTION:  HOME                 
 -----------------------------------------*/
+
 header {
-        background: url('../images/bg-1.png') no-repeat center;
+    background: url('../images/bg-1.png') no-repeat center;
     -webkit-background-size: cover;
-            background-size: cover;
+    background-size: cover;
 }
+
 header .color-overlay {
     min-height: 900px;
 }
@@ -289,32 +283,32 @@ header .full-screen {
 /* TOP BAR WITH NAVIGATION */
 
 .sticky-navigation {
-  min-height: 60px;
-  background: #FFFFFF;
-  border: none;
-  padding: 0 !important;
-  margin-bottom: 0 !important;
-  -webkit-backface-visibility: hidden;
-  -webkit-box-shadow: 0px 2px 8px 0px rgba(50, 50, 50, 0.08);
-          box-shadow: 0px 2px 8px 0px rgba(50, 50, 50, 0.08);
+    min-height: 60px;
+    background: #FFFFFF;
+    border: none;
+    padding: 0 !important;
+    margin-bottom: 0 !important;
+    -webkit-backface-visibility: hidden;
+    -webkit-box-shadow: 0px 2px 8px 0px rgba(50, 50, 50, 0.08);
+    box-shadow: 0px 2px 8px 0px rgba(50, 50, 50, 0.08);
 }
 
 .sticky-navigation .navbar-header img {
-  max-height: 30px;
-  -webkit-backface-visibility: hidden;
+    max-height: 30px;
+    -webkit-backface-visibility: hidden;
 }
 
 .sticky-navigation .main-navigation .current a {
-  color: #000000 !important;
-  position: relative;
-  outline: none;
+    color: #000000 !important;
+    position: relative;
+    outline: none;
 }
 
 .sticky-navigation .main-navigation li a {
-  line-height: 30px;
-  font-weight: 400;
-  font-size: 13px;
-  text-transform: uppercase;
+    line-height: 30px;
+    font-weight: 400;
+    font-size: 13px;
+    text-transform: uppercase;
 }
 
 .sticky-navigation .main-navigation li a:hover {
@@ -322,24 +316,23 @@ header .full-screen {
 }
 
 .navbar-inverse .navbar-toggle {
-border-color: #313131;
-background: #313131;
+    border-color: #313131;
+    background: #313131;
 }
 
 .nav-pills a {
     background-color: grey;
-    color:white;
+    color: white;
 }
 
 .nav-pills a:hover {
-    background-color:#bdbdbd;
-    color:black;
+    background-color: #bdbdbd;
+    color: black;
 }
-.nav-pills>li.active>a,
-.nav-pills>li.active>a:hover,
- .nav-pills>li.active>a:focus{
-    background-color:#960000;
-    color:white;
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus {
+    background-color: #960000;
+    color: white;
 }
 
 header .only-logo .navbar {
@@ -421,10 +414,10 @@ header .intro-section .buttons {
     font-size: 18px;
     text-align: center;
     -webkit-transition: all ease-in 0.25s;
-            transition: all ease-in 0.25s;
+    transition: all ease-in 0.25s;
     -webkit-background-clip: padding-box;
-           -moz-background-clip: padding;
-            background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
 }
 
 .features .phone-image {
@@ -436,7 +429,6 @@ header .intro-section .buttons {
 .features .phone-image img {
     width: 100%;
 }
-
 
 /*---------------------------------------
    SECTION:  BRIEF                 
@@ -486,16 +478,13 @@ header .intro-section .buttons {
     vertical-align: inherit;
 }
 
-
 /* VIDEO */
 
 video {
     height: auto;
 }
 
-iframe,
-embed,
-object {
+iframe, embed, object {
     max-width: 100%;
 }
 
@@ -504,23 +493,23 @@ object {
     background: transparent !important;
     margin: auto;
     margin-bottom: 50px;
-    margin-top: 40px; 
+    margin-top: 40px;
 }
 
 .video {
     background: transparent !important;
 }
 
-
 /*---------------------------------------
    SECTION:  TESTIMONIALS                 
 -----------------------------------------*/
+
 .testimonials {
-background: url('../images/bg-2.jpg') no-repeat center;
--webkit-background-size: cover;
-        background-size: cover;
+    background: url('../images/bg-2.jpg') no-repeat center;
+    -webkit-background-size: cover;
+    background-size: cover;
 }
-    
+
 .testimonials {
     color: #ffffff;
 }
@@ -539,7 +528,7 @@ background: url('../images/bg-2.jpg') no-repeat center;
     font-size: 24px;
     border: 2px solid transparent;
     -webkit-box-shadow: 0px 0px 0px 2px #ffffff;
-            box-shadow: 0px 0px 0px 2px #ffffff;
+    box-shadow: 0px 0px 0px 2px #ffffff;
     border-radius: 50%;
     width: 80px;
     height: 80px;
@@ -579,10 +568,9 @@ background: url('../images/bg-2.jpg') no-repeat center;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-            user-select: none;
+    user-select: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-
 
 /*---------------------------------------
    SECTION:  SERVICES           
@@ -606,8 +594,6 @@ background: url('../images/bg-2.jpg') no-repeat center;
     margin-top: 20px;
 }
 
-
-
 /*---------------------------------------
    SECTION:  SCREENSHOTS 
 -----------------------------------------*/
@@ -623,7 +609,7 @@ background: url('../images/bg-2.jpg') no-repeat center;
     margin: 13px;
     border-radius: 4px;
     -webkit-box-shadow: none;
-            box-shadow: none;
+    box-shadow: none;
     display: block;
 }
 
@@ -652,18 +638,19 @@ background: url('../images/bg-2.jpg') no-repeat center;
 
 .single-package .price {
     background: #FFFFFF;
-
 }
+
 .single-package .color-bg {
     background-color: !important;
 }
+
 .single-package .price h2 {
     color: #272727;
 }
 
 .single-package .price .color-bg h2 {
     color: #FFFFFF !important;
-} 
+}
 
 .single-package .price .sign {
     vertical-align: super;
@@ -677,28 +664,27 @@ background: url('../images/bg-2.jpg') no-repeat center;
 }
 
 .single-package .package-feature {
-  margin-top: 25px;
-  margin-bottom: 25px;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
-.single-package .package-feature > li {
-  margin-top: 15px;
-  margin-bottom: 15px;
+.single-package .package-feature>li {
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
-.single-package .package-feature > li > span {
-  margin-right: 7px;
+.single-package .package-feature>li>span {
+    margin-right: 7px;
 }
-
 
 /*---------------------------------------
    SECTION:  DOWNLOAD                 
 -----------------------------------------*/
-.download {
-background: url('../images/bg-3.png') no-repeat center;
--webkit-background-size: cover;
-        background-size: cover;
 
+.download {
+    background: url('../images/bg-3.png') no-repeat center;
+    -webkit-background-size: cover;
+    background-size: cover;
 }
 
 .download {
@@ -723,19 +709,17 @@ background: url('../images/bg-3.png') no-repeat center;
     padding-left: 20px;
     width: 320px;
     -webkit-box-shadow: none;
-            box-shadow: none;
+    box-shadow: none;
     background: #FFF;
     border: 2px solid #FFF;
 }
 
-.download .subscription-form .input-box:focus, 
-.download .subscription-form .input-box:active {
+.download .subscription-form .input-box:focus, .download .subscription-form .input-box:active {
     color: #000;
     font-weight: 400;
 }
 
-.download .subscription-form .subscription-success,
-.download .subscription-form .subscription-error {
+.download .subscription-form .subscription-success, .download .subscription-form .subscription-error {
     display: none;
 }
 
@@ -746,6 +730,7 @@ background: url('../images/bg-3.png') no-repeat center;
 /*---------------------------------------
    SECTION:  FOOTER                
 -----------------------------------------*/
+
 footer {
     background: #FFFFFF;
 }
@@ -766,7 +751,7 @@ footer .contact-box .contact-button {
     margin-top: -40px;
     background: #ffffff;
     -webkit-box-shadow: 0px 0px 0px 3px #ffffff;
-            box-shadow: 0px 0px 0px 3px #ffffff;
+    box-shadow: 0px 0px 0px 3px #ffffff;
     -webkit-backface-visibility: hidden;
     -webkit-background-clip: padding-box;
     -moz-background-clip: padding;
@@ -782,8 +767,7 @@ footer .contact-box .expanded-contact-form {
     display: none;
 }
 
-footer .contact-box .expanded-contact-form .success,
-footer .contact-box .expanded-contact-form .error {
+footer .contact-box .expanded-contact-form .success, footer .contact-box .expanded-contact-form .error {
     display: none;
 }
 
@@ -792,14 +776,14 @@ footer .contact-box .expanded-contact-form .input-box {
     margin-top: 10px;
     height: 50px;
     -webkit-box-shadow: none;
-            box-shadow: none;
+    box-shadow: none;
 }
 
 footer .contact-box .expanded-contact-form .textarea-box {
     margin-top: 20px;
     margin-bottom: 20px;
     -webkit-box-shadow: none;
-            box-shadow: none;
+    box-shadow: none;
 }
 
 footer .contact-box .expanded-contact-form .textarea-box:active {

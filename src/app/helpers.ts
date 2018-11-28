@@ -1,4 +1,4 @@
-declare var jQuery:any;
+
 declare var $ :any;
 
 export class Helpers {
