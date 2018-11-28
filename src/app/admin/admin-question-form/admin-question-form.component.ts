@@ -43,7 +43,10 @@ export class AdminQuestionFormComponent implements OnInit {
   loading = false;
   equation = "";
   options: KatexOptions = {
-    displayMode: true
+    displayMode: true,
+    macros: {
+        "\\f": "f(#1)"
+    }
   };
   displayKatex = false;
 
@@ -268,6 +271,7 @@ export class AdminQuestionFormComponent implements OnInit {
         status: 'success',
         message: res["message"]
       };
+      console.log(res.question);
       this.loading = false;
     }, error => {
       this.formResponse = {
