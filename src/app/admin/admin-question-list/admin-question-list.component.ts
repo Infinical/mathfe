@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import { QuestionService } from '../../services/question.service';
 import { MatPaginator, MatTableDataSource, MatSort, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'; 
 import { KatexOptions } from 'ng-katex';
+import katex from 'katex';
 
 export interface DialogData { id: string }
 
@@ -36,7 +37,7 @@ export class AdminQuestionListComponent implements OnInit {
 
   }
 
-  displayKatex(question: string){
+  displayKatex(question: string, id?:number){
     var isKatex = false;
     if (question.length <= 0) isKatex = false;
     
@@ -51,6 +52,18 @@ export class AdminQuestionListComponent implements OnInit {
     if (question.indexOf("</") >= 0) isKatex = false;
     if (question.indexOf("class") >= 0) isKatex = false;
     if (question.indexOf("input") >= 0) isKatex = false;
+
+    if (isKatex && id){
+
+      setTimeout(function(){
+        const katexDiv: any = document.getElementById('katexDiv' + id);
+        var html = katex.renderToString(question, {
+            throwOnError: false
+        });
+        katexDiv.innerHTML = html;   
+      }, 500);       
+    }
+    
     return isKatex;
   }
 

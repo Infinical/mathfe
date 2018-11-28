@@ -268,6 +268,7 @@ export class AdminQuestionFormComponent implements OnInit {
         status: 'success',
         message: res["message"]
       };
+      console.log(res.question);
       this.loading = false;
     }, error => {
       this.formResponse = {
