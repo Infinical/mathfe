@@ -26,7 +26,10 @@ export class AdminQuestionListComponent implements OnInit {
   selectedQuestion: any; 
   loading = true;
   options: KatexOptions = {
-    displayMode: true
+    displayMode: true,
+    macros: {
+        "\\f": "f(#1)"
+    }
   };
   
   constructor(private http: HttpClient, private questionService: QuestionService, public dialog: MatDialog) { 

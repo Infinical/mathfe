@@ -43,7 +43,10 @@ export class AdminQuestionFormComponent implements OnInit {
   loading = false;
   equation = "";
   options: KatexOptions = {
-    displayMode: true
+    displayMode: true,
+    macros: {
+        "\\f": "f(#1)"
+    }
   };
   displayKatex = false;
 
