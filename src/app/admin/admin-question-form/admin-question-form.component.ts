@@ -101,6 +101,7 @@ export class AdminQuestionFormComponent implements OnInit {
   equationChange(event){
 
     const katexDiv: any = document.getElementById('katex');
+    if (!katexDiv) return;
     var html = katex.renderToString(event, {
         throwOnError: false
     });

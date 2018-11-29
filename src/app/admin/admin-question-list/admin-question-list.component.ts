@@ -60,6 +60,9 @@ export class AdminQuestionListComponent implements OnInit {
 
       setTimeout(function(){
         const katexDiv: any = document.getElementById('katexDiv' + id);
+
+        if (!katexDiv) return;
+
         var html = katex.renderToString(question, {
             throwOnError: false
         });
