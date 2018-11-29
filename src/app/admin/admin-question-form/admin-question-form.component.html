@@ -33,24 +33,16 @@
 
           <div class="form-group">
             <label for="question" class="col-lg-1 control-label">Question</label>
-            <input type="checkbox" (click)="katexClick()" [checked]="displayKatex"> Is Katex<br>
             <div class="col-lg-12">
-              <angular-editor *ngIf="!displayKatex" formControlName="question" 
+              <angular-editor formControlName="question" 
                               [config]="editorConfig"
                               name="question" 
-                              [(ngModel)]="question.question"                              
+                              [(ngModel)]="question.question"
+                              (ngModelChange)="questionChange()"                            
                               required
                               style="text-align: left!important;">
               </angular-editor>
-              <textarea *ngIf="displayKatex" required
-                        formControlName="question"
-                        (ngModelChange)="equationChange($event)"
-                        [(ngModel)]="question.question"
-                        rows="6" 
-                        style="width: 100%">
-              {{question.question}}
-              </textarea>
-              <div *ngIf="displayKatex" style="width: 100%;background-color: white;padding: 1rem;" id="katex"></div>
+              <div [ngStyle]="{'display': (displayKatex) ? '': 'none'}" style="width: 100%;background-color: white;padding: 1rem;" id="katex"></div>
               <div *ngIf="question.question.length <= 0 && QuestionForm['controls'].question.touched" class="alert alert-danger">
                 Question is required
               </div>

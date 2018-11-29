@@ -40,34 +40,44 @@ export class AdminQuestionListComponent implements OnInit {
 
   }
 
-  displayKatex(question: string, id?:number){
-    var isKatex = false;
-    if (question.length <= 0) isKatex = false;
-    
-    const mathSymbols = [
-      "+","-","=","!","/","(",")","[", "]", "<", ">", "|","'",":","*", "^", "{", "}"
-    ];
-    
-    mathSymbols.forEach(function(symbol){
-      if (question.indexOf(symbol, 0) >= 0) isKatex = true;
-    });
+  displayKatex(question: string, id?:number, parseHtml?: boolean){
 
-    if (question.indexOf("</") >= 0) isKatex = false;
-    if (question.indexOf("class") >= 0) isKatex = false;
-    if (question.indexOf("input") >= 0) isKatex = false;
+    var searchStrLen = question.length;
+    var startIndex = 0, index, indexes = [];
 
-    if (isKatex && id){
+    if (question.indexOf('$$') < 0) return false;
+    else if (!parseHtml) return true;
 
-      setTimeout(function(){
-        const katexDiv: any = document.getElementById('katexDiv' + id);
-        var html = katex.renderToString(question, {
-            throwOnError: false
-        });
-        katexDiv.innerHTML = html;   
-      }, 500);       
+    while ((index = question.indexOf('$$', startIndex)) > -1) {
+        indexes.push(index);
+        startIndex = index + 2;
     }
-    
-    return isKatex;
+
+    if (indexes.length <= 1 || !parseHtml) return false;
+
+    let html="";
+    startIndex = 0;
+    for (var i=0; i<indexes.length; i++){
+      let katexString = question.substring(indexes[i]+2, indexes[i+1]);
+      let text = question.substring(startIndex, indexes[i]) + " ";
+
+      html += text + katex.renderToString(katexString, {
+        throwOnError: false
+      });
+
+      i++;
+      startIndex = indexes[i]+2;
+
+      if (((i+1) == indexes.length) && (startIndex < searchStrLen)){
+        html += question.substring(startIndex, searchStrLen);
+      }
+    }
+
+    const katexDiv: any = document.getElementById('katexDiv' + id);
+    if (!katexDiv) return false;
+
+    katexDiv.innerHTML = html;
+    return true;
   }
 
   onPaginateChange(e: any, origin?: string){
