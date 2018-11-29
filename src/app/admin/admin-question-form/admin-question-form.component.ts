@@ -52,7 +52,7 @@ export class AdminQuestionFormComponent implements OnInit {
   disableAddNumTxtBx = false;
   numericTextBxCount = 0;
   numericTextBoxHTML = '<input min="0" type="number" class="lineinput" placeholder="?">';
-
+  
   editorConfig: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -120,7 +120,15 @@ and more text goes here$$\frac{2}{4}$$*/
 
   refreshNumericTextBoxCount(){
     const searchHTML = '<input min="0" type="number"';
-    if (this.question.question.indexOf(searchHTML) < 0) return;
+    if (this.question.question.indexOf(searchHTML) < 0) {
+
+      for (var i = 0; i < 4; i++){
+        this.QuestionForm.controls['answer' + i.toString()].enable();
+        this.QuestionForm.controls['answer' + i.toString()+ '_image'].enable();
+      }
+
+      return;
+    }
 
     var startIndex = 0, index, indexes = [];
     while ((index = this.question.question.indexOf(searchHTML, startIndex)) > -1) {
@@ -129,6 +137,17 @@ and more text goes here$$\frac{2}{4}$$*/
     }
 
     this.numericTextBxCount = indexes.length;
+
+    for (var i = 0; i < 4; i++){
+      if (!indexes[i]) { 
+        this.QuestionForm.controls['answer' + i.toString()].disable();
+        this.QuestionForm.controls['answer' + i.toString()+ '_image'].disable();
+      }
+      else {
+        this.QuestionForm.controls['answer' + i.toString()].enable();
+        this.QuestionForm.controls['answer' + i.toString()+ '_image'].enable();
+      }
+    }
 
     if (this.numericTextBxCount >= 4) this.disableAddNumTxtBx = true;
     else this.disableAddNumTxtBx = false;
