@@ -49,6 +49,9 @@ export class AdminQuestionFormComponent implements OnInit {
     }
   };
   displayKatex = false;
+  disableAddNumTxtBx = false;
+  numericTextBxCount = 0;
+  numericTextBoxHTML = '<input min="0" type="number" class="lineinput" placeholder="?">';
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -67,32 +70,14 @@ export class AdminQuestionFormComponent implements OnInit {
     this.img3URL = (data.answer3_image) ? this.apiURL + data.answer3_image : this.img3URL;
   }
 
-  isKatex(question){
-  	var isKatex = false;
-
-    if (question === "<br>") {
-      this.question.question = "";
-      question = "";
-    };
-    if (question.length <= 0) isKatex = false;
-    
-    const mathSymbols = [
-      "+","-","=","!","/","(",")","[", "]", "<", ">", "|","'",":","*", "^", "{", "}"
-    ];
-    
-    mathSymbols.forEach(function(symbol){
-      if (question.indexOf(symbol, 0) >= 0) isKatex = true;
-    });
-
-    if (question.indexOf("</") >= 0) isKatex = false;
-    if (question.indexOf("class") >= 0) isKatex = false;
-    if (question.indexOf("input") >= 0) isKatex = false;
-    if (question.indexOf("<br>") >= 0) isKatex = false;
-
-    return isKatex;
+  addNumericTextBox(event: any){
+    event.preventDefault();
+    this.question.question += this.numericTextBoxHTML;
+    this.refreshNumericTextBoxCount();
   }
 
-  questionChange(){
+  questionChange(event){
+    this.refreshNumericTextBoxCount();
 
     var searchStrLen = this.question.question.length;
     var startIndex = 0, index, indexes = [];
@@ -116,8 +101,6 @@ export class AdminQuestionFormComponent implements OnInit {
         throwOnError: false
       });
 
-      //html += "</br>";
-
       i++;
       startIndex = indexes[i]+2;
 
@@ -134,6 +117,22 @@ export class AdminQuestionFormComponent implements OnInit {
     /*This   is a Katex Question $$f{x} = \int_{-\infty}^\infty\hat f\xi\,e^{2 \pi i \xi x}\,d\xi$$ here's some text $$\frac{1}{3}$$ 
 and more text goes here$$\frac{2}{4}$$*/
   }
+
+  refreshNumericTextBoxCount(){
+    const searchHTML = '<input min="0" type="number"';
+    if (this.question.question.indexOf(searchHTML) < 0) return;
+
+    var startIndex = 0, index, indexes = [];
+    while ((index = this.question.question.indexOf(searchHTML, startIndex)) > -1) {
+        indexes.push(index);
+        startIndex = index + searchHTML.length;
+    }
+
+    this.numericTextBxCount = indexes.length;
+
+    if (this.numericTextBxCount >= 4) this.disableAddNumTxtBx = true;
+    else this.disableAddNumTxtBx = false;
+  }
   
   ngOnInit() {
     this.route.params.subscribe((params) => {
@@ -146,7 +145,7 @@ and more text goes here$$\frac{2}{4}$$*/
           .subscribe((data) => {
             this.loading = false;
             this.question = data;
-            //this.displayKatex = this.isKatex(this.question.question);        
+            this.refreshNumericTextBoxCount();
             this.refreshImages(data);
           }, error => {
 
