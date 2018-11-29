@@ -92,20 +92,47 @@ export class AdminQuestionFormComponent implements OnInit {
     return isKatex;
   }
 
-  katexClick(){
-    this.displayKatex = !this.displayKatex;
+  questionChange(){
 
-    if (this.displayKatex) this.equation = this.question.question;
-  }
+    var searchStrLen = this.question.question.length;
+    var startIndex = 0, index, indexes = [];
+    while ((index = this.question.question.indexOf('$$', startIndex)) > -1) {
+        indexes.push(index);
+        startIndex = index + 2;
+    }
 
-  equationChange(event){
+    if (indexes.length <= 1){
+      this.displayKatex = false;
+      return;
+    }
+
+    let html="";
+    startIndex = 0;
+    for (var i=0; i<indexes.length; i++){
+      let katexString = this.question.question.substring(indexes[i]+2, indexes[i+1]);
+      let text = this.question.question.substring(startIndex, indexes[i]) + " ";
+
+      html += text + katex.renderToString(katexString, {
+        throwOnError: false
+      });
+
+      //html += "</br>";
+
+      i++;
+      startIndex = indexes[i]+2;
+
+      if (((i+1) == indexes.length) && (startIndex < searchStrLen)){
+        html += this.question.question.substring(startIndex, searchStrLen);
+      }
+    }
 
     const katexDiv: any = document.getElementById('katex');
     if (!katexDiv) return;
-    var html = katex.renderToString(event, {
-        throwOnError: false
-    });
-    katexDiv.innerHTML = html;    
+
+    katexDiv.innerHTML = html;
+    this.displayKatex = true;
+    /*This   is a Katex Question $$f{x} = \int_{-\infty}^\infty\hat f\xi\,e^{2 \pi i \xi x}\,d\xi$$ here's some text $$\frac{1}{3}$$ 
+and more text goes here$$\frac{2}{4}$$*/
   }
   
   ngOnInit() {
@@ -119,7 +146,7 @@ export class AdminQuestionFormComponent implements OnInit {
           .subscribe((data) => {
             this.loading = false;
             this.question = data;
-            this.displayKatex = this.isKatex(this.question.question);        
+            //this.displayKatex = this.isKatex(this.question.question);        
             this.refreshImages(data);
           }, error => {
 
