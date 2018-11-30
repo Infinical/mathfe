@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, ChangeDetectorRef, OnChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
@@ -14,7 +14,7 @@ export interface DialogData { id: string }
   templateUrl: './admin-question-list.component.html',
   styleUrls: ['./admin-question-list.component.css']
 })
-export class AdminQuestionListComponent implements OnInit {
+export class AdminQuestionListComponent implements OnInit, OnChanges {
 
   @ViewChild(MatPaginator) topPaginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -32,7 +32,10 @@ export class AdminQuestionListComponent implements OnInit {
     }
   };
   
-  constructor(private http: HttpClient, private questionService: QuestionService, public dialog: MatDialog) { 
+  constructor(private http: HttpClient, 
+              private questionService: QuestionService, 
+              public dialog: MatDialog,
+              private cdr: ChangeDetectorRef) { 
     this.onPaginateChange({pageIndex: this.currentPage});    
   }
 
@@ -40,15 +43,20 @@ export class AdminQuestionListComponent implements OnInit {
 
   }
 
-  displayKatex(question: string, id?:number, parseHtml?: boolean){
+  ngOnChanges(){
+    this.cdr.detectChanges();
+  }
 
-    var searchStrLen = question.length;
+  displayKatex(string: string, id?:number, parseHtml?: boolean, elementId?: string){
+
+    if (!string) return true;
+    var searchStrLen = string.length;
     var startIndex = 0, index, indexes = [];
 
-    if (question.indexOf('$$') < 0) return false;
+    if (string.indexOf('$$') < 0) return false;
     else if (!parseHtml) return true;
 
-    while ((index = question.indexOf('$$', startIndex)) > -1) {
+    while ((index = string.indexOf('$$', startIndex)) > -1) {
         indexes.push(index);
         startIndex = index + 2;
     }
@@ -58,8 +66,8 @@ export class AdminQuestionListComponent implements OnInit {
     let html="";
     startIndex = 0;
     for (var i=0; i<indexes.length; i++){
-      let katexString = question.substring(indexes[i]+2, indexes[i+1]);
-      let text = question.substring(startIndex, indexes[i]) + " ";
+      let katexString = string.substring(indexes[i]+2, indexes[i+1]);
+      let text = string.substring(startIndex, indexes[i]) + " ";
 
       html += text + katex.renderToString(katexString, {
         throwOnError: false
@@ -69,14 +77,15 @@ export class AdminQuestionListComponent implements OnInit {
       startIndex = indexes[i]+2;
 
       if (((i+1) == indexes.length) && (startIndex < searchStrLen)){
-        html += question.substring(startIndex, searchStrLen);
+        html += string.substring(startIndex, searchStrLen);
       }
     }
 
-    const katexDiv: any = document.getElementById('katexDiv' + id);
+    const katexDiv: any = document.getElementById(elementId);
     if (!katexDiv) return false;
 
     katexDiv.innerHTML = html;
+    katexDiv.style.display = "";
     return true;
   }
 

@@ -48,8 +48,11 @@ export class AdminQuestionFormComponent implements OnInit {
         "\\f": "f(#1)"
     }
   };
-  displayKatex = false;
-
+  displayKatex = [false, false, false, false, false];
+  disableAddNumTxtBx = false;
+  numericTextBxCount = 0;
+  numericTextBoxHTML = '<input min="0" type="number" class="lineinput" placeholder="?">';
+  
   editorConfig: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -67,72 +70,90 @@ export class AdminQuestionFormComponent implements OnInit {
     this.img3URL = (data.answer3_image) ? this.apiURL + data.answer3_image : this.img3URL;
   }
 
-  isKatex(question){
-  	var isKatex = false;
-
-    if (question === "<br>") {
-      this.question.question = "";
-      question = "";
-    };
-    if (question.length <= 0) isKatex = false;
-    
-    const mathSymbols = [
-      "+","-","=","!","/","(",")","[", "]", "<", ">", "|","'",":","*", "^", "{", "}"
-    ];
-    
-    mathSymbols.forEach(function(symbol){
-      if (question.indexOf(symbol, 0) >= 0) isKatex = true;
-    });
-
-    if (question.indexOf("</") >= 0) isKatex = false;
-    if (question.indexOf("class") >= 0) isKatex = false;
-    if (question.indexOf("input") >= 0) isKatex = false;
-    if (question.indexOf("<br>") >= 0) isKatex = false;
-
-    return isKatex;
+  addNumericTextBox(event: any){
+    event.preventDefault();
+    this.question.question += this.numericTextBoxHTML;
+    this.refreshNumericTextBoxCount();
   }
 
-  questionChange(){
+  questionChange(event){
+    this.refreshNumericTextBoxCount();
 
-    var searchStrLen = this.question.question.length;
+    this.parseKatex(this.question.question, 'katex');
+  }
+
+  parseKatex(string: string, htmlElement: string){
+
+    const katexDiv: any = document.getElementById(htmlElement);
+    if (!katexDiv) return;
+
+    var searchStrLen = string.length;
     var startIndex = 0, index, indexes = [];
-    while ((index = this.question.question.indexOf('$$', startIndex)) > -1) {
+    while ((index = string.indexOf('$$', startIndex)) > -1) {
         indexes.push(index);
         startIndex = index + 2;
     }
 
     if (indexes.length <= 1){
-      this.displayKatex = false;
+      katexDiv.style.display = "none";
       return;
     }
 
     let html="";
     startIndex = 0;
     for (var i=0; i<indexes.length; i++){
-      let katexString = this.question.question.substring(indexes[i]+2, indexes[i+1]);
-      let text = this.question.question.substring(startIndex, indexes[i]) + " ";
+      let katexString = string.substring(indexes[i]+2, indexes[i+1]);
+      let text = string.substring(startIndex, indexes[i]) + " ";
 
       html += text + katex.renderToString(katexString, {
         throwOnError: false
       });
 
-      //html += "</br>";
-
       i++;
       startIndex = indexes[i]+2;
 
       if (((i+1) == indexes.length) && (startIndex < searchStrLen)){
-        html += this.question.question.substring(startIndex, searchStrLen);
+        html += string.substring(startIndex, searchStrLen);
       }
     }
 
-    const katexDiv: any = document.getElementById('katex');
-    if (!katexDiv) return;
-
     katexDiv.innerHTML = html;
-    this.displayKatex = true;
-    /*This   is a Katex Question $$f{x} = \int_{-\infty}^\infty\hat f\xi\,e^{2 \pi i \xi x}\,d\xi$$ here's some text $$\frac{1}{3}$$ 
-and more text goes here$$\frac{2}{4}$$*/
+    katexDiv.style.display = "";
+  }
+
+  refreshNumericTextBoxCount(){
+    const searchHTML = '<input min="0" type="number"';
+    if (this.question.question.indexOf(searchHTML) < 0) {
+
+      for (var i = 0; i < 4; i++){
+        this.QuestionForm.controls['answer' + i.toString()].enable();
+        this.QuestionForm.controls['answer' + i.toString()+ '_image'].enable();
+      }
+
+      return;
+    }
+
+    var startIndex = 0, index, indexes = [];
+    while ((index = this.question.question.indexOf(searchHTML, startIndex)) > -1) {
+        indexes.push(index);
+        startIndex = index + searchHTML.length;
+    }
+
+    this.numericTextBxCount = indexes.length;
+
+    for (var i = 0; i < 4; i++){
+      if (!indexes[i]) { 
+        this.QuestionForm.controls['answer' + i.toString()].disable();
+        this.QuestionForm.controls['answer' + i.toString()+ '_image'].disable();
+      }
+      else {
+        this.QuestionForm.controls['answer' + i.toString()].enable();
+        this.QuestionForm.controls['answer' + i.toString()+ '_image'].enable();
+      }
+    }
+
+    if (this.numericTextBxCount >= 4) this.disableAddNumTxtBx = true;
+    else this.disableAddNumTxtBx = false;
   }
   
   ngOnInit() {
@@ -146,7 +167,7 @@ and more text goes here$$\frac{2}{4}$$*/
           .subscribe((data) => {
             this.loading = false;
             this.question = data;
-            //this.displayKatex = this.isKatex(this.question.question);        
+            this.refreshNumericTextBoxCount();
             this.refreshImages(data);
           }, error => {
 
