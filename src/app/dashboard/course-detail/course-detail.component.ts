@@ -12,17 +12,17 @@ import { AuthService } from '../../services/auth.service';
 export class CourseDetailComponent implements OnInit, OnChanges {
   beURL = environment.apiURL + '/';
   @Input() selectedCourse: Course;
-  constructor(private authService:AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
   }
 
   ngOnChanges(changes) {
-   // console.log(changes.selectedCourse);
+    // console.log(changes.selectedCourse);
   }
 
   public login(obj) {
-    this.authService.login();
+    this.authService.login(true);
     localStorage.setItem('house', JSON.stringify(obj));
   }
 
@@ -33,7 +33,7 @@ export class CourseDetailComponent implements OnInit, OnChanges {
   public isAuthenticated(): boolean {
     // Check whether the current time is past the
     // access token's expiry time
-   const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-   return new Date().getTime() < expiresAt;
+    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    return new Date().getTime() < expiresAt;
   }
 }
