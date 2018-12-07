@@ -7,7 +7,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class AuthService {
-  refreshSubscription: any; 
+  refreshSubscription: any;
   auth0 = new auth0.WebAuth({
     clientID: 'eVJv6UFM9GVdukBWiURczRCxmb6iaUYG',
     domain: 'pamelalim.auth0.com',
@@ -20,11 +20,11 @@ export class AuthService {
     },
     params: {
 
-      }    
+    }
   });
 
   public scheduleRenewal() {
-    if(!this.isAuthenticated()) return;
+    if (!this.isAuthenticated()) return;
     this.unscheduleRenewal();
 
     const expiresAt = JSON.parse(window.localStorage.getItem('expires_at'));
@@ -32,38 +32,45 @@ export class AuthService {
     const source = Observable.of(expiresAt).flatMap(
       expiresAt => {
 
-       const now = Date.now();
+        const now = Date.now();
 
-       // Use the delay in a timer to
-       // run the refresh at the proper time
-       return Observable.timer(Math.max(1, expiresAt - now));
-   });
+        // Use the delay in a timer to
+        // run the refresh at the proper time
+        return Observable.timer(Math.max(1, expiresAt - now));
+      });
 
     // Once the delay time from above is
     // reached, get a new JWT and schedule
     // additional refreshes
     this.refreshSubscription = source.subscribe(() => {
-       this.renewToken();
-       this.scheduleRenewal();
-     });
+      this.renewToken();
+      this.scheduleRenewal();
+    });
   }
 
   public unscheduleRenewal() {
-     if(!this.refreshSubscription) return;
-     this.refreshSubscription.unsubscribe();
+    if (!this.refreshSubscription) return;
+    this.refreshSubscription.unsubscribe();
   }
 
   constructor(
     public router: Router,
-    private jwtHelper: JwtHelperService) {}
+    private jwtHelper: JwtHelperService) { }
 
-  public login(): void {
+  public login(enrol): void {
+    if (enrol) {
+      this.auth0.baseOptions.redirectUri = this.auth0.baseOptions.redirectUri + "?enrol=true";
+    }
     this.auth0.authorize();
   }
 
   public handleAuthentication(): void {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
+        var isEnrol = decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent("enrol").replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"))
+        if (!isEnrol) {
+          localStorage.removeItem('house');
+        }
         window.location.hash = '/member';
         this.setSession(authResult);
         this.router.navigate(['/member']);
@@ -100,7 +107,7 @@ export class AuthService {
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     return new Date().getTime() < expiresAt;
   }
-  
+
   loggedIn() {
     return this.jwtHelper.isTokenExpired();
   }
