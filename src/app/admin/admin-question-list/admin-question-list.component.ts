@@ -47,6 +47,28 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     this.cdr.detectChanges();
   }
 
+  onSearchChange(value){
+
+    value = value.toLowerCase();
+    let data = this.gridData.questions.filter(question => {
+      if (question.question.toLowerCase().indexOf(value) != -1) return true;
+      else if (question.skill.skill.toLowerCase().indexOf(value) != -1) return true;
+      else {
+
+        let found = false;
+        question.skill.tracks.forEach(function(track){
+          const level = track.level.level.toString();
+          
+          if (level.toLowerCase().indexOf(value) != -1) found = true;
+        });
+
+        return found;
+      }    
+    });
+
+    this.dataSource = new MatTableDataSource<any>(data);
+  }
+
   displayKatex(string: string, id?:number, parseHtml?: boolean, elementId?: string){
 
     if (!string) return true;
