@@ -20,7 +20,11 @@
         <a [routerLink]="['/admin/questions/create']" style="margin-left: 0.5rem;" class="btn btn-success"> New Question</a>
     </div>
   </div>
-
+  <div class="col-sm-4">
+	  <form>
+	      <input #search (keyup)="onSearchChange($event.target.value)" class="form-control" type="text" placeholder="Search">
+	  </form>
+  </div>
   <div class="col-md-12">
   	<div class="table-responsive">
 
