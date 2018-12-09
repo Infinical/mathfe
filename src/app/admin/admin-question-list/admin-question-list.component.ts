@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, ChangeDetectorRef, OnChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
 import { QuestionService } from '../../services/question.service';
 import { MatPaginator, MatTableDataSource, MatSort, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'; 
 import { KatexOptions } from 'ng-katex';
+import katex from 'katex';
 
 export interface DialogData { id: string }
 
@@ -13,7 +14,7 @@ export interface DialogData { id: string }
   templateUrl: './admin-question-list.component.html',
   styleUrls: ['./admin-question-list.component.css']
 })
-export class AdminQuestionListComponent implements OnInit {
+export class AdminQuestionListComponent implements OnInit, OnChanges {
 
   @ViewChild(MatPaginator) topPaginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -25,10 +26,16 @@ export class AdminQuestionListComponent implements OnInit {
   selectedQuestion: any; 
   loading = true;
   options: KatexOptions = {
-    displayMode: true
+    displayMode: true,
+    macros: {
+        "\\f": "f(#1)"
+    }
   };
   
-  constructor(private http: HttpClient, private questionService: QuestionService, public dialog: MatDialog) { 
+  constructor(private http: HttpClient, 
+              private questionService: QuestionService, 
+              public dialog: MatDialog,
+              private cdr: ChangeDetectorRef) { 
     this.onPaginateChange({pageIndex: this.currentPage});    
   }
 
@@ -36,22 +43,72 @@ export class AdminQuestionListComponent implements OnInit {
 
   }
 
-  displayKatex(question: string){
-    var isKatex = false;
-    if (question.length <= 0) isKatex = false;
-    
-    const mathSymbols = [
-      "+","-","=","!","/","(",")","[", "]", "<", ">", "|","'",":","*", "^", "{", "}"
-    ];
-    
-    mathSymbols.forEach(function(symbol){
-      if (question.indexOf(symbol, 0) >= 0) isKatex = true;
+  ngOnChanges(){
+    this.cdr.detectChanges();
+  }
+
+  onSearchChange(value){
+
+    value = value.toLowerCase();
+    let data = this.gridData.questions.filter(question => {
+      if (question.question.toLowerCase().indexOf(value) != -1) return true;
+      else if (question.skill.skill.toLowerCase().indexOf(value) != -1) return true;
+      else {
+
+        let found = false;
+        question.skill.tracks.forEach(function(track){
+          const level = track.level.level.toString();
+          
+          if (level.toLowerCase().indexOf(value) != -1) found = true;
+        });
+
+        return found;
+      }    
     });
 
-    if (question.indexOf("</") >= 0) isKatex = false;
-    if (question.indexOf("class") >= 0) isKatex = false;
-    if (question.indexOf("input") >= 0) isKatex = false;
-    return isKatex;
+    this.dataSource = new MatTableDataSource<any>(data);
+  }
+
+  displayKatex(string: string, id?:number, parseHtml?: boolean, elementId?: string){
+
+    if (!string) return true;
+    var searchStrLen = string.length;
+    var startIndex = 0, index, indexes = [];
+
+    if (string.indexOf('$$') < 0) return false;
+    else if (!parseHtml) return true;
+
+    while ((index = string.indexOf('$$', startIndex)) > -1) {
+        indexes.push(index);
+        startIndex = index + 2;
+    }
+
+    if (indexes.length <= 1 || !parseHtml) return false;
+
+    let html="";
+    startIndex = 0;
+    for (var i=0; i<indexes.length; i++){
+      let katexString = string.substring(indexes[i]+2, indexes[i+1]);
+      let text = string.substring(startIndex, indexes[i]) + " ";
+
+      html += text + katex.renderToString(katexString, {
+        throwOnError: false
+      });
+
+      i++;
+      startIndex = indexes[i]+2;
+
+      if (((i+1) == indexes.length) && (startIndex < searchStrLen)){
+        html += string.substring(startIndex, searchStrLen);
+      }
+    }
+
+    const katexDiv: any = document.getElementById(elementId);
+    if (!katexDiv) return false;
+
+    katexDiv.innerHTML = html;
+    katexDiv.style.display = "";
+    return true;
   }
 
   onPaginateChange(e: any, origin?: string){
