@@ -4,19 +4,20 @@ import 'rxjs/add/operator/map';
 import { Observable, of } from 'rxjs';
 import * as auth0 from 'auth0-js';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import {environment} from "../../environments/environment"
 
 @Injectable()
 export class AuthService {
   refreshSubscription: any;
   auth0 = new auth0.WebAuth({
-    clientID: 'eVJv6UFM9GVdukBWiURczRCxmb6iaUYG',
-    domain: 'pamelalim.auth0.com',
+    clientID: environment.webAuth.clientID,
+    domain: environment.webAuth.domain,
     responseType: 'token id_token',
-    audience: 'https://pamelalim.auth0.com/userinfo',
-    redirectUri: 'http://localhost:4200/home',
+    audience: environment.webAuth.audience,
+    redirectUri:  environment.webAuth.redirectUri,
     scope: 'openid profile email name picture',
     theme: {
-      logo: "http://school.all-gifted.com/pluginfile.php/1/theme_lambda/logo/1472088488/newlogo.png"
+      logo: environment.webAuth.theme.logo
     },
     params: {
 
