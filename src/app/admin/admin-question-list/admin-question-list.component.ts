@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Inject, ChangeDetectorRef, OnChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, ChangeDetectorRef, OnChanges, ViewEncapsulation } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
@@ -12,7 +12,8 @@ export interface DialogData { id: string }
 @Component({
   selector: 'ag-admin-question-list',
   templateUrl: './admin-question-list.component.html',
-  styleUrls: ['./admin-question-list.component.css']
+  styleUrls: ['./admin-question-list.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AdminQuestionListComponent implements OnInit, OnChanges {
 
@@ -31,12 +32,23 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
         "\\f": "f(#1)"
     }
   };
+  searchOptions: any = { skills: [], levels: [] };
+  selectedLevel: any;
+  selectedSkill: any;
+  searchQuestion: any;
   
   constructor(private http: HttpClient, 
               private questionService: QuestionService, 
               public dialog: MatDialog,
               private cdr: ChangeDetectorRef) { 
-    this.onPaginateChange({pageIndex: this.currentPage});    
+    this.onPaginateChange({pageIndex: this.currentPage});
+
+    this.questionService.getSearchOptions().subscribe(res => {
+      this.searchOptions = res;
+    }, error => {
+      console.log("error", error);
+    });
+
   }
 
   ngOnInit() {
@@ -47,26 +59,34 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     this.cdr.detectChanges();
   }
 
-  onSearchChange(value){
+  searchByQuestion(value){
+    this.search({question: value});
+  }
 
-    value = value.toLowerCase();
-    let data = this.gridData.questions.filter(question => {
-      if (question.question.toLowerCase().indexOf(value) != -1) return true;
-      else if (question.skill.skill.toLowerCase().indexOf(value) != -1) return true;
-      else {
+  searchBySkill(skill_id: any){
+    this.search({skill: skill_id});
+  }
 
-        let found = false;
-        question.skill.tracks.forEach(function(track){
-          const level = track.level.level.toString();
-          
-          if (level.toLowerCase().indexOf(value) != -1) found = true;
-        });
+  searchByLevel(level_id: any){
+    this.search({level: level_id});
+  }
 
-        return found;
-      }    
+  search(searchOption: any){
+    this.loading = true;
+    this.questionService.searchQuestions(searchOption).subscribe(res => {
+      this.dataSource = new MatTableDataSource<any>(res.questions);
+      this.loading = false;
+    }, error => {
+      console.log("error", error);
+      this.loading = false;
     });
+  }
 
-    this.dataSource = new MatTableDataSource<any>(data);
+  resetSearch(){
+    this.selectedLevel = null;
+    this.selectedSkill = null;;
+    const dom: any = document.getElementById('searchQuestion');
+    dom.value = "";
   }
 
   displayKatex(string: string, id?:number, parseHtml?: boolean, elementId?: string){
