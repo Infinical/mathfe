@@ -60,7 +60,7 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
   }
 
   searchByQuestion(value){
-    this.search({question: value});
+    this.search({keyword: value});
   }
 
   searchBySkill(skill_id: any){
@@ -76,6 +76,7 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     this.questionService.searchQuestions(searchOption).subscribe(res => {
       this.dataSource = new MatTableDataSource<any>(res.questions);
       this.loading = false;
+      console.log(res);
     }, error => {
       console.log("error", error);
       this.loading = false;
@@ -135,6 +136,7 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     this.loading = true;
     this.currentPage = (e.pageIndex === 0) ? 1 : e.pageIndex;
     this.questionService.getQuestions(this.currentPage).subscribe((data) => {
+      console.log(data);
       this.gridData = data;
       this.dataSource = new MatTableDataSource<any>(this.gridData.questions);
       this.dataSource.sort = this.sort;
