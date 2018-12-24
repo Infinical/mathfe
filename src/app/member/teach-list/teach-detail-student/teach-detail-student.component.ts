@@ -32,13 +32,33 @@ export class TeachDetailStudentComponent implements OnInit {
   fields: any;
   levels: any;
   statuses: any;
+  show_track_passed_modal = false;
+  selectedTrackResult: any;
 
   constructor(private trackService: TrackService, private skillService: SkillService) {
 
   }
-  
 
+  parseDecimal(v) {
+    if (v) {
+      if (v.toString().indexOf(".") != -1) {
+        return v.toFixed(2);
+      } else {
+        return v;
+      }
+    }
+    return 0;
+  }
   ngOnInit() {
+  }
+  showTrackPassedModal(track, status) {
+    if (status) {
+      this.selectedTrackResult = track.tracks_passed;
+      this.show_track_passed_modal = true
+    } else {
+      this.show_track_passed_modal = false;
+      
+    }
   }
   // unSelect(house: House) {
   //   this.selectedEvent.emit(null);

@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ChartComponent implements OnInit {
   @Input() chartdata: any;
   // Doughnut
-  public doughnutChartLabels:string[] = ['UnderPerform','Excel', 'On_target'];
+  public doughnutChartLabels:string[] = ['Underperform','Overperform', 'On Target'];
   public doughnutChartType:string = 'doughnut';
  
   // events

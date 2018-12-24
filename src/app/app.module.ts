@@ -40,6 +40,7 @@ import { DropdownDirective } from './directives/dropdown.directive';
 import { TeachListComponent } from './member/teach-list/teach-list.component';
 import { TeachComponent } from './member/teach-list/teach.component';
 import { TeachDetailComponent } from './member/teach-list/teach-detail/teach-detail.component';
+import { TrackPassedComponent } from './member/teach-list/track-passed/track-passed.component';
 import { ChartsModule } from 'ng2-charts';
 import { ChartComponent } from './member/teach-list/teach-detail/chart/chart.component';
 import { BarchartComponent } from './member/teach-list/teach-detail/barchart/barchart.component';
@@ -132,6 +133,7 @@ export function tokenGetter() {
     TeachListComponent,
     TeachComponent,
     TeachDetailComponent,
+    TrackPassedComponent,
     ChartComponent,
     BarchartComponent,
     StudentradarComponent,

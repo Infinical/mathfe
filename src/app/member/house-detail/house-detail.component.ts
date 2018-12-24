@@ -44,4 +44,7 @@ export class HouseDetailComponent implements OnInit {
     }
     return "";
   }
+  culculateTrackPassPercentageValue(tracks_passed, total_tracks) {
+    return tracks_passed / total_tracks * 100;
+  }
 }
