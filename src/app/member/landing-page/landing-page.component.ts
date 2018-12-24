@@ -4,10 +4,10 @@ import { Course } from '../../models/course';
 import { House } from '../../models/house';
 import { Skill } from '../../models/skill';
 import { Observable } from 'rxjs/Observable';
-
+import { environment } from '../../../environments/environment';
 import { ModalService } from '../../services/modal.service';
 import { of } from 'rxjs';
-import { PayPalConfig, PayPalEnvironment, PayPalIntegrationType } from 'ngx-paypal';
+import { PayPalConfig, PayPalIntegrationType } from 'ngx-paypal';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 declare var $: any;
@@ -180,12 +180,12 @@ export class LandingPageComponent implements OnInit {
   public initConfig(): void {
     this.payPalConfig = new PayPalConfig(
       PayPalIntegrationType.ClientSideREST,
-      PayPalEnvironment.Sandbox,
+      environment.payPal.payPalEnvironment,
       {
         commit: true,
         client: {
-          sandbox:
-            'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R'
+          production: environment.payPal.productionKey,
+          sandbox: environment.payPal.sandboxKey
         },
         button: {
           label: 'paypal',
@@ -282,7 +282,7 @@ export class LandingPageComponent implements OnInit {
     }
 
     this.http.post(
-      'http://devapi.pamelalim.me/enrolments',
+      environment.payPal.postEnrollmentUrl,
       param,
       httpOptions
     ).subscribe(data => {
