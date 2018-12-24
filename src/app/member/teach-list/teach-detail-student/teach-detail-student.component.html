@@ -1,5 +1,5 @@
 <section *ngIf="selectedTeach" id="teach-detail">
-  <div class="alert alert-default alert-dismissible" >
+  <div class="alert alert-default alert-dismissible">
     <!-- <a class="close" data-dismiss="alert" aria-label="close" (click)="unSelect(selectedTeach)"><button><img src="images/exit.png" height="42" width="42" /></button></a> -->
     <div class="house-detail">
       <div class="">
@@ -24,13 +24,13 @@
           Student Management
         </h3>
         <div class="row" *ngIf="selectedTeach.enrolled_students?.length>0; else nostudent">
-          <div class="col-md-3 col-sm-12 single-service wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
+          <div class="col-md-6 col-sm-12 single-service wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
 
             <div class="single-package">
               <h4 class="package-heading main-color">Class Maxile Score</h4>
               <div class="price">
                 <div class="color-bg">
-                  <h4>{{selectedTeach.average_progress}}<span class="month"><br />Average Maxile Score</span></h4>
+                  <h4>{{parseDecimal(selectedTeach.average_progress)}}<span class="month"><br />Average Maxile Score</span></h4>
                 </div>
                 <div>
                   <h4>{{selectedTeach.lowest_progress}}<span class="month"><br />Lowest Maxile Score</span></h4>
@@ -43,7 +43,7 @@
           </div>
           <!-- /END SINGLE PACKACGE -->
           <!-- SINGLE PACKACGE -->
-          <div class="col-md-6 col-sm-12 single-service wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
+          <!-- <div class="col-md-6 col-sm-12 single-service wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
 
             <div class="single-package">
 
@@ -52,10 +52,10 @@
               </h4>
               <ag-barchart [tracksdata]="selectedTeach.tracksdata" [barChartData]="selectedTeach.barchartdata"></ag-barchart>
             </div>
-          </div>
+          </div> -->
           <!-- /END SINGLE PACKACGE -->
           <!-- SINGLE PACKACGE -->
-          <div class="col-md-3 col-sm-12 single-service wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
+          <div class="col-md-6 col-sm-12 single-service wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
 
             <div class="single-package">
               <h4 class="package-heading main-color">
@@ -76,15 +76,24 @@
       <div class="row" *ngIf="selectedTeach.enrolled_students?.length>0">
         <div class="col-xs-12 table-responsive">
 
-          <table class="table table-striped table-condensed" [mfData]="selectedTeach.enrolled_students" #mf="mfDataTable" [mfRowsOnPage]="50">
+          <table class="table table-striped table-condensed" [mfData]="selectedTeach.enrolled_students" #mf="mfDataTable"
+            [mfRowsOnPage]="50">
             <thead>
               <tr>
                 <th>Student</th>
-                <th><mfDefaultSorter by="firstname">Name</mfDefaultSorter></th>
-                <th><mfDefaultSorter by="maxile_level">Total Maxile Level</mfDefaultSorter></th>
-                <th><mfDefaultSorter by="game_level">Game Level</mfDefaultSorter></th>
-                <th><mfDefaultSorter by="pivot.progress">Class Maxile</mfDefaultSorter></th>
-                <th>Field Level</th>
+                <th>
+                  <mfDefaultSorter by="firstname">Name</mfDefaultSorter>
+                </th>
+                <th>
+                  <mfDefaultSorter by="maxile_level">Total Maxile Level</mfDefaultSorter>
+                </th>
+                <th>
+                  <mfDefaultSorter by="game_level">Game Level</mfDefaultSorter>
+                </th>
+                <th>
+                  <mfDefaultSorter by="pivot.progress">Class Maxile</mfDefaultSorter>
+                </th>
+                <!-- <th>Field Level</th> -->
                 <th>Tracks Passed</th>
               </tr>
             </thead>
@@ -99,15 +108,17 @@
                 <td>{{student.maxile_level}}</td>
                 <td>{{student.game_level}}</td>
                 <td>{{student.pivot.progress}}</td>
-                <td>
+                <!-- <td>
                   <ul>
                     <li *ngFor="let level of student.field_maxile">{{level}}</li>
                   </ul>
-                </td>
+                </td> -->
                 <td>
-                  <ul>
+                  <!-- <ul>
                     <li *ngFor="let track of student.tracks_passed">{{track.track}}</li>
-                  </ul>
+                  </ul> -->
+                  <a data-toggle="modal" title="View Tracks" data-target="#trackPassed" class="btn btn-info" (click)="showTrackPassedModal(student,true)">
+                    <i class="icon_target"></i></a>
                 </td>
               </tr>
             </tbody>
@@ -125,3 +136,4 @@
     </div>
   </div>
 </section>
+<ag-track-passed  [trackResult]="selectedTrackResult" *ngIf="show_track_passed_modal"></ag-track-passed>
