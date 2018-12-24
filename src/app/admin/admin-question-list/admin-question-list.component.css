@@ -16,3 +16,7 @@ th.mat-sort-header-sorted {
 .mat-table{
 	font-family: 'Raleway', sans-serif;
 }
+
+.mat-expansion-indicator{
+	color: white!important;
+}

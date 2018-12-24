@@ -44,4 +44,14 @@ export class QuestionService {
 	  return this.http.post<any>(`${environment.apiURL}/questions/` + id, question)
 	    .map((response) => response);
 	}
+
+	getSearchOptions(): Observable<any>{
+		return this.http.get<any>(environment.apiURL + '/questions/search_init')
+    	.map((response) => response);
+	}
+
+	searchQuestions(searchQuery): Observable<any> {
+		return this.http.post<any>(environment.apiURL + '/questions/search', searchQuery)
+    	.map((response) => response);
+	}
 }

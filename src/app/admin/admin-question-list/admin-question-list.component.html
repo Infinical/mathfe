@@ -20,10 +20,49 @@
         <a [routerLink]="['/admin/questions/create']" style="margin-left: 0.5rem;" class="btn btn-success"> New Question</a>
     </div>
   </div>
-  <div class="col-sm-4">
-	  <form>
-	      <input #search (keyup)="onSearchChange($event.target.value)" class="form-control" type="text" placeholder="Search">
-	  </form>
+  <div class="col-sm-10" style="margin-bottom: 1rem; margin-top: 1rem;">
+  	<mat-accordion>
+	  <mat-expansion-panel>
+	    <mat-expansion-panel-header style="background-color: #960000">
+	      <mat-panel-title style="color:white;">
+	        Search
+	      </mat-panel-title>
+	    </mat-expansion-panel-header>
+
+	    <div class="row" style="margin-top: 0.5rem;">
+	    	<div class="col-sm-6">
+	    		<mat-form-field>
+			      <input id="searchQuestion" matInput (keyup)="searchByQuestion($event.target.value)" class="form-control" type="text" placeholder="Search by Question">
+			    </mat-form-field>
+	    	</div>
+	    	<div class="col-sm-3">
+	    		<mat-form-field >
+			      <mat-select id="searchSkill" [(ngModel)]="selectedSkill" (ngModelChange)="searchBySkill($event)" placeholder="Search by Skill">
+				    <mat-option *ngFor="let skill of searchOptions.skills" [value]="skill.id">
+				      {{skill.skill}}
+				    </mat-option>
+				  </mat-select>
+			    </mat-form-field>
+	    	</div>
+	    	<div class="col-sm-3">
+	    		<mat-form-field >
+			      <mat-select #searchLevel [(ngModel)]="selectedLevel" (ngModelChange)="searchByLevel($event)" placeholder="Search by Level">
+				    <mat-option *ngFor="let level of searchOptions.levels" [value]="level.id">
+				      {{level.description}}
+				    </mat-option>
+				  </mat-select>
+			    </mat-form-field>
+	    	</div>
+	    </div>
+	    <div class="row">
+	    	<div class="col-10">
+	    	</div>
+	    	<div class="col-2">
+	    		<input type="button" class="btn btn-default" (click)="resetSearch()" value="Reset" />
+	    	</div>
+	    </div>
+	  </mat-expansion-panel>
+	</mat-accordion>
   </div>
   <div class="col-md-12">
   	<div class="table-responsive">
@@ -34,7 +73,7 @@
 	        <mat-spinner style="margin:auto"></mat-spinner>
 		</div>
 
-  		<table mat-table [dataSource]="dataSource" matSort class="col-sm-12 mat-elevation-z8 table-condensed">
+  		<table *ngIf="!loading" mat-table [dataSource]="dataSource" matSort class="col-sm-12 mat-elevation-z8 table-condensed">
   			<ng-container matColumnDef="question">
 			  	<th mat-header-cell *matHeaderCellDef>Question</th>
 			  	<td mat-cell *matCellDef="let question">
@@ -108,6 +147,7 @@
 			</ng-container>
 
 			<ng-container matColumnDef="skill">
+			  	<th mat-header-cell *matHeaderCellDef mat-sort-header>Skill</th>
 			  	<th mat-header-cell *matHeaderCellDef mat-sort-header>Skill</th>
 			  	<td mat-cell *matCellDef="let question"> 
 			  		<span [matTooltip]="question.skill.description">
