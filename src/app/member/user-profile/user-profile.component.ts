@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
-
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'ag-user-profile',
   templateUrl: './user-profile.component.html',
@@ -15,7 +15,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   params: any;
   @Output() editingmode = new EventEmitter<boolean>();
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private authService: AuthService) { }
   fileToUplaod: File = null;
   ngOnInit() {
     this.params = this.user['id'];
@@ -44,6 +44,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       .subscribe(
         (user: any) => {
           this.user = user.user;
+          localStorage.setItem('profile_image', (user.image || ''));
+          this.authService.triggerUpdateProfileImageObservable();
           this.status = 'success';
           this.message = user['message'];
           setTimeout(() => {    //<<<---    using ()=> syntax

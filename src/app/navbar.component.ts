@@ -11,9 +11,21 @@ declare var $: any;
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private authService: AuthService, public router: Router) { }
+  constructor(private authService: AuthService, public router: Router) {
+
+    this.authService.profileImage().subscribe(p => {
+      debugger;
+      if (p) {
+        this.profilePic = localStorage.getItem('profile_image') ? localStorage.getItem('profile_image') : "/assets/images/user.png";
+      }
+    })
+  }
   isHomeActive = false;
+  profilePic = "/assets/images/user.png";
   ngOnInit() {
+    if (this.authService.isAuthenticated()) {
+      this.authService.triggerUpdateProfileImageObservable();
+    }
     this.router.events.subscribe((r: any) => {
       if (r.url == "/" || r.url == "/member") {
         this.isHomeActive = true;
@@ -21,7 +33,7 @@ export class NavbarComponent implements OnInit {
         this.isHomeActive = false;
       }
     });
-    
+
     // $(document).ready(function () {
     //   mainNav();
     // });
@@ -66,10 +78,7 @@ export class NavbarComponent implements OnInit {
   }
 
   public isAuthenticated(): boolean {
-    // Check whether the current time is past the
-    // access token's expiry time
-    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-    return new Date().getTime() < expiresAt;
+    return this.authService.isAuthenticated();
   }
 
   public collapseMenuOnMobile() {
