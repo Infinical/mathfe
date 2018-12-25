@@ -20,3 +20,7 @@ th.mat-sort-header-sorted {
 .mat-expansion-indicator{
 	color: white!important;
 }
+
+td.mat-cell{
+	text-align: left;
+}
