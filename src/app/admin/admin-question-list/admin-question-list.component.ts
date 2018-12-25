@@ -59,8 +59,9 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     this.cdr.detectChanges();
   }
 
-  searchByQuestion(value){
-    this.search({keyword: value});
+  searchByQuestion(){
+    const dom: any = document.getElementById('searchQuestion');
+    this.search({keyword: dom.value});
   }
 
   searchBySkill(skill_id: any){
@@ -76,7 +77,6 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     this.questionService.searchQuestions(searchOption).subscribe(res => {
       this.dataSource = new MatTableDataSource<any>(res.questions);
       this.loading = false;
-      console.log(res);
     }, error => {
       console.log("error", error);
       this.loading = false;
@@ -88,6 +88,7 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     this.selectedSkill = null;;
     const dom: any = document.getElementById('searchQuestion');
     dom.value = "";
+    this.dataSource = new MatTableDataSource<any>(this.gridData.questions);
   }
 
   displayKatex(string: string, id?:number, parseHtml?: boolean, elementId?: string){
@@ -136,7 +137,6 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     this.loading = true;
     this.currentPage = (e.pageIndex === 0) ? 1 : e.pageIndex;
     this.questionService.getQuestions(this.currentPage).subscribe((data) => {
-      console.log(data);
       this.gridData = data;
       this.dataSource = new MatTableDataSource<any>(this.gridData.questions);
       this.dataSource.sort = this.sort;
