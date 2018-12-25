@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import * as auth0 from 'auth0-js';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import {environment} from "../../environments/environment"
+import { environment } from "../../environments/environment"
 
 @Injectable()
 export class AuthService {
@@ -14,7 +14,7 @@ export class AuthService {
     domain: environment.webAuth.domain,
     responseType: 'token id_token',
     audience: environment.webAuth.audience,
-    redirectUri:  environment.webAuth.redirectUri,
+    redirectUri: environment.webAuth.redirectUri,
     scope: 'openid profile email name picture',
     theme: {
       logo: environment.webAuth.theme.logo
@@ -23,7 +23,7 @@ export class AuthService {
 
     }
   });
-
+  private asyncProfileImageWorker = new Subject<boolean>();
   public scheduleRenewal() {
     if (!this.isAuthenticated()) return;
     this.unscheduleRenewal();
@@ -56,7 +56,9 @@ export class AuthService {
 
   constructor(
     public router: Router,
-    private jwtHelper: JwtHelperService) { }
+    private jwtHelper: JwtHelperService) {
+
+  }
 
   public login(enrol): void {
     if (enrol) {
@@ -64,7 +66,12 @@ export class AuthService {
     }
     this.auth0.authorize();
   }
-
+  profileImage(): Observable<boolean> {
+    return this.asyncProfileImageWorker.asObservable();
+  }
+  triggerUpdateProfileImageObservable() {
+    this.asyncProfileImageWorker.next(true);
+  }
   public handleAuthentication(): void {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
@@ -88,7 +95,8 @@ export class AuthService {
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
-
+    localStorage.setItem('profile_image', authResult.idTokenPayload.picture);
+    this.triggerUpdateProfileImageObservable();
     this.scheduleRenewal();
   }
 
@@ -98,6 +106,7 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('expires_at');
     this.unscheduleRenewal();
+    this.asyncProfileImageWorker.next(false);
     // Go back to the home route
     this.router.navigate(['/']);
   }

@@ -30,10 +30,14 @@
         <li routerLinkActive="active"><a (click)="collapseMenuOnMobile()" [routerLink]="['/leader']"><i class="icon_star_alt"></i></a></li>
         <li routerLinkActive="active"><a (click)="collapseMenuOnMobile()" [routerLink]="['/admin']"><i class="icon_pencil-edit"></i></a></li>
         <li class="dropdown" ngDropdown>
-          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="icon_profile"></i>
-            <span class="caret"></span></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            <img [src]="profilePic"  class="img-circle img-top-nav-profile"/>
+            <!-- <i class="icon_profile"></i> -->
+            <span class="caret"></span>
+          </a>
 
           <ul class="dropdown-menu" role="menu">
+            <li (click)="collapseMenuOnMobile()"><a routerLink="/member">Edit Profile</a></li>
             <li (click)="collapseMenuOnMobile()"><a (click)="logout()">Logout</a></li>
           </ul>
         </li>
