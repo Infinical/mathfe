@@ -20,11 +20,11 @@
         <a [routerLink]="['/admin/questions/create']" style="margin-left: 0.5rem;" class="btn btn-success"> New Question</a>
     </div>
   </div>
-  <div class="col-sm-10" style="margin-bottom: 1rem; margin-top: 1rem;">
+  <div class="col-sm-12" style="margin-bottom: 1rem; margin-top: 1rem;">
   	<mat-accordion>
 	  <mat-expansion-panel>
-	    <mat-expansion-panel-header style="background-color: #960000">
-	      <mat-panel-title style="color:white;">
+	    <mat-expansion-panel-header style="background-color: #d9d9d9">
+	      <mat-panel-title>
 	        Search
 	      </mat-panel-title>
 	    </mat-expansion-panel-header>
@@ -32,7 +32,7 @@
 	    <div class="row" style="margin-top: 0.5rem;">
 	    	<div class="col-sm-6">
 	    		<mat-form-field>
-			      <input id="searchQuestion" matInput (keyup)="searchByQuestion($event.target.value)" class="form-control" type="text" placeholder="Search by Question">
+			      <input id="searchQuestion" matInput class="form-control" type="text" placeholder="Search by Question">
 			    </mat-form-field>
 	    	</div>
 	    	<div class="col-sm-3">
@@ -55,11 +55,8 @@
 	    	</div>
 	    </div>
 	    <div class="row">
-	    	<div class="col-10">
-	    	</div>
-	    	<div class="col-2">
-	    		<input type="button" class="btn btn-default" (click)="resetSearch()" value="Reset" />
-	    	</div>
+    		<input type="button" class="btn btn-default" (click)="resetSearch()" value="Reset" />
+    		<input type="button" style="padding-left: 1rem!important; background-color: #960000; color: white" class="btn" (click)="searchByQuestion()" value="Search" />
 	    </div>
 	  </mat-expansion-panel>
 	</mat-accordion>
@@ -99,7 +96,7 @@
 			<ng-container matColumnDef="answer">
 			  	<th mat-header-cell *matHeaderCellDef>Answer</th>
 			  	<td mat-cell *matCellDef="let question">
-		  			<div [ngClass]="{'correct-answer': question.correct_answer === 0 && question.type.type === 'MCQ', 'row': true}">
+		  			<div [ngClass]="{'correct-answer': question.correct_answer === 0 && question.type &&  question.type.type === 'MCQ', 'row': true}">
 		  				<div *ngIf="question.answer0 && !displayKatex(question.answer0)" class="col-sm-12">
 	  						{{question.answer0}}
 		  				</div>
