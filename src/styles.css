@@ -162,3 +162,15 @@ progress {
   float: left;
   margin-top: -5px;
 }
+
+.bar-green {
+  background-color: #b7ca79 !important;
+}
+
+.bar-yellow {
+  background-color: #f6e8b1 !important;
+}
+
+.bar-grey {
+  background-color: #e9ecef !important;
+}

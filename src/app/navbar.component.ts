@@ -14,7 +14,6 @@ export class NavbarComponent implements OnInit {
   constructor(private authService: AuthService, public router: Router) {
 
     this.authService.profileImage().subscribe(p => {
-      debugger;
       if (p) {
         this.profilePic = localStorage.getItem('profile_image') ? localStorage.getItem('profile_image') : "/assets/images/user.png";
       }
