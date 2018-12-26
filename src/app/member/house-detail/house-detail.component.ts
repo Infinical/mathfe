@@ -20,25 +20,19 @@ export class HouseDetailComponent implements OnInit {
   constructor() {
 
   }
-  getBgColor(tracks) {
+  getBgColor(track) {
     let trackPassedBgColor = "";
-    if (tracks) {
+    if (track) {
       var green = 0;
       var yellow = 0;
-      if (this.selectedHouse) {
-        if (this.selectedHouse.tracks) {
-          this.selectedHouse.tracks.forEach((track, i) => {
-            if (track.skills) {
-              track.skills.forEach((skill, i) => {
-                if (this.getSkillClass(skill, track) == this.rowgreen) {
-                  green++;
-                } else if (this.getSkillClass(skill, track) == this.rowyellow) {
-                  yellow++;
-                }
-              })
-            }
-          })
-        }
+      if (track.skills) {
+        track.skills.forEach((skill, i) => {
+          if (this.getSkillClass(skill, track) == this.rowgreen) {
+            green++;
+          } else if (this.getSkillClass(skill, track) == this.rowyellow) {
+            yellow++;
+          }
+        })
       }
       //tracks in green if all the skills are green
       if (green > 0 && yellow == 0) {
