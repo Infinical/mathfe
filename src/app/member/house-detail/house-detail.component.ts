@@ -11,13 +11,50 @@ declare var $: any;
 })
 export class HouseDetailComponent implements OnInit {
 
-  @Input() selectedHouse: House;
+  @Input() selectedHouse: any;
   @Output() selectedEvent: EventEmitter<House> = new EventEmitter<House>();
   @Output() selectedVideo: EventEmitter<Skill> = new EventEmitter<Skill>();
+  rowgreen = "row-green";
+  rowyellow = "row-yellow";
 
-  constructor() { }
+  constructor() {
 
+  }
+  getBgColor(tracks) {
+    let trackPassedBgColor = "";
+    if (tracks) {
+      var green = 0;
+      var yellow = 0;
+      if (this.selectedHouse) {
+        if (this.selectedHouse.tracks) {
+          this.selectedHouse.tracks.forEach((track, i) => {
+            if (track.skills) {
+              track.skills.forEach((skill, i) => {
+                if (this.getSkillClass(skill, track) == this.rowgreen) {
+                  green++;
+                } else if (this.getSkillClass(skill, track) == this.rowyellow) {
+                  yellow++;
+                }
+              })
+            }
+          })
+        }
+      }
+      //tracks in green if all the skills are green
+      if (green > 0 && yellow == 0) {
+        trackPassedBgColor = "bar-green";//
+      }
+      //yellow if any of the skills within is either green or yellow
+      else if (yellow > 0 || green > 0) {
+        trackPassedBgColor = "bar-yellow";//
+      } else
+        //default grey
+        trackPassedBgColor = "bar-grey";///
+    }
+    return trackPassedBgColor;
+  }
   ngOnInit() {
+
   }
 
   // unSelect(house: House) {
@@ -35,9 +72,9 @@ export class HouseDetailComponent implements OnInit {
       if (skill.skill_maxile) {
         if (skill.skill_maxile.skill_maxile) {
           if (skill.skill_maxile.skill_maxile >= track.level_id * 100) {
-            return "row-green";
+            return this.rowgreen;
           } else if (skill.skill_maxile.skill_maxile < track.level_id * 100 && skill.skill_maxile.noOfTries > 0) {
-            return "row-yellow";
+            return this.rowyellow;
           }
         }
       }

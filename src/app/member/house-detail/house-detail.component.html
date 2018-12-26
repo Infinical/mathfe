@@ -90,7 +90,7 @@
             <div class="col-sm-6">
               <div class="progress">
                 <br />
-                <div class="progress-bar progress-bar-striped active" role="progressbar" [style.background-color]="(culculateTrackPassPercentageValue(selectedHouse.tracks_passed,selectedHouse.total_tracks) == 100) ? 'green' : ''"
+                <div class="progress-bar progress-bar-striped active {{getBgColor(selectedHouse?.tracks)}}" role="progressbar"
                   [style.width.%]="culculateTrackPassPercentageValue(selectedHouse?.tracks_passed,selectedHouse?.total_tracks)"
                   aria-valuenow="selectedHouse?.tracks_passed" aria-valuemin="0" aria-valuemax="selectedHouse?.total_tracks">
                   {{selectedHouse?.tracks_passed}}
