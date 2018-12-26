@@ -5,7 +5,7 @@
 import { PayPalEnvironment } from 'ngx-paypal';
 export const environment = {
   production: false,
-  apiURL: 'http://devapi.pamelalim.me',
+  apiURL: 'http://localhost',
   webAuth: {
     clientID: 'eVJv6UFM9GVdukBWiURczRCxmb6iaUYG',
     domain: 'pamelalim.auth0.com',
