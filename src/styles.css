@@ -162,15 +162,31 @@ progress {
   float: left;
   margin-top: -5px;
 }
+/*
+color must be same from chart color
+/src/app/member/teach-list/teach-detail/chart/chart.component.ts
+*/
+:root {
+  --underperform-bg-color: rgb(151, 37, 23); /*Red*/
+  --overperform-bg-color: rgb(117, 197, 47); /*Green*/
+  --on-target-bg-color: rgb(249, 221, 150); /*Yellow*/
+} 
+tr.row-green, tr.row-green>td {
+  background-color: var(--overperform-bg-color) !important;
+}
+
+tr.row-yellow, tr.row-yellow>td {
+  background-color: var(--on-targe-bg-color) !important
+}
 
 .bar-green {
-  background-color: #b7ca79 !important;
+  background-color:  var(--overperform-bg-color) !important;
   padding: 8px;
   margin: 0;
 }
 
 .bar-yellow {
-  background-color: #f6e8b1 !important;
+  background-color: var(--on-targe-bg-color) !important;
   padding: 8px;
   margin: 0;
 }
@@ -178,4 +194,7 @@ progress {
 .bar-grey {
   padding: 8px;
   margin: 0;
+}
+.skill-grey-row{
+  color: #a5a0a0;
 }
