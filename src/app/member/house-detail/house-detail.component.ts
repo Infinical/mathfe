@@ -25,8 +25,8 @@ export class HouseDetailComponent implements OnInit {
     if (track) {
       var green = 0;
       var yellow = 0;
-      if (track.skills) {
-        track.skills.forEach((skill, i) => {
+      if (track.checked_skills) {
+        track.checked_skills.forEach((skill, i) => {
           if (this.getSkillClass(skill, track) == this.rowgreen) {
             green++;
           } else if (this.getSkillClass(skill, track) == this.rowyellow) {
