@@ -140,7 +140,13 @@
                         <tbody>
                           <tr *ngFor="let skill of mf.data" [class]="getSkillClass(skill,track)">
                             <td>{{skill.skill}}</td>
-                            <td>{{skill.description}}</td>
+                            <td>{{skill.description}}
+                              <br>
+                            {{ skill?.skill_maxile?.skill_maxile}}
+                            <br>
+                            {{track?.level_id * 100}}
+
+                            </td>
                             <td>
                               <div *ngIf="skill?.skill_maxile?.skill_maxile">{{skill.skill_maxile.skill_maxile | number
                                 : '1.0-0'}}</div>
