@@ -33,7 +33,7 @@ export class TeachDetailCourseComponent implements OnInit {
   fields: any;
   levels: any;
   statuses: any;
-
+  selectedStudent: any;
   constructor(private trackService: TrackService, private skillService: SkillService) {
 
   }
@@ -74,5 +74,24 @@ export class TeachDetailCourseComponent implements OnInit {
     this.delete_skill_track = track;
     this.delete_skill = skill;
     this.deleteSkillOn = true;
+  }
+  getTargetClass(skill, house) {
+    if (skill) {
+      if (skill.user) {
+        if (parseFloat(skill.user.maxile_level) < ((house.underperform * house.end_framework) / 100)) {
+          return "btn-delete"; //red (failed)
+        } else if (parseFloat(skill.user.maxile_level) > ((house.overperform * house.end_framework) / 100)) {
+          return "btn-success"; //green icon (exceed target)
+        } else {
+          return "btn-warning"  //yellow (on target)
+        }
+      }
+    }
+    /**
+     * if user.maxile_level < house.underperform/100house.end_framework
+    
+    , then underperform, if user.maxile_level > house.overperform/100 house.end_framework then overperform. Otherwise, on target.
+     * 
+     */
   }
 }
