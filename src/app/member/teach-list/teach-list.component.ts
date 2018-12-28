@@ -20,7 +20,7 @@ export class TeachListComponent implements OnInit {
     this.houses
       .subscribe(
         houses => {
-          localStorage.setItem("teachListSelectedHouses", JSON.stringify(houses));
+          localStorage.setItem("EnrolledTeachers", JSON.stringify(houses));
         },
         error => {
           console.log(<any>error); 

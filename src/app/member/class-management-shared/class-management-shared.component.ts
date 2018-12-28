@@ -35,7 +35,7 @@ export class ClassManagementSharedComponent implements OnInit {
       },
       error => console.log(<any>error));
 
-    var houses = localStorage.getItem('teachListSelectedHouses');
+    var houses = localStorage.getItem('EnrolledTeachers');
     if (houses) {
       this.selectedTeach = JSON.parse(houses).filter((d) => d.id == this.houseid)[0];
     }
