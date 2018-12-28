@@ -21,29 +21,42 @@ export class HouseDetailComponent implements OnInit {
 
   }
   getBgColor(track) {
-    let trackPassedBgColor = "";
+    /**If all the skills inside is green, then the track is green.
+If all the skills inside is grey, then the track is grey.
+Otherwise, the track is yellow. */
+    //default grey    
+    let trackPassedBgColor = "bar-grey";
     if (track) {
       var green = 0;
       var yellow = 0;
+      var grey = 0;
+      var totalSkill = 0;
       if (track.checked_skills) {
+        totalSkill = track.checked_skills.length;
         track.checked_skills.forEach((skill, i) => {
           if (this.getSkillClass(skill, track) == this.rowgreen) {
             green++;
           } else if (this.getSkillClass(skill, track) == this.rowyellow) {
             yellow++;
+          } else {
+            grey++;
           }
         })
       }
-      //tracks in green if all the skills are green
-      if (green > 0 && yellow == 0) {
-        trackPassedBgColor = "bar-green";//
+      if (totalSkill > 0) {
+        //If all the skills inside is green, then the track is green.
+        if (green == totalSkill) {
+          trackPassedBgColor = "bar-green";//
+        }
+        //If all the skills inside is grey, then the track is grey.
+        else if (grey == totalSkill) {
+          trackPassedBgColor = "bar-grey";//
+        }
+        //Otherwise, the track is yellow
+        else {
+          trackPassedBgColor = "bar-yellow";//
+        }
       }
-      //yellow if any of the skills within is either green or yellow
-      else if (yellow > 0 || green > 0) {
-        trackPassedBgColor = "bar-yellow";//
-      } else
-        //default grey
-        trackPassedBgColor = "bar-grey";///
     }
     return trackPassedBgColor;
   }
