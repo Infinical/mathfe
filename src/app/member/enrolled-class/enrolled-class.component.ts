@@ -15,7 +15,7 @@ export class EnrolledClassComponent implements OnInit {
   constructor(private route: ActivatedRoute) {
     $('.spinner-footer-envelope').show();
     this.houseid = this.route.snapshot.paramMap.get("id");
-    var houses = localStorage.getItem('enrolledClassSelectedHouse');
+    var houses = localStorage.getItem('EnrolledClassess');
     if (houses) {
       this.selectedHouse = JSON.parse(houses).filter((d) => d.id == this.houseid)[0];
     }
