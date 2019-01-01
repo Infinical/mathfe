@@ -15,6 +15,7 @@ import { HouseTrackService } from './services/house-track.service';
 import { SkillTrackService } from './services/skill-track.service';
 import { UserService } from './services/user.service';
 import { DashboardService } from './services/dashboard.service';
+import { HouseService } from './services/house.service';
 import { CourseDetailComponent } from './dashboard/course-detail/course-detail.component';
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
@@ -203,7 +204,7 @@ export function tokenGetter() {
     KatexModule
   ],
   entryComponents: [DialogDeleteCourse, DialogDeleteQuestion],
-  providers: [TrackService, CourseService, QuestionService, DashboardService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService, ModalService],
+  providers: [TrackService, CourseService, QuestionService, DashboardService, HouseService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService, ModalService],
   bootstrap: [AppComponent]
 })
 
