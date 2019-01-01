@@ -179,10 +179,17 @@ color must be same from chart color
 
 tr.row-green, tr.row-green>td {
   background-color: var(--overperform-bg-color) !important;
+  color: #fff;
 }
 
 tr.row-yellow, tr.row-yellow>td {
-  background-color: var(--on-targe-bg-color) !important
+  background-color: var(--on-targe-bg-color) !important;
+  color: #fff;
+}
+
+tr.row-red, tr.row-red>td {
+  background-color: var(--underperform-bg-color) !important;
+  color: #fff;
 }
 
 .bar-green {

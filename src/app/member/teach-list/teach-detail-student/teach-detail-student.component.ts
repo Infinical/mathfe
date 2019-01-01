@@ -64,7 +64,7 @@ export class TeachDetailStudentComponent implements OnInit {
     }
   }
   updateHouse() {
-    this.houseService.updateHouse(this.selectedTeach).subscribe((d: any) => {      
+    this.houseService.updateHouse(this.selectedTeach).subscribe((d: any) => {
       let EnrolledTeachers = JSON.parse(localStorage.getItem('EnrolledTeachers'));
       EnrolledTeachers.forEach((v, i) => {
         if (v.id == this.selectedTeach.id) {
@@ -89,6 +89,23 @@ export class TeachDetailStudentComponent implements OnInit {
       this.state = 'error';
       this.message = error['message'];
     });
+  }
+  getRowClass(student) {
+    /**
+     * Students with maxile < house.underperform * house.end_framework/100 underperform,
+     * students with maxile>house.overperform*house.end_framework/100 overperform.
+     * 
+     */
+    if (student) {
+      if (parseFloat(student.maxile_level) < ((this.selectedTeach.underperform * this.selectedTeach.end_framework) / 100)) {
+        return "row-red"; //red (underperform)
+      } else if (parseFloat(student.maxile_level) > ((this.selectedTeach.overperform * this.selectedTeach.end_framework) / 100)) {
+        return "row-green"; //green (overperform)
+      } else {
+        return ""  //
+      }
+    }
+    return "";
   }
   // unSelect(house: House) {
   //   this.selectedEvent.emit(null);
