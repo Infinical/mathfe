@@ -134,7 +134,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="m-table__row--active" *ngFor="let student of mf.data">
+              <tr class="m-table__row--active {{getRowClass(student)}}" *ngFor="let student of mf.data">
                 <td scope="row">
                   <img src="{{student.image}}" width="75" />
                 </td>
