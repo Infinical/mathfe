@@ -5,6 +5,7 @@ import { Skill } from '../../../models/skill';
 
 import { TrackService } from '../../../services/track.service';
 import { SkillService } from '../../../services/skill.service';
+import { HouseService } from '../../../services/house.service';
 
 @Component({
   selector: 'ag-teach-detail-student',
@@ -32,10 +33,12 @@ export class TeachDetailStudentComponent implements OnInit {
   fields: any;
   levels: any;
   statuses: any;
+  state: string;
+  message: string;
   show_track_passed_modal = false;
   selectedTrackResult: any;
 
-  constructor(private trackService: TrackService, private skillService: SkillService) {
+  constructor(private trackService: TrackService, private skillService: SkillService, private houseService: HouseService) {
 
   }
 
@@ -57,8 +60,35 @@ export class TeachDetailStudentComponent implements OnInit {
       this.show_track_passed_modal = true
     } else {
       this.show_track_passed_modal = false;
-      
+
     }
+  }
+  updateHouse() {
+    this.houseService.updateHouse(this.selectedTeach).subscribe((d: any) => {      
+      let EnrolledTeachers = JSON.parse(localStorage.getItem('EnrolledTeachers'));
+      EnrolledTeachers.forEach((v, i) => {
+        if (v.id == this.selectedTeach.id) {
+          v.underperform = d.class.underperform;
+          v.overperform = d.class.overperform;
+        }
+      })
+      localStorage.setItem('EnrolledTeachers', JSON.stringify(EnrolledTeachers));
+      //
+      let EnrolledClassess = JSON.parse(localStorage.getItem('EnrolledClassess'));
+      EnrolledTeachers.forEach((v, i) => {
+        if (v.id == this.selectedTeach.id) {
+          v.underperform = d.class.underperform;
+          v.overperform = d.class.overperform;
+        }
+      })
+      localStorage.setItem('EnrolledClassess', JSON.stringify(EnrolledClassess));
+      this.state = 'success';
+      this.message = d['message'];
+    }, (error) => {
+      console.error(error);
+      this.state = 'error';
+      this.message = error['message'];
+    });
   }
   // unSelect(house: House) {
   //   this.selectedEvent.emit(null);
