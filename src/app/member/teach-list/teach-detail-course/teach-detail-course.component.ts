@@ -94,4 +94,18 @@ export class TeachDetailCourseComponent implements OnInit {
      * 
      */
   }
+
+  toggelSkillCheck(skill) {
+    if (skill.check == 1) {
+      skill.check = 0;
+    } else {
+      skill.check = 1;
+    }
+    this.skillService.updateSkill(skill).subscribe((s) => {
+      debugger;
+    }, (error) => {
+      debugger;
+    });
+  }
+
 }

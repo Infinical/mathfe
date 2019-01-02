@@ -183,8 +183,7 @@ tr.row-green, tr.row-green>td {
 }
 
 tr.row-yellow, tr.row-yellow>td {
-  background-color: var(--on-targe-bg-color) !important;
-  color: #fff;
+  background-color: var(--on-target-bg-color) !important;
 }
 
 tr.row-red, tr.row-red>td {
