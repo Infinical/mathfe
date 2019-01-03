@@ -211,3 +211,30 @@ tr.row-red, tr.row-red>td {
 .skill-grey-row {
   color: #a5a0a0;
 }
+
+.lds-dual-ring {
+  width: 38px;
+  height: 34px;
+  position: absolute;
+  z-index: 9;
+  cursor: progress;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 35px;
+  height: 35px;
+  margin: 1px;
+  border-radius: 50%;
+  border: 3px solid #972517;
+  border-color: #972517 transparent #972517 transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
