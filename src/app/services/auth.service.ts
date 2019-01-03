@@ -37,6 +37,7 @@ export class AuthService {
 
         // Use the delay in a timer to
         // run the refresh at the proper time
+        console.log('will refresh token in ' + Math.max(1, expiresAt - now) / 1000 + ' seconds')
         return Observable.timer(Math.max(1, expiresAt - now));
       });
 
@@ -123,10 +124,12 @@ export class AuthService {
   }
 
   public renewToken() {
+    console.log('Refresh Token Start')
     this.auth0.checkSession({}, (err, result) => {
       if (err) {
         console.log(err);
       } else {
+        console.log('Refresh Token Success')
         this.setSession(result);
       }
     });

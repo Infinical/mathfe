@@ -96,15 +96,29 @@ export class TeachDetailCourseComponent implements OnInit {
   }
 
   toggelSkillCheck(skill) {
-    if (skill.check == 1) {
-      skill.check = 0;
+    skill.checkProcess = true;
+    if (!Object.create)
+      Object.create = function (proto) {
+        function F() { }
+        F.prototype = proto;
+        return new F;
+      }
+    let skillModel = Object.create(skill);
+    if (skillModel.check == 1) {
+      skillModel.check = "FALSE";
     } else {
-      skill.check = 1;
+      skillModel.check = "TRUE"
     }
-    this.skillService.updateSkill(skill).subscribe((s) => {
-      debugger;
+    this.skillService.updateSkill(skillModel).subscribe((s: any) => {
+      if (s.skill.check == "TRUE") {
+        skill.check = 1;
+      } else {
+        skill.check = 0;
+      }
+      skill.checkProcess = false;
     }, (error) => {
-      debugger;
+      console.error(error);
+      skill.checkProcess = false;
     });
   }
 
