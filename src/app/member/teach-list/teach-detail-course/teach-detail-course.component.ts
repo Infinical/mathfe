@@ -95,7 +95,7 @@ export class TeachDetailCourseComponent implements OnInit {
      */
   }
 
-  toggelSkillCheck(skill) {
+  toggelSkillCheck(skill, trackId) {
     skill.checkProcess = true;
     if (!Object.create)
       Object.create = function (proto) {
@@ -116,6 +116,31 @@ export class TeachDetailCourseComponent implements OnInit {
         skill.check = 0;
       }
       skill.checkProcess = false;
+      let houses = JSON.parse(localStorage.getItem('EnrolledTeachers'));
+      houses.forEach((h, i) => {
+        if (h.id == this.selectedTeach.id) {
+          h = this.selectedTeach;
+        }
+      })
+      localStorage.setItem('EnrolledTeachers', JSON.stringify(houses));
+
+      let EnrolledTeachers = JSON.parse(localStorage.getItem('EnrolledTeachers'));
+      EnrolledTeachers.forEach((v, i) => {
+        if (v.id == this.selectedTeach.id) {
+          v.tracks.forEach((t, ti) => {
+            if (t.id == trackId) {
+              t.skills.forEach((s, si) => {
+                if (s.id == skill.id) {
+                  s.check = skill.check;
+                }
+              });
+            }
+          })
+        }
+      })
+      debugger;
+      localStorage.setItem('EnrolledTeachers', JSON.stringify(EnrolledTeachers));
+
     }, (error) => {
       console.error(error);
       skill.checkProcess = false;

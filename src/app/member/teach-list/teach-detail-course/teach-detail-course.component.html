@@ -112,7 +112,7 @@
 
                                       <button type="button" class="m-btn btn btn-question"><i class="icon_question"></i></button>
                                       <span *ngIf=" skill.checkProcess" class="lds-dual-ring"></span>
-                                      <button type="button" (click)="toggelSkillCheck(skill)" class="m-btn btn btn-edit"><i [class.icon_box-empty]="skill.check==0"
+                                      <button type="button" (click)="toggelSkillCheck(skill,track.id)" class="m-btn btn btn-edit"><i [class.icon_box-empty]="skill.check==0"
                                           [class.icon_check_alt2]="skill.check==1"></i></button>
                                       <button (click)="selectedStudent=skill.user" data-toggle="modal" data-target="#studentModal"
                                         title="Target" type="button" class="m-btn btn {{getTargetClass(skill,selectedTeach)}}"><i
