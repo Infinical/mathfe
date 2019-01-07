@@ -77,6 +77,7 @@ import { AdminQuestionEditComponent } from './admin/admin-question-edit/admin-qu
 import { AdminQuestionDeleteComponent } from './admin/admin-question-delete/admin-question-delete.component';
 import { DynamicContentComponent } from './admin/admin-question-list/dynamicContent/dynamicContent.component';
 import { DialogDeleteCourse } from './admin/admin-course-list/admin-course-list.component';
+import { ConfirmDialogComponent } from './admin/confirm-dialog/confirm-dialog.component';
 import { DialogDeleteQuestion } from './admin/admin-question-list/admin-question-list.component';
 import { ModalComponent } from './member/modal.component';
 import { ModalService } from './services/modal.service';
@@ -169,6 +170,7 @@ export function tokenGetter() {
     DynamicContentComponent,
     DialogDeleteCourse,
     DialogDeleteQuestion,
+    ConfirmDialogComponent,
     ModalComponent,
     LandingPageComponent,
     ClassManagementComponent,
@@ -203,7 +205,7 @@ export function tokenGetter() {
     DataTableModule,
     KatexModule
   ],
-  entryComponents: [DialogDeleteCourse, DialogDeleteQuestion],
+  entryComponents: [DialogDeleteCourse, DialogDeleteQuestion, ConfirmDialogComponent],
   providers: [TrackService, CourseService, QuestionService, DashboardService, HouseService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService, ModalService],
   bootstrap: [AppComponent]
 })
