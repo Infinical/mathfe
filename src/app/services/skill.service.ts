@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 import { throwError } from 'rxjs';
 @Injectable()
 export class SkillService {
-
+	public updateStatus="";
 	constructor(private http: HttpClient) { }
 
 	getSkills(): Observable<any> {

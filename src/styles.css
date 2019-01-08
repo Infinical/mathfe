@@ -219,6 +219,7 @@ tr.row-red, tr.row-red>td {
   z-index: 9;
   cursor: progress;
 }
+
 .lds-dual-ring:after {
   content: " ";
   display: block;
@@ -230,6 +231,7 @@ tr.row-red, tr.row-red>td {
   border-color: #972517 transparent #972517 transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
+
 @keyframes lds-dual-ring {
   0% {
     transform: rotate(0deg);
@@ -237,4 +239,51 @@ tr.row-red, tr.row-red>td {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.action-2 {
+  width: 107px;
+}
+
+.btn {
+  margin-right: 5px;
+}
+
+tr {
+  background-color: white;
+}
+
+.table>thead>tr>th {
+  vertical-align: middle;
+}
+
+.mat-table-th {
+  text-align: center;
+  cursor: default;
+  background: no-repeat 100% 45%;
+}
+
+.mat-table-th_clickable {
+  cursor: pointer;
+  position: relative;
+}
+
+.mat-table-th_inactive:hover {
+  background: url(/images/arrow_up.png) no-repeat 100% 45%;
+}
+
+.mat-table-th_active {
+  background: url(/images/arrow_up.png) no-repeat 100% 45%;
+}
+
+.mat-table-th_reversed {
+  background: url(/images/arrow_down.png) no-repeat 100% 45%;
+}
+
+.mat-table-spinner-wrapper {
+  background-color: transparent;
+}
+
+.mat-table-spinner {
+  padding: 30px;
 }

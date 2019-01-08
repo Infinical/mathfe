@@ -1,109 +1,102 @@
 <section class="screenshots grey-bg" id="courses">
 
-<div class="container">
-  
-  <!-- SECTION HEADER -->
-  <div class="section-header wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
-    
-    <!-- SECTION TITLE -->
-    <h2 class="dark-text">All Courses</h2>
-    
-    <div class="colored-line">
-    </div>
-    
-  </div>
-  <!-- /END SECTION HEADER -->
-  
-  <div *ngIf="updateStatus" class="alert alert-success alert-dismissible" role="alert">
-    {{ updateStatus }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="resetUpdateStatus()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
+  <div class="container">
 
-  <div class="col-md-12">
-    <div>
+    <!-- SECTION HEADER -->
+    <div class="section-header wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
+
+      <!-- SECTION TITLE -->
+      <h2 class="dark-text">All Courses</h2>
+
+      <div class="colored-line">
+      </div>
+
+    </div>
+    <!-- /END SECTION HEADER -->
+
+    <div *ngIf="updateStatus" class="alert alert-success alert-dismissible" role="alert">
+      {{ updateStatus }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="resetUpdateStatus()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="col-md-12">
+      <div>
         <a [routerLink]="['/admin/']" class="btn btn-default"> Back</a>
         <a [routerLink]="['/admin/courses/create']" class="btn btn-success"> New Course</a>
+      </div>
+      <br />
     </div>
-  </div>
-  <div class="col-md-12">
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <th class="admin-courses__table-head">Course</th>
-            <th
-              class="admin-courses__table-head admin-courses__table-head_clickable"
-              [ngClass]="{
-                'admin-courses__table-head_active': sortedByTitle,
-                'admin-courses__table-head_reversed': reversedByTitle,
-                'admin-courses__table-head_inactive': !reversedByTitle && !sortedByTitle
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="mat-table-th">Course</th>
+              <th class="mat-table-th mat-table-th_clickable" [ngClass]="{
+                'mat-table-th_active': sortedByTitle,
+                'mat-table-th_reversed': reversedByTitle,
+                'mat-table-th_inactive': !reversedByTitle && !sortedByTitle
               }"
-              (click)="sortBy('title')">
+                (click)="sortBy('title')">
                 Title
-            </th>
-            <th
-              class="admin-courses__table-head admin-courses__table-head_clickable"
-              [ngClass]="{
-                'admin-courses__table-head_active': sortedByDescription,
-                'admin-courses__table-head_reversed': reversedByDescription,
-                'admin-courses__table-head_inactive': !reversedByDescription && !sortedByDescription
+              </th>
+              <th class="mat-table-th mat-table-th_clickable" [ngClass]="{
+                'mat-table-th_active': sortedByDescription,
+                'mat-table-th_reversed': reversedByDescription,
+                'mat-table-th_inactive': !reversedByDescription && !sortedByDescription
               }"
-              (click)="sortBy('description')">
+                (click)="sortBy('description')">
                 Description
-            </th>
-            <th
-              class="admin-courses__table-head admin-courses__table-head_clickable"
-              [ngClass]="{
-                'admin-courses__table-head_active': sortedByStart,
-                'admin-courses__table-head_reversed': reversedByStart,
-                'admin-courses__table-head_inactive': !reversedByStart && !sortedByStart
+              </th>
+              <th class="mat-table-th mat-table-th_clickable" [ngClass]="{
+                'mat-table-th_active': sortedByStart,
+                'mat-table-th_reversed': reversedByStart,
+                'mat-table-th_inactive': !reversedByStart && !sortedByStart
               }"
-              (click)="sortBy('start')">
+                (click)="sortBy('start')">
                 Start Maxile
-            </th>
-            <th
-              class="admin-courses__table-head admin-courses__table-head_clickable"
-              [ngClass]="{
-                'admin-courses__table-head_active': sortedByEnd,
-                'admin-courses__table-head_reversed': reversedByEnd,
-                'admin-courses__table-head_inactive': !reversedByEnd && !sortedByEnd
+              </th>
+              <th class="mat-table-th mat-table-th_clickable" [ngClass]="{
+                'mat-table-th_active': sortedByEnd,
+                'mat-table-th_reversed': reversedByEnd,
+                'mat-table-th_inactive': !reversedByEnd && !sortedByEnd
               }"
-              (click)="sortBy('end')">
+                (click)="sortBy('end')">
                 End Maxile
-            </th>
-            <th class="admin-courses__table-head">Action</th>
-          </tr>
-        </thead>
-        <tbody class="admin-courses__table-body">
+              </th>
+              <th class="mat-table-th action-2">Action</th>
+            </tr>
+          </thead>
+          <tbody>
 
-          <tr *ngIf="loading" class="admin-courses__spinner-wrapper">
-            <td colspan="6" align="center" class="admin-courses__spinner">
-              <mat-spinner color="#960000"></mat-spinner>
-            </td>
-          </tr>
+            <tr *ngIf="loading" class="mat-table-spinner-wrapper">
+              <td colspan="6" align="center" class="mat-table-spinner">
+                <mat-spinner color="#960000"></mat-spinner>
+              </td>
+            </tr>
 
-          <tr *ngFor="let course of courses">
-            <td><img src="{{ imageUrl(course.image) }}" width="200" /></td>
-            <td>{{ course.course }}</td>
-            <td align="left">{{ course.description }}</td>
-            <td>{{ course.start_maxile_score }}</td>
-            <td>{{ course.end_maxile_score }}</td>
-            <td>
-              <div class="btn-group" role="group" aria-label="First group">
-                <a (click)="editCourse(course.id)" class="btn btn-info"><i class="icon_pencil"></i></a>
-                <a (click)="openDialog(course.id)" class="btn btn-danger"><i class="icon_minus_alt2"></i></a>
-            </div>
-            </td>
-          </tr>
+            <tr *ngFor="let course of courses">
+              <td><img src="{{ imageUrl(course.image) }}" width="200" /></td>
+              <td>{{ course.course }}</td>
+              <td align="left">{{ course.description }}</td>
+              <td>{{ course.start_maxile_score }}</td>
+              <td>{{ course.end_maxile_score }}</td>
+              <td>
+                <div class="btn-group" role="group" aria-label="First group">
+                  <a (click)="editCourse(course.id)" class="btn btn-info"><i class="icon_pencil"></i></a>
+                  <a (click)="openDialog(course.id)" class="btn btn-danger"><i class="icon_minus_alt2"></i></a>
+                </div>
+              </td>
+            </tr>
 
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
+
   </div>
-  
-</div>
-<!-- /END CONTAINER -->
+  <!-- /END CONTAINER -->
 
 </section>
