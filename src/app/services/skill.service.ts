@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 import { throwError } from 'rxjs';
 @Injectable()
 export class SkillService {
-	public updateStatus="";
+	public updateStatus = "";
 	constructor(private http: HttpClient) { }
 
 	getSkills(): Observable<any> {
@@ -20,12 +20,25 @@ export class SkillService {
 	addSkill(skill: Object): Observable<Skill[]> {
 		return this.http.post<Skill[]>(`${environment.apiURL}/skills`, skill)
 			.map((response) => response)
-			.catch((error: any) => throwError(error.json().error || { message: 'Server Error' }));
+			.catch((error: any) => {
+				console.error(error);
+				let msg = "Server Error";
+				if (error.json) {
+					msg = error.json().error;
+				} else {
+					msg = error.error.message;
+				}
+				return throwError({
+					message: msg
+				})
+			});
 	}
 
 	getSkill(id: String): Observable<any> {
 		return this.http.get(`${environment.apiURL}/skills/` + id)
-			.map((response) => response['skill'])
+			.map((response) => {
+				return response['skill']
+			})
 			.catch((error: any) => throwError(error.json().error || { message: 'Server Error' }));
 	}
 
@@ -38,13 +51,21 @@ export class SkillService {
 		} else {
 			skill['check'] = (skill['check'] + "").toUpperCase();
 		}
-		
+
 		const apiUrl = `${environment.apiURL}/skills`;
 		const url = `${apiUrl}/${skill['id']}`;
 		return this.http.put<Skill[]>(url, skill)
 			.map((response) => response)
 			.catch((error: any) => throwError(error.error || { message: 'Server Error' }));
 	}
+	updateSkillWithFormData(skill: FormData, id: number): Observable<Skill[]> {
+		const apiUrl = `${environment.apiURL}/skills`;
+		const url = `${apiUrl}/${id}`;
+		return this.http.post<any>(url, skill)
+			.map((response) => response)
+			.catch((error: any) => throwError(error.error || { message: 'Server Error' }));
+	}
+
 
 	deleteSkill(id: String): Observable<Skill[]> {
 		const apiUrl = `${environment.apiURL}/skills`;
