@@ -30,7 +30,7 @@ export class AdminSkillCreateComponent implements OnInit {
 
   public createSkill(skill): void {
     const formData: FormData = new FormData();
-    if ((skill.video){
+    if (skill.video){
       if (!this.lesson_link.includes(skill.video)) {
         formData.append('lesson_link', this.selectedFile);
       }
@@ -42,6 +42,7 @@ export class AdminSkillCreateComponent implements OnInit {
     this.skillService.addSkill(formData)
       .subscribe(
         skill => {
+          debugger;
           this.skillService.updateStatus = skill['message'];
           setTimeout(() => this.skillService.updateStatus = '', 2000);
           this.router.navigate(['/admin/skills']);
