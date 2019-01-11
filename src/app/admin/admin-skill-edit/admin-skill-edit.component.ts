@@ -64,6 +64,7 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
     this.skillService.updateSkillWithFormData(this.formData, skill.id)
       .subscribe(
         skill => {
+          debugger;
           this.status = 'success';
           this.message = skill['message'];
           this.skillService.updateStatus = this.message = skill['message'];
