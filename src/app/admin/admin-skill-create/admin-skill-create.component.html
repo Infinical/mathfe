@@ -27,7 +27,7 @@
         <form novalidate class="form-horizontal" (ngSubmit)="createSkill(createSkillForm.value)" #createSkillForm="ngForm">
           <fieldset>
             <div class="form-group">
-              <label for="image" class="col-lg-2 control-label">Skill Image</label>
+              <label for="image" class="col-lg-2 control-label">Skill Video</label>
               <div class="col-lg-10">
                 <input type="file" class="form-control" id="video" name="video" ngModel #video="ngModel" minlength="3"
                   accept="video/mp4,video/x-m4v,video/*" (change)="onFileSelected($event.target.files)" placeholder="Skill Video">

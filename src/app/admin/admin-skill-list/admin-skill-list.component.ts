@@ -22,9 +22,11 @@ export class AdminSkillListComponent implements OnInit {
 
   public sortedByTitle: boolean = false;
   public sortedByDescription: boolean = false;
+  public sortedByAuther: boolean = false;
 
   public reversedByTitle: boolean = false;
   public reversedByDescription: boolean = false;
+  public reversedByAuther: boolean = false;
 
   constructor(
     private _router: Router,
@@ -52,10 +54,10 @@ export class AdminSkillListComponent implements OnInit {
     return this.skillService.updateStatus;
   }
 
-  public imageUrl(url: string): string {
+  public videoUrl(url: string): string {
     if (url)
       return this._beURL + url;
-    else return "/images/no-image.jpg";
+    else return "";
   }
 
   public editSkill(id: number): void {
@@ -105,6 +107,18 @@ export class AdminSkillListComponent implements OnInit {
             this.sortedByDescription = true;
           }
           break;
+        case 'auther':
+          if (this.sortedByAuther) {
+            this.skills.reverse();
+            this._resetSort();
+            this.reversedByAuther = true;
+          }
+          else {
+            this.skills.sort(this._sortByAuther);
+            this._resetSort();
+            this.sortedByAuther = true;
+          }
+          break;
       }
     }
   }
@@ -145,11 +159,25 @@ export class AdminSkillListComponent implements OnInit {
       return 0;
     }
   }
+
+  private _sortByAuther(a, b): number {
+    if (a.user.firstname.toLowerCase() < b.user.firstname.toLowerCase()) {
+      return -1;
+    }
+    else if (a.user.firstname.toLowerCase() > b.user.firstname.toLowerCase()) {
+      return 1;
+    }
+    else {
+      return 0;
+    }
+  }
+
   private _resetSort(): void {
     this.sortedByTitle = false;
     this.sortedByDescription = false;
     this.reversedByTitle = false;
     this.reversedByDescription = false;
+    this.reversedByAuther = false;
 
   }
 

@@ -50,21 +50,46 @@
                 (click)="sortBy('description')">
                 Description
               </th>
+              <!-- <th>Tracks</th>
+              <th class="mat-table-th mat-table-th_clickable" [ngClass]="{
+                'mat-table-th_active': sortedByAuther,
+                'mat-table-th_reversed': reversedByAuther,
+                'mat-table-th_inactive': !reversedByAuther && !sortedByAuther
+              }"
+                (click)="sortBy('auther')">
+                Auther
+              </th> -->
               <th class="mat-table-th action-2">Action</th>
             </tr>
           </thead>
           <tbody>
 
             <tr *ngIf="loading" class="mat-table-spinner-wrapper">
-              <td colspan="5" align="center" class="mat-table-spinner">
+              <td colspan="6" align="center" class="mat-table-spinner">
                 <mat-spinner color="#960000"></mat-spinner>
               </td>
             </tr>
 
             <tr *ngFor="let skill of skills">
-              <td><img src="{{ imageUrl(skill.image) }}" width="200" /></td>
+              <td>
+                <video *ngIf="skill.lesson_link" width="250" controls>
+                  <source [src]="videoUrl(skill.lesson_link)" type="video/mp4" />
+                  Your browser does not support HTML5 video.
+                </video>
+                <p *ngIf="!skill.lesson_link"> There is no video available for this skill.</p>
+              </td>
               <td>{{ skill.skill }}</td>
-              <td align="left">{{ skill.description }}</td>
+              <td align="left">
+                <p>{{ skill.description }}</p>
+              </td>
+              <!-- <td align="left">
+                <ul>
+                  <li *ngFor="let track of skill.tracks">
+                    {{track.track}}
+                  </li>
+                </ul>
+              </td>
+              <td align="left">{{ skill.user.firstname + ' '+ skill.user.lastname }}</td> -->
               <td>
                 <div class="btn-group" role="group" aria-label="First group">
                   <a (click)="editSkill(skill.id)" class="btn btn-info"><i class="icon_pencil"></i></a>
