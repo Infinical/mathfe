@@ -16,7 +16,7 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
   id: any;
   params: any;
   selectedFile: File = null;
-  lesson_link: string = "images/upload.png";
+  lesson_link: string = "";
   formData: FormData = new FormData();
   statuses: any;
 
@@ -53,18 +53,18 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
 
   updateSkill(skill) {
     this.formData.append('_method', 'PATCH');
-    if ((skill.video)){
-      if (!this.lesson_link.includes(skill.video)) {
-        this.formData.append('lesson_link', this.selectedFile);
-      }
-    }
+    // if ((skill.video)){
+    //   if (!this.lesson_link.includes(skill.video)) {
+    if (this.selectedFile)
+      this.formData.append('lesson_link', this.selectedFile);
+    //   }
+    // }
     this.formData.append('description', skill.description);
     this.formData.append('skill', skill.skill);
     this.formData.append('status_id', skill.status_id);
     this.skillService.updateSkillWithFormData(this.formData, skill.id)
       .subscribe(
         skill => {
-          debugger;
           this.status = 'success';
           this.message = skill['message'];
           this.skillService.updateStatus = this.message = skill['message'];

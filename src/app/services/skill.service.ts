@@ -14,7 +14,7 @@ export class SkillService {
 	getSkills(): Observable<any> {
 		return this.http.get(`${environment.apiURL}/skills`)
 			.map((response) => response)
-			.catch((error: any) => throwError(error.json().error || { message: 'Server Error' }));;
+			.catch((error: any) => throwError(error || { message: 'Server Error' }));;
 	}
 
 	addSkill(skill: Object): Observable<Skill[]> {
@@ -24,7 +24,7 @@ export class SkillService {
 				console.error(error);
 				let msg = "Server Error";
 				if (error.json) {
-					msg = error.json().error;
+					msg = error;
 				} else {
 					msg = error.error.message;
 				}
@@ -39,7 +39,7 @@ export class SkillService {
 			.map((response) => {
 				return response['skill']
 			})
-			.catch((error: any) => throwError(error.json().error || { message: 'Server Error' }));
+			.catch((error: any) => throwError(error || { message: 'Server Error' }));
 	}
 
 	updateSkill(skill: Object): Observable<Skill[]> {
@@ -72,12 +72,12 @@ export class SkillService {
 		const url = `${apiUrl}/${id}`;
 		return this.http.delete<Skill[]>(url)
 			.map((response) => response)
-			.catch((error: any) => throwError(error.json().error || { message: 'Server Error' }));
+			.catch((error: any) => throwError(error || { message: 'Server Error' }));
 	}
 
 	createSkill(): Observable<any> {
 		return this.http.get(`${environment.apiURL}/skills/create`)
 			.map((response) => response)
-			.catch((error: any) => throwError(error.json().error || { message: 'Server Error' }));;
+			.catch((error: any) => throwError(error || { message: 'Server Error' }));;
 	}
 }

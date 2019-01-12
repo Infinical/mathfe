@@ -72,11 +72,10 @@
 
             <tr *ngFor="let skill of skills">
               <td>
-                <video *ngIf="skill.lesson_link" width="250" controls>
+                <video preload="none" width="250" controls>
                   <source [src]="videoUrl(skill.lesson_link)" type="video/mp4" />
                   Your browser does not support HTML5 video.
                 </video>
-                <p *ngIf="!skill.lesson_link"> There is no video available for this skill.</p>
               </td>
               <td>{{ skill.skill }}</td>
               <td align="left">
