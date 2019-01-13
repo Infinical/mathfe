@@ -57,7 +57,7 @@ export class AdminSkillListComponent implements OnInit {
   public videoUrl(url: string): string {
     if (url)
       return this._beURL + url;
-    else return "";
+    else return  this._beURL + "/videos/skills/logo.mp4"
   }
 
   public editSkill(id: number): void {
@@ -72,7 +72,7 @@ export class AdminSkillListComponent implements OnInit {
       subscribe(ifYes => {
         if (ifYes) {
           //accepted
-          this._router.navigate(['/admin/skill/delete', id]);
+          this._router.navigate(['/admin/skills/delete', id]);
         } else {
           //rejected
         }

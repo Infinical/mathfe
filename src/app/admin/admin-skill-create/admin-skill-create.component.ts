@@ -42,7 +42,6 @@ export class AdminSkillCreateComponent implements OnInit {
     this.skillService.addSkill(formData)
       .subscribe(
         skill => {
-          debugger;
           this.skillService.updateStatus = skill['message'];
           setTimeout(() => this.skillService.updateStatus = '', 2000);
           this.router.navigate(['/admin/skills']);
