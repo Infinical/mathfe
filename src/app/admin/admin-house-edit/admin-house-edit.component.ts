@@ -33,8 +33,7 @@ export class AdminHouseEditComponent implements OnInit {
   ngOnInit() {
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
     this.houseService.getHouse(this.id).subscribe(
-      data => {
-        debugger;
+      data => { 
         this.house = data;
         this.imgURL = this.beURL + this.house.image;
       },
