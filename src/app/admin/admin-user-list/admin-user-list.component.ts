@@ -20,6 +20,6 @@ export class AdminUserListComponent implements OnInit {
 	  data => {
 	    this.users = data;
 	  },
-	  error =>  console.log(<any>error));
+	  error =>  console.error(<any>error));
   }
 }

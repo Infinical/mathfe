@@ -25,7 +25,7 @@ export class AdminSkillCreateComponent implements OnInit {
         this.my_tracks = data['my_tracks'] || [];
         this.public_tracks = data['public_tracks'] || [];
       },
-      error => console.log(<any>error));
+      error => console.error(<any>error));
   }
 
   public createSkill(skill): void {
@@ -48,7 +48,7 @@ export class AdminSkillCreateComponent implements OnInit {
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
-          console.log(<any>error);
+          console.error(<any>error);
           this.status = 'success';
           this.message = error['message'];
         }

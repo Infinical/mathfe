@@ -137,8 +137,7 @@ export class TeachDetailCourseComponent implements OnInit {
             }
           })
         }
-      })
-      debugger;
+      }) 
       localStorage.setItem('EnrolledTeachers', JSON.stringify(EnrolledTeachers));
 
     }, (error) => {

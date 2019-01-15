@@ -23,7 +23,7 @@ export class HouseListComponent implements OnInit {
         localStorage.setItem("EnrolledClassess", JSON.stringify(houses));
       },
       error => {
-        console.log(<any>error);
+        console.error(<any>error);
       }
       );
   }

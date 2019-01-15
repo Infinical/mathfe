@@ -19,6 +19,6 @@ export class LeaderboardComponent implements OnInit {
 	    this.game_leaders = data['game_leaders'];
 	    this.maxile_leaders = data['maxile_leaders'];
 	  },
-	  error =>  console.log(<any>error));
+	  error =>  console.error(<any>error));
   }
 }

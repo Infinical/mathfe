@@ -53,7 +53,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
           }, 3000);
         },
         error => {
-          console.log(<any>error);
+          console.error(<any>error);
           this.status = 'error';
           this.message = error['message'] || 'Not allowed';
         }

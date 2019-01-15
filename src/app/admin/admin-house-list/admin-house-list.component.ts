@@ -40,7 +40,7 @@ export class AdminHouseListComponent implements OnInit {
     this._updateloading(true);
     this.houseService.getHouses()
       .subscribe(items => {
-        this.houses = items.sort(this._sortById);
+        this.houses = items.sort(this._sortById); 
         this._updateloading(false);
       });
   }
@@ -48,7 +48,12 @@ export class AdminHouseListComponent implements OnInit {
   private _updateloading(status: boolean): void {
     this.loading = status;
   }
-
+  public imageUrl(url: string): string {
+    if (!url) {
+      return "/images/no-image.jpg";
+    }
+    return this._beURL + url;
+  }
   // sort block
 
   public sortBy(str: string): void {
@@ -143,6 +148,10 @@ export class AdminHouseListComponent implements OnInit {
     }
   }
 
+  public editHouse(id: number): void {
+    this._router.navigate(['/admin/houses/edit', id]);
+    setTimeout(() => window.scrollTo(0, 0), 0);
+  }
   private _sortByStart(a: House, b: House): number {
     if (a.start_date < b.start_date) {
       return -1;
