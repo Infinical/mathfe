@@ -19,6 +19,8 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
   lesson_link: string = "";
   formData: FormData = new FormData();
   statuses: any;
+  my_tracks = [];
+  public_tracks = [];
 
   skill = new Skill('id', 'skill', 'description', 'user_id', 'image', 'lesson_link', 'status_id');
 
@@ -35,13 +37,15 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
         this.skill = data;
         this.lesson_link = this.beURL + this.skill.lesson_link;
       },
-      error => console.log(<any>error));
+      error => console.error(<any>error));
 
     this.skillService.createSkill().subscribe(
       data => {
         this.statuses = data['statuses'];
+        this.my_tracks = data['my_tracks'] || [];
+        this.public_tracks = data['public_tracks'] || [];
       },
-      error => console.log(<any>error));
+      error => console.error(<any>error));
 
   }
 
@@ -62,6 +66,7 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
     this.formData.append('description', skill.description);
     this.formData.append('skill', skill.skill);
     this.formData.append('status_id', skill.status_id);
+    this.formData.append('track_id', skill.track_id);
     this.skillService.updateSkillWithFormData(this.formData, skill.id)
       .subscribe(
         skill => {
@@ -73,7 +78,7 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
-          console.log(<any>error);
+          console.error(<any>error);
           this.status = 'success';
           this.message = error['message'];
         }

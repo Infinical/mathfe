@@ -11,8 +11,8 @@ import { House } from 'app/models/house';
 export class AdminHouseCreateComponent implements OnInit {
   public status: string;
   public message: string;
-  // public selectedFile: File = null;
-  // public imgURL: string = 'images/upload.png';
+  public selectedFile: File = null;
+  public imgURL: string = 'images/upload.png';
   courses = [];
   currencies = [];
 
@@ -26,7 +26,7 @@ export class AdminHouseCreateComponent implements OnInit {
         this.courses = data['courses'];
         this.currencies = data['currency'];
       },
-      error => console.log(<any>error));
+      error => console.error(<any>error));
   }
 
   public createHouse(house): void {
@@ -49,19 +49,19 @@ export class AdminHouseCreateComponent implements OnInit {
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
-          console.log(<any>error);
+          console.error(<any>error);
           this.status = 'success';
           this.message = error['message'];
         }
       );
   }
 
-  // public onFileSelected(files: FileList): void {
-  //   this.selectedFile = files.item(0);
-  //   let reader = new FileReader();
-  //   reader.onload = (event:any)=>{
-  //     this.imgURL = event.target.result;
-  //   }
-  //   reader.readAsDataURL(this.selectedFile);
-  // }
+  public onFileSelected(files: FileList): void {
+    this.selectedFile = files.item(0);
+    let reader = new FileReader();
+    reader.onload = (event: any) => {
+      this.imgURL = event.target.result;
+    }
+    reader.readAsDataURL(this.selectedFile);
+  }
 }

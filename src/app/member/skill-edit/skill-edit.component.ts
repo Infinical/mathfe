@@ -21,7 +21,7 @@ export class SkillEditComponent implements OnInit {
       data => {
         this.statuses = data['statuses'];
       },
-      error =>  console.log(<any>error)); 
+      error =>  console.error(<any>error)); 
   }
 
   updateSkill(skill) {
@@ -33,7 +33,7 @@ export class SkillEditComponent implements OnInit {
 	        this.skill = skill['skill'];
 	      },
 	      error => { 
-	        console.log(<any>error);
+	        console.error(<any>error);
 	        this.state = 'error';
 	        this.message = error['message'];
 	      }

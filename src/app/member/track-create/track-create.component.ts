@@ -31,7 +31,7 @@ export class TrackCreateComponent implements OnInit {
         this.my_tracks = data['my_tracks'];
         this.public_tracks = data['public_tracks'];
       },
-      error =>  console.log(<any>error)); 
+      error =>  console.error(<any>error)); 
   }
 
   addTrack(track) {
@@ -45,7 +45,7 @@ export class TrackCreateComponent implements OnInit {
        this.house['tracks'].push(track['track']);
      },
      error => {
-       console.log(<any>error);
+       console.error(<any>error);
        this.status = 'success';
        this.message = error['message'];
      }

@@ -23,7 +23,7 @@ export class TeachListComponent implements OnInit {
           localStorage.setItem("EnrolledTeachers", JSON.stringify(houses));
         },
         error => {
-          console.log(<any>error); 
+          console.error(<any>error); 
         }
       );
   }

@@ -33,7 +33,7 @@ export class ClassManagementSharedComponent implements OnInit {
       data => {
         this.user = data;
       },
-      error => console.log(<any>error));
+      error => console.error(<any>error));
 
     var houses = localStorage.getItem('EnrolledTeachers');
     if (houses) {

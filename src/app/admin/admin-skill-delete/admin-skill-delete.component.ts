@@ -18,15 +18,19 @@ export class AdminSkillDeleteComponent implements OnInit {
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
     this.skillService.deleteSkill(this.id).subscribe(
       data => {
-        debugger;
         this.skillService.updateStatus = data['message'];
         setTimeout(() => this.skillService.updateStatus = '', 2000);
         this.router.navigate(['/admin/skills']);
         setTimeout(() => window.scrollTo(0, 0), 0);
       },
       error => {
-        debugger;
-        console.log(<any>error)
+        this.msg = "Server Error";
+        if (error.error) {
+          if (error.error.message) {
+            this.msg = error.error.message;
+          }
+        }
+        console.error(<any>error);
       }
     )
   };

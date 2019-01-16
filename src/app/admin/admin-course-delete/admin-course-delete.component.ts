@@ -22,7 +22,7 @@ export class AdminCourseDeleteComponent implements OnInit, OnDestroy {
       this.router.navigate(['/admin/courses']);
       setTimeout(() => window.scrollTo(0, 0), 0);
       },
-  	error => console.log(<any>error));
+  	error => console.error(<any>error));
     }
     ngOnDestroy() {
       this.params.unsubscribe();
