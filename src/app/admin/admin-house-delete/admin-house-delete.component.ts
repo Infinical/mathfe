@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SkillService } from 'app/services/skill.service';
+import { HouseService } from 'app/services/house.service';
 
 @Component({
-  selector: 'ag-admin-skill-delete',
-  templateUrl: './admin-skill-delete.component.html',
-  styleUrls: ['./admin-skill-delete.component.css']
+  selector: 'ag-admin-house-delete',
+  templateUrl: './admin-house-delete.component.html',
+  styleUrls: ['./admin-house-delete.component.css']
 })
-export class AdminSkillDeleteComponent implements OnInit {
+export class AdminHouseDeleteComponent implements OnInit {
 
   id: any;
   params: any;
   msg = "Processing the delete request..";
-  constructor(private activatedRoute: ActivatedRoute, private skillService: SkillService, private router: Router) { }
+  constructor(private activatedRoute: ActivatedRoute, private houseService: HouseService, private router: Router) { }
 
   ngOnInit() {
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
-    this.skillService.deleteSkill(this.id).subscribe(
-      data => {
-        this.skillService.updateStatus = data['message'];
-        setTimeout(() => this.skillService.updateStatus = '', 2000);
-        this.router.navigate(['/admin/skills']);
+    this.houseService.deleteHouse(this.id).subscribe(
+      data => { 
+        this.houseService.updateStatus = data['message'];
+        setTimeout(() => this.houseService.updateStatus = '', 2000);
+        this.router.navigate(['/admin/houses']);
         setTimeout(() => window.scrollTo(0, 0), 0);
       },
       error => {
@@ -37,5 +37,6 @@ export class AdminSkillDeleteComponent implements OnInit {
   ngOnDestroy() {
     this.params.unsubscribe();
   }
+
 
 }

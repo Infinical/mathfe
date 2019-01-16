@@ -15,7 +15,7 @@ export class QuestionService {
 	getQuestions(currentPage):Observable<any> {
 		return this.http.get<any>(environment.apiURL + '/questions?page=' + currentPage)
     	.map((response) => response)
-    	.catch((error: any) => throwError(error.json().error || {message: 'Server Error'} ));
+    	.catch((error: any) => throwError(error || {message: 'Server Error'} ));
     }
 
     deleteQuestion(id: String): Observable<any[]> {

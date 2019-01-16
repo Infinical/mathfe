@@ -31,7 +31,7 @@ export class TrackEditComponent implements OnInit {
         this.levels = data['levels'];
         this.statuses = data['statuses'];
       },
-      error =>  console.log(<any>error)); 
+      error =>  console.error(<any>error)); 
   }
 
   updateTrack(track) {
@@ -47,7 +47,7 @@ export class TrackEditComponent implements OnInit {
 	        this.track = track['track'];
 	      },
 	      error => { 
-	        console.log(<any>error);
+	        console.error(<any>error);
 	        this.state = 'error';
 	        this.message = error['message'];
 	      }

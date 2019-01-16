@@ -28,7 +28,7 @@ export class SkillCreateComponent implements OnInit {
         this.my_skills = data['my_skills'];
         this.public_skills = data['public_skills'];
       },
-      error =>  console.log(<any>error)); 
+      error =>  console.error(<any>error)); 
   }
 
   addSkill(skill) {
@@ -42,7 +42,7 @@ export class SkillCreateComponent implements OnInit {
        this.track['skills'].push(skill['skill']);
      },
      error => {
-       console.log(<any>error);
+       console.error(<any>error);
        this.state = 'success';
        this.message = error['message'];
      }

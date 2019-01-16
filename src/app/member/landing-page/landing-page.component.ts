@@ -64,7 +64,7 @@ export class LandingPageComponent implements OnInit {
       data => {
         this.user = data;
       },
-      error => console.log(<any>error));
+      error => console.error(<any>error));
     if (this.price_value != 0) {
       this.initConfig();
     }

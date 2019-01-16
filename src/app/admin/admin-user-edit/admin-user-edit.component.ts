@@ -24,7 +24,7 @@ export class AdminUserEditComponent implements OnInit, OnDestroy {
       data => {
         this.user = data;
       },
-      error => console.log(<any>error));
+      error => console.error(<any>error));
   }
   handelFileInput(file: FileList) {
     this.fileToUplaod = file.item(0); 
@@ -52,7 +52,7 @@ export class AdminUserEditComponent implements OnInit, OnDestroy {
           this.message = user['message'];
         },
         error => {
-          console.log(<any>error);
+          console.error(<any>error);
           this.status = 'success';
           this.message = error['message'];
         }

@@ -27,7 +27,7 @@ export class TrackDeleteComponent implements OnInit {
 		this.house['tracks'] = track['tracks'];
       },
       error => { 
-        console.log(<any>error);
+        console.error(<any>error);
         this.state = 'error';
         this.message = error['message'];
       }

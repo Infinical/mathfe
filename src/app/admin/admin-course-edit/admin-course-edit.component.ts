@@ -35,7 +35,7 @@ export class AdminCourseEditComponent implements OnInit, OnDestroy {
         this.course = data;
         this.imgURL = this.beURL + this.course.image;
       },
-      error => console.log(<any>error));
+      error => console.error(<any>error));
   }
 
   ngOnDestroy() {
@@ -62,7 +62,7 @@ export class AdminCourseEditComponent implements OnInit, OnDestroy {
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
-          console.log(<any>error);
+          console.error(<any>error);
           this.status = 'success';
           this.message = error['message'];
         }

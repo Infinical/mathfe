@@ -14,12 +14,12 @@ export class UserService {
   getUsers(): Observable<any> {
     return this.http.get(`${environment.apiURL}/users`)
       .map((response) => response)
-      .catch((error: any) => throwError(error.json().error || { message: 'Server Error' }));;
+      .catch((error: any) => throwError(error || { message: 'Server Error' }));;
   }
   getUser(id: String): Observable<any> {
     return this.http.get(`${environment.apiURL}/users/` + id)
       .map((response) => response['user'])
-      .catch((error: any) => throwError(error.json().error || { message: 'Server Error' }));
+      .catch((error: any) => throwError(error || { message: 'Server Error' }));
   }
   updateUser(user: FormData, userId: Number): Observable<User[]> {
     const apiUrl = `${environment.apiURL}/users`
@@ -33,6 +33,6 @@ export class UserService {
     const url = `${apiUrl}/${id}`;
     return this.http.delete<User[]>(url)
       .map((response) => response)
-      .catch((error: any) => throwError(error.json().error || { message: 'Server Error' }));
+      .catch((error: any) => throwError(error || { message: 'Server Error' }));
   }
 }

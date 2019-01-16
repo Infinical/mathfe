@@ -12,19 +12,19 @@ export class HouseTrackService {
   getTracks():Observable<any> {
     	return this.http.get<any>(`${environment.apiURL}/tracks`)
     	.map((response) => response)
-    	.catch((error: any) => throwError(error.json().error || {message: 'Server Error'} ));;
+    	.catch((error: any) => throwError(error || {message: 'Server Error'} ));;
     }
 
 	addTrack(track: Object): Observable<Track[]> {
 	    return this.http.post<Track[]>(`${environment.apiURL}/tracks`, track)
 	      .map((response) => response)
-	      .catch((error: any) => throwError(error.json().error || {message: 'Server Error'} ));
+	      .catch((error: any) => throwError(error || {message: 'Server Error'} ));
 	}
 
 	getTrack(id: String): Observable<any> {
 	  return this.http.get(`${environment.apiURL}/tracks/` + id)
 	    .map((response) => response['track'])
-        .catch((error: any) => throwError(error.json().error || {message: 'Server Error'} ));
+        .catch((error: any) => throwError(error || {message: 'Server Error'} ));
 	}
 
 	updateTrack(track: Object): Observable<Track[]> {
@@ -40,12 +40,12 @@ export class HouseTrackService {
 	  const url = `${apiUrl}/${houseid}/tracks/${trackid}`;
 	  return this.http.delete<Track[]>(url)
 	    .map((response) => response)
-	    .catch((error: any) => throwError(error.json().error || {message: 'Server Error'}));
+	    .catch((error: any) => throwError(error || {message: 'Server Error'}));
 	}
 
 	createTrack():Observable<any> {
     	return this.http.get(`${environment.apiURL}/tracks/create`)
     	.map((response) => response)
-    	.catch((error: any) => throwError(error.json().error || {message: 'Server Error'} ));;
+    	.catch((error: any) => throwError(error || {message: 'Server Error'} ));;
     }
 }

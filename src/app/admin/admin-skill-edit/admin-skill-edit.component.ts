@@ -16,9 +16,11 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
   id: any;
   params: any;
   selectedFile: File = null;
-  lesson_link: string = "images/upload.png";
+  lesson_link: string = "";
   formData: FormData = new FormData();
   statuses: any;
+  my_tracks = [];
+  public_tracks = [];
 
   skill = new Skill('id', 'skill', 'description', 'user_id', 'image', 'lesson_link', 'status_id');
 
@@ -35,13 +37,15 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
         this.skill = data;
         this.lesson_link = this.beURL + this.skill.lesson_link;
       },
-      error => console.log(<any>error));
+      error => console.error(<any>error));
 
     this.skillService.createSkill().subscribe(
       data => {
         this.statuses = data['statuses'];
+        this.my_tracks = data['my_tracks'] || [];
+        this.public_tracks = data['public_tracks'] || [];
       },
-      error => console.log(<any>error));
+      error => console.error(<any>error));
 
   }
 
@@ -53,18 +57,19 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
 
   updateSkill(skill) {
     this.formData.append('_method', 'PATCH');
-    if ((skill.video)){
-      if (!this.lesson_link.includes(skill.video)) {
-        this.formData.append('lesson_link', this.selectedFile);
-      }
-    }
+    // if ((skill.video)){
+    //   if (!this.lesson_link.includes(skill.video)) {
+    if (this.selectedFile)
+      this.formData.append('lesson_link', this.selectedFile);
+    //   }
+    // }
     this.formData.append('description', skill.description);
     this.formData.append('skill', skill.skill);
     this.formData.append('status_id', skill.status_id);
+    this.formData.append('track_id', skill.track_id);
     this.skillService.updateSkillWithFormData(this.formData, skill.id)
       .subscribe(
         skill => {
-          debugger;
           this.status = 'success';
           this.message = skill['message'];
           this.skillService.updateStatus = this.message = skill['message'];
@@ -73,7 +78,7 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
-          console.log(<any>error);
+          console.error(<any>error);
           this.status = 'success';
           this.message = error['message'];
         }
