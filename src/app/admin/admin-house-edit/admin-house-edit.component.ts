@@ -89,7 +89,7 @@ export class AdminHouseEditComponent implements OnInit {
     this.selectedFile = files.item(0);
     var reader = new FileReader();
     reader.onload = (event: any) => {
-      this.lesson_link = event.target.result;
+      this.imgURL = event.target.result;
     }
     reader.readAsDataURL(this.selectedFile);
   }
