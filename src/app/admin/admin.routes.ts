@@ -34,6 +34,11 @@ import { AdminTypeCreateComponent } from './admin-type-create/admin-type-create.
 import { AdminTypeEditComponent } from './admin-type-edit/admin-type-edit.component';
 import { AdminTypeDeleteComponent } from './admin-type-delete/admin-type-delete.component';
 
+import { AdminUnitListComponent } from "./admin-unit-list/admin-unit-list.component";
+import { AdminUnitCreateComponent } from './admin-unit-create/admin-unit-create.component';
+import { AdminUnitEditComponent } from './admin-unit-edit/admin-unit-edit.component';
+import { AdminUnitDeleteComponent } from './admin-unit-delete/admin-unit-delete.component';
+
 export const adminRoutes: Routes = [
   { path: '', component: AdminDashboardComponent },
   { path: 'courses', component: AdminCourseListComponent },
@@ -63,6 +68,11 @@ export const adminRoutes: Routes = [
   { path: 'types/create', component: AdminTypeCreateComponent },
   { path: 'types/edit/:id', component: AdminTypeEditComponent },
   { path: 'types/delete/:id', component: AdminTypeDeleteComponent },
+
+  { path: 'units', component: AdminUnitListComponent },
+  { path: 'units/create', component: AdminUnitCreateComponent },
+  { path: 'units/edit/:id', component: AdminUnitEditComponent },
+  { path: 'units/delete/:id', component: AdminUnitDeleteComponent },
 
   { path: 'questions', component: AdminQuestionListComponent },
   { path: 'questions/create', component: AdminQuestionFormComponent },

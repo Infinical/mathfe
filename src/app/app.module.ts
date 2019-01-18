@@ -18,6 +18,7 @@ import { DashboardService } from './services/dashboard.service';
 import { HouseService } from './services/house.service';
 import { FieldService } from './services/field.service';
 import { TypeService } from './services/type.service';
+import { UnitService } from './services/unit.service';
 import { CourseDetailComponent } from './dashboard/course-detail/course-detail.component';
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
@@ -94,8 +95,13 @@ import { AdminTypeCreateComponent } from './admin/admin-type-create/admin-type-c
 import { AdminTypeEditComponent } from './admin/admin-type-edit/admin-type-edit.component';
 import { AdminTypeDeleteComponent } from './admin/admin-type-delete/admin-type-delete.component';
 
+import { AdminUnitListComponent } from "./admin/admin-unit-list/admin-unit-list.component";
+import { AdminUnitCreateComponent } from './admin/admin-unit-create/admin-unit-create.component';
+import { AdminUnitEditComponent } from './admin/admin-unit-edit/admin-unit-edit.component';
+import { AdminUnitDeleteComponent } from './admin/admin-unit-delete/admin-unit-delete.component';
+
 import { DynamicContentComponent } from './admin/admin-question-list/dynamicContent/dynamicContent.component';
-import { DialogDeleteCourse } from './admin/admin-course-list/admin-course-list.component';
+
 import { ConfirmDialogComponent } from './admin/confirm-dialog/confirm-dialog.component';
 import { DialogDeleteQuestion } from './admin/admin-question-list/admin-question-list.component';
 import { ModalComponent } from './member/modal.component';
@@ -202,8 +208,13 @@ export function tokenGetter() {
     AdminTypeCreateComponent,
     AdminTypeDeleteComponent,
 
+    AdminUnitListComponent,
+    AdminUnitEditComponent,
+    AdminUnitCreateComponent,
+    AdminUnitDeleteComponent,
+
     DynamicContentComponent,
-    DialogDeleteCourse,
+
     DialogDeleteQuestion,
     ConfirmDialogComponent,
     ModalComponent,
@@ -240,8 +251,8 @@ export function tokenGetter() {
     DataTableModule,
     KatexModule
   ],
-  entryComponents: [DialogDeleteCourse, DialogDeleteQuestion, ConfirmDialogComponent],
-  providers: [TrackService, CourseService, QuestionService, DashboardService, HouseService, FieldService, TypeService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService, ModalService],
+  entryComponents: [DialogDeleteQuestion, ConfirmDialogComponent],
+  providers: [TrackService, CourseService, QuestionService, DashboardService, HouseService, FieldService, TypeService, UnitService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService, ModalService],
   bootstrap: [AppComponent]
 })
 
