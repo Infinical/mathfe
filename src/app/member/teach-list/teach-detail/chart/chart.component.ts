@@ -15,7 +15,7 @@ export class ChartComponent implements OnInit {
     {
       backgroundColor: [
         'rgb(151, 37, 23)',// Underperform - Red
-        'rgb(117, 197, 47)',// Overperform - Green
+        'rgb(183, 202, 121)',// Overperform - Green
         'rgb(249, 221, 150)'// On Target - Yellow
       ]
     }

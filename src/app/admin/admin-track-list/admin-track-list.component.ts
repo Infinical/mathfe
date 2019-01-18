@@ -9,13 +9,17 @@ import { Track } from '../../models/track';
   styleUrls: ['./admin-track-list.component.css']
 })
 export class AdminTrackListComponent implements OnInit {
+  loading = true;
+  tracks: Track[];
 
-  tracks: Observable<Track[]>;
-
-  constructor(private trackService:TrackService) { }
+  constructor(private trackService: TrackService) { }
 
   ngOnInit() {
-    this.tracks = this.trackService.getTracks();
+    this.loading = true;
+    this.trackService.getTracks().subscribe(x => {
+      this.tracks = x;
+      this.loading = false;
+    })
   }
 
 }
