@@ -24,6 +24,11 @@ import { AdminHouseCreateComponent } from './admin-house-create/admin-house-crea
 import { AdminHouseEditComponent } from './admin-house-edit/admin-house-edit.component';
 import { AdminHouseDeleteComponent } from './admin-house-delete/admin-house-delete.component';
 
+import { AdminFieldListComponent } from "./admin-field-list/admin-field-list.component";
+import { AdminFieldCreateComponent } from './admin-field-create/admin-field-create.component';
+import { AdminFieldEditComponent } from './admin-field-edit/admin-field-edit.component';
+import { AdminFieldDeleteComponent } from './admin-field-delete/admin-field-delete.component';
+
 export const adminRoutes: Routes = [
   { path: '', component: AdminDashboardComponent },
   { path: 'courses', component: AdminCourseListComponent },
@@ -43,6 +48,11 @@ export const adminRoutes: Routes = [
   { path: 'houses/create', component: AdminHouseCreateComponent },
   { path: 'houses/edit/:id', component: AdminHouseEditComponent },
   { path: 'houses/delete/:id', component: AdminHouseDeleteComponent },
+
+  { path: 'fields', component: AdminFieldListComponent },
+  { path: 'fields/create', component: AdminFieldCreateComponent },
+  { path: 'fields/edit/:id', component: AdminFieldEditComponent },
+  { path: 'fields/delete/:id', component: AdminFieldDeleteComponent },
 
   { path: 'questions', component: AdminQuestionListComponent },
   { path: 'questions/create', component: AdminQuestionFormComponent },

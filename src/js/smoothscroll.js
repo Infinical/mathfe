@@ -133,42 +133,45 @@ function ssc_keydown(e) {
     var r, i = 0,
         s = 0;
     var o = ssc_overflowingAncestor(ssc_activeElement);
+    if (!o) {
+        return true;
+    }
     var u = o.clientHeight;
     if (o == document.body) {
         u = window.innerHeight
     }
     switch (e.keyCode) {
-    case ssc_key.up:
-        s = -ssc_arrowscroll;
-        break;
-    case ssc_key.down:
-        s = ssc_arrowscroll;
-        break;
-    case ssc_key.spacebar:
-        r = e.shiftKey ? 1 : -1;
-        s = -r * u * .9;
-        break;
-    case ssc_key.pageup:
-        s = -u * .9;
-        break;
-    case ssc_key.pagedown:
-        s = u * .9;
-        break;
-    case ssc_key.home:
-        s = -o.scrollTop;
-        break;
-    case ssc_key.end:
-        var a = o.scrollHeight - o.scrollTop - u;
-        s = a > 0 ? a + 10 : 0;
-        break;
-    case ssc_key.left:
-        i = -ssc_arrowscroll;
-        break;
-    case ssc_key.right:
-        i = ssc_arrowscroll;
-        break;
-    default:
-        return true
+        case ssc_key.up:
+            s = -ssc_arrowscroll;
+            break;
+        case ssc_key.down:
+            s = ssc_arrowscroll;
+            break;
+        case ssc_key.spacebar:
+            r = e.shiftKey ? 1 : -1;
+            s = -r * u * .9;
+            break;
+        case ssc_key.pageup:
+            s = -u * .9;
+            break;
+        case ssc_key.pagedown:
+            s = u * .9;
+            break;
+        case ssc_key.home:
+            s = -o.scrollTop;
+            break;
+        case ssc_key.end:
+            var a = o.scrollHeight - o.scrollTop - u;
+            s = a > 0 ? a + 10 : 0;
+            break;
+        case ssc_key.left:
+            i = -ssc_arrowscroll;
+            break;
+        case ssc_key.right:
+            i = ssc_arrowscroll;
+            break;
+        default:
+            return true
     }
     ssc_scrollArray(o, i, s);
     e.preventDefault()

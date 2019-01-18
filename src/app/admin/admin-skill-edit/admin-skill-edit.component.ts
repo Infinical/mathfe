@@ -34,6 +34,7 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
     this.skillService.getSkill(this.id).subscribe(
       data => {
+        debugger;
         this.skill = data;
         this.lesson_link = this.beURL + this.skill.lesson_link;
       },
