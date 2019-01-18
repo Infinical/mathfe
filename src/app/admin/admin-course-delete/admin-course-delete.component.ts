@@ -7,24 +7,35 @@ import { CourseService } from '../../services/course.service';
   templateUrl: './admin-course-delete.component.html',
   styleUrls: ['./admin-course-delete.component.css']
 })
-export class AdminCourseDeleteComponent implements OnInit, OnDestroy {
+export class AdminCourseDeleteComponent implements OnInit {
+
   id: any;
   params: any;
-
-  constructor(private activatedRoute:ActivatedRoute, private courseService: CourseService, private router:Router) { }
+  msg = "Processing the delete request..";
+  constructor(private activatedRoute: ActivatedRoute, private courseService: CourseService, private router: Router) { }
 
   ngOnInit() {
-  	this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
-  	this.courseService.deleteCourse(this.id).subscribe(
-  	data => {
-      this.courseService.updateStatus = data['message'];
-      setTimeout(() => this.courseService.updateStatus = '', 2000);
-      this.router.navigate(['/admin/courses']);
-      setTimeout(() => window.scrollTo(0, 0), 0);
+    this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
+    this.courseService.deleteCourse(this.id).subscribe(
+      data => {
+        this.courseService.updateStatus = data['message'];
+        setTimeout(() => this.courseService.updateStatus = '', 2000);
+        this.router.navigate(['/admin/courses']);
+        setTimeout(() => window.scrollTo(0, 0), 0);
       },
-  	error => console.error(<any>error));
-    }
-    ngOnDestroy() {
-      this.params.unsubscribe();
-    }
+      error => {
+        this.msg = "Server Error";
+        if (error.error) {
+          if (error.error.message) {
+            this.msg = error.error.message;
+          }
+        }
+        console.error(<any>error);
+      }
+    )
+  };
+  ngOnDestroy() {
+    this.params.unsubscribe();
+  }
+
 }
