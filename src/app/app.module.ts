@@ -16,6 +16,7 @@ import { SkillTrackService } from './services/skill-track.service';
 import { UserService } from './services/user.service';
 import { DashboardService } from './services/dashboard.service';
 import { HouseService } from './services/house.service';
+import { FieldService } from './services/field.service';
 import { CourseDetailComponent } from './dashboard/course-detail/course-detail.component';
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
@@ -81,6 +82,11 @@ import { AdminHouseListComponent } from "./admin/admin-house-list/admin-house-li
 import { AdminHouseEditComponent } from './admin/admin-house-edit/admin-house-edit.component';
 import { AdminHouseCreateComponent } from './admin/admin-house-create/admin-house-create.component';
 import { AdminHouseDeleteComponent } from './admin/admin-house-delete/admin-house-delete.component';
+
+import { AdminFieldListComponent } from "./admin/admin-field-list/admin-field-list.component";
+import { AdminFieldCreateComponent } from './admin/admin-field-create/admin-field-create.component';
+import { AdminFieldEditComponent } from './admin/admin-field-edit/admin-field-edit.component';
+import { AdminFieldDeleteComponent } from './admin/admin-field-delete/admin-field-delete.component';
 
 import { DynamicContentComponent } from './admin/admin-question-list/dynamicContent/dynamicContent.component';
 import { DialogDeleteCourse } from './admin/admin-course-list/admin-course-list.component';
@@ -180,6 +186,11 @@ export function tokenGetter() {
     AdminHouseCreateComponent,
     AdminHouseDeleteComponent,
 
+    AdminFieldListComponent,
+    AdminFieldEditComponent,
+    AdminFieldCreateComponent,
+    AdminFieldDeleteComponent,
+
     DynamicContentComponent,
     DialogDeleteCourse,
     DialogDeleteQuestion,
@@ -219,7 +230,7 @@ export function tokenGetter() {
     KatexModule
   ],
   entryComponents: [DialogDeleteCourse, DialogDeleteQuestion, ConfirmDialogComponent],
-  providers: [TrackService, CourseService, QuestionService, DashboardService, HouseService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService, ModalService],
+  providers: [TrackService, CourseService, QuestionService, DashboardService, HouseService, FieldService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService, ModalService],
   bootstrap: [AppComponent]
 })
 

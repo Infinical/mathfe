@@ -1,35 +1,36 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import { TrackService } from '../../services/track.service';
-import { Track } from '../../models/track';
-@Component({
-  selector: 'ag-admin-track-edit',
-  templateUrl: './admin-track-edit.component.html',
-  styleUrls: ['./admin-track-edit.component.css']
-})
-export class AdminTrackEditComponent implements OnInit {
+import { FieldService } from '../../services/field.service';
+import { Field } from '../../models/field';
 
+@Component({
+  selector: 'ag-admin-field-edit',
+  templateUrl: './admin-field-edit.component.html',
+  styleUrls: ['./admin-field-edit.component.css']
+})
+export class AdminFieldEditComponent implements OnInit, OnDestroy {
   beURL = environment.apiURL + '/';
   status: string;
   message: string;
   id: any;
   params: any; 
+  formData: FormData = new FormData();
 
 
-  track = new Track('id', 'track', 'description', 'user_id', 'image', 'status_id', 'field_id', 'level_id');
+  field = new Field('id', 'field', 'description');
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private trackService: TrackService,
+    private fieldService: FieldService,
     private router: Router
   ) { }
 
   ngOnInit() {
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
-    this.trackService.getTrack(this.id).subscribe(
+    this.fieldService.getField(this.id).subscribe(
       data => {
-        this.track = data; 
+        this.field = data; 
       },
       error => console.error(<any>error));
   }
@@ -38,15 +39,15 @@ export class AdminTrackEditComponent implements OnInit {
     this.params.unsubscribe();
   }
 
-  updateTrack(track) { 
-    this.trackService.updateTrack(track)
+  updateField(field:Field) {  
+    this.fieldService.updateField(field)
       .subscribe(
-        track => {
+        field => {
           this.status = 'success';
-          this.message = track['message'];
-          this.trackService.updateStatus = this.message = track['message'];
-          setTimeout(() => this.trackService.updateStatus = '', 2000);
-          this.router.navigate(['/admin/tracks']);
+          this.message = field['message'];
+          this.fieldService.updateStatus = this.message = field['message'];
+          setTimeout(() => this.fieldService.updateStatus = '', 2000);
+          this.router.navigate(['/admin/fields']);
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
@@ -55,5 +56,7 @@ export class AdminTrackEditComponent implements OnInit {
           this.message = error['message'];
         }
       );
-  } 
+  }
+ 
+
 }
