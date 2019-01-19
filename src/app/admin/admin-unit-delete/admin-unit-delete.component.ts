@@ -1,26 +1,26 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CourseService } from '../../services/course.service';
+import { UnitService } from '../../services/unit.service';
 
 @Component({
-  selector: 'ag-admin-course-delete',
-  templateUrl: './admin-course-delete.component.html',
-  styleUrls: ['./admin-course-delete.component.css']
+  selector: 'ag-admin-unit-delete',
+  templateUrl: './admin-unit-delete.component.html',
+  styleUrls: ['./admin-unit-delete.component.css']
 })
-export class AdminCourseDeleteComponent implements OnInit {
+export class AdminUnitDeleteComponent implements OnInit {
 
   id: any;
   params: any;
   msg = "Processing the delete request..";
-  constructor(private activatedRoute: ActivatedRoute, private courseService: CourseService, private router: Router) { }
+  constructor(private activatedRoute: ActivatedRoute, private unitService: UnitService, private router: Router) { }
 
   ngOnInit() {
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
-    this.courseService.deleteCourse(this.id).subscribe(
+    this.unitService.deleteUnit(this.id).subscribe(
       data => {
-        this.courseService.updateStatus = data['message'];
-        setTimeout(() => this.courseService.updateStatus = '', 2000);
-        this.router.navigate(['/admin/courses']);
+        this.unitService.updateStatus = data['message'];
+        setTimeout(() => this.unitService.updateStatus = '', 2000);
+        this.router.navigate(['/admin/units']);
         setTimeout(() => window.scrollTo(0, 0), 0);
       },
       error => {
