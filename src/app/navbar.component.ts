@@ -18,7 +18,10 @@ export class NavbarComponent implements OnInit {
         this.profilePic = localStorage.getItem('profile_image') ? localStorage.getItem('profile_image') : "/assets/images/user.png";
       }
     })
+
   }
+
+
   isHomeActive = false;
   profilePic = "/assets/images/user.png";
   ngOnInit() {
@@ -75,7 +78,6 @@ export class NavbarComponent implements OnInit {
     this.authService.logout();
     localStorage.clear();
   }
-
   public isAuthenticated(): boolean {
     return this.authService.isAuthenticated();
   }

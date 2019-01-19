@@ -19,7 +19,7 @@ export class UnitService {
       .catch((error: any) => {
         return throwError((error.json() ? error : (error.statusText)) || { message: 'Server Error' })
       }
-      );;
+      );
   }
   addUnit(unit: Object): Observable<Unit[]> {
     return this.http.post<Unit[]>(`${environment.apiURL}/units`, unit)
@@ -31,10 +31,10 @@ export class UnitService {
       .map((response) => response['unit'])
       .catch((error: any) => throwError(error || { message: 'Server Error' }));
   }
-  updateUnit(unit: Object): Observable<Unit[]> {
+  updateUnit(unit: Object): Observable<Unit[]> { 
     const apiUrl = `${environment.apiURL}/units`;
     const url = `${apiUrl}/${unit['id']}`;
-    return this.http.post<any>(url, unit)
+    return this.http.put<any>(url, unit)
       .map((response) => response)
       .catch((error: any) => throwError(error.error || { message: 'Server Error' }));
   }

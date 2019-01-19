@@ -15,7 +15,7 @@ export class HouseService {
 	getHouses(): Observable<any> {
 		return this.http.get(`${environment.apiURL}/houses`)
 			.map((response) => response)
-			.catch((error: any) => throwError(error || { message: 'Server Error' }));;
+			.catch((error: any) => throwError(error || { message: 'Server Error' }));
 	}
 	getHouse(id: String): Observable<any> {
 		return this.http.get(`${environment.apiURL}/houses/` + id)
@@ -46,7 +46,7 @@ export class HouseService {
 	createHouse(): Observable<any> {
 		return this.http.get(`${environment.apiURL}/houses/create`)
 			.map((response) => response)
-			.catch((error: any) => throwError(error || { message: 'Server Error' }));;
+			.catch((error: any) => throwError(error || { message: 'Server Error' }));
 	}
 	deleteHouse(id: String): Observable<House[]> {
 		const apiUrl = `${environment.apiURL}/houses`;

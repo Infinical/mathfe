@@ -13,8 +13,17 @@ export class ChartComponent implements OnInit {
 
   public chartColors: Array<any> = [
     {
+      /*
+        Color must be same as base color:
+        /media/amit/Stuff/Projects/Linux/PamelaLim/mathfeFork/src/styles.css
+        :root {
+          --underperform-bg-color   
+          --overperform-bg-color   
+          --on-target-bg-color  
+        } 
+       */
       backgroundColor: [
-        'rgb(151, 37, 23)',// Underperform - Red
+        'rgb(244, 203, 204)',// Underperform - Red
         'rgb(183, 202, 121)',// Overperform - Green
         'rgb(249, 221, 150)'// On Target - Yellow
       ]

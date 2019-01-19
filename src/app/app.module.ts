@@ -19,6 +19,8 @@ import { HouseService } from './services/house.service';
 import { FieldService } from './services/field.service';
 import { TypeService } from './services/type.service';
 import { UnitService } from './services/unit.service';
+import { LevelService } from './services/level.service';
+import { DifficultyService } from './services/difficulty.service';
 import { CourseDetailComponent } from './dashboard/course-detail/course-detail.component';
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
@@ -99,6 +101,17 @@ import { AdminUnitListComponent } from "./admin/admin-unit-list/admin-unit-list.
 import { AdminUnitCreateComponent } from './admin/admin-unit-create/admin-unit-create.component';
 import { AdminUnitEditComponent } from './admin/admin-unit-edit/admin-unit-edit.component';
 import { AdminUnitDeleteComponent } from './admin/admin-unit-delete/admin-unit-delete.component';
+
+import { AdminLevelListComponent } from "./admin/admin-level-list/admin-level-list.component";
+import { AdminLevelCreateComponent } from './admin/admin-level-create/admin-level-create.component';
+import { AdminLevelEditComponent } from './admin/admin-level-edit/admin-level-edit.component';
+import { AdminLevelDeleteComponent } from './admin/admin-level-delete/admin-level-delete.component';
+
+import { AdminDifficultyListComponent } from "./admin/admin-difficulty-list/admin-difficulty-list.component";
+import { AdminDifficultyCreateComponent } from './admin/admin-difficulty-create/admin-difficulty-create.component';
+import { AdminDifficultyEditComponent } from './admin/admin-difficulty-edit/admin-difficulty-edit.component';
+import { AdminDifficultyDeleteComponent } from './admin/admin-difficulty-delete/admin-difficulty-delete.component';
+
 
 import { DynamicContentComponent } from './admin/admin-question-list/dynamicContent/dynamicContent.component';
 
@@ -213,6 +226,16 @@ export function tokenGetter() {
     AdminUnitCreateComponent,
     AdminUnitDeleteComponent,
 
+    AdminLevelListComponent,
+    AdminLevelEditComponent,
+    AdminLevelCreateComponent,
+    AdminLevelDeleteComponent,
+
+    AdminDifficultyListComponent,
+    AdminDifficultyEditComponent,
+    AdminDifficultyCreateComponent,
+    AdminDifficultyDeleteComponent,
+
     DynamicContentComponent,
 
     DialogDeleteQuestion,
@@ -252,7 +275,11 @@ export function tokenGetter() {
     KatexModule
   ],
   entryComponents: [DialogDeleteQuestion, ConfirmDialogComponent],
-  providers: [TrackService, CourseService, QuestionService, DashboardService, HouseService, FieldService, TypeService, UnitService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService, ModalService],
+  providers: [TrackService, CourseService, QuestionService, DashboardService,
+    HouseService, FieldService, TypeService, UnitService, LevelService,
+    DifficultyService,
+    UserService, AuthService, AuthGuardService, HouseTrackService,
+    SkillService, SkillTrackService, ModalService],
   bootstrap: [AppComponent]
 })
 

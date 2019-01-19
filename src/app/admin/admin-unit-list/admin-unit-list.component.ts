@@ -33,8 +33,7 @@ export class AdminUnitListComponent implements OnInit {
 
   ngOnInit() {
     this.unitService.getUnits()
-      .subscribe(items => {
-        debugger;
+      .subscribe(items => {        
         this.units = items.sort(this._sortById);
         this._updateloading(false);
       });

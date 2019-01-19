@@ -14,7 +14,7 @@ export class UserService {
   getUsers(): Observable<any> {
     return this.http.get(`${environment.apiURL}/users`)
       .map((response) => response)
-      .catch((error: any) => throwError(error || { message: 'Server Error' }));;
+      .catch((error: any) => throwError(error || { message: 'Server Error' }));
   }
   getUser(id: String): Observable<any> {
     return this.http.get(`${environment.apiURL}/users/` + id)
