@@ -1,13 +1,10 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'; ;
+import { MatDialog } from '@angular/material';
 import { environment } from '../../../environments/environment';
 import { CourseService } from '../../services/course.service';
 import { Course } from '../../models/course';
-
-export interface DialogData { id: number }
-
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 // course-list component
 
 @Component({
@@ -72,10 +69,15 @@ export class AdminCourseListComponent implements OnInit {
   // open dialog block
 
   public openDialog(id: number): void {
-    const dialogRef = this.dialog.open(DialogDeleteCourse, {
-      width: '250px',
-      data: { id: id }
-    });
+    this.dialog.open(ConfirmDialogComponent, { data: { message: "Are you sure?", title: "Delete Course" } }).afterClosed().
+      subscribe(ifYes => {
+        if (ifYes) {
+          //accepted
+          this._router.navigate(['/admin/courses/delete', id]);
+        } else {
+          //rejected
+        }
+      });
   }
 
   // sort block
@@ -204,32 +206,6 @@ export class AdminCourseListComponent implements OnInit {
     this.reversedByDescription = false;
     this.reversedByStart = false;
     this.reversedByEnd = false;
-  }
-
-}
-
-// dialog component
-
-@Component({
-  selector: 'dialog-delete-course',
-  templateUrl: 'dialog-delete-course.html',
-})
-
-export class DialogDeleteCourse {
-
-  constructor(
-    private _router: Router,
-    public dialogRef: MatDialogRef<DialogDeleteCourse>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
-  ) {}
-
-  public onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  public onYesClick(): void {
-    this.dialogRef.close();
-    this._router.navigate(['/admin/courses/delete', this.data.id]);
   }
 
 }
