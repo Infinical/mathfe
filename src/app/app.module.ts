@@ -107,6 +107,12 @@ import { AdminLevelCreateComponent } from './admin/admin-level-create/admin-leve
 import { AdminLevelEditComponent } from './admin/admin-level-edit/admin-level-edit.component';
 import { AdminLevelDeleteComponent } from './admin/admin-level-delete/admin-level-delete.component';
 
+import { AdminPermissionListComponent } from "./admin/admin-permission-list/admin-permission-list.component";
+import { AdminPermissionCreateComponent } from './admin/admin-permission-create/admin-permission-create.component';
+import { AdminPermissionEditComponent } from './admin/admin-permission-edit/admin-permission-edit.component';
+import { AdminPermissionDeleteComponent } from './admin/admin-permission-delete/admin-permission-delete.component';
+
+
 import { AdminDifficultyListComponent } from "./admin/admin-difficulty-list/admin-difficulty-list.component";
 import { AdminDifficultyCreateComponent } from './admin/admin-difficulty-create/admin-difficulty-create.component';
 import { AdminDifficultyEditComponent } from './admin/admin-difficulty-edit/admin-difficulty-edit.component';
@@ -140,6 +146,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
 import { DataTableModule } from "angular-6-datatable";
 
 import { KatexModule } from 'ng-katex';
+import { PermissionService } from './services/permission.service';
 
 
 export function tokenGetter() {
@@ -231,6 +238,11 @@ export function tokenGetter() {
     AdminLevelCreateComponent,
     AdminLevelDeleteComponent,
 
+    AdminPermissionListComponent,
+    AdminPermissionEditComponent,
+    AdminPermissionCreateComponent,
+    AdminPermissionDeleteComponent,
+
     AdminDifficultyListComponent,
     AdminDifficultyEditComponent,
     AdminDifficultyCreateComponent,
@@ -276,7 +288,7 @@ export function tokenGetter() {
   ],
   entryComponents: [DialogDeleteQuestion, ConfirmDialogComponent],
   providers: [TrackService, CourseService, QuestionService, DashboardService,
-    HouseService, FieldService, TypeService, UnitService, LevelService,
+    HouseService, FieldService, TypeService, UnitService, PermissionService, LevelService,
     DifficultyService,
     UserService, AuthService, AuthGuardService, HouseTrackService,
     SkillService, SkillTrackService, ModalService],

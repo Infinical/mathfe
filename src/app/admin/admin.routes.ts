@@ -44,10 +44,17 @@ import { AdminLevelCreateComponent } from './admin-level-create/admin-level-crea
 import { AdminLevelEditComponent } from './admin-level-edit/admin-level-edit.component';
 import { AdminLevelDeleteComponent } from './admin-level-delete/admin-level-delete.component';
 
+import { AdminPermissionListComponent } from "./admin-permission-list/admin-permission-list.component";
+import { AdminPermissionCreateComponent } from './admin-permission-create/admin-permission-create.component';
+import { AdminPermissionEditComponent } from './admin-permission-edit/admin-permission-edit.component';
+import { AdminPermissionDeleteComponent } from './admin-permission-delete/admin-permission-delete.component';
+
 import { AdminDifficultyListComponent } from "./admin-difficulty-list/admin-difficulty-list.component";
 import { AdminDifficultyCreateComponent } from './admin-difficulty-create/admin-difficulty-create.component';
 import { AdminDifficultyEditComponent } from './admin-difficulty-edit/admin-difficulty-edit.component';
 import { AdminDifficultyDeleteComponent } from './admin-difficulty-delete/admin-difficulty-delete.component';
+
+
 
 export const adminRoutes: Routes = [
   { path: '', component: AdminDashboardComponent },
@@ -88,6 +95,11 @@ export const adminRoutes: Routes = [
   { path: 'levels/create', component: AdminLevelCreateComponent },
   { path: 'levels/edit/:id', component: AdminLevelEditComponent },
   { path: 'levels/delete/:id', component: AdminLevelDeleteComponent },
+
+  { path: 'permissions', component: AdminPermissionListComponent },
+  { path: 'permissions/create', component: AdminPermissionCreateComponent },
+  { path: 'permissions/edit/:id', component: AdminPermissionEditComponent },
+  { path: 'permissions/delete/:id', component: AdminPermissionDeleteComponent },
 
   { path: 'difficulties', component: AdminDifficultyListComponent },
   { path: 'difficulties/create', component: AdminDifficultyCreateComponent },
