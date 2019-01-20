@@ -12,7 +12,7 @@ export class HouseTrackService {
   getTracks():Observable<any> {
     	return this.http.get<any>(`${environment.apiURL}/tracks`)
     	.map((response) => response)
-    	.catch((error: any) => throwError(error || {message: 'Server Error'} ));;
+    	.catch((error: any) => throwError(error || {message: 'Server Error'} ));
     }
 
 	addTrack(track: Object): Observable<Track[]> {
@@ -46,6 +46,6 @@ export class HouseTrackService {
 	createTrack():Observable<any> {
     	return this.http.get(`${environment.apiURL}/tracks/create`)
     	.map((response) => response)
-    	.catch((error: any) => throwError(error || {message: 'Server Error'} ));;
+    	.catch((error: any) => throwError(error || {message: 'Server Error'} ));
     }
 }

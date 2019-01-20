@@ -14,7 +14,7 @@ export class TrackService {
 	getTracks(): Observable<any> {
 		return this.http.get(`${environment.apiURL}/tracks`)
 			.map((response) => response)
-			.catch((error: any) => throwError(error || { message: 'Server Error' }));;
+			.catch((error: any) => throwError(error || { message: 'Server Error' }));
 	}
 	addTrack(track: Object): Observable<Track[]> {
 		return this.http.post<Track[]>(`${environment.apiURL}/tracks`, track)
@@ -43,7 +43,7 @@ export class TrackService {
 	createTrack(): Observable<any> {
 		return this.http.get(`${environment.apiURL}/tracks/create`)
 			.map((response) => response)
-			.catch((error: any) => throwError(error || { message: 'Server Error' }));;
+			.catch((error: any) => throwError(error || { message: 'Server Error' }));
 	}
 
 	getTrack(id: String): Observable<any> {

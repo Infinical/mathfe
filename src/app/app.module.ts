@@ -19,6 +19,8 @@ import { HouseService } from './services/house.service';
 import { FieldService } from './services/field.service';
 import { TypeService } from './services/type.service';
 import { UnitService } from './services/unit.service';
+import { LevelService } from './services/level.service';
+import { DifficultyService } from './services/difficulty.service';
 import { CourseDetailComponent } from './dashboard/course-detail/course-detail.component';
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
@@ -100,6 +102,23 @@ import { AdminUnitCreateComponent } from './admin/admin-unit-create/admin-unit-c
 import { AdminUnitEditComponent } from './admin/admin-unit-edit/admin-unit-edit.component';
 import { AdminUnitDeleteComponent } from './admin/admin-unit-delete/admin-unit-delete.component';
 
+import { AdminLevelListComponent } from "./admin/admin-level-list/admin-level-list.component";
+import { AdminLevelCreateComponent } from './admin/admin-level-create/admin-level-create.component';
+import { AdminLevelEditComponent } from './admin/admin-level-edit/admin-level-edit.component';
+import { AdminLevelDeleteComponent } from './admin/admin-level-delete/admin-level-delete.component';
+
+import { AdminPermissionListComponent } from "./admin/admin-permission-list/admin-permission-list.component";
+import { AdminPermissionCreateComponent } from './admin/admin-permission-create/admin-permission-create.component';
+import { AdminPermissionEditComponent } from './admin/admin-permission-edit/admin-permission-edit.component';
+import { AdminPermissionDeleteComponent } from './admin/admin-permission-delete/admin-permission-delete.component';
+
+
+import { AdminDifficultyListComponent } from "./admin/admin-difficulty-list/admin-difficulty-list.component";
+import { AdminDifficultyCreateComponent } from './admin/admin-difficulty-create/admin-difficulty-create.component';
+import { AdminDifficultyEditComponent } from './admin/admin-difficulty-edit/admin-difficulty-edit.component';
+import { AdminDifficultyDeleteComponent } from './admin/admin-difficulty-delete/admin-difficulty-delete.component';
+
+
 import { DynamicContentComponent } from './admin/admin-question-list/dynamicContent/dynamicContent.component';
 
 import { ConfirmDialogComponent } from './admin/confirm-dialog/confirm-dialog.component';
@@ -127,6 +146,7 @@ import { NgxPayPalModule } from 'ngx-paypal';
 import { DataTableModule } from "angular-6-datatable";
 
 import { KatexModule } from 'ng-katex';
+import { PermissionService } from './services/permission.service';
 
 
 export function tokenGetter() {
@@ -213,6 +233,21 @@ export function tokenGetter() {
     AdminUnitCreateComponent,
     AdminUnitDeleteComponent,
 
+    AdminLevelListComponent,
+    AdminLevelEditComponent,
+    AdminLevelCreateComponent,
+    AdminLevelDeleteComponent,
+
+    AdminPermissionListComponent,
+    AdminPermissionEditComponent,
+    AdminPermissionCreateComponent,
+    AdminPermissionDeleteComponent,
+
+    AdminDifficultyListComponent,
+    AdminDifficultyEditComponent,
+    AdminDifficultyCreateComponent,
+    AdminDifficultyDeleteComponent,
+
     DynamicContentComponent,
 
     DialogDeleteQuestion,
@@ -252,7 +287,11 @@ export function tokenGetter() {
     KatexModule
   ],
   entryComponents: [DialogDeleteQuestion, ConfirmDialogComponent],
-  providers: [TrackService, CourseService, QuestionService, DashboardService, HouseService, FieldService, TypeService, UnitService, UserService, AuthService, AuthGuardService, HouseTrackService, SkillService, SkillTrackService, ModalService],
+  providers: [TrackService, CourseService, QuestionService, DashboardService,
+    HouseService, FieldService, TypeService, UnitService, PermissionService, LevelService,
+    DifficultyService,
+    UserService, AuthService, AuthGuardService, HouseTrackService,
+    SkillService, SkillTrackService, ModalService],
   bootstrap: [AppComponent]
 })
 

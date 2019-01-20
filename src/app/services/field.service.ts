@@ -20,7 +20,7 @@ export class FieldService {
       .catch((error: any) => {
         return throwError((error.json() ? error : (error.statusText)) || { message: 'Server Error' })
       }
-      );;
+      );
   }
   addField(field: Object): Observable<Field[]> {
     return this.http.post<Field[]>(`${environment.apiURL}/fields`, field)

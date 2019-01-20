@@ -20,7 +20,7 @@ export class TypeService {
       .catch((error: any) => {
         return throwError((error.json() ? error : (error.statusText)) || { message: 'Server Error' })
       }
-      );;
+      );
   }
   addType(type: Object): Observable<Type[]> {
     return this.http.post<Type[]>(`${environment.apiURL}/types`, type)
@@ -35,7 +35,7 @@ export class TypeService {
   updateType(type: Object): Observable<Type[]> {
     const apiUrl = `${environment.apiURL}/types`;
     const url = `${apiUrl}/${type['id']}`;
-    return this.http.post<any>(url, type)
+    return this.http.put<any>(url, type)
       .map((response) => response)
       .catch((error: any) => throwError(error.error || { message: 'Server Error' }));
   }

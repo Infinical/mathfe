@@ -14,7 +14,7 @@ export class SkillTrackService {
     getSkills():Observable<any> {
     	return this.http.get(`${environment.apiURL}/skills`)
     	.map((response) => response)
-    	.catch((error: any) => throwError(error || {message: 'Server Error'} ));;
+    	.catch((error: any) => throwError(error || {message: 'Server Error'} ));
     }
 
 	addSkill(skill: Skill, trackid: String): Observable<Skill[]> {
@@ -50,6 +50,6 @@ export class SkillTrackService {
 	createSkill():Observable<any> {
     	return this.http.get(`${environment.apiURL}/skills/create`)
     	.map((response) => response)
-    	.catch((error: any) => throwError(error || {message: 'Server Error'} ));;
+    	.catch((error: any) => throwError(error || {message: 'Server Error'} ));
     }
 }
