@@ -63,6 +63,8 @@ export class LandingPageComponent implements OnInit {
     this.dashboardService.getUser().subscribe(
       data => {
         this.user = data;
+        // if (this.user["is_admin"] == 0) { 
+        // }
       },
       error => console.error(<any>error));
     if (this.price_value != 0) {

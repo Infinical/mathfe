@@ -19,13 +19,13 @@ export class CourseService {
 			.catch((error: any) => {
 				return throwError((error.json() ? error : (error.statusText)) || { message: 'Server Error' })
 			}
-			);;
+			);
 	}
 
 	getOpenCourses(): Observable<any[]> {
 		return this.http.get<any[]>(`${environment.apiURL}/opencourses`)
 			.map((response) => response)
-			.catch((error: any) => throwError(error || { message: 'Server Error' }));;
+			.catch((error: any) => throwError(error || { message: 'Server Error' }));
 	}
 
 	addCourse(course: Object): Observable<Course[]> {

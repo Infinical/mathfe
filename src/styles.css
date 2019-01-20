@@ -169,7 +169,7 @@ color must be same from chart color
 */
 
 :root {
-  --underperform-bg-color: rgb(151, 37, 23);
+  --underperform-bg-color: rgb(244, 203, 204);
   /*Red*/
   --overperform-bg-color: rgb(183, 202, 121);
   /*Green*/

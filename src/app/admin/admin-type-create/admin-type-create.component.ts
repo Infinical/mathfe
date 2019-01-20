@@ -28,9 +28,16 @@ export class AdminTypeCreateComponent implements OnInit {
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
+
+          let msg = error['message'];
+          if (error.error) {
+            if (error.error.message) {
+              msg = error.error.message;
+            }
+          }
           console.error(<any>error);
           this.status = 'success';
-          this.message = error['message'];
+          this.message = msg;
         }
       );
   }
