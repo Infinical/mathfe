@@ -7,18 +7,18 @@ export const environment = {
   production: false,
   apiURL: 'http://localhost',
   webAuth: {
-    clientID: 'eVJv6UFM9GVdukBWiURczRCxmb6iaUYG',
-    domain: 'pamelalim.auth0.com',
-    audience: 'https://pamelalim.auth0.com/userinfo',
-    redirectUri: 'http://localhost:4200/home',
+    clientID: 'bs3jSKz2Ewrye8dD2qRVrD0Tra2tOqHC',
+    domain: 'allgiftedllc.au.auth0.com',
+    audience: 'https://allgiftedllc.au.auth0.com/userinfo',
+    redirectUri: 'http://localhost:4200/',
     theme: {
       logo: "http://school.all-gifted.com/pluginfile.php/1/theme_lambda/logo/1472088488/newlogo.png"
     }
   },
   payPal: {
     payPalEnvironment: PayPalEnvironment.Sandbox,
-    productionKey: "AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R",
+    productionKey: "Aa1oNd1jzn5vvmcXCNyaEdwcYv9dKmFjlncL9j5vfpvggrcllDKgZUYfvmVdlrQz83susU-ih07wvSEH",
     sandboxKey: "AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R",
-    postEnrollmentUrl: 'http://devapi.pamelalim.me/enrolments'
+    postEnrollmentUrl: 'http://mathapi.pamelalim.me/enrolments'
   }
 };
