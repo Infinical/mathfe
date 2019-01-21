@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component"
 import { SkillService } from 'app/services/skill.service';
 import { MatDialog } from '@angular/material';
-
+declare var $: any;
 @Component({
   selector: 'ag-admin-skill-list',
   templateUrl: './admin-skill-list.component.html',
@@ -14,19 +14,22 @@ import { MatDialog } from '@angular/material';
 export class AdminSkillListComponent implements OnInit {
 
   private _beURL = environment.apiURL + '/';
+  public allSkill = [];
   public skills: Skill[];
   public loading: boolean = true;
-
-
+  public currentTracks;
+  public search = {
+    author: ''
+  };
   // sort block
 
   public sortedByTitle: boolean = false;
   public sortedByDescription: boolean = false;
-  public sortedByAuther: boolean = false;
+  public sortedByauthor: boolean = false;
 
   public reversedByTitle: boolean = false;
   public reversedByDescription: boolean = false;
-  public reversedByAuther: boolean = false;
+  public reversedByauthor: boolean = false;
 
   constructor(
     private _router: Router,
@@ -38,6 +41,7 @@ export class AdminSkillListComponent implements OnInit {
     this._updateloading(true);
     this.skillService.getSkills()
       .subscribe(items => {
+        this.allSkill = items.sort(this._sortById);
         this.skills = items.sort(this._sortById);
         this._updateloading(false);
       });
@@ -57,7 +61,7 @@ export class AdminSkillListComponent implements OnInit {
   public videoUrl(url: string): string {
     if (url)
       return this._beURL + url;
-    else return  this._beURL + "/videos/skills/logo.mp4"
+    else return this._beURL + "/videos/skills/logo.mp4"
   }
 
   public editSkill(id: number): void {
@@ -107,16 +111,16 @@ export class AdminSkillListComponent implements OnInit {
             this.sortedByDescription = true;
           }
           break;
-        case 'auther':
-          if (this.sortedByAuther) {
+        case 'author':
+          if (this.sortedByauthor) {
             this.skills.reverse();
             this._resetSort();
-            this.reversedByAuther = true;
+            this.reversedByauthor = true;
           }
           else {
-            this.skills.sort(this._sortByAuther);
+            this.skills.sort(this._sortByauthor);
             this._resetSort();
-            this.sortedByAuther = true;
+            this.sortedByauthor = true;
           }
           break;
       }
@@ -160,7 +164,7 @@ export class AdminSkillListComponent implements OnInit {
     }
   }
 
-  private _sortByAuther(a, b): number {
+  private _sortByauthor(a, b): number {
     if (a.user.firstname.toLowerCase() < b.user.firstname.toLowerCase()) {
       return -1;
     }
@@ -177,8 +181,65 @@ export class AdminSkillListComponent implements OnInit {
     this.sortedByDescription = false;
     this.reversedByTitle = false;
     this.reversedByDescription = false;
-    this.reversedByAuther = false;
+    this.reversedByauthor = false;
 
   }
 
+  public doSearch() {
+    let filtered = [];
+    this.allSkill.forEach((v, i) => {
+      let add = false;
+      if (this.search.author) {
+        let auth = this.search.author.toLowerCase();
+        if (v.user.firstname) {
+          if (v.user.firstname.toLowerCase().indexOf(auth) != -1) {
+            add = true;
+          }
+        }
+        if (v.user.lastname) {
+          if (v.user.lastname.toLowerCase().indexOf(auth) != -1) {
+            add = true;
+          }
+        }
+      } else {
+        add = true;
+      }
+      if (add) {
+        filtered.push(v);
+      }
+    })
+    this.skills = filtered;
+  }
+
+  public resetSearch() {
+    this.search.author = '';
+    this.skills = this.allSkill;
+  }
+
+  public showTracks(tracks) {
+    this.currentTracks = tracks;
+    $('.modal').modal()
+  }
+  public hideTracks() {
+    $('.modal').modal('hide')
+  }
+
+  public loadQuestions(skill) {
+    if (skill.loadingQuestions == undefined) {
+      skill.loadingQuestions = true;
+      skill.questions = [];
+      this.skillService.getQuestios(skill.id).subscribe((d) => {
+        skill.questions = d;
+        skill.loadingQuestions = false;
+        this.allSkill.forEach((s, i) => {
+          if (s.id == skill.id) {
+            s = skill;
+          }
+        });
+      }, (err) => {
+        skill.loadingQuestions = false;
+        console.error(err);
+      })
+    }
+  }
 }
