@@ -28,6 +28,20 @@
       </div>
       <br />
     </div>
+    <div class="row" style="background: #e0e0e0;clear: both">
+      <div class="col-md-6">
+        <mat-form-field>
+          <input style="background:#fff" [(ngModel)]="search.author" matInput class="form-control" type="text"
+            placeholder="Search by Author">
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <br>
+        <input type="button" class="btn btn-default" (click)="resetSearch()" value="Reset" />
+        <input type="button" style="padding-left: 1rem!important; background-color: #960000; color: white" class="btn"
+          (click)="doSearch()" value="Search" />
+      </div>
+    </div>
     <div class="col-md-12">
       <div class="table-responsive">
         <table class="table">
@@ -49,37 +63,83 @@
                 }"
                 (click)="sortBy('description')">
                 Description
-              </th> 
+              </th>
+              <th class="mat-table-th mat-table-th_clickable" [ngClass]="{
+                'mat-table-th_active': sortedByAuthor,
+                'mat-table-th_reversed': reversedByAuthor,
+                'mat-table-th_inactive': !reversedByAuthor && !sortedByAuthor
+              }"
+                (click)="sortBy('Author')">
+                Author
+              </th>
+              <th class="mat-table-th">Tracks</th>
+              <th class="mat-table-th">Questions</th>
               <th class="mat-table-th action-2">Action</th>
             </tr>
           </thead>
           <tbody>
 
             <tr *ngIf="loading" class="mat-table-spinner-wrapper">
-              <td colspan="4" align="center" class="mat-table-spinner">
+              <td colspan="5" align="center" class="mat-table-spinner">
                 <mat-spinner color="#960000"></mat-spinner>
               </td>
             </tr>
+            <ng-container *ngFor="let skill of skills">
+              <tr>
+                <td>
+                  <video preload="none" width="250" controls>
+                    <source [src]="videoUrl(skill.lesson_link)" type="video/mp4" />
+                    Your browser does not support HTML5 video.
+                  </video>
+                </td>
+                <td>{{ skill.skill }}</td>
+                <td align="left">
+                  <p>{{ skill.description }}</p>
+                </td>
+                <td>{{ skill.user.firstname }} {{skill.user.lastname}}</td>
+                <td>
+                  <a (click)="showTracks(skill.tracks)">Show Tracks</a>
+                </td>
 
-            <tr *ngFor="let skill of skills">
-              <td>
-                <video preload="none" width="250" controls>
-                  <source [src]="videoUrl(skill.lesson_link)" type="video/mp4" />
-                  Your browser does not support HTML5 video.
-                </video>
-              </td>
-              <td>{{ skill.skill }}</td>
-              <td align="left">
-                <p>{{ skill.description }}</p>
-              </td> 
-              <td>
-                <div class="btn-group" role="group" aria-label="First group">
-                  <a (click)="editSkill(skill.id)" class="btn btn-info"><i class="icon_pencil"></i></a>
-                  <a (click)="openDialog(skill.id)" class="btn btn-danger"><i class="icon_minus_alt2"></i></a>
-                </div>
-              </td>
-            </tr>
-
+                <td>
+                  <a data-toggle="collapse" (click)="loadQuestions(skill)" href="#collapse{{skill.id}}">Questions</a>
+                </td>
+                <td>
+                  <div class="btn-group" role="group" aria-label="First group">
+                    <a (click)="editSkill(skill.id)" class="btn btn-info"><i class="icon_pencil"></i></a>
+                    <a (click)="openDialog(skill.id)" class="btn btn-danger"><i class="icon_minus_alt2"></i></a>
+                  </div>
+                </td>
+              </tr>
+              <tr class="panel-collapse collapse" id="collapse{{skill.id}}">
+                <td colspan="7">
+                  <div *ngIf="skill.loadingQuestions" class="mat-table-spinner-wrapper">
+                    <div colspan="5" align="center" class="mat-table-spinner">
+                      <mat-spinner color="#960000"></mat-spinner>
+                    </div>
+                  </div>
+                  <div *ngIf="skill.questions?.length==0 && !skill.loadingQuestions">
+                    <p>No data exist!!</p>
+                  </div>
+                  <div *ngIf="skill.questions?.length>0">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="mat-table-th">Skill</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let q of skill.questions">
+                          <td>
+                            <div [innerHTML]="q.question"></div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
           </tbody>
         </table>
       </div>
@@ -89,3 +149,57 @@
   <!-- /END CONTAINER -->
 
 </section>
+<div style="display:none" class="modal fade" id="trackPassed" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" (click)="hideTracks()">&times;</button>
+        <h4 class="modal-title">Track Passed</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <fieldset>
+              <div class="modal-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Track</th>
+                        <th>Description</th>
+                        <th>Level</th>
+                        <th>Level Age</th>
+                        <th>Start Maxile Level</th>
+                        <th>End Maxile Level</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let track of currentTracks">
+                        <td>{{track.track}}</td>
+                        <td>{{track.description}}</td>
+                        <td>{{track.level.level}}</td>
+                        <td>{{track.level.age}}</td>
+                        <td>{{track.level.start_maxile_level}}</td>
+                        <td>{{track.level.end_maxile_level}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+
+              </div>
+              <div class="modal-footer">
+                <div class="form-group">
+                  <div class="col-lg-6 col-lg-offset4">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="hideTracks()">Close</button>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
