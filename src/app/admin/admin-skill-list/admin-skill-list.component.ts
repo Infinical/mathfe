@@ -18,9 +18,6 @@ export class AdminSkillListComponent implements OnInit {
   public skills: Skill[];
   public loading: boolean = true;
   public currentTracks;
-  public search = {
-    author: ''
-  };
   // sort block
 
   public sortedByTitle: boolean = false;
@@ -185,19 +182,29 @@ export class AdminSkillListComponent implements OnInit {
 
   }
 
-  public doSearch() {
+  public doSearch(query) {
     let filtered = [];
     this.allSkill.forEach((v, i) => {
       let add = false;
-      if (this.search.author) {
-        let auth = this.search.author.toLowerCase();
+      if (query) {
+        query = query.toLowerCase();
         if (v.user.firstname) {
-          if (v.user.firstname.toLowerCase().indexOf(auth) != -1) {
+          if (v.user.firstname.toLowerCase().indexOf(query) != -1) {
             add = true;
           }
         }
         if (v.user.lastname) {
-          if (v.user.lastname.toLowerCase().indexOf(auth) != -1) {
+          if (v.user.lastname.toLowerCase().indexOf(query) != -1) {
+            add = true;
+          }
+        }
+        if (v.description) {
+          if (v.description.toLowerCase().indexOf(query) != -1) {
+            add = true;
+          }
+        }
+        if (v.skill) {
+          if (v.skill.toLowerCase().indexOf(query) != -1) {
             add = true;
           }
         }
@@ -209,11 +216,6 @@ export class AdminSkillListComponent implements OnInit {
       }
     })
     this.skills = filtered;
-  }
-
-  public resetSearch() {
-    this.search.author = '';
-    this.skills = this.allSkill;
   }
 
   public showTracks(tracks) {
