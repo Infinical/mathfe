@@ -21,7 +21,7 @@ export class UserinfoComponent implements OnInit {
     if (!user) {
       $(".spinner-footer-envelope").show();
       return false;
-    } else {
+    } else { 
       $(".spinner-footer-envelope").hide();
       return true;
     }
@@ -29,7 +29,7 @@ export class UserinfoComponent implements OnInit {
   userprof() {
     this.editing = this.editing ? false : true;
   }
-  updateEditMode(iseditmode: boolean) {  
+  updateEditMode(iseditmode: boolean) {
     this.editing = iseditmode;
   }
 

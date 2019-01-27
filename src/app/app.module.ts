@@ -276,7 +276,16 @@ export function tokenGetter() {
       config: {
         tokenGetter: tokenGetter,
         whitelistedDomains: [
-          'localhost:4200', 'localhost', 'devapi.pamelalim.me', 'localhost:8000', 'quiz.pamelalim.me', 'api.pamelalim.me', 'math.pamelalim.me', 'quiz.all-gifted.com']
+          'localhost:4200', 
+          'localhost',
+          'devapi.pamelalim.me',
+          'localhost:8000',
+          'quiz.pamelalim.me',
+          'api.pamelalim.me', 
+          'math.pamelalim.me',
+          'quiz.all-gifted.com',
+          'mathapi.pamelalim.me'
+        ]
       }
     }),
     AngularMaterialModule,

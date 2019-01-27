@@ -44,7 +44,13 @@ export class AdminHouseListComponent implements OnInit {
         this._updateloading(false);
       });
   }
+  resetUpdateStatus() {
+    this.houseService.updateStatus = '';
+  }
 
+  get updateStatus(): string {
+    return this.houseService.updateStatus;
+  }
   private _updateloading(status: boolean): void {
     this.loading = status;
   }

@@ -20,7 +20,8 @@
               "src/assets",
               "src/favicon.ico",
               "src/images",
-              "src/videos"
+              "src/videos",
+              "src/.htaccess"
             ],
             "styles": [
               "src/css/bootstrap.min.css",
