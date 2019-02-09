@@ -5,14 +5,14 @@
 import { PayPalEnvironment } from 'ngx-paypal';
 export const environment = {
   production: false,
-  apiURL: 'http://localhost',
+  apiURL: 'http://localhost:8000',
   webAuth: {
     clientID: 'bs3jSKz2Ewrye8dD2qRVrD0Tra2tOqHC',
     domain: 'allgiftedllc.au.auth0.com',
     audience: 'https://allgiftedllc.au.auth0.com/userinfo',
     redirectUri: 'http://localhost:4200/',
     theme: {
-      logo: "http://school.all-gifted.com/pluginfile.php/1/theme_lambda/logo/1472088488/newlogo.png"
+      logo: "http://school.all-gifted.com/pluginfile.php/1/core_admin/logo/0x150/1535925593/logo.png"
     }
   },
   payPal: {
