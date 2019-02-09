@@ -48,7 +48,7 @@ export class NavbarComponent implements OnInit {
       $('.main-navigation').onePageNav({
         scrollThreshold: 0.2, // Adjust if Navigation highlights too early or too late
         filter: ':not(.external)',
-        changeHash: true
+        changeHash: false
       });
 
     })

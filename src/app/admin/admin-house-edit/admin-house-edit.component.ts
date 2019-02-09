@@ -22,7 +22,7 @@ export class AdminHouseEditComponent implements OnInit {
   courses = [];
   currencies = [];
 
-  house = new House('', '', '', '', '', '', '', '', '');
+  house: any;//= new House('', '', '', '', '', '', '', '', '');
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -33,7 +33,7 @@ export class AdminHouseEditComponent implements OnInit {
   ngOnInit() {
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
     this.houseService.getHouse(this.id).subscribe(
-      data => { 
+      data => {
         this.house = data;
         this.imgURL = this.beURL + this.house.image;
       },
@@ -46,7 +46,13 @@ export class AdminHouseEditComponent implements OnInit {
       },
       error => console.error(<any>error));
   }
+  resetUpdateStatus() {
+    this.houseService.updateStatus = '';
+  }
 
+  get updateStatus(): string {
+    return this.houseService.updateStatus;
+  }
 
 
   ngOnDestroy() {

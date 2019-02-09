@@ -16,7 +16,11 @@ export class SkillTrackService {
     	.map((response) => response)
     	.catch((error: any) => throwError(error || {message: 'Server Error'} ));
     }
-
+  getSkillsByTrack(trackid): Observable<any> {
+    return this.http.get(`${environment.apiURL}/tracks/${trackid}/skills`)
+      .map((response) => response)
+      .catch((error: any) => throwError(error || { message: 'Server Error' }));
+  }
 	addSkill(skill: Skill, trackid: String): Observable<Skill[]> {
 	  const apiUrl = `${environment.apiURL}/tracks`;
 	  const url = `${apiUrl}/${trackid}/skills/${skill.id}`;
@@ -24,7 +28,13 @@ export class SkillTrackService {
 	    .map((response) => response)
 	    .catch((error: any) => throwError(error || {message: 'Server Error'}));
 	}
-
+  addSkillByTrack(skills, trackid): Observable<any> {
+    const apiUrl = `${environment.apiURL}/tracks`;
+    const url = `${apiUrl}/${trackid}/skills`;
+    return this.http.post(url, skills)
+      .map((response) => response)
+      .catch((error: any) => throwError(error || { message: 'Server Error' }));
+  }
 	getSkill(id: String): Observable<any> {
 	  return this.http.get(`${environment.apiURL}/skills/` + id)
 	    .map((response) => response['skill'])
@@ -46,7 +56,20 @@ export class SkillTrackService {
 	    .map((response) => response)
 	    .catch((error: any) => throwError(error || {message: 'Server Error'}));
 	}
-
+  deleteSkillByTrackId(trackid: String, skillid: String): Observable<Skill[]> {
+    const apiUrl = `${environment.apiURL}/tracks`;
+    const url = `${apiUrl}/${trackid}/skills/${skillid}`;
+    return this.http.delete<Skill[]>(url)
+      .map((response) => response)
+      .catch((error: any) => throwError(error || { message: 'Server Error' }));
+  }
+  deleteAllSkills(trackid: String): Observable<Skill[]> {
+    const apiUrl = `${environment.apiURL}/tracks`;
+    const url = `${apiUrl}/${trackid}/skills`;
+    return this.http.delete<Skill[]>(url)
+      .map((response) => response)
+      .catch((error: any) => throwError(error || { message: 'Server Error' }));
+  }
 	createSkill():Observable<any> {
     	return this.http.get(`${environment.apiURL}/skills/create`)
     	.map((response) => response)

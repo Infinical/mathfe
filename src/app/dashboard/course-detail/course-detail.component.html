@@ -16,11 +16,11 @@
       </div>
     </div>
     <div class="buttons wow fadeInRight animated" data-wow-offset="10" data-wow-duration="1.5s">
-      <h3 *ngIf="(selectedCourse.houses.length > 0); else emptyHouse">Classes available for Course: {{selectedCourse.course}}</h3>
+      <h3 *ngIf="(selectedCourse.valid_houses.length > 0); else emptyHouse">Classes available for Course: {{selectedCourse.course}}</h3>
       <ng-template #emptyHouse>
           <h3>There is no class available for this course.</h3>
       </ng-template>
-    <table class="table table-striped" *ngFor="let house of selectedCourse.houses">
+    <table class="table table-striped" *ngFor="let house of selectedCourse.valid_houses">
   <thead>
     <tr>
       <th scope="col"></th>

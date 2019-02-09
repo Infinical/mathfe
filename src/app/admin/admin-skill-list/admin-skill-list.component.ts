@@ -22,11 +22,11 @@ export class AdminSkillListComponent implements OnInit {
 
   public sortedByTitle: boolean = false;
   public sortedByDescription: boolean = false;
-  public sortedByauthor: boolean = false;
+  public sortedByAuthor: boolean = false;
 
   public reversedByTitle: boolean = false;
   public reversedByDescription: boolean = false;
-  public reversedByauthor: boolean = false;
+  public reversedByAuthor: boolean = false;
 
   constructor(
     private _router: Router,
@@ -109,15 +109,15 @@ export class AdminSkillListComponent implements OnInit {
           }
           break;
         case 'author':
-          if (this.sortedByauthor) {
+          if (this.sortedByAuthor) {
             this.skills.reverse();
             this._resetSort();
-            this.reversedByauthor = true;
+            this.reversedByAuthor = true;
           }
           else {
             this.skills.sort(this._sortByauthor);
             this._resetSort();
-            this.sortedByauthor = true;
+            this.sortedByAuthor = true;
           }
           break;
       }
@@ -178,7 +178,7 @@ export class AdminSkillListComponent implements OnInit {
     this.sortedByDescription = false;
     this.reversedByTitle = false;
     this.reversedByDescription = false;
-    this.reversedByauthor = false;
+    this.reversedByAuthor = false;
 
   }
 
