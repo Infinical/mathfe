@@ -15,7 +15,8 @@ export class SkillService {
 		return this.http.get(`${environment.apiURL}/skills`)
 			.map((response) => response)
 			.catch((error: any) => throwError(error || { message: 'Server Error' }));
-	}
+    }
+
 	getQuestios(skillId): Observable<any> {
 		return this.http.get(`${environment.apiURL}/skills/${skillId}/questions`)
 			.map((response) => {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LevelService } from '../../services/level.service';
 import { Level } from 'app/models/level';
+import { FormGroup, FormControl, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'ag-admin-level-create',
@@ -11,15 +12,14 @@ import { Level } from 'app/models/level';
 export class AdminLevelCreateComponent implements OnInit {
   public status: string;
   public message: string;
-
+  end_maxile_level: FormControl;
+ 
   constructor(
-    private levelService: LevelService,
-    private router: Router) {
-
+    private levelService: LevelService, private router: Router) {
   }
-
-  ngOnInit() { }
-
+  ngOnInit() {
+    this.end_maxile_level = new FormControl("", [Validators.max(9999), Validators.min(100)])
+}
   public createLevel(level: Level): void {
 
     this.levelService.addLevel(level)
@@ -43,4 +43,12 @@ export class AdminLevelCreateComponent implements OnInit {
         }
       );
   }
+//  end_maxile_levelValidator(min: number, max: number): ValidatorFn {
+//  return (control: AbstractControl): { [key: string]: boolean } | null => {
+//    if (control.value !== undefined && (isNaN(control.value) || control.value < min || control.value > max)) {
+//      return { 'end_maxile_level': true };
+//    }
+//    return null;
+//  };
+//}
 }

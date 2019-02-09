@@ -20,7 +20,7 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator) topPaginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   gridData: any;
-  displayedColumns: string[] = ['question', 'answer', 'skill', 'track', 'field', 'level', 'difficulty', 'status', 'source', 'author', 'action'];
+  displayedColumns: string[] = ['id', 'question', 'answer', 'skill', 'track', 'field', 'level', 'difficulty', 'status', 'source', 'author', 'action'];
   dataSource = new MatTableDataSource<any>();
   beURL = environment.apiURL;
   currentPage = 1;

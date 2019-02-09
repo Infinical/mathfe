@@ -287,3 +287,7 @@ tr {
 .mat-table-spinner {
   padding: 30px;
 }
+
+.cdk-overlay-container {
+  z-index: 9999 !important;
+}

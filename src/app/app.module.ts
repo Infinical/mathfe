@@ -43,6 +43,8 @@ import { FooterComponent } from './footer.component';
 import { HouseListComponent } from './member/house-list/house-list.component';
 import { HouseDetailComponent } from './member/house-detail/house-detail.component';
 import { DropdownDirective } from './directives/dropdown.directive';
+import { CustomMinDirective } from './directives/custom-min-validator.directive';
+import { CustomMaxDirective } from './directives/custom-max-validator.directive';
 import { TeachListComponent } from './member/teach-list/teach-list.component';
 import { TeachComponent } from './member/teach-list/teach.component';
 import { TeachDetailComponent } from './member/teach-list/teach-detail/teach-detail.component';
@@ -118,6 +120,10 @@ import { AdminDifficultyCreateComponent } from './admin/admin-difficulty-create/
 import { AdminDifficultyEditComponent } from './admin/admin-difficulty-edit/admin-difficulty-edit.component';
 import { AdminDifficultyDeleteComponent } from './admin/admin-difficulty-delete/admin-difficulty-delete.component';
 
+import { AdminHouseTracksListComponent } from './admin/admin-house-list/modal/admin-house-tracks-list/admin-house-tracks-list.component';
+import { AdminAddTrackListComponent } from './admin/admin-house-list/modal/admin-add-track-list/admin-add-track-list.component';
+import { AdminHouseSkillsTrackListComponent } from './admin/admin-track-list/modal/admin-house-skills-track-list/admin-house-skills-track-list.component';
+import { AdminAddSkillComponent } from './admin/admin-track-list/modal/admin-add-skill/admin-add-skill.component';
 
 import { DynamicContentComponent } from './admin/admin-question-list/dynamicContent/dynamicContent.component';
 
@@ -177,6 +183,8 @@ export function tokenGetter() {
     HouseListComponent,
     HouseDetailComponent,
     DropdownDirective,
+    CustomMinDirective,
+    CustomMaxDirective,
     TeachListComponent,
     TeachComponent,
     TeachDetailComponent,
@@ -217,7 +225,7 @@ export function tokenGetter() {
     AdminHouseEditComponent,
     AdminHouseCreateComponent,
     AdminHouseDeleteComponent,
-
+    AdminHouseSkillsTrackListComponent,
     AdminFieldListComponent,
     AdminFieldEditComponent,
     AdminFieldCreateComponent,
@@ -242,12 +250,13 @@ export function tokenGetter() {
     AdminPermissionEditComponent,
     AdminPermissionCreateComponent,
     AdminPermissionDeleteComponent,
-
+    AdminAddSkillComponent,
     AdminDifficultyListComponent,
     AdminDifficultyEditComponent,
     AdminDifficultyCreateComponent,
     AdminDifficultyDeleteComponent,
-
+    AdminHouseTracksListComponent,
+    AdminAddTrackListComponent,
     DynamicContentComponent,
 
     DialogDeleteQuestion,
@@ -295,7 +304,8 @@ export function tokenGetter() {
     DataTableModule,
     KatexModule
   ],
-  entryComponents: [DialogDeleteQuestion, ConfirmDialogComponent],
+  entryComponents: [DialogDeleteQuestion, ConfirmDialogComponent, AdminHouseTracksListComponent, AdminAddTrackListComponent,
+    AdminHouseSkillsTrackListComponent, AdminAddSkillComponent],
   providers: [TrackService, CourseService, QuestionService, DashboardService,
     HouseService, FieldService, TypeService, UnitService, PermissionService, LevelService,
     DifficultyService,

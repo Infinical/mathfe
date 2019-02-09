@@ -6,13 +6,20 @@ import { environment } from '../../../environments/environment';
 import { HouseService } from '../../services/house.service';
 import { House } from '../../models/house';
 import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component"
+import { AdminHouseTracksListComponent } from './modal/admin-house-tracks-list/admin-house-tracks-list.component';
+import { debug } from 'util';
+import { HouseTrackService } from '../../services/house-track.service';
+import { TrackService } from '../../services/track.service';
+import { Track } from '../../models/track';
+import { AdminAddTrackListComponent } from './modal/admin-add-track-list/admin-add-track-list.component';
+
 @Component({
   selector: 'ag-admin-house-list',
   templateUrl: './admin-house-list.component.html',
   styleUrls: ['./admin-house-list.component.css']
 })
 export class AdminHouseListComponent implements OnInit {
-
+  tracks: Track[];
   private _beURL = environment.apiURL + '/';
   public houses: House[];
   public loading: boolean = true;
@@ -31,7 +38,7 @@ export class AdminHouseListComponent implements OnInit {
 
   constructor(
     private _router: Router,
-    private houseService: HouseService,
+    private houseService: HouseService, private trackService: HouseTrackService,
     public dialog: MatDialog
   ) { }
 
@@ -40,7 +47,7 @@ export class AdminHouseListComponent implements OnInit {
     this._updateloading(true);
     this.houseService.getHouses()
       .subscribe(items => {
-        this.houses = items.sort(this._sortById); 
+        this.houses = items.sort(this._sortById);
         this._updateloading(false);
       });
   }
@@ -207,4 +214,51 @@ export class AdminHouseListComponent implements OnInit {
       });
   }
 
+  openViewTrack(houseid): void {
+    const dialogRef = this.dialog.open(AdminHouseTracksListComponent, {
+      data: { houseid: houseid }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  getAddTrack(houseid) {
+    const dialogRef = this.dialog.open(AdminAddTrackListComponent, {
+      width: '400px',
+      data: { houseid: houseid }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.houseService.updateStatus = result;
+        window.scrollTo(0, 0)
+      }
+    });
+  }
+
+  deleteAllTracks(houseid) {
+    this.dialog.open(ConfirmDialogComponent, { data: { message: "Do you really want to delete all the tracks from this class?", title: "Delete All Tracks" } }).afterClosed().
+      subscribe(ifYes => {
+        if (ifYes) {
+          this.loading = true;
+          this.trackService.deleteAllTracks(houseid).subscribe((x: any) => {
+            //this.tracks = x.tracks;
+            this.houseService.updateStatus = x.message;
+            this.loading = false;
+            window.scrollTo(0, 0)
+            //accepted
+          }, (err) => {
+            console.error(err);
+            this.houseService.updateStatus = 'Server is not responding, please try after some time!'
+            window.scrollTo(0, 0)
+          })
+        } else {
+          //rejected
+        }
+      });
+  }
 }
+
+

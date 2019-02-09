@@ -11,10 +11,11 @@ import { House } from 'app/models/house';
 export class AdminHouseCreateComponent implements OnInit {
   public status: string;
   public message: string;
-  public selectedFile: File = null;
-  public imgURL: string = 'images/upload.png';
+  selectedFile: File = null;
+  imgURL: string = "images/upload.png";
   courses = [];
   currencies = [];
+  formData: any;
 
   constructor(
     private houseService: HouseService,
@@ -31,7 +32,8 @@ export class AdminHouseCreateComponent implements OnInit {
 
   public createHouse(house): void {
     const formData: FormData = new FormData();
-
+    if (this.selectedFile)
+      formData.append('image', this.selectedFile);
     // formData.append('image', this.selectedFile);
     formData.append('house', house.house);
     formData.append('description', house.description);
@@ -40,9 +42,10 @@ export class AdminHouseCreateComponent implements OnInit {
     formData.append('currency', house.currency);
     formData.append('course_id', house.course_id);
     formData.append('price', house.price);
+    formData.append('link_tracks', house.link_tracks ? 'TRUE' : 'FALSE');
     this.houseService.addHouse(formData)
       .subscribe(
-        house => {
+        house => { 
           this.houseService.updateStatus = house['message'];
           setTimeout(() => this.houseService.updateStatus = '', 2000);
           this.router.navigate(['/admin/houses']);
@@ -56,7 +59,7 @@ export class AdminHouseCreateComponent implements OnInit {
       );
   }
 
-  public onFileSelected(files: FileList): void {
+  onFileSelected(files: FileList): void {
     this.selectedFile = files.item(0);
     let reader = new FileReader();
     reader.onload = (event: any) => {
