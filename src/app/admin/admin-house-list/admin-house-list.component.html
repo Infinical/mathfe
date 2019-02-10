@@ -1,30 +1,23 @@
 <section class="screenshots grey-bg" id="houses">
-
   <div class="container">
-
     <!-- SECTION HEADER -->
     <div class="section-header wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
-
       <!-- SECTION TITLE -->
-      <h2 class="dark-text">All Houses</h2>
-
+      <h2 class="dark-text">All Classes</h2>
       <div class="colored-line">
       </div>
-
     </div>
     <!-- /END SECTION HEADER -->
-
     <div *ngIf="updateStatus" class="alert alert-success alert-dismissible" role="alert">
       {{ updateStatus }}
       <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="resetUpdateStatus()">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-
     <div class="col-md-12">
       <div>
         <a [routerLink]="['/admin/']" class="btn btn-default"> Back</a>
-        <a [routerLink]="['/admin/houses/create']" class="btn btn-success"> New House</a>
+        <a [routerLink]="['/admin/houses/create']" class="btn btn-success"> New Class</a>
       </div>
       <br />
     </div>
@@ -39,7 +32,7 @@
                 'mat-table-th_reversed': reversedByTitle,
                 'mat-table-th_inactive': !reversedByTitle && !sortedByTitle
               }"
-                (click)="sortBy('title')">
+                  (click)="sortBy('title')">
                 Title
               </th>
               <th class="mat-table-th mat-table-th_clickable" [ngClass]="{
@@ -47,7 +40,7 @@
                 'mat-table-th_reversed': reversedByDescription,
                 'mat-table-th_inactive': !reversedByDescription && !sortedByDescription
               }"
-                (click)="sortBy('description')">
+                  (click)="sortBy('description')">
                 Description
               </th>
               <th class="mat-table-th mat-table-th_clickable" [ngClass]="{
@@ -55,7 +48,7 @@
                 'mat-table-th_reversed': reversedByStart,
                 'mat-table-th_inactive': !reversedByStart && !sortedByStart
               }"
-                (click)="sortBy('start')">
+                  (click)="sortBy('start')">
                 Start Date
               </th>
               <th class="mat-table-th mat-table-th_clickable" [ngClass]="{
@@ -63,20 +56,18 @@
                 'mat-table-th_reversed': reversedByEnd,
                 'mat-table-th_inactive': !reversedByEnd && !sortedByEnd
               }"
-                (click)="sortBy('end')">
+                  (click)="sortBy('end')">
                 End Date
               </th>
               <th class="mat-table-th action-2">Action</th>
             </tr>
           </thead>
           <tbody>
-
             <tr *ngIf="loading" class="mat-table-spinner-wrapper">
               <td colspan="7" align="center" class="mat-table-spinner">
                 <mat-spinner color="#960000"></mat-spinner>
               </td>
             </tr>
-
             <tr *ngFor="let house of houses">
               <td>
                 <img width="200" [src]=" imageUrl(house.image)" />
@@ -90,15 +81,20 @@
                   <a (click)="editHouse(house.id)" class="btn btn-info"><i class="icon_pencil"></i></a>
                   <a (click)="openDialog(house.id)" class="btn btn-danger"><i class="icon_minus_alt2"></i></a>
                 </div>
+                <div class="box">
+                  <p><b>Manage Tracks</b></p>
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-primary" (click)="openViewTrack(house.id)">View Tracks</button>
+                    <button type="button" class="btn btn-primary" (click)="deleteAllTracks(house.id)">Delete ALL Tracks</button>
+                    <button type="button" class="btn btn-primary" (click)="getAddTrack(house.id)"> Add Track</button>
+                  </div>
+                </div>
               </td>
             </tr>
-
           </tbody>
         </table>
       </div>
     </div>
-
   </div>
   <!-- /END CONTAINER -->
-
 </section>

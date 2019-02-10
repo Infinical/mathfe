@@ -22,7 +22,7 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
   my_tracks = [];
   public_tracks = [];
 
-  skill = new Skill('id', 'skill', 'description', 'user_id', 'image', 'lesson_link', 'status_id');
+  skill :any;//= new Skill('id', 'skill', 'description', 'user_id', 'image', 'lesson_link', 'status_id');
 
   constructor(
     private activatedRoute: ActivatedRoute,
