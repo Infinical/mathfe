@@ -25,6 +25,12 @@ export class AdminPermissionListComponent implements OnInit {
   public reversedByTitle: boolean = false;
   public reversedByDescription: boolean = false;
 
+  ShowColumns = {
+    Title: true,
+    Description: true,
+    Action: true
+  }
+
   constructor(
     private _router: Router,
     private permissionService: PermissionService,

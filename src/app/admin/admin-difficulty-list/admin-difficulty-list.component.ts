@@ -30,6 +30,13 @@ export class AdminDifficultyListComponent implements OnInit {
   public reversedByShortDescription: boolean = false;
   public reversedByAuther: boolean = false;
 
+  ShowColumns = {
+    Difficulty: true,
+    Description: true,
+    Short_Description: true,
+    Action: true
+  }
+
   constructor(
     private _router: Router,
     private difficultyService: DifficultyService,

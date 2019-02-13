@@ -1,19 +1,16 @@
 <section class="screenshots grey-bg" id="skills">
-
   <div class="container">
-
     <!-- SECTION HEADER -->
     <div class="section-header wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
-
       <!-- SECTION TITLE -->
       <!-- <img [src]="lesson_link" style="width:250px;" /><br /> -->
       <h2 class="dark-text">Add a New Skill</h2>
-
       <div class="colored-line">
       </div>
-
     </div>
-
+    <div *ngIf="loading" class="mat-table-spinner-wrapper" align="center">
+      <mat-spinner color="#960000"></mat-spinner>
+    </div>
     <div *ngIf="status=='success'" class="alert alert-success" role="alert"> {{ message }} </div>
     <div *ngIf="status=='error'" class="alert alert-danger" role="alert"> {{ message }} </div>
     <div class="col-md-10 col-md-offset-1">
@@ -21,7 +18,6 @@
         <a [routerLink]="['/admin/']" class="btn btn-default"> Back</a>
       </div>
     </div>
-
     <div class="col-md-10 col-md-offset-1">
       <div class="well well bs-component">
         <form novalidate class="form-horizontal" (ngSubmit)="createSkill(createSkillForm.value)" #createSkillForm="ngForm">
@@ -30,20 +26,20 @@
               <label for="image" class="col-lg-2 control-label">Skill Video</label>
               <div class="col-lg-10">
                 <input type="file" class="form-control" id="video" name="video" ngModel #video="ngModel" minlength="3"
-                  accept="video/mp4,video/x-m4v,video/*" (change)="onFileSelected($event.target.files)" placeholder="Skill Video">
-                <!-- <div *ngIf="video.errors?.required && video.dirty" class="alert alert-danger">
+                       accept="video/mp4,video/x-m4v,video/*" (change)="onFileSelected($event.target.files)" placeholder="Skill Video">
+                 <!--<div *ngIf="video.errors?.required && video.dirty" class="alert alert-danger">
                   Image is required
-                </div>
-                <div *ngIf="video.errors?.minlength && video.touched" class="alert alert-danger">
-                  Minimum of 3 characters
-                </div> -->
+                </div>-->
+                <div *ngIf="video.errors?.required && video.touched" class="alert alert-danger">
+                  Your video should be in HD format and of maximum 2 minutes long
+                </div> 
               </div>
             </div>
             <div class="form-group">
               <label for="skill" class="col-lg-2 control-label">Skill Title</label>
               <div class="col-lg-10">
                 <input type="text" class="form-control" id="skill" name="skill" placeholder="Skill Title" ngModel
-                  #skill="ngModel" required>
+                       #skill="ngModel" required>
                 <div *ngIf="skill.errors?.required && skill.touched" class="alert alert-danger">
                   Skill Title is required
                 </div>
@@ -53,7 +49,7 @@
               <label for="description" class="col-lg-2 control-label">Description</label>
               <div class="col-lg-10">
                 <textarea class="form-control" rows="3" id="description" name="description" placeholder="Description of the skill"
-                  ngModel #description="ngModel" required></textarea>
+                          ngModel #description="ngModel" required></textarea>
                 <div *ngIf="description.errors?.required && description.touched" class="alert alert-danger">
                   Description is required
                 </div>
@@ -63,10 +59,11 @@
               <label for="description" class="col-lg-2 control-label">Status</label>
               <div class="col-lg-10">
                 <select class="form-control" #status_id="ngModel" [(ngModel)]="skill.status_id" id="status_id" required
-                  name="status_id" placeholder="Skill's status">
+                        name="status_id" placeholder="Skill's status">
                   <option value="" disabled selected>Select Status</option>
                   <option *ngFor="let status of statuses" [value]="status.id">
-                    {{status.status}} - {{status.description}} </option>
+                    {{status.status}} - {{status.description}}
+                  </option>
                 </select>
                 <div *ngIf="status_id.errors?.required && status_id.touched" class="alert alert-danger">
                   Status is required
@@ -76,8 +73,8 @@
             <div class="form-group">
               <label for="skill" class="col-lg-2 control-label">Track</label>
               <div class="col-lg-10">
-                <mat-select class="form-control" name="track_id" id="track_id" #track_id="ngModel" [(ngModel)]="skill.track_id"
-                  multiple>
+                <mat-select class="form-control" name="track_id" id="track_id" #track_id="ngModel" ngModel
+                            multiple>
                   <mat-option *ngFor="let track of my_tracks" [value]="track.id">{{track.track}}</mat-option>
                   <mat-option disabled *ngIf="(my_tracks)?.length>0">-----------------</mat-option>
                   <mat-option *ngFor="let track of public_tracks" [value]="track.id">{{track.track}}</mat-option>

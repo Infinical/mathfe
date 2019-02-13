@@ -31,6 +31,14 @@ export class AdminCourseListComponent implements OnInit {
   public reversedByStart: boolean = false;
   public reversedByEnd: boolean = false;
 
+  ShowColumns = {
+    Course: true,
+    Title: true,
+    Description: true,
+    Start_Maxile: true,
+    End_Maxile: true,
+    Action: true
+  }
   constructor(
     private _router: Router,
     private courseService: CourseService,

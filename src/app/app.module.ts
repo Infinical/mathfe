@@ -113,6 +113,7 @@ import { AdminPermissionListComponent } from "./admin/admin-permission-list/admi
 import { AdminPermissionCreateComponent } from './admin/admin-permission-create/admin-permission-create.component';
 import { AdminPermissionEditComponent } from './admin/admin-permission-edit/admin-permission-edit.component';
 import { AdminPermissionDeleteComponent } from './admin/admin-permission-delete/admin-permission-delete.component';
+ 
 
 
 import { AdminDifficultyListComponent } from "./admin/admin-difficulty-list/admin-difficulty-list.component";
@@ -280,7 +281,7 @@ export function tokenGetter() {
     HttpClientModule,
     HttpModule,
     ChartsModule,
-    NgxPayPalModule,
+    NgxPayPalModule, 
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

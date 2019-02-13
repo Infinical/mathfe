@@ -20,6 +20,15 @@ export class AdminTrackListComponent implements OnInit {
   public houses: House[];
   message: '';
 
+  ShowColumns = {
+    Track: true,
+    Description: true,
+    Status: true,
+    Field: true,
+    Level: true,
+    Classes: true,
+    Action: true
+  } 
   constructor(private skillTrackService: SkillTrackService, private trackService: TrackService, private _router: Router,
     public dialog: MatDialog) { }
 
