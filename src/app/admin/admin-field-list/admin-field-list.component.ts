@@ -29,6 +29,12 @@ export class AdminFieldListComponent  implements OnInit {
   public reversedByStart: boolean = false;
   public reversedByEnd: boolean = false;
 
+  ShowColumns = {
+    Title: true,
+    Description: true,
+    Action: true
+  }
+
   constructor(
     private _router: Router,
     private fieldService: FieldService,

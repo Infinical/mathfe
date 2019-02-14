@@ -15,7 +15,7 @@ export class AdminSkillListComponent implements OnInit {
 
   private _beURL = environment.apiURL + '/';
   public allSkill = [];
-  public skills: Skill[];
+  public skills: Skill[] = [];
   public loading: boolean = true;
   public currentTracks;
   // sort block
@@ -27,6 +27,16 @@ export class AdminSkillListComponent implements OnInit {
   public reversedByTitle: boolean = false;
   public reversedByDescription: boolean = false;
   public reversedByAuthor: boolean = false;
+
+  ShowColumns = {
+    Skill: true,
+    Title: true,
+    Description: true,
+    Author: true,
+    Tracks: true,
+    Questions: true,
+    Action: true
+  }
 
   constructor(
     private _router: Router,

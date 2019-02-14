@@ -49,7 +49,7 @@ export class TrackService {
 	getTrack(id: String): Observable<any> {
 		return this.http.get(`${environment.apiURL}/tracks/${id}`)
 			.map((response) => { 
-				return response['track']
+				return response['tracks']
 			})
 			.catch((error: any) => throwError(error || { message: 'Server Error' }));
 	}

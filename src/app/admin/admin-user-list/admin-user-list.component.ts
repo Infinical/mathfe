@@ -13,6 +13,20 @@ export class AdminUserListComponent implements OnInit {
   status: string;
   message: string;
 
+  ShowColumns = {
+    User: true,
+    Email: true,
+    First_Name: true,
+    Last_Name: true,
+    Name: true,
+    Admin: true,
+    Maxile_Level: true,
+    Game_Level: true,
+    Date_of_Birth: true,
+    Last_Test_Date: true,
+    Edit: true
+  }
+
   constructor(private userService: UserService) { }
 
   ngOnInit() {

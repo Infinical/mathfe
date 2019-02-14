@@ -357,6 +357,7 @@ export class AdminQuestionFormComponent implements OnInit {
     form.append('type_id', String(this.question.type_id));
 
     this.questionService.updateQuestion(form, this.question.id).subscribe(res => {
+      debugger;
       this.question = res.question;
       this.refreshImages(res.question);
       this.formResponse = {
@@ -365,6 +366,7 @@ export class AdminQuestionFormComponent implements OnInit {
         };
       this.loading = false;
     }, error => {
+      debugger;
       this.formResponse = {
           status: 'error',
           message: 'Server Error'

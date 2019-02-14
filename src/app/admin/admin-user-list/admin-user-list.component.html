@@ -1,64 +1,112 @@
 <section class="screenshots grey-bg" id="adminusers">
+  <div class="container">
 
-<div class="container">
-  
-  <!-- SECTION HEADER -->
-  <div class="section-header wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
-    
-    <!-- SECTION TITLE -->
-    <h2 class="dark-text">All Users</h2>
-    
-    <div class="colored-line">
+    <!-- SECTION HEADER -->
+    <div class="section-header wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
+
+      <!-- SECTION TITLE -->
+      <h2 class="dark-text">All Users</h2>
+
+      <div class="colored-line">
+      </div>
+
     </div>
-    
-  </div>
-  <div *ngIf="status=='success'" class="alert alert-success" role="alert"> {{ message }} </div>
-  <div *ngIf="status=='error'" class="alert alert-danger" role="alert"> {{ message }} </div>
-  <div class="col-md-10 col-md-offset-1">
-    <div>
-      <a [routerLink]="['/admin/']" class="btn btn-default"> Back</a>
-      <!--a [routerLink]="['/admin/users/create']" class="btn btn-success"> New User</a-->
+    <div *ngIf="status=='success'" class="alert alert-success" role="alert"> {{ message }} </div>
+    <div *ngIf="status=='error'" class="alert alert-danger" role="alert"> {{ message }} </div>
+    <div class="col-md-10 col-md-offset-1">
+      <div>
+        <a [routerLink]="['/admin/']" class="btn btn-default"> Back</a>
+        <!--a [routerLink]="['/admin/users/create']" class="btn btn-success"> New User</a-->
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <mat-card class="result">
+          <mat-card-content>
+            <h5 class="example-h2">Toggle Columns</h5>
+
+            <section class="toggle-columns-section">
+              <mat-slide-toggle [(ngModel)]="ShowColumns.User" color="primary">
+                User
+              </mat-slide-toggle>
+
+              <mat-slide-toggle [(ngModel)]="ShowColumns.Email" color="primary">
+                Email
+              </mat-slide-toggle>
+
+              <mat-slide-toggle [(ngModel)]="ShowColumns.First_Name" color="primary">
+                First Name
+              </mat-slide-toggle>
+
+              <mat-slide-toggle [(ngModel)]="ShowColumns.Last_Name" color="primary">
+                Last Name
+              </mat-slide-toggle>
+
+              <mat-slide-toggle [(ngModel)]="ShowColumns.Name" color="primary">
+               Name
+              </mat-slide-toggle>
+
+              <mat-slide-toggle [(ngModel)]="ShowColumns.Admin" color="primary">
+               Admin
+              </mat-slide-toggle>
+
+              <mat-slide-toggle [(ngModel)]="ShowColumns.Maxile_Level" color="primary">
+                Maxile Level
+              </mat-slide-toggle>
+
+              <mat-slide-toggle [(ngModel)]="ShowColumns.Game_Level" color="primary">
+                Game Level
+              </mat-slide-toggle>
+
+              <mat-slide-toggle [(ngModel)]="ShowColumns.Date_of_Birth" color="primary">
+                Date of Birth
+              </mat-slide-toggle>
+
+              <mat-slide-toggle [(ngModel)]="ShowColumns.Last_Test_Date" color="primary">
+                Last Test Date
+              </mat-slide-toggle>
+
+              <mat-slide-toggle [(ngModel)]="ShowColumns.Edit" color="primary">
+                Edit
+              </mat-slide-toggle>
+            </section>
+          </mat-card-content>
+        </mat-card>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th [hidden]="!ShowColumns.User">User</th>
+              <th [hidden]="!ShowColumns.Email">Email</th>
+              <th [hidden]="!ShowColumns.First_Name">First Name</th>
+              <th [hidden]="!ShowColumns.Last_Name">Last Name</th>
+              <th [hidden]="!ShowColumns.Name">Name</th>
+              <th [hidden]="!ShowColumns.Admin">Admin?</th>
+              <th [hidden]="!ShowColumns.Maxile_Level">Maxile Level</th>
+              <th [hidden]="!ShowColumns.Game_Level">Game Level</th>
+              <th [hidden]="!ShowColumns.Date_of_Birth">Date of Birth</th>
+              <th [hidden]="!ShowColumns.Last_Test_Date">Last Test Date</th>
+              <th [hidden]="!ShowColumns.Edit">Edit</th>
+            </tr>
+          </thead>
+          <tbody align="left">
+            <tr *ngFor="let user of users">
+              <td [hidden]="!ShowColumns.User"><img src="{{user.image}}" width="75" /></td>
+              <td [hidden]="!ShowColumns.Email">{{user.email}} </td>
+              <td [hidden]="!ShowColumns.First_Name">{{user.firstname}}</td>
+              <td [hidden]="!ShowColumns.Last_Name">{{user.lastname}}</td>
+              <td [hidden]="!ShowColumns.Name">{{user.name}}</td>
+              <td [hidden]="!ShowColumns.Admin" *ngIf="user.is_admin; else no">Yes</td>
+              <ng-template #no><td>No</td></ng-template>
+              <td [hidden]="!ShowColumns.Maxile_Level">{{user.maxile_level | number : 0-0 }}</td>
+              <td [hidden]="!ShowColumns.Game_Level">{{user.game_level}}</td>
+              <td [hidden]="!ShowColumns.Date_of_Birth">{{user.date_of_birth}}</td>
+              <td [hidden]="!ShowColumns.Last_Test_Date">{{user.last_test_date}}</td>
+              <td [hidden]="!ShowColumns.Edit"><a [routerLink]="['/admin/users/edit', user.id]" class="btn btn-info"><i class="icon_pencil"></i></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-
-  <div class="col-md-12">
-
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-        <tr>
-        	<th>User</th>
-          <th>Email</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Name</th>
-          <th>Admin?</th>
-          <th>Maxile Level</th>
-          <th>Game Level</th>
-          <th>Date of Birth</th>
-          <th>Last Test Date</th>
-          <th>Edit</th>
-        </tr>
-        </thead>
-        <tbody align="left">
-
-        <tr *ngFor="let user of users">
-          <td><img src="{{user.image}}" width="75"/></td>
-          <td>{{user.email}} </td>
-          <td>{{user.firstname}}</td>
-          <td>{{user.lastname}}</td>
-          <td>{{user.name}}</td>
-          <td *ngIf="user.is_admin; else no">Yes</td>
-          <ng-template #no><td>No</td></ng-template>
-          <td>{{user.maxile_level | number : 0-0 }}</td>
-          <td>{{user.game_level}}</td>
-          <td>{{user.date_of_birth}}</td>
-          <td>{{user.last_test_date}}</td>
-          <td><a [routerLink]="['/admin/users/edit', user.id]" class="btn btn-info"><i class="icon_pencil"></i></a></td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
 </section>

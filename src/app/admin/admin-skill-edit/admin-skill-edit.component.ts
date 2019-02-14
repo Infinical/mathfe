@@ -20,9 +20,8 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
   formData: FormData = new FormData();
   statuses: any;
   my_tracks = [];
-  public_tracks = [];
-
-  skill :any;//= new Skill('id', 'skill', 'description', 'user_id', 'image', 'lesson_link', 'status_id');
+  public_tracks = []; 
+  skill: any = {}//= new Skill('id', 'skill', 'description', 'user_id', 'image', 'lesson_link', 'status_id');
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -40,16 +39,14 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
       error => console.error(<any>error));
 
     this.skillService.createSkill().subscribe(
-      data => {
+      data => { 
         this.statuses = data['statuses'];
         this.my_tracks = data['my_tracks'] || [];
-        this.public_tracks = data['public_tracks'] || [];
+        this.public_tracks = data['public_tracks'] || []; 
       },
       error => console.error(<any>error));
 
   }
-
-
 
   ngOnDestroy() {
     this.params.unsubscribe();
@@ -66,7 +63,8 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
     this.formData.append('description', skill.description);
     this.formData.append('skill', skill.skill);
     this.formData.append('status_id', skill.status_id);
-    this.formData.append('track_id', skill.track_id);
+    // this.formData.append('track_id', skill.track_id);
+    this.formData.append('track_ids', JSON.stringify(skill.track_id));
     this.skillService.updateSkillWithFormData(this.formData, skill.id)
       .subscribe(
         skill => {

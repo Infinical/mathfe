@@ -14,10 +14,14 @@ export class AdminTrackEditComponent implements OnInit {
   status: string;
   message: string;
   id: any;
-  params: any; 
+  params: any;
+  levels = [];
+  statuses = [];
+  fields = [];
+  skills = [];
+  formData: any;
 
-
-  track = new Track('id', 'track', 'description', 'user_id', 'image', 'status_id', 'field_id', 'level_id');
+  trackObj = {};
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -29,7 +33,22 @@ export class AdminTrackEditComponent implements OnInit {
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
     this.trackService.getTrack(this.id).subscribe(
       data => {
-        this.track = data; 
+        data.skill_ids = [];
+        if (data.skills) {
+          data.skills.forEach((v, i) => {
+            data.skill_ids.push(v.id)
+          })
+        }
+        this.trackObj = data;
+      },
+      error => console.error(<any>error));
+
+    this.trackService.createTrack().subscribe(
+      data => {
+        this.levels = data['levels'];
+        this.statuses = data['statuses'];
+        this.fields = data['fields'];
+        this.skills = data['skills'];
       },
       error => console.error(<any>error));
   }
@@ -38,7 +57,8 @@ export class AdminTrackEditComponent implements OnInit {
     this.params.unsubscribe();
   }
 
-  updateTrack(track) { 
+  updateTrack(track) {
+    track.id = this.id;
     this.trackService.updateTrack(track)
       .subscribe(
         track => {
@@ -55,5 +75,5 @@ export class AdminTrackEditComponent implements OnInit {
           this.message = error['message'];
         }
       );
-  } 
+  }
 }

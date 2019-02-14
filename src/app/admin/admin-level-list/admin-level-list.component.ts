@@ -31,6 +31,15 @@ export class AdminLevelListComponent implements OnInit {
   public reversedByStart: boolean = false;
   public reversedByEnd: boolean = false;
 
+  ShowColumns = {
+    Level: true,
+    Age: true,
+    Start_Maxile_Level: true,
+    End_Maxile_Level: true,
+    Description: true,
+    Action: true
+  }
+
   constructor(
     private _router: Router,
     private levelService: LevelService,

@@ -36,6 +36,15 @@ export class AdminHouseListComponent implements OnInit {
   public reversedByStart: boolean = false;
   public reversedByEnd: boolean = false;
 
+  ShowColumns = {
+    Image: true,
+    Title: true,
+    Description: true,
+    Start_Date: true,
+    End_Date: true,
+    Action: true
+  }
+
   constructor(
     private _router: Router,
     private houseService: HouseService, private trackService: HouseTrackService,
@@ -203,7 +212,7 @@ export class AdminHouseListComponent implements OnInit {
   // open dialog block
 
   public openDialog(id: number): void {
-    this.dialog.open(ConfirmDialogComponent, { data: { message: "Are you sure?", title: "Delete House" } }).afterClosed().
+    this.dialog.open(ConfirmDialogComponent, { data: { message: "Are you sure?", title: "Delete Class" } }).afterClosed().
       subscribe(ifYes => {
         if (ifYes) {
           //accepted

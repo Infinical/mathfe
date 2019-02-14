@@ -4,7 +4,7 @@
     <div class="section-header wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
       <!-- SECTION TITLE -->
       <img [src]="imgURL" style="width:250px;" /><br />
-      <h2 class="dark-text">Updating House: {{house.house}}</h2>
+      <h2 class="dark-text">Updating Class: {{house.house}}</h2>
       <div class="colored-line">
       </div>
     </div>
@@ -20,7 +20,7 @@
         <form novalidate class="form-horizontal" (ngSubmit)="updateHouse(house)" #editHouseForm="ngForm">
           <fieldset>
             <div class="form-group">
-              <label for="image" class="col-lg-2 control-label">House Image</label>
+              <label for="image" class="col-lg-2 control-label">Class Image</label>
               <div class="col-lg-10">
                 <input type="file" class="form-control" id="image" name="image" ngModel #image="ngModel" minlength="3" accept="image/*" (change)="onFileSelected($event.target.files)" placeholder="House Image">
                 <div *ngIf="image.errors?.minlength && image.touched" class="alert alert-danger">
@@ -29,7 +29,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="txtHouse" class="col-lg-2 control-label">House Title</label>
+              <label for="txtHouse" class="col-lg-2 control-label">Class Title</label>
               <div class="col-lg-10">
                 <input type="text" class="form-control" id="txtHouse" name="txtHouse" placeholder="House Title" [(ngModel)]="house.house"
                        #txtHouse="ngModel" required>

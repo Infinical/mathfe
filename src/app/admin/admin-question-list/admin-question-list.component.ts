@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
 import { QuestionService } from '../../services/question.service';
-import { MatPaginator, MatTableDataSource, MatSort, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'; 
+import { MatPaginator, MatTableDataSource, MatSort, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { KatexOptions } from 'ng-katex';
 import katex from 'katex';
 
@@ -24,24 +24,39 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
   dataSource = new MatTableDataSource<any>();
   beURL = environment.apiURL;
   currentPage = 1;
-  selectedQuestion: any; 
+  selectedQuestion: any;
   loading = true;
   options: KatexOptions = {
     displayMode: true,
     macros: {
-        "\\f": "f(#1)"
+      "\\f": "f(#1)"
     }
   };
   searchOptions: any = { skills: [], levels: [] };
   selectedLevel: any;
   selectedSkill: any;
   searchQuestion: any;
-  
-  constructor(private http: HttpClient, 
-              private questionService: QuestionService, 
-              public dialog: MatDialog,
-              private cdr: ChangeDetectorRef) { 
-    this.onPaginateChange({pageIndex: this.currentPage});
+
+  ShowColumns = {
+    ID: true,
+    Question: true,
+    Answer: true,
+    Skill: true,
+    Track: true,
+    Field: true,
+    Level: true,
+    Difficulty: true,
+    Status: true,
+    Source: true,
+    Author: true,
+    Action: true
+  }
+
+  constructor(private http: HttpClient,
+    private questionService: QuestionService,
+    public dialog: MatDialog,
+    private cdr: ChangeDetectorRef) {
+    this.onPaginateChange({ pageIndex: this.currentPage });
 
     this.questionService.getSearchOptions().subscribe(res => {
       this.searchOptions = res;
@@ -55,24 +70,37 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
 
   }
 
-  ngOnChanges(){
+  columnClick(colName: string) {
+    const colIndex = this.displayedColumns.findIndex(col => col === colName);
+    if (colIndex > 0) {
+      // column is currently shown in the table, so we remove it
+      this.displayedColumns.splice(colIndex, 1);
+    } else {
+      // column is not in the table, so we add it
+      this.displayedColumns.push(colName);
+    }
+  }
+
+
+
+  ngOnChanges() {
     this.cdr.detectChanges();
   }
 
-  searchByQuestion(){
+  searchByQuestion() {
     const dom: any = document.getElementById('searchQuestion');
-    this.search({keyword: dom.value});
+    this.search({ keyword: dom.value });
   }
 
-  searchBySkill(skill_id: any){
-    this.search({skill: skill_id});
+  searchBySkill(skill_id: any) {
+    this.search({ skill: skill_id });
   }
 
-  searchByLevel(level_id: any){
-    this.search({level: level_id});
+  searchByLevel(level_id: any) {
+    this.search({ level: level_id });
   }
 
-  search(searchOption: any){
+  search(searchOption: any) {
     this.loading = true;
     this.questionService.searchQuestions(searchOption).subscribe(res => {
       this.dataSource = new MatTableDataSource<any>(res.questions);
@@ -83,7 +111,7 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     });
   }
 
-  resetSearch(){
+  resetSearch() {
     this.selectedLevel = null;
     this.selectedSkill = null;;
     const dom: any = document.getElementById('searchQuestion');
@@ -91,7 +119,7 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     this.dataSource = new MatTableDataSource<any>(this.gridData.questions);
   }
 
-  displayKatex(string: string, id?:number, parseHtml?: boolean, elementId?: string){
+  displayKatex(string: string, id?: number, parseHtml?: boolean, elementId?: string) {
 
     if (!string) return true;
     var searchStrLen = string.length;
@@ -101,16 +129,16 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     else if (!parseHtml) return true;
 
     while ((index = string.indexOf('$$', startIndex)) > -1) {
-        indexes.push(index);
-        startIndex = index + 2;
+      indexes.push(index);
+      startIndex = index + 2;
     }
 
     if (indexes.length <= 1 || !parseHtml) return false;
 
-    let html="";
+    let html = "";
     startIndex = 0;
-    for (var i=0; i<indexes.length; i++){
-      let katexString = string.substring(indexes[i]+2, indexes[i+1]);
+    for (var i = 0; i < indexes.length; i++) {
+      let katexString = string.substring(indexes[i] + 2, indexes[i + 1]);
       let text = string.substring(startIndex, indexes[i]) + " ";
 
       html += text + katex.renderToString(katexString, {
@@ -118,9 +146,9 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
       });
 
       i++;
-      startIndex = indexes[i]+2;
+      startIndex = indexes[i] + 2;
 
-      if (((i+1) == indexes.length) && (startIndex < searchStrLen)){
+      if (((i + 1) == indexes.length) && (startIndex < searchStrLen)) {
         html += string.substring(startIndex, searchStrLen);
       }
     }
@@ -133,7 +161,7 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     return true;
   }
 
-  onPaginateChange(e: any, origin?: string){
+  onPaginateChange(e: any, origin?: string) {
     this.loading = true;
     this.currentPage = (e.pageIndex === 0) ? 1 : e.pageIndex;
     this.questionService.getQuestions(this.currentPage).subscribe((data) => {
@@ -145,23 +173,23 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     });
   }
 
-  updatePaginator(origin: string){
+  updatePaginator(origin: string) {
     this.topPaginator.length = ((this.currentPage + 2) * this.gridData.questions.length);
     this.topPaginator.pageIndex = this.currentPage;
     const dom: any = document.querySelector('.mat-paginator-range-label');
-    if (dom) dom.style.display = 'none';    
+    if (dom) dom.style.display = 'none';
   }
 
-  confirmDelete(question: any){
+  confirmDelete(question: any) {
     let dialogRef = this.dialog.open(DialogDeleteQuestion, {
       width: '250px',
       data: { id: question.id }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.onPaginateChange({pageIndex: this.currentPage});
+      this.onPaginateChange({ pageIndex: this.currentPage });
     });
-  }  
+  }
 }
 
 // dialog component
@@ -187,7 +215,7 @@ export class DialogDeleteQuestion {
     private questionService: QuestionService,
     public dialogRef: MatDialogRef<DialogDeleteQuestion>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
-  ) {}
+  ) { }
 
   public onNoClick(): void {
     this.dialogRef.close();
@@ -196,14 +224,14 @@ export class DialogDeleteQuestion {
   public onYesClick(): void {
 
     this.questionService.deleteQuestion(this.data.id)
-      .subscribe(res => {        
+      .subscribe(res => {
 
         this.deleteResult = {
           status: 'success',
           message: res["message"]
         };
 
-        let dom: any = document.querySelector('#closeButton');    
+        let dom: any = document.querySelector('#closeButton');
         dom.innerHTML = "Close"
 
         dom = document.querySelector('#yesButton');
@@ -214,6 +242,6 @@ export class DialogDeleteQuestion {
           status: 'error',
           message: 'Server Error'
         };
-      });    
+      });
   }
 }
