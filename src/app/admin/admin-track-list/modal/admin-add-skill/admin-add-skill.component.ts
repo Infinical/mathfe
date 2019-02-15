@@ -41,7 +41,7 @@ export class AdminAddSkillComponent implements OnInit {
     let selectedSkill = [];
     this.skill_ids.forEach((item, index) => {
       let t = this.skills.filter(t => { return t.id == item })[0]
-      selectedSkill.push(t);
+      selectedSkill.push(t.id);
     });
     this.skillTrackService.addSkillByTrack(selectedSkill, this.data.trackid).subscribe((result: any) => {
       // Handle result
