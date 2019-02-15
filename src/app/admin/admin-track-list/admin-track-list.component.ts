@@ -39,6 +39,15 @@ export class AdminTrackListComponent implements OnInit {
       this.loading = false;
     })
   }
+
+  resetUpdateStatus() {
+    this.trackService.updateStatus = '';
+  }
+
+  get updateStatus(): string {
+    return this.trackService.updateStatus;
+  }
+
   openViewSkills(trackid): void {
     const dialogRef = this.dialog.open(AdminHouseSkillsTrackListComponent, {
       data: { trackid: trackid }
@@ -56,7 +65,10 @@ export class AdminTrackListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      if (result) {
+        this.trackService.updateStatus = result;
+        window.scrollTo(0, 0)
+      }
     });
   }
 

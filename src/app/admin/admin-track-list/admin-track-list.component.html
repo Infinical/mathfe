@@ -7,8 +7,11 @@
       <div class="colored-line">
       </div>
     </div>
-    <div *ngIf="message" class="alert alert-success alert-dismissible" role="alert">
-      {{ message }}
+    <div *ngIf="updateStatus" class="alert alert-success alert-dismissible" role="alert">
+      {{ updateStatus }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="resetUpdateStatus()">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
     <!-- /END SECTION HEADER -->
     <div class="col-md-12">
@@ -20,7 +23,7 @@
     </div>
     <div class="col-md-12">
       <div class="table-responsive">
-        <mat-card class="result">
+        <mat-card id="ToggleGridColumnsContainer" class="result">
           <mat-card-content>
             <h5 class="example-h2">Toggle Columns</h5>
 

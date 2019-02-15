@@ -33,9 +33,6 @@ export class AdminAddTrackListComponent implements OnInit {
         this.tracks = aviableTracks;
         this.loading = false;
       })
-
-
-
     })
   }
   saveTrack() {

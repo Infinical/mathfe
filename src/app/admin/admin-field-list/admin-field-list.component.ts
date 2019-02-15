@@ -16,6 +16,7 @@ export class AdminFieldListComponent  implements OnInit {
   private _beURL = environment.apiURL + '/';
   public fields: Field[];
   public loading: boolean = true;
+  message: '';
 
   // sort block
 

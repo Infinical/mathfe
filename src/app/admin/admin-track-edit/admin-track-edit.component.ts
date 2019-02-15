@@ -21,7 +21,7 @@ export class AdminTrackEditComponent implements OnInit {
   skills = [];
   formData: any;
 
-  trackObj = {};
+  trackObj:any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
