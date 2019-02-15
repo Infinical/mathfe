@@ -42,7 +42,7 @@ export class AdminAddTrackListComponent implements OnInit {
     let selectedTracks = [];
     this.track_ids.forEach((item, index) => {
       let t = this.tracks.filter(t => { return t.id == item })[0]
-      selectedTracks.push(t);
+      selectedTracks.push(t.id);
     });
     this.housetrackService.addHouseTracks(this.data.houseid, selectedTracks).subscribe((result: any) => {
       this.dialogRef.close(result.message);
