@@ -26,9 +26,10 @@ export class AdminAddTrackListComponent implements OnInit {
         let aviableTracks = [];
         x.forEach((item, index) => {
           let isExist = y.class.filter(t => { return t.id == item.id }).length > 0;
-          if (!isExist) {
-            aviableTracks.push(item)
+          if (isExist) {
+            this.track_ids.push(item.id)
           }
+          aviableTracks.push(item);
         });
         this.tracks = aviableTracks;
         this.loading = false;
