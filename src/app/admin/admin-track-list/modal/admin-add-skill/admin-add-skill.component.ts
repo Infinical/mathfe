@@ -27,9 +27,11 @@ export class AdminAddSkillComponent implements OnInit {
         let aviableSkills = [];
         x.forEach((item, index) => {
           let isExist = y.skill.filter(t => { return t.id == item.id }).length > 0;
-          if (!isExist) {
-            aviableSkills.push(item)
+          if (isExist) {
+            this.skill_ids.push(item.id);
           }
+          aviableSkills.push(item)
+
         });
         this.skills = aviableSkills;
         this.loading = false;

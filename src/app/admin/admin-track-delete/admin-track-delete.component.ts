@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TrackService } from 'app/services/track.service';
 
 @Component({
   selector: 'ag-admin-track-delete',
@@ -7,9 +9,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminTrackDeleteComponent implements OnInit {
 
-  constructor() { }
+  id: any;
+  params: any;
+  msg = "Processing the delete request..";
+  constructor(private activatedRoute: ActivatedRoute, private trackService: TrackService, private router: Router) { }
 
   ngOnInit() {
+    this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
+    this.trackService.deleteTrack(this.id).subscribe(
+      data => {
+        debugger;
+        this.trackService.updateStatus = data['message'];
+        setTimeout(() => this.trackService.updateStatus = '', 2000);
+        this.router.navigate(['/admin/tracks']);
+        setTimeout(() => window.scrollTo(0, 0), 0);
+      },
+      error => {
+        debugger;
+        this.msg = "Server Error";
+        if (error.error) {
+          if (error.error.message) {
+            this.msg = error.error.message;
+          }
+        }
+        console.error(<any>error);
+      }
+    )
+  };
+  ngOnDestroy() {
+    this.params.unsubscribe();
   }
 
 }

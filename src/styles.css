@@ -3,7 +3,6 @@
 @charset "UTF-8";
 @import './mathfe.css';
 @import '~katex/dist/katex.css';
-
 .spinner {
   position: absolute;
   left: 50%;
@@ -26,7 +25,6 @@
   from {
     -webkit-transform: rotate(0deg);
   }
-
   to {
     -webkit-transform: rotate(359deg);
   }
@@ -36,7 +34,6 @@
   from {
     -moz-transform: rotate(0deg);
   }
-
   to {
     -moz-transform: rotate(359deg);
   }
@@ -46,7 +43,6 @@
   from {
     -o-transform: rotate(0deg);
   }
-
   to {
     -o-transform: rotate(359deg);
   }
@@ -56,7 +52,6 @@
   from {
     transform: rotate(0deg);
   }
-
   to {
     transform: rotate(359deg);
   }
@@ -75,9 +70,9 @@ progress {
   -webkit-appearance: none;
 }
 
-  [type="search"]::-webkit-search-cancel-button, [type="search"]::-webkit-search-decoration {
-    -webkit-appearance: none;
-  }
+[type="search"]::-webkit-search-cancel-button, [type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
 
 ::-webkit-file-upload-button {
   font: inherit;
@@ -88,7 +83,6 @@ progress {
   from {
     background-position: 1rem 0;
   }
-
   to {
     background-position: 0 0;
   }
@@ -130,17 +124,17 @@ progress {
   height: 6px;
 }
 
-  .progress.m-progress--sm .progress-bar {
-    border-radius: 3px;
-  }
+.progress.m-progress--sm .progress-bar {
+  border-radius: 3px;
+}
 
 .progress.m-progress--lg {
   height: 20px;
 }
 
-  .progress.m-progress--lg .progress-bar {
-    border-radius: 4px;
-  }
+.progress.m-progress--lg .progress-bar {
+  border-radius: 4px;
+}
 
 .spinner-footer-envelope {
   top: 4% !important;
@@ -183,16 +177,16 @@ color must be same from chart color
   /*Yellow*/
 }
 
-tr.row-green, tr.row-green > td {
+tr.row-green, tr.row-green>td {
   background-color: var(--overperform-bg-color) !important;
   color: #fff;
 }
 
-tr.row-yellow, tr.row-yellow > td {
+tr.row-yellow, tr.row-yellow>td {
   background-color: var(--on-target-bg-color) !important;
 }
 
-tr.row-red, tr.row-red > td {
+tr.row-red, tr.row-red>td {
   background-color: var(--underperform-bg-color) !important;
   color: #fff;
 }
@@ -226,23 +220,22 @@ tr.row-red, tr.row-red > td {
   cursor: progress;
 }
 
-  .lds-dual-ring:after {
-    content: " ";
-    display: block;
-    width: 35px;
-    height: 35px;
-    margin: 1px;
-    border-radius: 50%;
-    border: 3px solid #972517;
-    border-color: #972517 transparent #972517 transparent;
-    animation: lds-dual-ring 1.2s linear infinite;
-  }
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 35px;
+  height: 35px;
+  margin: 1px;
+  border-radius: 50%;
+  border: 3px solid #972517;
+  border-color: #972517 transparent #972517 transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
 
 @keyframes lds-dual-ring {
   0% {
     transform: rotate(0deg);
   }
-
   100% {
     transform: rotate(360deg);
   }
@@ -260,7 +253,7 @@ tr {
   background-color: white;
 }
 
-.table > thead > tr > th {
+.table>thead>tr>th {
   vertical-align: middle;
 }
 
@@ -317,4 +310,11 @@ tr {
 
 #ToggleGridColumnsContainer span.mat-slide-toggle-content {
   padding-right: 10px !important;
+}
+
+.action-box {
+  width: 310px;
+  border: 1px solid #972517;
+  padding: 10px 3px 3px 5px;
+  margin-top: 12px;
 }
