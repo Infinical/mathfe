@@ -23,13 +23,13 @@
     </div>
     <div class="col-md-12">
       <div class="table-responsive">
-        <mat-card class="result">
+        <mat-card id="ToggleGridColumnsContainer" class="result">
           <mat-card-content>
             <h5 class="example-h2">Toggle Columns</h5>
 
             <section class="toggle-columns-section">
               <mat-slide-toggle [(ngModel)]="ShowColumns.Image" color="primary">
-                Image
+                <span>Image</span>
               </mat-slide-toggle>
 
               <mat-slide-toggle [(ngModel)]="ShowColumns.Title" color="primary">

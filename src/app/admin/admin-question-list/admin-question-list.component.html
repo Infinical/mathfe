@@ -60,7 +60,7 @@
       </mat-accordion>
     </div>
     <div class="col-md-12">
-      <mat-card class="result">
+      <mat-card id="ToggleGridColumnsContainer" class="result">
         <mat-card-content>
           <h5 class="example-h2">Toggle Columns</h5>
 
@@ -116,8 +116,15 @@
         </mat-card-content>
       </mat-card>
       <div class="table-responsive">
-
-
+        <!--<button mat-button (click)="page.previousPage()"><</button>
+        <button mat-button (click)="page.pageIndex = 0">1</button>
+        <button mat-button (click)="page.pageIndex = 1">2</button>
+        <button mat-button (click)="page.pageIndex = 2">3</button>
+        <button mat-button (click)="page.nextPage()">></button>
+        <mat-paginator style-paginator showFirstLastButtons hidePageSize [length]="95" (page)="onPaginateChange($event, 'top')"
+                       [pageSize]="10"
+                       #topPaginator [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>-->
         <mat-paginator #topPaginator [pageSizeOptions]="[20]" (page)="onPaginateChange($event, 'top')"></mat-paginator>
         <div class="spinner-container row" *ngIf="loading">
           <mat-spinner style="margin:auto"></mat-spinner>

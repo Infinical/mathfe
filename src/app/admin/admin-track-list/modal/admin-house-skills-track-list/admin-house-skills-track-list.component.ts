@@ -18,6 +18,8 @@ export class AdminHouseSkillsTrackListComponent implements OnInit {
   loading = true; 
   skills = [];
   updateStatus: '';
+  public sortedByDescription: boolean = false;
+  public reversedByDescription: boolean = false;
   private _beURL = environment.apiURL + '/';
   message: '';
 
@@ -54,4 +56,40 @@ export class AdminHouseSkillsTrackListComponent implements OnInit {
         }
       });
   }
+  public sortBy(str: string): void {
+    if (this.skills && this.skills.length) {
+      switch (str) {
+        case 'description':
+          if (this.sortedByDescription) {
+            this.skills.reverse();
+            this._resetSort();
+            this.reversedByDescription = true;
+          }
+          else {
+            this.skills.sort(this._sortByDescription);
+            this._resetSort();
+            this.sortedByDescription = true;
+          }
+          break; 
+      }
+    }
+  }
+  private _resetSort(): void { 
+    this.sortedByDescription = false; 
+    this.reversedByDescription = false; 
+
+  }
+
+  private _sortByDescription(a: Track, b: Track): number {
+    if (a.description.toLowerCase() < b.description.toLowerCase()) {
+      return -1;
+    }
+    else if (a.description.toLowerCase() > b.description.toLowerCase()) {
+      return 1;
+    }
+    else {
+      return 0;
+    }
+  }
+
 }

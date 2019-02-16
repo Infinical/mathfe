@@ -302,3 +302,19 @@ tr {
 .toggle-columns-section mat-slide-toggle {
   margin-right: 10px;
 }
+
+.mat-pseudo-checkbox {
+  background-color: gray;
+}
+
+.mat-slide-toggle.mat-primary.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: rgb(163, 165, 171) !important;
+}
+
+#ToggleGridColumnsContainer .mat-slide-toggle-label {
+  flex-direction: row-reverse !important;
+}
+
+#ToggleGridColumnsContainer span.mat-slide-toggle-content {
+  padding-right: 10px !important;
+}

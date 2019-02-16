@@ -35,7 +35,7 @@ export class FieldService {
   updateField(field: Object): Observable<Field[]> {
     const apiUrl = `${environment.apiURL}/fields`;
     const url = `${apiUrl}/${field['id']}`;
-    return this.http.post<any>(url, field)
+    return this.http.put<any>(url, field)
       .map((response) => response)
       .catch((error: any) => throwError(error.error || { message: 'Server Error' }));
   }
