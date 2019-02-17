@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router'; 
+import { ActivatedRoute, Router } from '@angular/router';
 import { TypeService } from '../../services/type.service';
 import { Type } from '../../models/type';
 
+import { HelperService } from '../../services/helper.service';
 
 @Component({
   selector: 'ag-admin-type-edit',
@@ -22,7 +23,8 @@ export class AdminTypeEditComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private typeService: TypeService,
-    private router: Router
+    private router: Router,
+    private helperService: HelperService
   ) { }
 
   ngOnInit() {
@@ -50,9 +52,8 @@ export class AdminTypeEditComponent implements OnInit, OnDestroy {
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
-          console.error(<any>error);
           this.status = 'success';
-          this.message = error['message'];
+          this.message = this.helperService.ParseErrorMsg(error);
         }
       );
   }

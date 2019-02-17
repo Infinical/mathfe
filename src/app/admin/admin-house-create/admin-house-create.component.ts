@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HouseService } from 'app/services/house.service';
+import { HouseService } from '../../services/house.service';
 import { Router } from '@angular/router';
 import { House } from 'app/models/house';
-
+import { HelperService } from '../../services/helper.service';
 @Component({
   selector: 'ag-admin-house-create',
   templateUrl: './admin-house-create.component.html',
@@ -19,6 +19,7 @@ export class AdminHouseCreateComponent implements OnInit {
 
   constructor(
     private houseService: HouseService,
+    private helperService:HelperService,
     private router: Router) { }
 
   ngOnInit() {
@@ -52,9 +53,9 @@ export class AdminHouseCreateComponent implements OnInit {
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
-          console.error(<any>error);
+          //console.error(<any>error);
           this.status = 'success';
-          this.message = error['message'];
+          this.message = this.helperService.ParseErrorMsg(error);
         }
       );
   }

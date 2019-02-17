@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material';
 import { House } from '../../models/house';
 import { TrackService } from '../../services/track.service';
 import { Track } from '../../models/track';
-
+import { HelperService } from '../../services/helper.service';
 @Component({
   selector: 'ag-admin-track-create',
   templateUrl: './admin-track-create.component.html',
@@ -21,7 +21,7 @@ export class AdminTrackCreateComponent implements OnInit {
 
   constructor(
     private trackService: TrackService,
-    private router: Router) { }
+    private router: Router, private helperService: HelperService) { }
 
   ngOnInit() {
     this.trackService.createTrack().subscribe(
@@ -34,7 +34,7 @@ export class AdminTrackCreateComponent implements OnInit {
       error => console.error(<any>error));
   }
 
-  public createTrack(track): void { 
+  public createTrack(track): void {
     this.trackService.addTrack(track)
       .subscribe(
         track => {
@@ -44,9 +44,8 @@ export class AdminTrackCreateComponent implements OnInit {
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
-          console.error(error);
           this.status = 'success';
-          this.message = error['message'];
+          this.message = this.helperService.ParseErrorMsg(error);
         }
       );
   }

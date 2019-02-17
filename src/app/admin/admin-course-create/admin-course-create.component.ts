@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router} from '@angular/router';
-import { CourseService} from '../../services/course.service';
+import { Router } from '@angular/router';
+import { CourseService } from '../../services/course.service';
+import { HelperService } from '../../services/helper.service';
 
 @Component({
   selector: 'ag-admin-course-create',
@@ -16,9 +17,10 @@ export class AdminCourseCreateComponent implements OnInit {
 
   constructor(
     private courseService: CourseService,
-    private router: Router) {}
+    private helperService: HelperService,
+    private router: Router) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   public createCourse(course): void {
     const formData: FormData = new FormData();
@@ -38,9 +40,8 @@ export class AdminCourseCreateComponent implements OnInit {
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
-          console.error(<any>error);
           this.status = 'success';
-          this.message = error['message'];
+          this.message = this.helperService.ParseErrorMsg(error);
         }
       );
   }
@@ -48,7 +49,7 @@ export class AdminCourseCreateComponent implements OnInit {
   public onFileSelected(files: FileList): void {
     this.selectedFile = files.item(0);
     let reader = new FileReader();
-    reader.onload = (event:any)=>{
+    reader.onload = (event: any) => {
       this.imgURL = event.target.result;
     }
     reader.readAsDataURL(this.selectedFile);

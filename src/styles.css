@@ -313,8 +313,8 @@ tr {
 }
 
 .action-box {
-  width: 310px;
+  width: 313px;
   border: 1px solid #972517;
-  padding: 10px 3px 3px 5px;
+  padding: 10px 0px 3px 5px;
   margin-top: 12px;
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router} from '@angular/router';
 import { FieldService} from '../../services/field.service';
 import { Field } from 'app/models/field';
+import { HelperService } from '../../services/helper.service';
 @Component({
   selector: 'ag-admin-field-create',
   templateUrl: './admin-field-create.component.html',
@@ -13,7 +14,8 @@ export class AdminFieldCreateComponent implements OnInit {
 
   constructor(
     private fieldService: FieldService,
-    private router: Router) {
+    private router: Router,
+    private helperService:HelperService) {
       
     }
 
@@ -29,10 +31,9 @@ export class AdminFieldCreateComponent implements OnInit {
           this.router.navigate(['/admin/fields']);
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
-        error => {
-          console.error(<any>error);
+        error => { 
           this.status = 'success';
-          this.message = error['message'];
+          this.message =  this.helperService.ParseErrorMsg(error);
         }
       );
   } 

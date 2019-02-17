@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user';
+import { HelperService } from '../../services/helper.service';
 
 @Component({
   selector: 'ag-admin-user-edit',
@@ -16,8 +17,8 @@ export class AdminUserEditComponent implements OnInit, OnDestroy {
 
   user = new User('id', 'name', 'firstname', 'lastname', 'contact', 'email', 0, 'maxile_level', 'game_level', 'date_of_birth', 'last_test_date', 'next_test_date', 'image');
 
-  constructor(private activatedRoute: ActivatedRoute, private userService: UserService) { }
-  fileToUplaod: File = null; 
+  constructor(private helperService: HelperService, private activatedRoute: ActivatedRoute, private userService: UserService) { }
+  fileToUplaod: File = null;
   ngOnInit() {
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
     this.userService.getUser(this.id).subscribe(
@@ -27,7 +28,7 @@ export class AdminUserEditComponent implements OnInit, OnDestroy {
       error => console.error(<any>error));
   }
   handelFileInput(file: FileList) {
-    this.fileToUplaod = file.item(0); 
+    this.fileToUplaod = file.item(0);
   }
   ngOnDestroy() {
     this.params.unsubscribe();
@@ -51,10 +52,9 @@ export class AdminUserEditComponent implements OnInit, OnDestroy {
           this.status = 'success';
           this.message = user['message'];
         },
-        error => {
-          console.error(<any>error);
+        error => { 
           this.status = 'success';
-          this.message = error['message'];
+          this.message =  this.helperService.ParseErrorMsg(error);
         }
       );
   }

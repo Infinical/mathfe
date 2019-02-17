@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router'; 
+import { ActivatedRoute, Router } from '@angular/router';
 import { UnitService } from '../../services/unit.service';
 import { Unit } from '../../models/unit';
-
+import { HelperService } from '../../services/helper.service';
 @Component({
   selector: 'ag-admin-unit-edit',
   templateUrl: './admin-unit-edit.component.html',
@@ -21,7 +21,8 @@ export class AdminUnitEditComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private unitService: UnitService,
-    private router: Router
+    private router: Router,
+    private helperService: HelperService
   ) { }
 
   ngOnInit() {
@@ -49,9 +50,8 @@ export class AdminUnitEditComponent implements OnInit, OnDestroy {
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
-          console.error(<any>error);
           this.status = 'success';
-          this.message = error['message'];
+          this.message = this.helperService.ParseErrorMsg(error);
         }
       );
   }

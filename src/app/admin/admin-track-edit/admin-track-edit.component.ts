@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { TrackService } from '../../services/track.service';
 import { Track } from '../../models/track';
+import { HelperService } from '../../services/helper.service';
 @Component({
   selector: 'ag-admin-track-edit',
   templateUrl: './admin-track-edit.component.html',
@@ -21,12 +22,13 @@ export class AdminTrackEditComponent implements OnInit {
   skills = [];
   formData: any;
 
-  trackObj:any;
+  trackObj: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private trackService: TrackService,
-    private router: Router
+    private router: Router,
+    private helperService: HelperService
   ) { }
 
   ngOnInit() {
@@ -70,9 +72,8 @@ export class AdminTrackEditComponent implements OnInit {
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
-          console.error(<any>error);
           this.status = 'success';
-          this.message = error['message'];
+          this.message = this.helperService.ParseErrorMsg(error);
         }
       );
   }

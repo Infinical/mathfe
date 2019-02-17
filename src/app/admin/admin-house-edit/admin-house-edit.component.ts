@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { HouseService } from '../../services/house.service';
+import { HelperService } from '../../services/helper.service';
 import { House } from 'app/models/house';
 @Component({
   selector: 'ag-admin-house-edit',
@@ -27,7 +28,8 @@ export class AdminHouseEditComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private houseService: HouseService,
-    private router: Router
+    private router: Router,
+    private helperService: HelperService
   ) { }
 
   ngOnInit() {
@@ -83,10 +85,9 @@ export class AdminHouseEditComponent implements OnInit {
           this.router.navigate(['/admin/houses']);
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
-        error => {
-          console.error(<any>error);
+        error => { 
           this.status = 'success';
-          this.message = error['message'];
+          this.message =  this.helperService.ParseErrorMsg(error);
         }
       );
   }

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { FieldService } from '../../services/field.service';
 import { Field } from '../../models/field';
-
+import { HelperService } from '../../services/helper.service';
 @Component({
   selector: 'ag-admin-field-edit',
   templateUrl: './admin-field-edit.component.html',
@@ -14,7 +14,7 @@ export class AdminFieldEditComponent implements OnInit, OnDestroy {
   status: string;
   message: string;
   id: any;
-  params: any; 
+  params: any;
   formData: FormData = new FormData();
 
 
@@ -23,14 +23,15 @@ export class AdminFieldEditComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private fieldService: FieldService,
-    private router: Router
+    private router: Router,
+    private helperService: HelperService
   ) { }
 
   ngOnInit() {
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
     this.fieldService.getField(this.id).subscribe(
       data => {
-        this.field = data; 
+        this.field = data;
       },
       error => console.error(<any>error));
   }
@@ -39,7 +40,7 @@ export class AdminFieldEditComponent implements OnInit, OnDestroy {
     this.params.unsubscribe();
   }
 
-  updateField(field:Field) {  
+  updateField(field: Field) {
     this.fieldService.updateField(field)
       .subscribe(
         field => {
@@ -51,12 +52,11 @@ export class AdminFieldEditComponent implements OnInit, OnDestroy {
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
-          console.error(<any>error);
           this.status = 'success';
-          this.message = error['message'];
+          this.message = this.helperService.ParseErrorMsg(error);
         }
       );
   }
- 
+
 
 }

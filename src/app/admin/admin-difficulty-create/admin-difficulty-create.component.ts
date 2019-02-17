@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DifficultyService } from '../../services/difficulty.service';
 import { Difficulty } from 'app/models/difficulty';
-
+import { HelperService } from '../../services/helper.service';
 @Component({
   selector: 'ag-admin-difficulty-create',
   templateUrl: './admin-difficulty-create.component.html',
@@ -14,7 +14,8 @@ export class AdminDifficultyCreateComponent implements OnInit {
 
   constructor(
     private difficultyService: DifficultyService,
-    private router: Router) {
+    private router: Router,
+    private helperService:HelperService) {
 
   }
 
@@ -30,10 +31,9 @@ export class AdminDifficultyCreateComponent implements OnInit {
           this.router.navigate(['/admin/difficulties']);
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
-        error => {
-          console.error(<any>error);
-          this.status = 'success';
-          this.message = error['message'];
+        error => { 
+          this.status = 'success'; 
+          this.message =  this.helperService.ParseErrorMsg(error)
         }
       );
   }

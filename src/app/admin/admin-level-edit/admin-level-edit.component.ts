@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { LevelService } from '../../services/level.service';
 import { Level } from '../../models/level';
+import { HelperService } from '../../services/helper.service';
 
 @Component({
   selector: 'ag-admin-level-edit',
@@ -23,7 +24,8 @@ export class AdminLevelEditComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private levelService: LevelService,
-    private router: Router
+    private router: Router,
+    private helperService:HelperService
   ) { }
 
   ngOnInit() {
@@ -51,9 +53,8 @@ export class AdminLevelEditComponent implements OnInit, OnDestroy {
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
-          console.error(<any>error);
           this.status = 'success';
-          this.message = error['message'];
+          this.message =  this.helperService.ParseErrorMsg(error);
         }
       );
   }
