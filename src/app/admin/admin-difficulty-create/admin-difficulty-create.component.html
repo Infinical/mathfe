@@ -28,7 +28,7 @@
             <div class="form-group">
               <label for="difficulty" class="col-lg-2 control-label">Difficulty</label>
               <div class="col-lg-10">
-                <input type="number" class="form-control" id="difficulty" name="difficulty" placeholder="Difficulty Title"
+                <input type="number" class="form-control" id="difficulty" name="difficulty" placeholder="Difficulty Level Number"
                   ngModel #difficulty="ngModel" required>
                 <div *ngIf="difficulty.errors?.required && difficulty.touched" class="alert alert-danger">
                   Difficulty is required
