@@ -18,14 +18,12 @@ export class AdminTrackDeleteComponent implements OnInit {
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
     this.trackService.deleteTrack(this.id).subscribe(
       data => {
-        debugger;
         this.trackService.updateStatus = data['message'];
         setTimeout(() => this.trackService.updateStatus = '', 2000);
         this.router.navigate(['/admin/tracks']);
         setTimeout(() => window.scrollTo(0, 0), 0);
       },
       error => {
-        debugger;
         this.msg = "Server Error";
         if (error.error) {
           if (error.error.message) {

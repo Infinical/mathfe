@@ -5,11 +5,15 @@
 import { PayPalEnvironment } from 'ngx-paypal';
 export const environment = {
   production: false,
-  apiURL: 'http://devapi.pamelalim.me',
+//  apiURL: 'http://devapi.pamelalim.me',
+  apiURL: 'http://localhost:8000',
   webAuth: {
-    clientID: 'eVJv6UFM9GVdukBWiURczRCxmb6iaUYG',
-    domain: 'pamelalim.auth0.com',
-    audience: 'https://pamelalim.auth0.com/userinfo',
+    domain: 'allgiftedllc.au.auth0.com',
+    clientID: 'bs3jSKz2Ewrye8dD2qRVrD0Tra2tOqHC'
+      
+//    clientID: 'eVJv6UFM9GVdukBWiURczRCxmb6iaUYG',
+//    domain: 'pamelalim.auth0.com',
+    audience: 'https://allgiftedllc.au.auth0.com/userinfo',
     redirectUri: 'http://localhost:4200/home',
     theme: {
       logo: "http://school.all-gifted.com/pluginfile.php/1/theme_lambda/logo/1472088488/newlogo.png"
