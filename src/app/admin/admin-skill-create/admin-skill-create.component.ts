@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SkillService } from '../../services/skill.service'; 
+import { SkillService } from '../../services/skill.service';
+import { HelperService } from '../../services/helper.service';
 @Component({
   selector: 'ag-admin-skill-create',
   templateUrl: './admin-skill-create.component.html',
@@ -18,7 +19,7 @@ export class AdminSkillCreateComponent implements OnInit {
 
   constructor(
     private skillService: SkillService,
-    private router: Router) { }
+    private router: Router, private helperService: HelperService) { }
 
   ngOnInit() {
     this.skillService.createSkill().subscribe(
@@ -53,10 +54,9 @@ export class AdminSkillCreateComponent implements OnInit {
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
-          this.loading = false;
-          console.error(<any>error);
+          this.loading = false; 
           this.status = 'success';
-          this.message = error['message'];
+          this.message =  this.helperService.ParseErrorMsg(error);
         }
       );
   }

@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router'; 
+import { ActivatedRoute, Router } from '@angular/router';
 import { PermissionService } from '../../services/permission.service';
 import { Permission } from '../../models/permission';
+import { HelperService } from '../../services/helper.service';
 
 @Component({
   selector: 'ag-admin-permission-edit',
@@ -21,7 +22,8 @@ export class AdminPermissionEditComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private permissionService: PermissionService,
-    private router: Router
+    private router: Router,
+    private helperService: HelperService
   ) { }
 
   ngOnInit() {
@@ -48,10 +50,9 @@ export class AdminPermissionEditComponent implements OnInit, OnDestroy {
           this.router.navigate(['/admin/permissions']);
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
-        error => {
-          console.error(<any>error);
+        error => { 
           this.status = 'success';
-          this.message = error['message'];
+          this.message =  this.helperService.ParseErrorMsg(error);
         }
       );
   }

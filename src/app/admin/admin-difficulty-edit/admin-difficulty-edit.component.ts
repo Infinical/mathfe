@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { DifficultyService } from '../../services/difficulty.service';
 import { Difficulty } from '../../models/difficulty';
-
+import { HelperService } from '../../services/helper.service';
 @Component({
   selector: 'ag-admin-difficulty-edit',
   templateUrl: './admin-difficulty-edit.component.html',
@@ -23,7 +23,8 @@ export class AdminDifficultyEditComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private difficultyService: DifficultyService,
-    private router: Router
+    private router: Router,
+    private helperService: HelperService
   ) { }
 
   ngOnInit() {
@@ -51,9 +52,8 @@ export class AdminDifficultyEditComponent implements OnInit, OnDestroy {
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
-          console.error(<any>error);
           this.status = 'success';
-          this.message = error['message'];
+          this.message = this.helperService.ParseErrorMsg(error)
         }
       );
   }

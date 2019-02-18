@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { CourseService } from '../../services/course.service';
 import { Course } from '../../models/course';
-
+import { HelperService } from '../../services/helper.service';
 @Component({
   selector: 'ag-admin-course-edit',
   templateUrl: './admin-course-edit.component.html',
@@ -25,7 +25,8 @@ export class AdminCourseEditComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private courseService: CourseService,
-    private router: Router
+    private router: Router,
+    private helperService:HelperService
   ) { }
 
   ngOnInit() {
@@ -61,10 +62,9 @@ export class AdminCourseEditComponent implements OnInit, OnDestroy {
           this.router.navigate(['/admin/courses']);
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
-        error => {
-          console.error(<any>error);
-          this.status = 'success';
-          this.message = error['message'];
+        error => { 
+          this.status = 'success'; 
+          this.message =  this.helperService.ParseErrorMsg(error);
         }
       );
   }

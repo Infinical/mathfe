@@ -21,6 +21,7 @@ import { TypeService } from './services/type.service';
 import { UnitService } from './services/unit.service';
 import { LevelService } from './services/level.service';
 import { DifficultyService } from './services/difficulty.service';
+import { HelperService } from './services/helper.service';
 import { CourseDetailComponent } from './dashboard/course-detail/course-detail.component';
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
@@ -113,7 +114,7 @@ import { AdminPermissionListComponent } from "./admin/admin-permission-list/admi
 import { AdminPermissionCreateComponent } from './admin/admin-permission-create/admin-permission-create.component';
 import { AdminPermissionEditComponent } from './admin/admin-permission-edit/admin-permission-edit.component';
 import { AdminPermissionDeleteComponent } from './admin/admin-permission-delete/admin-permission-delete.component';
- 
+
 
 
 import { AdminDifficultyListComponent } from "./admin/admin-difficulty-list/admin-difficulty-list.component";
@@ -281,17 +282,17 @@ export function tokenGetter() {
     HttpClientModule,
     HttpModule,
     ChartsModule,
-    NgxPayPalModule, 
+    NgxPayPalModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
         whitelistedDomains: [
-          'localhost:4200', 
+          'localhost:4200',
           'localhost',
           'devapi.pamelalim.me',
           'localhost:8000',
           'quiz.pamelalim.me',
-          'api.pamelalim.me', 
+          'api.pamelalim.me',
           'math.pamelalim.me',
           'quiz.all-gifted.com',
           'mathapi.pamelalim.me'
@@ -311,7 +312,7 @@ export function tokenGetter() {
     HouseService, FieldService, TypeService, UnitService, PermissionService, LevelService,
     DifficultyService,
     UserService, AuthService, AuthGuardService, HouseTrackService,
-    SkillService, SkillTrackService, ModalService],
+    SkillService, SkillTrackService, ModalService, HelperService],
   bootstrap: [AppComponent]
 })
 

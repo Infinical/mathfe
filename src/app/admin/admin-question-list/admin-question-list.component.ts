@@ -19,6 +19,7 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
 
   @ViewChild(MatPaginator) topPaginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  allPages = [];
   gridData: any;
   displayedColumns: string[] = ['id', 'question', 'answer', 'skill', 'track', 'field', 'level', 'difficulty', 'status', 'source', 'author', 'action'];
   dataSource = new MatTableDataSource<any>();
@@ -56,7 +57,7 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     private questionService: QuestionService,
     public dialog: MatDialog,
     private cdr: ChangeDetectorRef) {
-    this.onPaginateChange({ pageIndex: this.currentPage });
+    this.onPaginateChange(1);
 
     this.questionService.getSearchOptions().subscribe(res => {
       this.searchOptions = res;
@@ -161,14 +162,22 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     return true;
   }
 
-  onPaginateChange(e: any, origin?: string) {
+  onPaginateChange(pageIndex) {
+
     this.loading = true;
-    this.currentPage = (e.pageIndex === 0) ? 1 : e.pageIndex;
+    this.currentPage = pageIndex;
     this.questionService.getQuestions(this.currentPage).subscribe((data) => {
       this.gridData = data;
+      this.allPages = [];
+      for (let i = 1; i <= data.num_pages; i++) {
+        this.allPages.push({
+          pageIndex: i,
+          active: i == this.currentPage
+        });
+      }
       this.dataSource = new MatTableDataSource<any>(this.gridData.questions);
       this.dataSource.sort = this.sort;
-      this.updatePaginator(origin);
+      //this.updatePaginator(origin);
       this.loading = false;
     });
   }
@@ -187,7 +196,7 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.onPaginateChange({ pageIndex: this.currentPage });
+      this.onPaginateChange(this.currentPage);
     });
   }
 }

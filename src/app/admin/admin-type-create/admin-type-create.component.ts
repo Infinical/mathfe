@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TypeService } from '../../services/type.service';
 import { Type } from '../../models/type';
+import { HelperService } from '../../services/helper.service';
 @Component({
   selector: 'ag-admin-type-create',
   templateUrl: './admin-type-create.component.html',
@@ -13,7 +14,7 @@ export class AdminTypeCreateComponent implements OnInit {
 
   constructor(
     private typeService: TypeService,
-    private router: Router) { }
+    private router: Router, private helperService: HelperService) { }
 
   ngOnInit() { }
 
@@ -28,16 +29,8 @@ export class AdminTypeCreateComponent implements OnInit {
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
-
-          let msg = error['message'];
-          if (error.error) {
-            if (error.error.message) {
-              msg = error.error.message;
-            }
-          }
-          console.error(<any>error);
           this.status = 'success';
-          this.message = msg;
+          this.message = this.helperService.ParseErrorMsg(error);
         }
       );
   }

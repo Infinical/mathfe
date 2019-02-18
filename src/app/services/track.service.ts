@@ -39,6 +39,13 @@ export class TrackService {
 			.map((response) => response)
 			.catch((error: any) => throwError(error || { message: 'Server Error' }));
 	}
+	deleteTrackWithSkills(id: String): Observable<Track[]> {
+		const apiUrl = `${environment.apiURL}/tracks`;
+		const url = `${apiUrl}/${id}?delink_skills=TRUE`;
+		return this.http.delete<Track[]>(url)
+			.map((response) => response)
+			.catch((error: any) => throwError(error || { message: 'Server Error' }));
+	}
 
 	createTrack(): Observable<any> {
 		return this.http.get(`${environment.apiURL}/tracks/create`)

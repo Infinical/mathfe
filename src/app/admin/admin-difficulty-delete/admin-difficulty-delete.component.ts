@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DifficultyService } from 'app/services/difficulty.service';
-
+import { HelperService } from '../../services/helper.service';
 @Component({
   selector: 'ag-admin-difficulty-delete',
   templateUrl: './admin-difficulty-delete.component.html',
@@ -12,7 +12,7 @@ export class AdminDifficultyDeleteComponent implements OnInit {
   id: any;
   params: any;
   msg = "Processing the delete request..";
-  constructor(private activatedRoute: ActivatedRoute, private difficultyService: DifficultyService, private router: Router) { }
+  constructor(private helperService:HelperService,private activatedRoute: ActivatedRoute, private difficultyService: DifficultyService, private router: Router) { }
 
   ngOnInit() {
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
@@ -24,13 +24,7 @@ export class AdminDifficultyDeleteComponent implements OnInit {
         setTimeout(() => window.scrollTo(0, 0), 0);
       },
       error => {
-        this.msg = "Server Error";
-        if (error.error) {
-          if (error.error.message) {
-            this.msg = error.error.message;
-          }
-        }
-        console.error(<any>error);
+        this.msg =  this.helperService.ParseErrorMsg(error);
       }
     )
   };

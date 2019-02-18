@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { SkillService } from '../../services/skill.service';
 import { Skill } from '../../models/skill';
+import { HelperService } from '../../services/helper.service';
 
 @Component({
   selector: 'ag-admin-skill-edit',
@@ -20,29 +21,30 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
   formData: FormData = new FormData();
   statuses: any;
   my_tracks = [];
-  public_tracks = []; 
+  public_tracks = [];
   skill: any = {}//= new Skill('id', 'skill', 'description', 'user_id', 'image', 'lesson_link', 'status_id');
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private skillService: SkillService,
-    private router: Router
+    private router: Router,
+    private helperService: HelperService
   ) { }
 
   ngOnInit() {
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
     this.skillService.getSkill(this.id).subscribe(
-      data => { 
+      data => {
         this.skill = data;
         this.lesson_link = this.beURL + this.skill.lesson_link;
       },
       error => console.error(<any>error));
 
     this.skillService.createSkill().subscribe(
-      data => { 
+      data => {
         this.statuses = data['statuses'];
         this.my_tracks = data['my_tracks'] || [];
-        this.public_tracks = data['public_tracks'] || []; 
+        this.public_tracks = data['public_tracks'] || [];
       },
       error => console.error(<any>error));
 
@@ -76,9 +78,8 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
-          console.error(<any>error);
           this.status = 'success';
-          this.message = error['message'];
+          this.message = this.helperService.ParseErrorMsg(error);
         }
       );
   }

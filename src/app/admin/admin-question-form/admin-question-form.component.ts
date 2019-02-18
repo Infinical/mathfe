@@ -5,22 +5,22 @@ import { HttpClient } from '@angular/common/http';
 import { QuestionService } from '../../services/question.service';
 import { ActivatedRoute } from '@angular/router';
 import { Question } from '../../models/question';
-import { FormControl, FormGroup, Validators, FormBuilder, AbstractControl  } from '@angular/forms';
+import { FormControl, FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { KatexOptions } from 'ng-katex';
 import katex from 'katex';
-
+import { HelperService } from '../../services/helper.service';
 @Component({
   selector: 'ag-admin-question-form',
   templateUrl: './admin-question-form.component.html',
   styleUrls: ['./admin-question-form.component.css'],
-  encapsulation : ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
 export class AdminQuestionFormComponent implements OnInit {
 
   QuestionForm: FormGroup;
   selectedFile: File = null;
-  imgURL :string = "images/upload.png";
+  imgURL: string = "images/upload.png";
   img0URL: string = "";
   img1URL: string = "";
   img2URL: string = "";
@@ -45,14 +45,14 @@ export class AdminQuestionFormComponent implements OnInit {
   options: KatexOptions = {
     displayMode: true,
     macros: {
-        "\\f": "f(#1)"
+      "\\f": "f(#1)"
     }
   };
   displayKatex = [false, false, false, false, false];
   disableAddNumTxtBx = false;
   numericTextBxCount = 0;
   numericTextBoxHTML = '<input min="0" type="number" class="lineinput" placeholder="?">';
-  
+
   editorConfig: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -62,7 +62,7 @@ export class AdminQuestionFormComponent implements OnInit {
     translate: 'no',
   };
 
-  refreshImages(data: any){
+  refreshImages(data: any) {
     if (data.question_image) this.imgURL = environment.apiURL + data.question_image;
     this.img0URL = (data.answer0_image) ? this.apiURL + data.answer0_image : this.img0URL;
     this.img1URL = (data.answer1_image) ? this.apiURL + data.answer1_image : this.img1URL;
@@ -70,19 +70,19 @@ export class AdminQuestionFormComponent implements OnInit {
     this.img3URL = (data.answer3_image) ? this.apiURL + data.answer3_image : this.img3URL;
   }
 
-  addNumericTextBox(event: any){
+  addNumericTextBox(event: any) {
     event.preventDefault();
     this.question.question += this.numericTextBoxHTML;
     this.refreshNumericTextBoxCount();
   }
 
-  questionChange(event){
+  questionChange(event) {
     this.refreshNumericTextBoxCount();
 
     this.parseKatex(this.question.question, 'katex');
   }
 
-  parseKatex(string: string, htmlElement: string){
+  parseKatex(string: string, htmlElement: string) {
 
     const katexDiv: any = document.getElementById(htmlElement);
     if (!katexDiv) return;
@@ -90,19 +90,19 @@ export class AdminQuestionFormComponent implements OnInit {
     var searchStrLen = string.length;
     var startIndex = 0, index, indexes = [];
     while ((index = string.indexOf('$$', startIndex)) > -1) {
-        indexes.push(index);
-        startIndex = index + 2;
+      indexes.push(index);
+      startIndex = index + 2;
     }
 
-    if (indexes.length <= 1){
+    if (indexes.length <= 1) {
       katexDiv.style.display = "none";
       return;
     }
 
-    let html="";
+    let html = "";
     startIndex = 0;
-    for (var i=0; i<indexes.length; i++){
-      let katexString = string.substring(indexes[i]+2, indexes[i+1]);
+    for (var i = 0; i < indexes.length; i++) {
+      let katexString = string.substring(indexes[i] + 2, indexes[i + 1]);
       let text = string.substring(startIndex, indexes[i]) + " ";
 
       html += text + katex.renderToString(katexString, {
@@ -110,9 +110,9 @@ export class AdminQuestionFormComponent implements OnInit {
       });
 
       i++;
-      startIndex = indexes[i]+2;
+      startIndex = indexes[i] + 2;
 
-      if (((i+1) == indexes.length) && (startIndex < searchStrLen)){
+      if (((i + 1) == indexes.length) && (startIndex < searchStrLen)) {
         html += string.substring(startIndex, searchStrLen);
       }
     }
@@ -121,13 +121,13 @@ export class AdminQuestionFormComponent implements OnInit {
     katexDiv.style.display = "";
   }
 
-  refreshNumericTextBoxCount(){
+  refreshNumericTextBoxCount() {
     const searchHTML = '<input min="0" type="number"';
     if (this.question.question.indexOf(searchHTML) < 0) {
 
-      for (var i = 0; i < 4; i++){
+      for (var i = 0; i < 4; i++) {
         this.QuestionForm.controls['answer' + i.toString()].enable();
-        this.QuestionForm.controls['answer' + i.toString()+ '_image'].enable();
+        this.QuestionForm.controls['answer' + i.toString() + '_image'].enable();
       }
 
       return;
@@ -135,31 +135,31 @@ export class AdminQuestionFormComponent implements OnInit {
 
     var startIndex = 0, index, indexes = [];
     while ((index = this.question.question.indexOf(searchHTML, startIndex)) > -1) {
-        indexes.push(index);
-        startIndex = index + searchHTML.length;
+      indexes.push(index);
+      startIndex = index + searchHTML.length;
     }
 
     this.numericTextBxCount = indexes.length;
 
-    for (var i = 0; i < 4; i++){
-      if (!indexes[i]) { 
+    for (var i = 0; i < 4; i++) {
+      if (!indexes[i]) {
         this.QuestionForm.controls['answer' + i.toString()].disable();
-        this.QuestionForm.controls['answer' + i.toString()+ '_image'].disable();
+        this.QuestionForm.controls['answer' + i.toString() + '_image'].disable();
       }
       else {
         this.QuestionForm.controls['answer' + i.toString()].enable();
-        this.QuestionForm.controls['answer' + i.toString()+ '_image'].enable();
+        this.QuestionForm.controls['answer' + i.toString() + '_image'].enable();
       }
     }
 
     if (this.numericTextBxCount >= 4) this.disableAddNumTxtBx = true;
     else this.disableAddNumTxtBx = false;
   }
-  
+
   ngOnInit() {
     this.route.params.subscribe((params) => {
       const id = params['id'];
-      
+
       if (id != undefined) {
         this.loading = true;
         this.editMode = true;
@@ -177,28 +177,29 @@ export class AdminQuestionFormComponent implements OnInit {
 
     this.QuestionForm = this.formBuilder.group({
 
-        answer0: [''],
-        answer0_image: [''],
-        answer1: [''],
-        answer1_image: [''],
-        answer2: [''],
-        answer2_image: [''],
-        answer3: [''],
-        answer3_image: [''],
-        correct_answer: [''],
-        difficulty_id: ['', Validators.required],
-        question: ['', Validators.required],
-        question_image: [''],
-        skill_id: ['', Validators.required],
-        status_id: ['', Validators.required],
-        type_id: ['', Validators.required],
+      answer0: [''],
+      answer0_image: [''],
+      answer1: [''],
+      answer1_image: [''],
+      answer2: [''],
+      answer2_image: [''],
+      answer3: [''],
+      answer3_image: [''],
+      correct_answer: [''],
+      difficulty_id: ['', Validators.required],
+      question: ['', Validators.required],
+      question_image: [''],
+      skill_id: ['', Validators.required],
+      status_id: ['', Validators.required],
+      type_id: ['', Validators.required],
     });
   }
 
-  constructor(private http: HttpClient, 
-              private questionService: QuestionService,
-              private route: ActivatedRoute,
-              private formBuilder: FormBuilder) {
+  constructor(private http: HttpClient,
+    private questionService: QuestionService,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private helperService: HelperService) {
 
     questionService.getQuestionOptions().subscribe((data) => {
       this.difficulties = data.difficulties;
@@ -206,95 +207,95 @@ export class AdminQuestionFormComponent implements OnInit {
       this.statuses = data.statuses;
       this.types = data.type;
 
-      if (this.editMode){
+      if (this.editMode) {
 
-        this.selectedLevel = this.levels.find((level) => 
-          level.tracks.find((track) => 
-            track.skills.find((skill) => 
+        this.selectedLevel = this.levels.find((level) =>
+          level.tracks.find((track) =>
+            track.skills.find((skill) =>
               skill.id == this.question.skill_id))
-          );
+        );
 
-        if (this.selectedLevel){
-          this.selectedTrack = this.selectedLevel.tracks.find((track) => 
-            track.skills.find((skill) => 
+        if (this.selectedLevel) {
+          this.selectedTrack = this.selectedLevel.tracks.find((track) =>
+            track.skills.find((skill) =>
               skill.id == this.question.skill_id));
         }
 
-        if (this.selectedTrack){
-          this.selectedTrack.skills.find((skill) => 
+        if (this.selectedTrack) {
+          this.selectedTrack.skills.find((skill) =>
             skill.id == this.question.skill_id);
         }
-      }      
+      }
     });
-  } 
+  }
 
-  levelChange(e: any){
+  levelChange(e: any) {
     this.selectedTrack = null;
     this.selectedSkill = null;
   }
 
-  onFileSelected(files: FileList){
+  onFileSelected(files: FileList) {
     this.selectedFile = files.item(0);
     var reader = new FileReader();
-    reader.onload = (event:any)=>{
+    reader.onload = (event: any) => {
       this.imgURL = event.target.result;
     }
     reader.readAsDataURL(this.selectedFile);
   }
 
-  answerOneImageSelected(files: FileList){
+  answerOneImageSelected(files: FileList) {
     this.answerOneImg = files.item(0);
     var reader = new FileReader();
-    reader.onload = (event:any)=>{
+    reader.onload = (event: any) => {
       this.img0URL = event.target.result;
     }
     reader.readAsDataURL(this.answerOneImg);
   }
 
-  answerTwoImageSelected(files: FileList){
+  answerTwoImageSelected(files: FileList) {
     this.answerTwoImg = files.item(0);
     var reader = new FileReader();
-    reader.onload = (event:any)=>{
+    reader.onload = (event: any) => {
       this.img1URL = event.target.result;
     }
     reader.readAsDataURL(this.answerTwoImg);
   }
 
-  answerThreeImageSelected(files: FileList){
+  answerThreeImageSelected(files: FileList) {
     this.answerThreeImg = files.item(0);
     var reader = new FileReader();
-    reader.onload = (event:any)=>{
+    reader.onload = (event: any) => {
       this.img2URL = event.target.result;
     }
     reader.readAsDataURL(this.answerThreeImg);
   }
 
-  answerFourImageSelected(files: FileList){
+  answerFourImageSelected(files: FileList) {
     this.answerFourImg = files.item(0);
     var reader = new FileReader();
-    reader.onload = (event:any)=>{
+    reader.onload = (event: any) => {
       this.img3URL = event.target.result;
     }
     reader.readAsDataURL(this.answerFourImg);
   }
 
-  submitForm(){
+  submitForm() {
     this.loading = true;
-    if (!this.editMode){
+    if (!this.editMode) {
       this.createQuestion();
-    }else{
+    } else {
       this.updateQuestion();
     }
   }
 
-  createQuestion(){
+  createQuestion() {
 
     const fileName = this.selectedFile.name.substring(0, this.selectedFile.name.indexOf('.'));
     const imageURL = '/images/questions/imp1_question_image/';
-    const questionValue = (this.question.question.indexOf('&lt;') >= 0) ? 
-                          this.question.question.replace(/&lt;/g, '<').replace(/&gt;/g, '>') :
-                          this.question.question;
-    
+    const questionValue = (this.question.question.indexOf('&lt;') >= 0) ?
+      this.question.question.replace(/&lt;/g, '<').replace(/&gt;/g, '>') :
+      this.question.question;
+
     const form = {
       answer0: this.question.answer0,
       answer0_image: (this.answerOneImg) ? this.answerOneImg : '',
@@ -324,19 +325,19 @@ export class AdminQuestionFormComponent implements OnInit {
       this.loading = false;
     }, error => {
       this.formResponse = {
-          status: 'error',
-          message: 'Server Error'
-        };
+        status: 'error',
+        message: this.helperService.ParseErrorMsg(error)
+      };
       this.loading = false;
     });
 
     window.scrollTo(0, 0);
   }
 
-  updateQuestion(){
-    this.question.question = (this.question.question.indexOf('&lt;') >= 0) ? 
-                             this.question.question.replace(/&lt;/g, '<').replace(/&gt;/g, '>') :
-                             this.question.question;
+  updateQuestion() {
+    this.question.question = (this.question.question.indexOf('&lt;') >= 0) ?
+      this.question.question.replace(/&lt;/g, '<').replace(/&gt;/g, '>') :
+      this.question.question;
 
     var form = new FormData();
     form.append('_method', 'PATCH');
@@ -361,38 +362,37 @@ export class AdminQuestionFormComponent implements OnInit {
       this.question = res.question;
       this.refreshImages(res.question);
       this.formResponse = {
-          status: 'success',
-          message: res["message"]
-        };
+        status: 'success',
+        message: res["message"]
+      };
       this.loading = false;
     }, error => {
-      debugger;
       this.formResponse = {
-          status: 'error',
-          message: 'Server Error'
-        };
+        status: 'error',
+        message: this.helperService.ParseErrorMsg(error)
+      };
       this.loading = false;
     });
 
     window.scrollTo(0, 0);
   }
 
-  validForm(){
+  validForm() {
     return (
-              (this.QuestionForm.status !== 'VALID') || 
-              (this.question.type_id == 1 && this.question.correct_answer === null) ||
-              (this.question.type_id == 2 && 
-                (
-                  isNaN(Number(this.question.answer0)) ||
-                  isNaN(Number(this.question.answer1)) ||
-                  isNaN(Number(this.question.answer2)) ||
-                  isNaN(Number(this.question.answer3))
-                )
-              )
-            );
+      (this.QuestionForm.status !== 'VALID') ||
+      (this.question.type_id == 1 && this.question.correct_answer === null) ||
+      (this.question.type_id == 2 &&
+        (
+          isNaN(Number(this.question.answer0)) ||
+          isNaN(Number(this.question.answer1)) ||
+          isNaN(Number(this.question.answer2)) ||
+          isNaN(Number(this.question.answer3))
+        )
+      )
+    );
   }
 
-  isNumeric(value: String){
+  isNumeric(value: String) {
     return isNaN(Number(value)) ? false : true;
   }
 }
