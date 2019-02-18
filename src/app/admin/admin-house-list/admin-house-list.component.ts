@@ -1,18 +1,19 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { environment } from '../../../environments/environment';
 import { HouseService } from '../../services/house.service';
 import { House } from '../../models/house';
-import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component"
+import { AdminHouseDeleteComponent } from "./modal/admin-house-delete/admin-house-delete.component"
 import { AdminHouseTracksListComponent } from './modal/admin-house-tracks-list/admin-house-tracks-list.component';
-import { debug } from 'util';
+
 import { HouseTrackService } from '../../services/house-track.service';
-import { TrackService } from '../../services/track.service';
+import { HelperService } from '../../services/helper.service';
 import { Track } from '../../models/track';
 import { AdminAddTrackListComponent } from './modal/admin-add-track-list/admin-add-track-list.component';
-
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { NotifyDialogComponent } from "../notify-dialog/notify-dialog.component";
 @Component({
   selector: 'ag-admin-house-list',
   templateUrl: './admin-house-list.component.html',
@@ -48,12 +49,17 @@ export class AdminHouseListComponent implements OnInit {
   constructor(
     private _router: Router,
     private houseService: HouseService, private trackService: HouseTrackService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private helperService: HelperService
   ) { }
 
 
   ngOnInit() {
+    this.bindHouses()
+  }
+  private bindHouses() {
     this._updateloading(true);
+    this.houses = [];
     this.houseService.getHouses()
       .subscribe(items => {
         this.houses = items.sort(this._sortById);
@@ -212,11 +218,16 @@ export class AdminHouseListComponent implements OnInit {
   // open dialog block
 
   public openDialog(id: number): void {
-    this.dialog.open(ConfirmDialogComponent, { data: { message: "Are you sure?", title: "Delete Class" } }).afterClosed().
-      subscribe(ifYes => {
-        if (ifYes) {
-          //accepted
-          this._router.navigate(['/admin/houses/delete', id]);
+    this.dialog.open(AdminHouseDeleteComponent, { data: { id: id } }).afterClosed().
+      subscribe(result => {
+        if (result) {
+          if (result.success) {
+            this.houseService.updateStatus = result.msg;
+            setTimeout(() => this.houseService.updateStatus = '', 2000);
+            setTimeout(() => window.scrollTo(0, 0), 0);
+            this.bindHouses();
+          }
+
         } else {
           //rejected
         }
@@ -229,7 +240,7 @@ export class AdminHouseListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      //console.log('The dialog was closed');
     });
   }
 
@@ -241,8 +252,13 @@ export class AdminHouseListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.houseService.updateStatus = result;
-        window.scrollTo(0, 0)
+        this.dialog.open(NotifyDialogComponent, {
+          data: {
+            message: result,
+            title: "Add Tracks",
+            error: false
+          }
+        });
       }
     });
   }
@@ -254,14 +270,24 @@ export class AdminHouseListComponent implements OnInit {
           this.loading = true;
           this.trackService.deleteAllTracks(houseid).subscribe((x: any) => {
             //this.tracks = x.tracks;
-            this.houseService.updateStatus = x.message;
             this.loading = false;
-            window.scrollTo(0, 0)
+            this.dialog.open(NotifyDialogComponent, {
+              data: {
+                message: x.message,
+                title: "Delete All Tracks",
+                error: false
+              }
+            });
             //accepted
           }, (err) => {
-            console.error(err);
-            this.houseService.updateStatus = 'Server is not responding, please try after some time!'
-            window.scrollTo(0, 0)
+            this.loading = false;
+            this.dialog.open(NotifyDialogComponent, {
+              data: {
+                message: this.helperService.ParseErrorMsg(err),
+                title: "Delete All Tracks",
+                error: true
+              }
+            });
           })
         } else {
           //rejected

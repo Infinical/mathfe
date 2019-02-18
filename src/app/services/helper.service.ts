@@ -7,7 +7,7 @@ export class HelperService {
   constructor() { }
 
   public ParseErrorMsg(error) {
-
+    debugger;
     if (error.status == 422) {
       console.log("Error", error)
       if (error.error) {
@@ -30,9 +30,14 @@ export class HelperService {
         }
       }
       return error.message || "Server Error";
-    } else {
-      console.error(error);
-      return "Server Error";
+    } else if (error.error) {
+      if (error.error.message) {
+        return error.error.message;
+      }
     }
+
+
+    console.error(error);
+    return "Server Error";
   }
 }

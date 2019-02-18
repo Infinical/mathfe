@@ -11,6 +11,12 @@
       </div>
 
     </div>
+    <div *ngIf="updateStatus" class="alert alert-success alert-dismissible" role="alert">
+      {{ updateStatus }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="resetUpdateStatus()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
     <div *ngIf="status=='success'" class="alert alert-success" role="alert"> {{ message }} </div>
     <div *ngIf="status=='error'" class="alert alert-danger" role="alert"> {{ message }} </div>
     <div class="col-md-10 col-md-offset-1">
@@ -43,11 +49,11 @@
               </mat-slide-toggle>
 
               <mat-slide-toggle [(ngModel)]="ShowColumns.Name" color="primary">
-               Name
+                Name
               </mat-slide-toggle>
 
               <mat-slide-toggle [(ngModel)]="ShowColumns.Admin" color="primary">
-               Admin
+                Admin
               </mat-slide-toggle>
 
               <mat-slide-toggle [(ngModel)]="ShowColumns.Maxile_Level" color="primary">
@@ -97,12 +103,15 @@
               <td [hidden]="!ShowColumns.Last_Name">{{user.lastname}}</td>
               <td [hidden]="!ShowColumns.Name">{{user.name}}</td>
               <td [hidden]="!ShowColumns.Admin" *ngIf="user.is_admin; else no">Yes</td>
-              <ng-template #no><td>No</td></ng-template>
+              <ng-template #no>
+                <td>No</td>
+              </ng-template>
               <td [hidden]="!ShowColumns.Maxile_Level">{{user.maxile_level | number : 0-0 }}</td>
               <td [hidden]="!ShowColumns.Game_Level">{{user.game_level}}</td>
               <td [hidden]="!ShowColumns.Date_of_Birth">{{user.date_of_birth}}</td>
               <td [hidden]="!ShowColumns.Last_Test_Date">{{user.last_test_date}}</td>
-              <td [hidden]="!ShowColumns.Edit"><a [routerLink]="['/admin/users/edit', user.id]" class="btn btn-info"><i class="icon_pencil"></i></a></td>
+              <td [hidden]="!ShowColumns.Edit"><a [routerLink]="['/admin/users/edit', user.id]" class="btn btn-info"><i
+                    class="icon_pencil"></i></a></td>
             </tr>
           </tbody>
         </table>

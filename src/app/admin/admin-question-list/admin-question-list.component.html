@@ -169,7 +169,7 @@
           <ng-container matColumnDef="answer">
             <th [hidden]="!ShowColumns.Answer" mat-header-cell *matHeaderCellDef>Answer</th>
             <td [hidden]="!ShowColumns.Answer" mat-cell *matCellDef="let question">
-              <div [ngClass]="{'correct-answer': question.correct_answer === 0 && question.type &&  question.type.type === 'MCQ', 'row': true}">
+              <div [ngClass]="{'correct-answer': question.correct_answer === 0 && question.type &&  question.type_id === '1', 'row': true}">
                 <div *ngIf="question.answer0 && !displayKatex(question.answer0)" class="col-sm-12">
                   {{question.answer0}}
                 </div>
@@ -180,7 +180,7 @@
                   <img *ngIf="question.answer0_image" src="{{beURL}}{{question.answer0_image}}" width="150" />
                 </div>
               </div>
-              <div [ngClass]="{'correct-answer': question.correct_answer === 1  && question.type.type === 'MCQ', 'row': true}">
+              <div [ngClass]="{'correct-answer': question.correct_answer === 1  && question.type_id === '1', 'row': true}">
                 <div *ngIf="question.answer1  && !displayKatex(question.answer1)" class="col-sm-12">
                   {{question.answer1}}
                 </div>
@@ -191,7 +191,7 @@
                   <img *ngIf="question.answer1_image" src="{{beURL}}{{question.answer1_image}}" width="150" />
                 </div>
               </div>
-              <div [ngClass]="{'correct-answer': question.correct_answer === 2  && question.type.type === 'MCQ', 'row': true}">
+              <div [ngClass]="{'correct-answer': question.correct_answer === 2  && question.type_id === '1', 'row': true}">
                 <div *ngIf="question.answer2  && !displayKatex(question.answer2)" class="col-sm-12">
                   {{question.answer2}}
                 </div>
@@ -202,7 +202,7 @@
                   <img *ngIf="question.answer2_image" src="{{beURL}}{{question.answer2_image}}" width="150" />
                 </div>
               </div>
-              <div [ngClass]="{'correct-answer': question.correct_answer === 3  && question.type.type === 'MCQ', 'row': true}">
+              <div [ngClass]="{'correct-answer': question.correct_answer === 3  && question.type_id === '1', 'row': true}">
                 <div *ngIf="question.answer3  && !displayKatex(question.answer3)" class="col-sm-12">
                   {{question.answer3}}
                 </div>
