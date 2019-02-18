@@ -8,7 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 @Injectable()
 export class UserService {
-
+  updateStatus = "";
   constructor(private http: HttpClient) { }
 
   getUsers(): Observable<any> {

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user';
 import { HelperService } from '../../services/helper.service';
@@ -17,7 +17,7 @@ export class AdminUserEditComponent implements OnInit, OnDestroy {
 
   user = new User('id', 'name', 'firstname', 'lastname', 'contact', 'email', 0, 'maxile_level', 'game_level', 'date_of_birth', 'last_test_date', 'next_test_date', 'image');
 
-  constructor(private helperService: HelperService, private activatedRoute: ActivatedRoute, private userService: UserService) { }
+  constructor(private helperService: HelperService, private router: Router, private activatedRoute: ActivatedRoute, private userService: UserService) { }
   fileToUplaod: File = null;
   ngOnInit() {
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
@@ -41,20 +41,25 @@ export class AdminUserEditComponent implements OnInit, OnDestroy {
       if (key != "image")
         fData.append(key, user[key]);
     }
-    if (this.fileToUplaod != null) {
-      fData.append("image", this.fileToUplaod);
-    } else {
-      fData.append("image", user.image);
-    }
+    // if (this.fileToUplaod != null) {
+    //   fData.append("image", this.fileToUplaod);
+    // } else {
+    //   fData.append("image", user.image);
+    // }
+    fData.append("image", user.image);
     this.userService.updateUser(fData, user.id)
       .subscribe(
         user => {
           this.status = 'success';
           this.message = user['message'];
+          this.userService.updateStatus = this.message = user['message'];
+          setTimeout(() => this.userService.updateStatus = '', 2000);
+          this.router.navigate(['/admin/users']);
+          setTimeout(() => window.scrollTo(0, 0), 0);
         },
-        error => { 
+        error => {
           this.status = 'success';
-          this.message =  this.helperService.ParseErrorMsg(error);
+          this.message = this.helperService.ParseErrorMsg(error);
         }
       );
   }

@@ -32,7 +32,7 @@ import { AdminCourseListComponent } from './admin/admin-course-list/admin-course
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminCourseCreateComponent } from './admin/admin-course-create/admin-course-create.component';
 import { AdminCourseEditComponent } from './admin/admin-course-edit/admin-course-edit.component';
-import { AdminCourseDeleteComponent } from './admin/admin-course-delete/admin-course-delete.component';
+import { AdminCourseDeleteComponent } from './admin/admin-course-list/modal/admin-course-delete/admin-course-delete.component';
 import { AdminUserListComponent } from './admin/admin-user-list/admin-user-list.component';
 import { AuthService } from './services/auth.service';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -88,7 +88,8 @@ import { AdminQuestionDeleteComponent } from './admin/admin-question-delete/admi
 import { AdminHouseListComponent } from "./admin/admin-house-list/admin-house-list.component";
 import { AdminHouseEditComponent } from './admin/admin-house-edit/admin-house-edit.component';
 import { AdminHouseCreateComponent } from './admin/admin-house-create/admin-house-create.component';
-import { AdminHouseDeleteComponent } from './admin/admin-house-delete/admin-house-delete.component';
+
+import { AdminHouseDeleteComponent } from './admin/admin-house-list/modal/admin-house-delete/admin-house-delete.component';
 
 import { AdminFieldListComponent } from "./admin/admin-field-list/admin-field-list.component";
 import { AdminFieldCreateComponent } from './admin/admin-field-create/admin-field-create.component';
@@ -130,6 +131,7 @@ import { AdminAddSkillComponent } from './admin/admin-track-list/modal/admin-add
 import { DynamicContentComponent } from './admin/admin-question-list/dynamicContent/dynamicContent.component';
 
 import { ConfirmDialogComponent } from './admin/confirm-dialog/confirm-dialog.component';
+import { NotifyDialogComponent } from './admin/notify-dialog/notify-dialog.component';
 import { DialogDeleteQuestion } from './admin/admin-question-list/admin-question-list.component';
 import { ModalComponent } from './member/modal.component';
 import { ModalService } from './services/modal.service';
@@ -263,6 +265,7 @@ export function tokenGetter() {
 
     DialogDeleteQuestion,
     ConfirmDialogComponent,
+    NotifyDialogComponent,
     ModalComponent,
     LandingPageComponent,
     ClassManagementComponent,
@@ -306,7 +309,8 @@ export function tokenGetter() {
     DataTableModule,
     KatexModule
   ],
-  entryComponents: [DialogDeleteQuestion, ConfirmDialogComponent, AdminHouseTracksListComponent, AdminAddTrackListComponent,
+  entryComponents: [DialogDeleteQuestion, AdminHouseDeleteComponent, AdminCourseDeleteComponent,
+    ConfirmDialogComponent, NotifyDialogComponent, AdminHouseTracksListComponent, AdminAddTrackListComponent,
     AdminHouseSkillsTrackListComponent, AdminAddSkillComponent],
   providers: [TrackService, CourseService, QuestionService, DashboardService,
     HouseService, FieldService, TypeService, UnitService, PermissionService, LevelService,

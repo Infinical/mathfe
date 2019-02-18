@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component"
 import { SkillService } from 'app/services/skill.service';
 import { MatDialog } from '@angular/material';
+import { KatexOptions } from 'ng-katex';
+import katex from 'katex';
 declare var $: any;
 @Component({
   selector: 'ag-admin-skill-list',
@@ -226,6 +228,48 @@ export class AdminSkillListComponent implements OnInit {
       }
     })
     this.skills = filtered;
+  }
+
+  displayKatex(string: string, id?: number, parseHtml?: boolean, elementId?: string) {
+
+    if (!string) return true;
+    var searchStrLen = string.length;
+    var startIndex = 0, index, indexes = [];
+
+    if (string.indexOf('$$') < 0) return false;
+    else if (!parseHtml) return true;
+
+    while ((index = string.indexOf('$$', startIndex)) > -1) {
+      indexes.push(index);
+      startIndex = index + 2;
+    }
+
+    if (indexes.length <= 1 || !parseHtml) return false;
+
+    let html = "";
+    startIndex = 0;
+    for (var i = 0; i < indexes.length; i++) {
+      let katexString = string.substring(indexes[i] + 2, indexes[i + 1]);
+      let text = string.substring(startIndex, indexes[i]) + " ";
+
+      html += text + katex.renderToString(katexString, {
+        throwOnError: false
+      });
+
+      i++;
+      startIndex = indexes[i] + 2;
+
+      if (((i + 1) == indexes.length) && (startIndex < searchStrLen)) {
+        html += string.substring(startIndex, searchStrLen);
+      }
+    }
+
+    const katexDiv: any = document.getElementById(elementId);
+    if (!katexDiv) return false;
+
+    katexDiv.innerHTML = html;
+    katexDiv.style.display = "";
+    return true;
   }
 
   public showTracks(tracks) {

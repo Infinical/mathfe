@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; ;
+import { Router } from '@angular/router';;
 import { MatDialog } from '@angular/material';
 import { environment } from '../../../environments/environment';
 import { CourseService } from '../../services/course.service';
 import { Course } from '../../models/course';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { AdminCourseDeleteComponent } from './modal/admin-course-delete/admin-course-delete.component'
 // course-list component
 
 @Component({
@@ -43,16 +43,20 @@ export class AdminCourseListComponent implements OnInit {
     private _router: Router,
     private courseService: CourseService,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit() {
+    this.bindCourses();
+  }
+  private bindCourses() {
+    this.courses = [];
+    this._updateloading(true);
     this.courseService.getCourses()
       .subscribe(items => {
         this.courses = items.sort(this._sortById);
         this._updateloading(false);
       });
   }
-
   private _updateloading(status: boolean): void {
     this.loading = status;
   }
@@ -73,15 +77,20 @@ export class AdminCourseListComponent implements OnInit {
     this._router.navigate(['/admin/courses/edit', id]);
     setTimeout(() => window.scrollTo(0, 0), 0);
   }
-  
+
   // open dialog block
 
   public openDialog(id: number): void {
-    this.dialog.open(ConfirmDialogComponent, { data: { message: "Are you sure?", title: "Delete Course" } }).afterClosed().
-      subscribe(ifYes => {
-        if (ifYes) {
-          //accepted
-          this._router.navigate(['/admin/courses/delete', id]);
+    this.dialog.open(AdminCourseDeleteComponent, { data: { id: id } }).afterClosed().
+      subscribe(result => {
+        if (result) {
+          if (result.success) {
+            this.courseService.updateStatus = result.msg;
+            setTimeout(() => this.courseService.updateStatus = '', 2000);
+            setTimeout(() => window.scrollTo(0, 0), 0);
+            this.bindCourses();
+          }
+
         } else {
           //rejected
         }
@@ -148,7 +157,7 @@ export class AdminCourseListComponent implements OnInit {
   private _sortById(a: Course, b: Course): number {
     if (a.id < b.id) {
       return -1;
-    } 
+    }
     else if (a.id > b.id) {
       return 1;
     }
@@ -160,7 +169,7 @@ export class AdminCourseListComponent implements OnInit {
   private _sortByTitle(a: Course, b: Course): number {
     if (a.course.toLowerCase() < b.course.toLowerCase()) {
       return -1;
-    } 
+    }
     else if (a.course.toLowerCase() > b.course.toLowerCase()) {
       return 1;
     }
@@ -172,7 +181,7 @@ export class AdminCourseListComponent implements OnInit {
   private _sortByDescription(a: Course, b: Course): number {
     if (a.description.toLowerCase() < b.description.toLowerCase()) {
       return -1;
-    } 
+    }
     else if (a.description.toLowerCase() > b.description.toLowerCase()) {
       return 1;
     }
@@ -184,7 +193,7 @@ export class AdminCourseListComponent implements OnInit {
   private _sortByStart(a: Course, b: Course): number {
     if (a.start_maxile_score < b.start_maxile_score) {
       return -1;
-    } 
+    }
     else if (a.start_maxile_score > b.start_maxile_score) {
       return 1;
     }
@@ -196,7 +205,7 @@ export class AdminCourseListComponent implements OnInit {
   private _sortByEnd(a: Course, b: Course): number {
     if (a.end_maxile_score < b.end_maxile_score) {
       return -1;
-    } 
+    }
     else if (a.end_maxile_score > b.end_maxile_score) {
       return 1;
     }

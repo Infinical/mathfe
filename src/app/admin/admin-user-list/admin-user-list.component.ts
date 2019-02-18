@@ -36,4 +36,12 @@ export class AdminUserListComponent implements OnInit {
 	  },
 	  error =>  console.error(<any>error));
   }
+  resetUpdateStatus() {
+    this.userService.updateStatus = '';
+  }
+
+  get updateStatus(): string {
+    return this.userService.updateStatus;
+  }
+
 }
