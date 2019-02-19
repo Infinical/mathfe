@@ -4,8 +4,10 @@ import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
 import { ConfirmDialogComponent } from "../confirm-dialog/confirm-dialog.component"
 import { SkillService } from 'app/services/skill.service';
+import { TrackService } from 'app/services/track.service';
 import { MatDialog } from '@angular/material';
 import { KatexOptions } from 'ng-katex';
+import { DomSanitizer } from '@angular/platform-browser';
 import katex from 'katex';
 declare var $: any;
 @Component({
@@ -43,7 +45,9 @@ export class AdminSkillListComponent implements OnInit {
   constructor(
     private _router: Router,
     private skillService: SkillService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private sanitizer: DomSanitizer,
+    private trackService: TrackService
   ) { }
 
   ngOnInit() {
@@ -67,9 +71,17 @@ export class AdminSkillListComponent implements OnInit {
     return this.skillService.updateStatus;
   }
 
-  public videoUrl(url: string): string {
-    if (url)
-      return this._beURL + url;
+  public videoUrl(skill): string {
+    let url = skill.lesson_link;
+    if (url) {
+      skill.vimeo = false;
+      if (url.indexOf('vimeo') != -1) {
+        skill.vimeo = true;
+        skill.vimeoVideoUrl = this.sanitizeVimeo(url);
+      } else {
+        return this._beURL + url;
+      }
+    }
     else return this._beURL + "/videos/skills/logo.mp4"
   }
 
@@ -273,6 +285,8 @@ export class AdminSkillListComponent implements OnInit {
   }
 
   public showTracks(tracks) {
+    //getTracksBySkillId
+    
     this.currentTracks = tracks;
     $('.modal').modal()
   }
@@ -297,5 +311,8 @@ export class AdminSkillListComponent implements OnInit {
         console.error(err);
       })
     }
+  }
+  sanitizeVimeo(url: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }

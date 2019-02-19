@@ -3,7 +3,16 @@
     <!-- SECTION HEADER -->
     <div class="section-header wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
       <!-- SECTION TITLE -->
-      <!-- <img [src]="lesson_link" style="width:250px;" /><br /> -->
+      <div>
+        <img *ngIf="!lesson_preview_link && !vimeoVideoUrl" style="height:142px;" src="/assets/images/play_video.png" />
+        <video *ngIf="lesson_preview_link && use_file_uplaod" width="250" controls>
+          <source [src]="lesson_preview_link" type="video/mp4" />
+          Your browser does not support HTML5 video.
+        </video>
+        <iframe *ngIf="vimeoVideoUrl && !use_file_uplaod" [src]="sanitizeVimeo(vimeoVideoUrl)" width="250" height="250"
+          frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+      </div>
+      
       <h2 class="dark-text">Add a New Skill</h2>
       <div class="colored-line">
       </div>
@@ -24,22 +33,32 @@
           <fieldset>
             <div class="form-group">
               <label for="image" class="col-lg-2 control-label">Skill Video</label>
-              <div class="col-lg-10">
+              <div *ngIf="use_file_uplaod" class="col-lg-10">
                 <input type="file" class="form-control" id="video" name="video" ngModel #video="ngModel" minlength="3"
-                       accept="video/mp4,video/x-m4v,video/*" (change)="onFileSelected($event.target.files)" placeholder="Skill Video">
-                 <!--<div *ngIf="video.errors?.required && video.dirty" class="alert alert-danger">
+                  accept="video/mp4,video/x-m4v,video/*" (change)="onFileSelected($event.target.files)" placeholder="Skill Video">
+                <!--<div *ngIf="video.errors?.required && video.dirty" class="alert alert-danger">
                   Image is required
                 </div>-->
                 <div *ngIf="video.errors?.required && video.touched" class="alert alert-danger">
                   Your video should be in HD format and of maximum 2 minutes long
-                </div> 
+                </div>
+                <br />
+                <button (click)="useUrlUpload()" type="button" class="pull-left btn btn-primary btn-sm">Click Here To
+                  Insert Vimeo Video URL</button>
+              </div>
+              <div *ngIf="!use_file_uplaod" class="col-lg-10">
+                <input type="text" class="form-control" id="vimeoVideoUrl" name="vimeoVideoUrl" [(ngModel)]="vimeoVideoUrl"
+                  minlength="3" placeholder="Skill Vimeo Video Url">
+                <br />
+                <button (click)="useFIleUplaod()" type="button" class="pull-left btn btn-primary btn-sm">Click Here To
+                  Use Video Upload</button>
               </div>
             </div>
             <div class="form-group">
               <label for="skill" class="col-lg-2 control-label">Skill Title</label>
               <div class="col-lg-10">
                 <input type="text" class="form-control" id="skill" name="skill" placeholder="Skill Title" ngModel
-                       #skill="ngModel" required>
+                  #skill="ngModel" required>
                 <div *ngIf="skill.errors?.required && skill.touched" class="alert alert-danger">
                   Skill Title is required
                 </div>
@@ -49,7 +68,7 @@
               <label for="description" class="col-lg-2 control-label">Description</label>
               <div class="col-lg-10">
                 <textarea class="form-control" rows="3" id="description" name="description" placeholder="Description of the skill"
-                          ngModel #description="ngModel" required></textarea>
+                  ngModel #description="ngModel" required></textarea>
                 <div *ngIf="description.errors?.required && description.touched" class="alert alert-danger">
                   Description is required
                 </div>
@@ -59,7 +78,7 @@
               <label for="description" class="col-lg-2 control-label">Status</label>
               <div class="col-lg-10">
                 <select class="form-control" #status_id="ngModel" [(ngModel)]="skill.status_id" id="status_id" required
-                        name="status_id" placeholder="Skill's status">
+                  name="status_id" placeholder="Skill's status">
                   <option value="" disabled selected>Select Status</option>
                   <option *ngFor="let status of statuses" [value]="status.id">
                     {{status.status}} - {{status.description}}
@@ -73,8 +92,7 @@
             <div class="form-group">
               <label for="skill" class="col-lg-2 control-label">Track</label>
               <div class="col-lg-10">
-                <mat-select class="form-control" name="track_id" id="track_id" #track_id="ngModel" ngModel
-                            multiple>
+                <mat-select class="form-control" name="track_id" id="track_id" #track_id="ngModel" ngModel multiple>
                   <mat-option *ngFor="let track of my_tracks" [value]="track.id">{{track.track}}</mat-option>
                   <mat-option disabled *ngIf="(my_tracks)?.length>0">-----------------</mat-option>
                   <mat-option *ngFor="let track of public_tracks" [value]="track.id">{{track.track}}</mat-option>

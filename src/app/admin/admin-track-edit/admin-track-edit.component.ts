@@ -64,6 +64,7 @@ export class AdminTrackEditComponent implements OnInit {
     this.trackService.updateTrack(track)
       .subscribe(
         track => {
+          localStorage.setItem("last_track_edit_id",this.id)
           this.status = 'success';
           this.message = track['message'];
           this.trackService.updateStatus = this.message = track['message'];

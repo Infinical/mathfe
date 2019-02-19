@@ -29,36 +29,47 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div class="row" style="margin-top: 0.5rem;">
-            <div class="col-sm-6">
-              <mat-form-field>
-                <input id="searchQuestion" matInput class="form-control" type="text" placeholder="Search Keyword">
-              </mat-form-field>
-            </div>
             <div class="col-sm-3">
-              <mat-form-field>
-                <mat-select id="searchSkill" [(ngModel)]="selectedSkill" (ngModelChange)="searchBySkill($event)"
+              <select class="form-control" [(ngModel)]="searchBy" placeholder="Search By">
+                <option value="1">
+                  Keyword
+                </option>
+                <option value="2">
+                  Skill
+                </option>
+                <option value="3">
+                  Level
+                </option>
+              </select>
+            </div>
+
+            <div class="col-sm-4">
+              <div *ngIf="searchBy==1">
+                <input id="searchQuestion" class="form-control" type="text" placeholder="Search Keyword">
+              </div>
+              <div *ngIf="searchBy==2">
+                <select id="searchSkill" class="form-control" [(ngModel)]="selectedSkill" (ngModelChange)="searchBySkill($event)"
                   placeholder="Search by Skill">
-                  <mat-option *ngFor="let skill of searchOptions.skills" [value]="skill.id">
+                  <option *ngFor="let skill of searchOptions.skills" [value]="skill.id">
                     {{skill.skill}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="col-sm-3">
-              <mat-form-field>
-                <mat-select #searchLevel [(ngModel)]="selectedLevel" (ngModelChange)="searchByLevel($event)"
+                  </option>
+                </select>
+              </div>
+              <div *ngIf="searchBy==3">
+                <select #searchLevel [(ngModel)]="selectedLevel" class="form-control" (ngModelChange)="searchByLevel($event)"
                   placeholder="Search by Level">
-                  <mat-option *ngFor="let level of searchOptions.levels" [value]="level.id">
+                  <option *ngFor="let level of searchOptions.levels" [value]="level.id">
                     {{level.description}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+                  </option>
+                </select>
+              </div>
             </div>
           </div>
+          <br>
           <div class="row">
             <input type="button" class="btn btn-default" (click)="resetSearch()" value="Reset" />
-            <input type="button" style="padding-left: 1rem!important; background-color: #960000; color: white" class="btn"
-              (click)="searchByQuestion()" value="Search" />
+            <input *ngIf="searchBy==1" type="button" style="padding-left: 1rem!important; background-color: #960000; color: white"
+              class="btn" (click)="searchByKeyword()" value="Search" />
           </div>
         </mat-expansion-panel>
       </mat-accordion>

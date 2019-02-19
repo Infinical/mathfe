@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { SkillService } from '../../services/skill.service';
-import { Skill } from '../../models/skill';
+import { DomSanitizer } from '@angular/platform-browser';
 import { HelperService } from '../../services/helper.service';
 
 @Component({
@@ -18,6 +18,9 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
   params: any;
   selectedFile: File = null;
   lesson_link: string = "";
+  lesson_preview_link: any;
+  vimeoVideoUrl: any;
+  public use_file_uplaod = true;
   formData: FormData = new FormData();
   statuses: any;
   my_tracks = [];
@@ -28,15 +31,26 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private skillService: SkillService,
     private router: Router,
-    private helperService: HelperService
+    private helperService: HelperService,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
     this.skillService.getSkill(this.id).subscribe(
-      data => {
+      data => { 
         this.skill = data;
-        this.lesson_link = this.beURL + this.skill.lesson_link;
+
+        if (this.skill.lesson_link) {
+          this.lesson_link = this.beURL + this.skill.lesson_link;
+          this.use_file_uplaod = true;
+          if (this.skill.lesson_link.indexOf('vimeo') != -1) {
+            this.use_file_uplaod = false;
+            this.vimeoVideoUrl = (this.skill.lesson_link);
+          } else {
+            this.lesson_preview_link = this.sanitizeURL(this.lesson_link);
+          }
+        }
       },
       error => console.error(<any>error));
 
@@ -49,19 +63,38 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
       error => console.error(<any>error));
 
   }
-
+  sanitize(url: string) {
+    return this.sanitizer.bypassSecurityTrustUrl(url);
+  }
+  sanitizeURL(url: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
   ngOnDestroy() {
     this.params.unsubscribe();
   }
-
+  public useFIleUplaod() {
+    this.lesson_link = "";
+    this.lesson_preview_link = "";
+    this.use_file_uplaod = true;
+    this.vimeoVideoUrl = "";
+  }
+  public useUrlUpload() {
+    this.lesson_link = "";
+    this.lesson_preview_link = "";
+    this.use_file_uplaod = false;
+    this.vimeoVideoUrl = "";
+  }
   updateSkill(skill) {
     this.formData.append('_method', 'PATCH');
-    // if ((skill.video)){
-    //   if (!this.lesson_link.includes(skill.video)) {
-    if (this.selectedFile)
-      this.formData.append('lesson_link', this.selectedFile);
-    //   }
-    // }
+    if (this.use_file_uplaod) {
+      if (this.selectedFile) {
+        this.formData.append('lesson_link', this.selectedFile);
+      }
+    } else {
+      if (this.vimeoVideoUrl) {
+        this.formData.append('lesson_link', this.vimeoVideoUrl);
+      }
+    }
     this.formData.append('description', skill.description);
     this.formData.append('skill', skill.skill);
     this.formData.append('status_id', skill.status_id);

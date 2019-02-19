@@ -19,6 +19,7 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
 
   @ViewChild(MatPaginator) topPaginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  searchBy = "1";
   allPages = [];
   gridData: any;
   displayedColumns: string[] = ['id', 'question', 'answer', 'skill', 'track', 'field', 'level', 'difficulty', 'status', 'source', 'author', 'action'];
@@ -87,8 +88,10 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.cdr.detectChanges();
   }
+  doSearch() {
 
-  searchByQuestion() {
+  }
+  searchByKeyword() {
     const dom: any = document.getElementById('searchQuestion');
     this.search({ keyword: dom.value });
   }
@@ -117,6 +120,7 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     this.selectedSkill = null;;
     const dom: any = document.getElementById('searchQuestion');
     dom.value = "";
+    this.searchBy = "1";
     this.dataSource = new MatTableDataSource<any>(this.gridData.questions);
   }
 

@@ -81,7 +81,7 @@
                   <mat-spinner color="#960000"></mat-spinner>
                 </td>
               </tr>
-              <tr *ngFor="let track of tracks">
+              <tr id="track_{{track.id}}" *ngFor="let track of tracks">
                 <td [hidden]="!ShowColumns.Track" align="left">{{track.track}} </td>
                 <td [hidden]="!ShowColumns.Description" align="left">{{track.description}}</td>
                 <td [hidden]="!ShowColumns.Status">{{track.status.status}}</td>

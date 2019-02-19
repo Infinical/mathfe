@@ -1,12 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ConfirmDialogComponent } from "../../../confirm-dialog/confirm-dialog.component"
-import { Router } from '@angular/router';
-import { debug } from 'util';
+import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from 'environments/environment';
 import { Track } from '../../../../models/track';
-import { Skill } from '../../../../models/skill';
-import { SkillService } from '../../../../services/skill.service';
 import { SkillTrackService } from '../../../../services/skill-track.service';
 
 @Component({
@@ -15,7 +12,7 @@ import { SkillTrackService } from '../../../../services/skill-track.service';
   styleUrls: ['./admin-house-skills-track-list.component.css']
 })
 export class AdminHouseSkillsTrackListComponent implements OnInit {
-  loading = true; 
+  loading = true;
   skills = [];
   updateStatus: '';
   public sortedByDescription: boolean = false;
@@ -24,21 +21,32 @@ export class AdminHouseSkillsTrackListComponent implements OnInit {
   message: '';
 
   constructor(private skillService: SkillTrackService, public dialogRef: MatDialogRef<AdminHouseSkillsTrackListComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialog) {
+    @Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialog,
+    private sanitizer: DomSanitizer) {
     this.loading = true;
     this.skillService.getSkillsByTrack(this.data.trackid).subscribe(x => {
       this.skills = x.skill;
       this.loading = false;
     })
   }
-  public videoUrl(url: string): string {
-    if (url)
-      return this._beURL + url;
+  public videoUrl(skill): string {
+    let url = skill.lesson_link;
+    if (url) {
+      if (url.indexOf('vimeo') != -1) {
+        skill.vimeo = true;
+        skill.vimeoVideoUrl = this.sanitizeVimeo(url);
+      } else {
+        return this._beURL + url;
+      }
+    }
     else return this._beURL + "/videos/skills/logo.mp4"
+  }
+  sanitizeVimeo(url: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
   ngOnInit() {
   }
-  
+
   deleteSkill(skillid) {
     this.dialog.open(ConfirmDialogComponent, { data: { message: "Do you really want to delete the track from this class?", title: "Delete Track" } }).afterClosed().
       subscribe(ifYes => {
@@ -70,13 +78,13 @@ export class AdminHouseSkillsTrackListComponent implements OnInit {
             this._resetSort();
             this.sortedByDescription = true;
           }
-          break; 
+          break;
       }
     }
   }
-  private _resetSort(): void { 
-    this.sortedByDescription = false; 
-    this.reversedByDescription = false; 
+  private _resetSort(): void {
+    this.sortedByDescription = false;
+    this.reversedByDescription = false;
 
   }
 
