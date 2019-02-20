@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SkillService } from '../../services/skill.service';
 import { HelperService } from '../../services/helper.service';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'ag-admin-skill-create',
   templateUrl: './admin-skill-create.component.html',
@@ -12,6 +13,9 @@ export class AdminSkillCreateComponent implements OnInit {
   public message: string;
   public selectedFile: File = null;
   public lesson_link: string = 'images/upload.png';
+  lesson_preview_link: any;
+  vimeoVideoUrl = "";
+  public use_file_uplaod = true;
   statuses: any;
   my_tracks = [];
   public_tracks = [];
@@ -19,7 +23,8 @@ export class AdminSkillCreateComponent implements OnInit {
 
   constructor(
     private skillService: SkillService,
-    private router: Router, private helperService: HelperService) { }
+    private router: Router, private helperService: HelperService,
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.skillService.createSkill().subscribe(
@@ -30,15 +35,32 @@ export class AdminSkillCreateComponent implements OnInit {
       },
       error => console.error(<any>error));
   }
-
+  public useFIleUplaod() {
+    this.lesson_link = "images/upload.png";
+    this.lesson_preview_link = "";
+    this.use_file_uplaod = true;
+    this.vimeoVideoUrl = "";
+  }
+  public useUrlUpload() {
+    this.lesson_link = "images/upload.png";
+    this.lesson_preview_link = "";
+    this.use_file_uplaod = false;
+    this.vimeoVideoUrl = "";
+  }
   public createSkill(skill): void {
     this.loading = true;
     const formData: FormData = new FormData();
-    if (skill.video) {
-      if (!this.lesson_link.includes(skill.video)) {
-        formData.append('lesson_link', this.selectedFile);
+    if (this.use_file_uplaod) {
+      if (skill.video) {
+        if (!this.lesson_link.includes(skill.video)) {
+          formData.append('lesson_link', this.selectedFile);
+        }
       }
-    }
+    } else {
+      if (this.vimeoVideoUrl) {
+        formData.append('lesson_link', this.vimeoVideoUrl);
+      }
+    } 
     formData.append('skill', skill.skill);
     formData.append('description', skill.description);
     formData.append('track_ids', JSON.stringify(skill.track_id));
@@ -54,19 +76,30 @@ export class AdminSkillCreateComponent implements OnInit {
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
-          this.loading = false; 
+          this.loading = false;
           this.status = 'success';
-          this.message =  this.helperService.ParseErrorMsg(error);
+          this.message = this.helperService.ParseErrorMsg(error);
         }
       );
   }
 
   public onFileSelected(files: FileList): void {
     this.selectedFile = files.item(0);
+ 
+    this.lesson_preview_link = "";
+
+
     let reader = new FileReader();
     reader.onload = (event: any) => {
       this.lesson_link = event.target.result;
+      this.lesson_preview_link = this.sanitize(URL.createObjectURL(this.selectedFile));
     }
     reader.readAsDataURL(this.selectedFile);
+  }
+  sanitize(url: string) {
+    return this.sanitizer.bypassSecurityTrustUrl(url);
+  }
+  sanitizeVimeo(url: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }

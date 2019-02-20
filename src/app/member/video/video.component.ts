@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router'; 
-
-declare var $ :any;
+import { ActivatedRoute } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
+declare var $: any;
 
 @Component({
   selector: 'ag-video',
@@ -12,15 +12,24 @@ declare var $ :any;
 export class VideoComponent implements OnInit {
   params: any;
   id: any;
-
-  constructor(private activatedRoute:ActivatedRoute,) { }
+  isVimeo = false;
+  constructor(private activatedRoute: ActivatedRoute, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-    this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
+    this.params = this.activatedRoute.params.subscribe(params =>
+      this.id = params['id']);
+    this.isVimeo = false;
+    if (this.id.indexOf('vimeo') != -1) {
+      this.isVimeo = true;
+      this.id = this.sanitizeVimeo(this.id);
+    }
+  }
+  sanitizeVimeo(url: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
   ngOnDestroy() {
     this.params.unsubscribe();
-    $('video').first().attr('src','');
+    $('video').first().attr('src', '');
   }
 }

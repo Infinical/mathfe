@@ -96,7 +96,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr style="background-color: #f3f3f3;" *ngIf="skills.length==0">
+              <tr style="background-color: #f3f3f3;" *ngIf="skills.length==0 && !loading">
                 <td colspan="7" align="center">
                   <p>No data exist!!</p>
                 </td>
@@ -108,12 +108,22 @@
               </tr>
               <ng-container *ngFor="let skill of skills">
                 <tr>
-                  <td [hidden]="!ShowColumns.Skill">
+                  <td [hidden]="!ShowColumns.Skill"> 
                     <img *ngIf="!skill.play" style="height:142px;" (click)="skill.play=true" src="/assets/images/play_video.png" />
-                    <video *ngIf="skill.play" width="250" controls autoplay>
-                      <source [src]="videoUrl(skill.lesson_link)" type="video/mp4" />
-                      Your browser does not support HTML5 video.
-                    </video>
+                    <div *ngIf="skill.play">
+                      <div *ngIf="!skill.vimeo">
+                        <video width="250" controls autoplay>
+                          <source [src]="videoUrl(skill)" type="video/mp4" />
+                          Your browser does not support HTML5 video.
+                        </video>
+                      </div>
+                      <div *ngIf="!skill.vimeo">
+                        <iframe [src]="skill.vimeoVideoUrl" width="250" height="250" frameborder="0"
+                          webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                      </div>
+
+                    </div>
+
                   </td>
                   <td [hidden]="!ShowColumns.Title">{{ skill.skill }}</td>
                   <td [hidden]="!ShowColumns.Description" align="left">

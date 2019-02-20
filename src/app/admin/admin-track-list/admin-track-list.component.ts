@@ -41,6 +41,16 @@ export class AdminTrackListComponent implements OnInit {
       this.tracks = x;
       this.allTrack = x;
       this.loading = false;
+      if (localStorage.getItem("last_track_edit_id")) {
+        setTimeout(() => {
+          let id = localStorage.getItem("last_track_edit_id");
+          var elmnt = document.getElementById("track_" + id);
+          elmnt.scrollIntoView({ block: 'end', behavior: 'smooth' });
+          localStorage.removeItem('last_track_edit_id');
+        }, 1000)
+
+
+      }
     })
   }
   public doSearch(query) {

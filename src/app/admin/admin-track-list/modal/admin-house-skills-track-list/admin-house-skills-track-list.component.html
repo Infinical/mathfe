@@ -15,7 +15,7 @@
                   'mat-table-th_reversed': reversedByDescription,
                   'mat-table-th_inactive': !reversedByDescription && !sortedByDescription
                 }"
-                (click)="sortBy('description')">
+              (click)="sortBy('description')">
               Description
             </th>
             <th class="mat-table-th">Status</th>
@@ -37,10 +37,12 @@
             <tr>
               <td>
                 <img *ngIf="!skill.play" style="height:142px;" (click)="skill.play=true" src="/assets/images/play_video.png" />
-                <video *ngIf="skill.play" width="250" controls autoplay>
-                  <source [src]="videoUrl(skill.lesson_link)" type="video/mp4" />
+                <video *ngIf="skill.play && !skill.vimeo" width="250" controls autoplay>
+                  <source [src]="videoUrl(skill)" type="video/mp4" />
                   Your browser does not support HTML5 video.
                 </video>
+                <iframe *ngIf="skill.play && skill.vimeo" [src]="skill.vimeoVideoUrl" width="250" height="250"
+                  frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
               </td>
               <td>{{ skill.skill }}</td>
               <td align="left">

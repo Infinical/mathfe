@@ -7,7 +7,7 @@ export class HelperService {
   constructor() { }
 
   public ParseErrorMsg(error) {
-    debugger;
+
     if (error.status == 422) {
       console.log("Error", error)
       if (error.error) {
