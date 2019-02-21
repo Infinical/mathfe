@@ -4,12 +4,11 @@
 			There is no video available for this skill.
 		</h2>
 		<div *ngIf="id">
-			<video *ngIf="!isVimeo" width="1000" controls>
+			<video width="1000" controls>
 				<source src="{{id}}" type="video/mp4">
 				Your browser does not support HTML5 video.
 			</video>
-			<iframe *ngIf="isVimeo" [src]="id" width="1000" frameborder="0" webkitallowfullscreen mozallowfullscreen
-			 allowfullscreen></iframe>
+
 		</div>
 	</div>
 </section>

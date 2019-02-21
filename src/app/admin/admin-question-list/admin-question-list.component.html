@@ -164,8 +164,10 @@
               <span *ngIf="((question.question.indexOf('<') < 0) && (!displayKatex(question.question)))">
                 {{question.question}}
               </span>
-              <img *ngIf="!question.calculator && question.question_image && question.question.indexOf('<') < 0 && !displayKatex(question.question)"
-                style="margin-top: 0.25rem; margin-bottom: 0.25rem;" src="{{beURL}}{{question.question_image}}" width="150" />
+              <img *ngIf="!question.calculator && question.question_image && !displayKatex(question.question)" style="margin-top: 0.25rem; margin-bottom: 0.25rem;"
+                src="{{beURL}}{{question.question_image}}" width="150" />
+              <!-- <img *ngIf="!question.calculator && question.question_image && question.question.indexOf('<') < 0 && !displayKatex(question.question)"
+                style="margin-top: 0.25rem; margin-bottom: 0.25rem;" src="{{beURL}}{{question.question_image}}" width="150" /> -->
               <dynamic-content *ngIf="((question.question.indexOf('<') >= 0) && (!displayKatex(question.question)) )"
                 [question]="question">
               </dynamic-content>

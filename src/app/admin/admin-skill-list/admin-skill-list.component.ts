@@ -21,7 +21,8 @@ export class AdminSkillListComponent implements OnInit {
   public allSkill = [];
   public skills: Skill[] = [];
   public loading: boolean = true;
-  public currentTracks;
+  public modalLoader = false;
+  public currentTracks = [];
   // sort block
 
   public sortedByTitle: boolean = false;
@@ -73,14 +74,8 @@ export class AdminSkillListComponent implements OnInit {
 
   public videoUrl(skill): string {
     let url = skill.lesson_link;
-    if (url) {
-      skill.vimeo = false;
-      if (url.indexOf('vimeo') != -1) {
-        skill.vimeo = true;
-        skill.vimeoVideoUrl = this.sanitizeVimeo(url);
-      } else {
-        return this._beURL + url;
-      }
+    if (url) { 
+        return this._beURL + url;       
     }
     else return this._beURL + "/videos/skills/logo.mp4"
   }
@@ -284,11 +279,15 @@ export class AdminSkillListComponent implements OnInit {
     return true;
   }
 
-  public showTracks(tracks) {
+  public showTracks(trackId) {
     //getTracksBySkillId
-    
-    this.currentTracks = tracks;
+    this.modalLoader = true;
+    this.currentTracks = [];
     $('.modal').modal()
+    this.trackService.getTracksBySkillId(trackId).subscribe((result) => {
+      this.currentTracks = result.tracks
+      this.modalLoader = false;;
+    })
   }
   public hideTracks() {
     $('.modal').modal('hide')
@@ -311,8 +310,5 @@ export class AdminSkillListComponent implements OnInit {
         console.error(err);
       })
     }
-  }
-  sanitizeVimeo(url: string) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  }
+  } 
 }

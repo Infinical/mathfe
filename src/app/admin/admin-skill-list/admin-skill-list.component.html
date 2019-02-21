@@ -108,20 +108,13 @@
               </tr>
               <ng-container *ngFor="let skill of skills">
                 <tr>
-                  <td [hidden]="!ShowColumns.Skill"> 
+                  <td [hidden]="!ShowColumns.Skill">
                     <img *ngIf="!skill.play" style="height:142px;" (click)="skill.play=true" src="/assets/images/play_video.png" />
                     <div *ngIf="skill.play">
-                      <div *ngIf="!skill.vimeo">
-                        <video width="250" controls autoplay>
-                          <source [src]="videoUrl(skill)" type="video/mp4" />
-                          Your browser does not support HTML5 video.
-                        </video>
-                      </div>
-                      <div *ngIf="!skill.vimeo">
-                        <iframe [src]="skill.vimeoVideoUrl" width="250" height="250" frameborder="0"
-                          webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                      </div>
-
+                      <video width="250" controls autoplay>
+                        <source [src]="videoUrl(skill)" type="video/mp4" />
+                        Your browser does not support HTML5 video.
+                      </video>
                     </div>
 
                   </td>
@@ -132,7 +125,7 @@
                   <td [hidden]="!ShowColumns.Author">{{ skill.user.firstname }} {{skill.user.lastname}}</td>
 
                   <td [hidden]="!ShowColumns.Tracks">
-                    <a (click)="showTracks(skill.tracks)">Show Tracks</a>
+                    <a (click)="showTracks(skill.id)">Show Tracks</a>
                   </td>
                   <td [hidden]="!ShowColumns.Questions">
                     <a data-toggle="collapse" (click)="loadQuestions(skill)" href="#collapse{{skill.id}}">Questions</a>
@@ -267,21 +260,30 @@
                       <tr>
                         <th>Track</th>
                         <th>Description</th>
-                        <th>Level</th>
+                        <!-- <th>Level</th>
                         <th>Level Age</th>
                         <th>Start Maxile Level</th>
-                        <th>End Maxile Level</th>
-                        <th></th>
+                        <th>End Maxile Level</th>  -->
                       </tr>
                     </thead>
                     <tbody>
+                      <tr *ngIf="!modalLoader && currentTracks.length==0" class="mat-table-spinner-wrapper">
+                        <td colspan="2" align="center">
+                          <p>No data exist!!</p>
+                        </td>
+                      </tr>
+                      <tr *ngIf="modalLoader" class="mat-table-spinner-wrapper">
+                        <td colspan="2" align="center" class="mat-table-spinner">
+                          <mat-spinner color="#960000"></mat-spinner>
+                        </td>
+                      </tr>
                       <tr *ngFor="let track of currentTracks">
                         <td>{{track.track}}</td>
                         <td>{{track.description}}</td>
-                        <td>{{track.level.level}}</td>
+                        <!-- <td>{{track.level.level}}</td>
                         <td>{{track.level.age}}</td>
                         <td>{{track.level.start_maxile_level}}</td>
-                        <td>{{track.level.end_maxile_level}}</td>
+                        <td>{{track.level.end_maxile_level}}</td> -->
                       </tr>
                     </tbody>
                   </table>

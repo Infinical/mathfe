@@ -13,9 +13,7 @@ export class AdminSkillCreateComponent implements OnInit {
   public message: string;
   public selectedFile: File = null;
   public lesson_link: string = 'images/upload.png';
-  lesson_preview_link: any;
-  vimeoVideoUrl = "";
-  public use_file_uplaod = true;
+  lesson_preview_link: any;  
   statuses: any;
   my_tracks = [];
   public_tracks = [];
@@ -35,32 +33,16 @@ export class AdminSkillCreateComponent implements OnInit {
       },
       error => console.error(<any>error));
   }
-  public useFIleUplaod() {
-    this.lesson_link = "images/upload.png";
-    this.lesson_preview_link = "";
-    this.use_file_uplaod = true;
-    this.vimeoVideoUrl = "";
-  }
-  public useUrlUpload() {
-    this.lesson_link = "images/upload.png";
-    this.lesson_preview_link = "";
-    this.use_file_uplaod = false;
-    this.vimeoVideoUrl = "";
-  }
   public createSkill(skill): void {
     this.loading = true;
     const formData: FormData = new FormData();
-    if (this.use_file_uplaod) {
-      if (skill.video) {
-        if (!this.lesson_link.includes(skill.video)) {
-          formData.append('lesson_link', this.selectedFile);
-        }
+
+    if (skill.video) {
+      if (!this.lesson_link.includes(skill.video)) {
+        formData.append('lesson_link', this.selectedFile);
       }
-    } else {
-      if (this.vimeoVideoUrl) {
-        formData.append('lesson_link', this.vimeoVideoUrl);
-      }
-    } 
+
+    }
     formData.append('skill', skill.skill);
     formData.append('description', skill.description);
     formData.append('track_ids', JSON.stringify(skill.track_id));
@@ -85,7 +67,7 @@ export class AdminSkillCreateComponent implements OnInit {
 
   public onFileSelected(files: FileList): void {
     this.selectedFile = files.item(0);
- 
+
     this.lesson_preview_link = "";
 
 
@@ -98,8 +80,5 @@ export class AdminSkillCreateComponent implements OnInit {
   }
   sanitize(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
-  }
-  sanitizeVimeo(url: string) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  }
+  } 
 }

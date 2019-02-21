@@ -4,15 +4,13 @@
     <div class="section-header wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
       <!-- SECTION TITLE -->
       <div>
-        <img *ngIf="!lesson_preview_link && !vimeoVideoUrl" style="height:142px;" src="/assets/images/play_video.png" />
-        <video *ngIf="lesson_preview_link && use_file_uplaod" width="250" controls>
+        <img *ngIf="!lesson_preview_link" style="height:142px;" src="/assets/images/play_video.png" />
+        <video *ngIf="lesson_preview_link" width="250" controls>
           <source [src]="lesson_preview_link" type="video/mp4" />
           Your browser does not support HTML5 video.
         </video>
-        <iframe *ngIf="vimeoVideoUrl && !use_file_uplaod" [src]="sanitizeVimeo(vimeoVideoUrl)" width="250" height="250"
-          frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
       </div>
-      
+
       <h2 class="dark-text">Add a New Skill</h2>
       <div class="colored-line">
       </div>
@@ -33,7 +31,7 @@
           <fieldset>
             <div class="form-group">
               <label for="image" class="col-lg-2 control-label">Skill Video</label>
-              <div *ngIf="use_file_uplaod" class="col-lg-10">
+              <div class="col-lg-10">
                 <input type="file" class="form-control" id="video" name="video" ngModel #video="ngModel" minlength="3"
                   accept="video/mp4,video/x-m4v,video/*" (change)="onFileSelected($event.target.files)" placeholder="Skill Video">
                 <!--<div *ngIf="video.errors?.required && video.dirty" class="alert alert-danger">
@@ -42,16 +40,6 @@
                 <div *ngIf="video.errors?.required && video.touched" class="alert alert-danger">
                   Your video should be in HD format and of maximum 2 minutes long
                 </div>
-                <br />
-                <button (click)="useUrlUpload()" type="button" class="pull-left btn btn-primary btn-sm">Click Here To
-                  Insert Vimeo Video URL</button>
-              </div>
-              <div *ngIf="!use_file_uplaod" class="col-lg-10">
-                <input type="text" class="form-control" id="vimeoVideoUrl" name="vimeoVideoUrl" [(ngModel)]="vimeoVideoUrl"
-                  minlength="3" placeholder="Skill Vimeo Video Url">
-                <br />
-                <button (click)="useFIleUplaod()" type="button" class="pull-left btn btn-primary btn-sm">Click Here To
-                  Use Video Upload</button>
               </div>
             </div>
             <div class="form-group">
