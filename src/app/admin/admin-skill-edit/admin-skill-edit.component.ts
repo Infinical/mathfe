@@ -19,8 +19,7 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
   selectedFile: File = null;
   lesson_link: string = "";
   lesson_preview_link: any;
-  vimeoVideoUrl: any;
-  public use_file_uplaod = true;
+  loading = true;
   formData: FormData = new FormData();
   statuses: any;
   my_tracks = [];
@@ -36,23 +35,21 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.loading = true;
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
     this.skillService.getSkill(this.id).subscribe(
-      data => { 
+      data => {
         this.skill = data;
-
+        this.loading = false;
         if (this.skill.lesson_link) {
           this.lesson_link = this.beURL + this.skill.lesson_link;
-          this.use_file_uplaod = true;
-          if (this.skill.lesson_link.indexOf('vimeo') != -1) {
-            this.use_file_uplaod = false;
-            this.vimeoVideoUrl = (this.skill.lesson_link);
-          } else {
-            this.lesson_preview_link = this.sanitizeURL(this.lesson_link);
-          }
+          this.lesson_preview_link = (this.lesson_link);
         }
       },
-      error => console.error(<any>error));
+      error => {
+        this.loading = false;
+        console.error(<any>error)
+      });
 
     this.skillService.createSkill().subscribe(
       data => {
@@ -72,37 +69,22 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.params.unsubscribe();
   }
-  public useFIleUplaod() {
-    this.lesson_link = "";
-    this.lesson_preview_link = "";
-    this.use_file_uplaod = true;
-    this.vimeoVideoUrl = "";
-  }
-  public useUrlUpload() {
-    this.lesson_link = "";
-    this.lesson_preview_link = "";
-    this.use_file_uplaod = false;
-    this.vimeoVideoUrl = "";
-  }
   updateSkill(skill) {
     this.formData.append('_method', 'PATCH');
-    if (this.use_file_uplaod) {
-      if (this.selectedFile) {
-        this.formData.append('lesson_link', this.selectedFile);
-      }
-    } else {
-      if (this.vimeoVideoUrl) {
-        this.formData.append('lesson_link', this.vimeoVideoUrl);
-      }
+    if (this.selectedFile) {
+      this.formData.append('lesson_link', this.selectedFile);
     }
+
     this.formData.append('description', skill.description);
     this.formData.append('skill', skill.skill);
     this.formData.append('status_id', skill.status_id);
     // this.formData.append('track_id', skill.track_id);
     this.formData.append('track_ids', JSON.stringify(skill.track_id));
+    this.loading = true;
     this.skillService.updateSkillWithFormData(this.formData, skill.id)
       .subscribe(
         skill => {
+          this.loading = false;
           this.status = 'success';
           this.message = skill['message'];
           this.skillService.updateStatus = this.message = skill['message'];
@@ -111,6 +93,7 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
+          this.loading = false;
           this.status = 'success';
           this.message = this.helperService.ParseErrorMsg(error);
         }
@@ -122,6 +105,7 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
     var reader = new FileReader();
     reader.onload = (event: any) => {
       this.lesson_link = event.target.result;
+      this.lesson_preview_link = this.sanitize(URL.createObjectURL(this.selectedFile));
     }
     reader.readAsDataURL(this.selectedFile);
   }

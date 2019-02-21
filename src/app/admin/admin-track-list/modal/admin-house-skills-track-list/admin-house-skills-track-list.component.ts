@@ -32,18 +32,10 @@ export class AdminHouseSkillsTrackListComponent implements OnInit {
   public videoUrl(skill): string {
     let url = skill.lesson_link;
     if (url) {
-      if (url.indexOf('vimeo') != -1) {
-        skill.vimeo = true;
-        skill.vimeoVideoUrl = this.sanitizeVimeo(url);
-      } else {
-        return this._beURL + url;
-      }
+      return this._beURL + url;
     }
     else return this._beURL + "/videos/skills/logo.mp4"
-  }
-  sanitizeVimeo(url: string) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  }
+  } 
   ngOnInit() {
   }
 

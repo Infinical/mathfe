@@ -123,7 +123,12 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     this.searchBy = "1";
     this.dataSource = new MatTableDataSource<any>(this.gridData.questions);
   }
-
+  test(question) {
+    if (question.id == 41) {
+      debugger;
+      var xxx = !question.calculator && question.question_image && question.question.indexOf('<') < 0 && !this.displayKatex(question.question)
+    }
+  }
   displayKatex(string: string, id?: number, parseHtml?: boolean, elementId?: string) {
 
     if (!string) return true;
