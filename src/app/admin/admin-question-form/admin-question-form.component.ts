@@ -10,6 +10,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { KatexOptions } from 'ng-katex';
 import katex from 'katex';
 import { HelperService } from '../../services/helper.service';
+import { retryWhen } from 'rxjs/operators';
 @Component({
   selector: 'ag-admin-question-form',
   templateUrl: './admin-question-form.component.html',
@@ -165,6 +166,18 @@ export class AdminQuestionFormComponent implements OnInit {
         this.editMode = true;
         this.questionService.getQuestion(id)
           .subscribe((data) => {
+            if (data.answer0 == "null" || data.answer0 == null) {
+              data.answer0 = "";
+            }
+            if (data.answer1 == "null" || data.answer1 == null) {
+              data.answer1 = "";
+            }
+            if (data.answer2 == "null" || data.answer2 == null) {
+              data.answer2 = "";
+            }
+            if (data.answer3 == "null" || data.answer3 == null) {
+              data.answer3 = "";
+            }
             this.loading = false;
             this.question = data;
             this.refreshNumericTextBoxCount();
@@ -312,8 +325,7 @@ export class AdminQuestionFormComponent implements OnInit {
       skill_id: this.question.skill_id,
       status_id: this.question.status_id,
       type_id: this.question.type_id
-    };
-
+    }; 
     this.questionService.addQuestion(form).subscribe(res => {
       this.question = res.question;
       this.refreshImages(res.question);
@@ -358,7 +370,7 @@ export class AdminQuestionFormComponent implements OnInit {
     form.append('type_id', String(this.question.type_id));
 
     this.questionService.updateQuestion(form, this.question.id).subscribe(res => {
-   
+
       this.question = res.question;
       this.refreshImages(res.question);
       this.formResponse = {
@@ -376,9 +388,53 @@ export class AdminQuestionFormComponent implements OnInit {
 
     window.scrollTo(0, 0);
   }
-
+  //if mcq then all images and answer are required
+  isAllAnsExistIfMCQ() {
+    if (this.question.type_id == 1) {
+      if (
+        (!this.question.answer0) ||
+        (!this.question.answer1) ||
+        (!this.question.answer2) ||
+        (!this.question.answer3) ||
+        (!this.img0URL) ||
+        (!this.img1URL) ||
+        (!this.img2URL) ||
+        (!this.img3URL)
+      ) {
+        return false;
+      }
+    }
+    return true;
+  }
+  isOneAnsExistIfNUMBER() {
+    if (this.question.type_id == 2) {
+      let isExist = false;
+      if (this.question.answer0) {
+        isExist = true;
+      }
+      if (!isExist) {
+        if (this.question.answer1) {
+          isExist = true;
+        }
+      }
+      if (!isExist) {
+        if (this.question.answer2) {
+          isExist = true;
+        }
+      }
+      if (!isExist) {
+        if (this.question.answer3) {
+          isExist = true;
+        }
+      }
+      return isExist;
+    }
+    return true;
+  }
   validForm() {
     return (
+      !this.isAllAnsExistIfMCQ() ||
+      !this.isOneAnsExistIfNUMBER() ||
       (this.QuestionForm.status !== 'VALID') ||
       (this.question.type_id == 1 && this.question.correct_answer === null) ||
       (this.question.type_id == 2 &&

@@ -16,7 +16,7 @@ import { AdminSkillEditComponent } from './admin-skill-edit/admin-skill-edit.com
 import { AdminSkillDeleteComponent } from './admin-skill-delete/admin-skill-delete.component';
 import { AdminQuestionListComponent } from "./admin-question-list/admin-question-list.component";
 import { AdminQuestionFormComponent } from './admin-question-form/admin-question-form.component';
-import { AdminQuestionEditComponent } from './admin-question-edit/admin-question-edit.component';
+
 import { AdminQuestionDeleteComponent } from './admin-question-delete/admin-question-delete.component';
 
 import { AdminHouseListComponent } from "./admin-house-list/admin-house-list.component";
