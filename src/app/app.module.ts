@@ -82,7 +82,7 @@ import { AdminQuestionListComponent } from './admin/admin-question-list/admin-qu
 
 import { AdminTrackDeleteComponent } from './admin/admin-track-delete/admin-track-delete.component';
 import { AdminQuestionFormComponent } from './admin/admin-question-form/admin-question-form.component';
-import { AdminQuestionEditComponent } from './admin/admin-question-edit/admin-question-edit.component';
+
 import { AdminQuestionDeleteComponent } from './admin/admin-question-delete/admin-question-delete.component';
 
 import { AdminHouseListComponent } from "./admin/admin-house-list/admin-house-list.component";
@@ -221,8 +221,7 @@ export function tokenGetter() {
     AdminQuestionListComponent,
     AdminSkillDeleteComponent,
     AdminTrackDeleteComponent,
-    AdminQuestionFormComponent,
-    AdminQuestionEditComponent,
+    AdminQuestionFormComponent, 
     AdminQuestionDeleteComponent,
 
     AdminHouseListComponent,
