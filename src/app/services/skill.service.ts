@@ -15,7 +15,7 @@ export class SkillService {
 		return this.http.get(`${environment.apiURL}/skills`)
 			.map((response) => response)
 			.catch((error: any) => throwError(error || { message: 'Server Error' }));
-    }
+	}
 
 	getQuestios(skillId): Observable<any> {
 		return this.http.get(`${environment.apiURL}/skills/${skillId}/questions`)
@@ -81,8 +81,14 @@ export class SkillService {
 		return this.http.delete<Skill[]>(url)
 			.map((response) => response)
 			.catch((error: any) => throwError(error || { message: 'Server Error' }));
+	} 
+	deleteSkillWithTracks(id: String): Observable<Skill[]> {
+		const apiUrl = `${environment.apiURL}/skills`;
+		const url = `${apiUrl}/${id}?delink_tracks=TRUE`;
+		return this.http.delete<Skill[]>(url)
+			.map((response) => response)
+			.catch((error: any) => throwError(error || { message: 'Server Error' }));
 	}
-
 	createSkill(): Observable<any> {
 		return this.http.get(`${environment.apiURL}/skills/create`)
 			.map((response) => response)
