@@ -2,7 +2,7 @@
   <div class="container">
     <!-- SECTION HEADER -->
     <div class="section-header wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
-      <div> 
+      <div>
         <img *ngIf="!lesson_preview_link" style="height:142px;" src="/assets/images/play_video.png" />
         <video *ngIf="lesson_preview_link" width="250" controls>
           <source [src]="lesson_preview_link" type="video/mp4" />
@@ -14,17 +14,19 @@
       <div class="colored-line">
       </div>
     </div>
-    <div *ngIf="loading" class="mat-table-spinner-wrapper" align="center">
-      <mat-spinner color="#960000"></mat-spinner>
-    </div>
+
     <div *ngIf="status=='success'" class="alert alert-success" role="alert"> {{ message }} </div>
     <div *ngIf="status=='error'" class="alert alert-danger" role="alert"> {{ message }} </div>
     <div class="col-md-10 col-md-offset-1">
       <div>
         <a [routerLink]="['/admin/skills']" class="btn btn-default"> Back</a>
       </div>
+      <br>
     </div>
     <div class="col-md-10 col-md-offset-1">
+      <div *ngIf="loading" class="mat-on-screen-loader mat-table-spinner-wrapper" align="center">
+        <mat-spinner color="#960000"></mat-spinner>
+      </div>
       <div class="well well bs-component">
         <form novalidate class="form-horizontal" (ngSubmit)="updateSkill(skill)" #editSkillForm="ngForm">
           <fieldset>

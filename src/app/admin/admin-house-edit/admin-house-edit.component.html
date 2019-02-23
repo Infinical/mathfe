@@ -14,15 +14,20 @@
       <div>
         <a [routerLink]="['/admin/houses']" class="btn btn-default"> Back</a>
       </div>
+      <br/>
     </div>
     <div class="col-md-10 col-md-offset-1">
+      <div *ngIf="loading" class="mat-on-screen-loader mat-table-spinner-wrapper" align="center">
+        <mat-spinner color="#960000"></mat-spinner>
+      </div>
       <div class="well well bs-component">
         <form novalidate class="form-horizontal" (ngSubmit)="updateHouse(house)" #editHouseForm="ngForm">
           <fieldset>
             <div class="form-group">
               <label for="image" class="col-lg-2 control-label">Class Image</label>
               <div class="col-lg-10">
-                <input type="file" class="form-control" id="image" name="image" ngModel #image="ngModel" minlength="3" accept="image/*" (change)="onFileSelected($event.target.files)" placeholder="House Image">
+                <input type="file" class="form-control" id="image" name="image" ngModel #image="ngModel" minlength="3"
+                  accept="image/*" (change)="onFileSelected($event.target.files)" placeholder="House Image">
                 <div *ngIf="image.errors?.minlength && image.touched" class="alert alert-danger">
                   Minimum of 3 characters
                 </div>
@@ -31,8 +36,8 @@
             <div class="form-group">
               <label for="txtHouse" class="col-lg-2 control-label">Class Title</label>
               <div class="col-lg-10">
-                <input type="text" class="form-control" id="txtHouse" name="txtHouse" placeholder="House Title" [(ngModel)]="house.house"
-                       #txtHouse="ngModel" required>
+                <input type="text" class="form-control" id="txtHouse" name="txtHouse" placeholder="House Title"
+                  [(ngModel)]="house.house" #txtHouse="ngModel" required>
                 <div *ngIf="txtHouse.errors?.required && txtHouse.touched" class="alert alert-danger">
                   House Title is required
                 </div>
@@ -42,7 +47,7 @@
               <label for="description" class="col-lg-2 control-label">Description</label>
               <div class="col-lg-10">
                 <textarea class="form-control" rows="3" id="description" name="description" placeholder="Description of the house"
-                          [(ngModel)]="house.description" #description="ngModel" required></textarea>
+                  [(ngModel)]="house.description" #description="ngModel" required></textarea>
                 <div *ngIf="description.errors?.required && description.touched" class="alert alert-danger">
                   Description is required
                 </div>
@@ -53,13 +58,14 @@
                 <label for="start_date" class="col-lg-4 control-label">Start Date</label>
                 <div class="col-lg-8">
                   <input type="date" [(ngModel)]="house.start_date" class="form-control" id="start_date" name="start_date"
-                         placeholder="Start Date" />
+                    placeholder="Start Date" />
                 </div>
               </div>
               <div class="form-group col-md-6">
                 <label for="end_date" class="col-lg-4 control-label">End Date</label>
                 <div class="col-lg-8">
-                  <input type="date" [(ngModel)]="house.end_date" class=" form-control" id="end_date" name="end_date" placeholder="End Date" />
+                  <input type="date" [(ngModel)]="house.end_date" class=" form-control" id="end_date" name="end_date"
+                    placeholder="End Date" />
                 </div>
               </div>
             </div>
@@ -67,7 +73,7 @@
               <label for="description" class="col-lg-2 control-label">Course</label>
               <div class="col-lg-10">
                 <select class="form-control" #course_id="ngModel" [(ngModel)]="house.course_id" id="course_id" required
-                        name="course_id" placeholder="House's couse">
+                  name="course_id" placeholder="House's couse">
                   <option value="" disabled selected>Select Course</option>
                   <option *ngFor="let course of courses" [value]="course.id">
                     {{course.course}}
@@ -82,7 +88,7 @@
               <label for="description" class="col-lg-2 control-label">Currency</label>
               <div class="col-lg-10">
                 <select class="form-control" #currency="ngModel" [(ngModel)]="house.currency" id="currency" required
-                        name="currency" placeholder="House's couse">
+                  name="currency" placeholder="House's couse">
                   <option value="" disabled selected>Select Currency</option>
                   <option *ngFor="let currency of currencies" [value]="currency">
                     {{currency}}
@@ -96,8 +102,8 @@
             <div class="form-group">
               <label for="description" class="col-lg-2 control-label">Price</label>
               <div class="col-lg-10">
-                <input type="text" class="form-control" id="price" name="price" placeholder="Price" [(ngModel)]="house.price" #price="ngModel"
-                       required>
+                <input type="text" class="form-control" id="price" name="price" placeholder="Price" [(ngModel)]="house.price"
+                  #price="ngModel" required>
                 <div *ngIf="price.errors?.required && price.touched" class="alert alert-danger">
                   Price is required
                 </div>
