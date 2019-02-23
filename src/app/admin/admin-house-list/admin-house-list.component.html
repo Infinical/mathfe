@@ -113,12 +113,15 @@
                   <a (click)="openDialog(house.id)" class="btn btn-danger"><i class="icon_minus_alt2"></i></a>
                 </div>
                 <div class="action-box">
-                  <label><b>Manage Tracks</b></label>
+                  <div><b>Manage Tracks</b></div>
                   <div class="btn-group">
-                    <button type="button" class="btn btn-info btn-sm" (click)="openViewTrack(house.id)">View Tracks</button>
-                    <button type="button" class="btn btn-danger  btn-sm" (click)="deleteAllTracks(house.id)">Delete ALL
-                      Tracks</button>
-                    <button type="button" class="btn btn-info btn-sm" (click)="getAddTrack(house.id)"> Add Tracks</button>
+                    <button title="View Tracks" type="button" class="btn btn-info btn-sm" (click)="openViewTrack(house.id)">
+                      <i class="glyphicon glyphicon-eye-open"></i> </button>
+                    <button title="Delete ALL Tracks" type="button" class="btn btn-danger  btn-sm" (click)="deleteAllTracks(house.id)">
+                      <i class="glyphicon glyphicon-remove"></i></button>
+                    <button type="button" class="btn btn-info btn-sm" (click)="getAddTrack(house.id)" title="Add Tracks">
+                      <i class="glyphicon glyphicon-road"></i>
+                    </button>
                   </div>
                 </div>
               </td>

@@ -20,6 +20,7 @@ import { retryWhen } from 'rxjs/operators';
 export class AdminQuestionFormComponent implements OnInit {
 
   QuestionForm: FormGroup;
+  questionTypeNumberRequirMsg = "Please select at least one answer.";
   selectedFile: File = null;
   imgURL: string = "images/upload.png";
   img0URL: string = "";
@@ -390,40 +391,74 @@ export class AdminQuestionFormComponent implements OnInit {
   //if mcq then all images and answer are required
   isAllAnsExistIfMCQ() {
     if (this.question.type_id == 1) {
-      if (
-        (!this.question.answer0) ||
-        (!this.question.answer1) ||
-        (!this.question.answer2) ||
-        (!this.question.answer3) ||
-        (!this.img0URL) ||
-        (!this.img1URL) ||
-        (!this.img2URL) ||
-        (!this.img3URL)
-      ) {
-        return false;
+      let isExist = true;
+      let noExistCount = 0;
+      if (!this.question.answer0 || !this.img0URL) {
+        noExistCount++;
       }
+      if (!this.question.answer1 || !this.img1URL) {
+        noExistCount++;
+      }
+      if (!this.question.answer2 || !this.img2URL) {
+        noExistCount++;
+      }
+      if (!this.question.answer3 || !this.img3URL) {
+        noExistCount++;
+      }
+
+      if (noExistCount > 3) {
+        isExist = false;
+      }
+      return isExist;
+      // if (
+      //   (!this.question.answer0) ||
+      //   (!this.question.answer1) ||
+      //   (!this.question.answer2) ||
+      //   (!this.question.answer3) ||
+      //   (!this.img0URL) ||
+      //   (!this.img1URL) ||
+      //   (!this.img2URL) ||
+      //   (!this.img3URL)
+      // ) {
+      //   return false;
+      // }
     }
     return true;
   }
   isOneAnsExistIfNUMBER() {
     if (this.question.type_id == 2) {
-      let isExist = false;
-      if (this.question.answer0) {
-        isExist = true;
+      const searchHTML = '<input min="0" type="number"';
+      let requiredAns = 1;
+      if (this.question.question.indexOf(searchHTML) != -1) {
+        requiredAns = this.question.question.split(searchHTML).filter(x => x.length > 0).length
       }
-      if (!isExist) {
-        if (this.question.answer1) {
-          isExist = true;
-        }
+      let isExist = true;
+      let noExistCount = 0;
+      if (!this.question.answer0) {
+        noExistCount++;
       }
-      if (!isExist) {
-        if (this.question.answer2) {
-          isExist = true;
-        }
+      if (!this.question.answer1) {
+        noExistCount++;
       }
-      if (!isExist) {
-        if (this.question.answer3) {
-          isExist = true;
+      if (!this.question.answer2) {
+        noExistCount++;
+      }
+      if (!this.question.answer3) {
+        noExistCount++;
+      }
+      if (noExistCount > 0) {
+        if (requiredAns == 1 && noExistCount > 3) {
+          this.questionTypeNumberRequirMsg = "Please select at least one answer.";
+          isExist = false;
+        } else if (requiredAns == 2 && noExistCount > 2) {
+          this.questionTypeNumberRequirMsg = "Please select at least two answer.";
+          isExist = false;
+        } else if (requiredAns == 3 && noExistCount > 1) {
+          this.questionTypeNumberRequirMsg = "Please select at least three answer.";
+          isExist = false;
+        } else if (requiredAns == 4 && noExistCount > 0) {
+          this.questionTypeNumberRequirMsg = "All answers are required.";
+          isExist = false;
         }
       }
       return isExist;

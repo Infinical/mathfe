@@ -155,8 +155,8 @@
                 </div>
               </div>
             </div>
-             <p *ngIf="!isOneAnsExistIfNUMBER()" style="color: red;">Please select at least one answer.</p>
-            <p *ngIf="!isAllAnsExistIfMCQ()" style="color: red;">All answers and their images are required.</p>
+            <p *ngIf="!isOneAnsExistIfNUMBER()" style="color: red;">{{questionTypeNumberRequirMsg}}</p>
+            <p *ngIf="!isAllAnsExistIfMCQ()" style="color: red;">Please select at least one answer with image.</p>
             <br>
             <div class="form-group">
               <label for="correctAnwer" class="col-sm-2 control-label">Correct Answer</label>
