@@ -44,10 +44,10 @@
             </div>
 
             <div class="col-sm-4">
-              <div *ngIf="searchBy==1">
+              <div *ngIf="searchBy==='1'">
                 <input id="searchQuestion" class="form-control" type="text" placeholder="Search Keyword">
               </div>
-              <div *ngIf="searchBy==2">
+              <div *ngIf="searchBy==='2'">
                 <select id="searchSkill" class="form-control" [(ngModel)]="selectedSkill" (ngModelChange)="searchBySkill($event)"
                   placeholder="Search by Skill">
                   <option *ngFor="let skill of searchOptions.skills" [value]="skill.id">
@@ -55,7 +55,7 @@
                   </option>
                 </select>
               </div>
-              <div *ngIf="searchBy==3">
+              <div *ngIf="searchBy==='3'">
                 <select #searchLevel [(ngModel)]="selectedLevel" class="form-control" (ngModelChange)="searchByLevel($event)"
                   placeholder="Search by Level">
                   <option *ngFor="let level of searchOptions.levels" [value]="level.id">
@@ -68,7 +68,7 @@
           <br>
           <div class="row">
             <input type="button" class="btn btn-default" (click)="resetSearch()" value="Reset" />
-            <input *ngIf="searchBy==1" type="button" style="padding-left: 1rem!important; background-color: #960000; color: white"
+            <input *ngIf="searchBy==='1'" type="button" style="padding-left: 1rem!important; background-color: #960000; color: white"
               class="btn" (click)="searchByKeyword()" value="Search" />
           </div>
         </mat-expansion-panel>
