@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { SkillService } from '../../services/skill.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HelperService } from '../../services/helper.service';
+import { TrackService } from 'app/services/track.service';
 
 @Component({
   selector: 'ag-admin-skill-edit',
@@ -23,6 +24,7 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
   formData: FormData = new FormData();
   statuses: any;
   my_tracks = [];
+  selected_track_ids = [];
   public_tracks = [];
   skill: any = {}//= new Skill('id', 'skill', 'description', 'user_id', 'image', 'lesson_link', 'status_id');
 
@@ -31,7 +33,8 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
     private skillService: SkillService,
     private router: Router,
     private helperService: HelperService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private trackService: TrackService
   ) { }
 
   ngOnInit() {
@@ -40,7 +43,14 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
     this.skillService.getSkill(this.id).subscribe(
       data => {
         this.skill = data;
-        this.loading = false;
+        this.trackService.getTracksBySkillId(data.id).subscribe((result) => {
+          this.selected_track_ids = [];
+          result.tracks.forEach((t, i) => {
+            this.selected_track_ids.push(t.id);
+          });
+          this.loading = false;
+        })
+      
         if (this.skill.lesson_link) {
           this.lesson_link = this.beURL + this.skill.lesson_link;
           this.lesson_preview_link = (this.lesson_link);
@@ -79,8 +89,9 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
     this.formData.append('skill', skill.skill);
     this.formData.append('status_id', skill.status_id);
     // this.formData.append('track_id', skill.track_id);
-    this.formData.append('track_ids', JSON.stringify(skill.track_id));
+    this.formData.append('track_ids', JSON.stringify(this.selected_track_ids));
     this.loading = true;
+    debugger;
     this.skillService.updateSkillWithFormData(this.formData, skill.id)
       .subscribe(
         skill => {

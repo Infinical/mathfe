@@ -303,7 +303,7 @@ export class AdminQuestionFormComponent implements OnInit {
 
   createQuestion() {
 
-    const fileName = this.selectedFile.name.substring(0, this.selectedFile.name.indexOf('.'));
+    //const fileName = this.selectedFile.name.substring(0, this.selectedFile.name.indexOf('.'));
     const imageURL = '/images/questions/imp1_question_image/';
     const questionValue = (this.question.question.indexOf('&lt;') >= 0) ?
       this.question.question.replace(/&lt;/g, '<').replace(/&gt;/g, '>') :
