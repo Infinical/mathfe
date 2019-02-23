@@ -77,13 +77,13 @@
             <div class="form-group">
               <label for="skill" class="col-lg-2 control-label">Track</label>
               <div class="col-lg-10">
-                <mat-select multiple="multiple" class="form-control" #track_id="ngModel" [(ngModel)]="skill.track_id"
-                  id="track_id" required name="track_id">
+                <mat-select multiple="multiple" class="form-control" #track_ids="ngModel" [(ngModel)]="selected_track_ids"
+                  id="track_ids" required name="track_ids">
                   <mat-option *ngFor="let track of my_tracks" [value]="track.id">{{track.track}}</mat-option>
                   <mat-option disabled *ngIf="(my_tracks)?.length>0">-----------------</mat-option>
                   <mat-option *ngFor="let track of public_tracks" [value]="track.id">{{track.track}}</mat-option>
                 </mat-select>
-                <div *ngIf="track_id.errors?.required && track_id.touched" class="alert alert-danger">
+                <div *ngIf="track_ids.errors?.required && track_ids.touched" class="alert alert-danger">
                   Track is required
                 </div>
               </div>

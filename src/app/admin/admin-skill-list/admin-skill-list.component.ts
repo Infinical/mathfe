@@ -279,12 +279,12 @@ export class AdminSkillListComponent implements OnInit {
     return true;
   }
 
-  public showTracks(trackId) {
+  public showTracks(skillId) {
     //getTracksBySkillId
     this.modalLoader = true;
     this.currentTracks = [];
     $('.modal').modal()
-    this.trackService.getTracksBySkillId(trackId).subscribe((result) => {
+    this.trackService.getTracksBySkillId(skillId).subscribe((result) => {
       this.currentTracks = result.tracks
       this.modalLoader = false;;
     })
