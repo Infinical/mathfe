@@ -133,7 +133,6 @@ export class AdminQuestionFormComponent implements OnInit {
 
       return;
     }
-
     var startIndex = 0, index, indexes = [];
     while ((index = this.question.question.indexOf(searchHTML, startIndex)) > -1) {
       indexes.push(index);
@@ -142,16 +141,16 @@ export class AdminQuestionFormComponent implements OnInit {
 
     this.numericTextBxCount = indexes.length;
 
-    for (var i = 0; i < 4; i++) {
-      if (!indexes[i]) {
-        this.QuestionForm.controls['answer' + i.toString()].disable();
-        this.QuestionForm.controls['answer' + i.toString() + '_image'].disable();
-      }
-      else {
-        this.QuestionForm.controls['answer' + i.toString()].enable();
-        this.QuestionForm.controls['answer' + i.toString() + '_image'].enable();
-      }
-    }
+    // for (var i = 0; i < 4; i++) { 
+    //   if (!indexes[i]) {
+    //     this.QuestionForm.controls['answer' + i.toString()].disable();
+    //     this.QuestionForm.controls['answer' + i.toString() + '_image'].disable();
+    //   }
+    //   else {
+    //     this.QuestionForm.controls['answer' + i.toString()].enable();
+    //     this.QuestionForm.controls['answer' + i.toString() + '_image'].enable();
+    //   }
+    // }
 
     if (this.numericTextBxCount >= 4) this.disableAddNumTxtBx = true;
     else this.disableAddNumTxtBx = false;
@@ -325,7 +324,7 @@ export class AdminQuestionFormComponent implements OnInit {
       skill_id: this.question.skill_id,
       status_id: this.question.status_id,
       type_id: this.question.type_id
-    }; 
+    };
     this.questionService.addQuestion(form).subscribe(res => {
       this.question = res.question;
       this.refreshImages(res.question);
