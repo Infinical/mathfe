@@ -22,7 +22,7 @@ export class AdminHouseEditComponent implements OnInit {
   statuses: any;
   courses = [];
   currencies = [];
-
+  loading = true;
   house: any;//= new House('', '', '', '', '', '', '', '', '');
 
   constructor(
@@ -34,12 +34,17 @@ export class AdminHouseEditComponent implements OnInit {
 
   ngOnInit() {
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
+    this.loading = true;
     this.houseService.getHouse(this.id).subscribe(
       data => {
         this.house = data;
         this.imgURL = this.beURL + this.house.image;
+        this.loading = false;
       },
-      error => console.error(<any>error));
+      error => {
+        this.loading = false;
+        console.error(<any>error);
+      });
 
     this.houseService.createHouse().subscribe(
       data => {
@@ -75,9 +80,11 @@ export class AdminHouseEditComponent implements OnInit {
     this.formData.append('currency', house.currency);
     this.formData.append('course_id', house.course_id);
     this.formData.append('price', house.price);
+    this.loading = true;
     this.houseService.updateHouseWithFormData(this.formData, house.id)
       .subscribe(
         house => {
+          this.loading = false;
           this.status = 'success';
           this.message = house['message'];
           this.houseService.updateStatus = this.message = house['message'];
@@ -85,9 +92,10 @@ export class AdminHouseEditComponent implements OnInit {
           this.router.navigate(['/admin/houses']);
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
-        error => { 
+        error => {
+          this.loading = false;
           this.status = 'success';
-          this.message =  this.helperService.ParseErrorMsg(error);
+          this.message = this.helperService.ParseErrorMsg(error);
         }
       );
   }

@@ -4,7 +4,7 @@ import { environment } from '../../../environments/environment';
 import { SkillService } from '../../services/skill.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HelperService } from '../../services/helper.service';
-import { TrackService } from 'app/services/track.service';
+import { TrackService } from '../../services/track.service';
 
 @Component({
   selector: 'ag-admin-skill-edit',
@@ -91,7 +91,6 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
     // this.formData.append('track_id', skill.track_id);
     this.formData.append('track_ids', JSON.stringify(this.selected_track_ids));
     this.loading = true;
-    debugger;
     this.skillService.updateSkillWithFormData(this.formData, skill.id)
       .subscribe(
         skill => {

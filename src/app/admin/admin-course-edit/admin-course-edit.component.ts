@@ -18,7 +18,7 @@ export class AdminCourseEditComponent implements OnInit, OnDestroy {
   selectedFile: File = null;
   imgURL: string = "images/upload.png";
   formData: FormData = new FormData();
-
+  loading = true;
 
   course = new Course('id', 'course', 'description', 'image', 'start_maxile_score', 'end_maxile_score');
 
@@ -26,17 +26,22 @@ export class AdminCourseEditComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private courseService: CourseService,
     private router: Router,
-    private helperService:HelperService
+    private helperService: HelperService
   ) { }
 
   ngOnInit() {
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
+    this.loading = true;
     this.courseService.getCourse(this.id).subscribe(
       data => {
         this.course = data;
         this.imgURL = this.beURL + this.course.image;
+        this.loading = false;
       },
-      error => console.error(<any>error));
+      error => {
+        console.error(<any>error)
+        this.loading = false;
+      });
   }
 
   ngOnDestroy() {
@@ -52,6 +57,7 @@ export class AdminCourseEditComponent implements OnInit, OnDestroy {
     this.formData.append('course', course.course);
     this.formData.append('start_maxile_score', course.start_maxile_score);
     this.formData.append('end_maxile_score', course.end_maxile_score);
+    this.loading = true;
     this.courseService.updateCourse(this.formData, course.id)
       .subscribe(
         course => {
@@ -61,10 +67,12 @@ export class AdminCourseEditComponent implements OnInit, OnDestroy {
           setTimeout(() => this.courseService.updateStatus = '', 2000);
           this.router.navigate(['/admin/courses']);
           setTimeout(() => window.scrollTo(0, 0), 0);
+          this.loading=false;
         },
-        error => { 
-          this.status = 'success'; 
-          this.message =  this.helperService.ParseErrorMsg(error);
+        error => {
+          this.status = 'success';
+          this.message = this.helperService.ParseErrorMsg(error);
+          this.loading=false;
         }
       );
   }
