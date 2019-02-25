@@ -430,7 +430,7 @@ export class AdminQuestionFormComponent implements OnInit {
       const searchHTML = '<input min="0" type="number"';
       let requiredAns = 1;
       if (this.question.question.indexOf(searchHTML) != -1) {
-        requiredAns = this.question.question.split(searchHTML).filter(x => x.length > 0).length
+        requiredAns = this.occurrences(this.question.question, searchHTML);
       }
       let isExist = true;
       let noExistCount = 0;
@@ -464,6 +464,25 @@ export class AdminQuestionFormComponent implements OnInit {
       return isExist;
     }
     return true;
+  }
+  occurrences(string, subString) {
+
+    string += "";
+    subString += "";
+    if (subString.length <= 0) return (string.length + 1);
+
+    var n = 0,
+      pos = 0,
+      step = subString.length;
+
+    while (true) {
+      pos = string.indexOf(subString, pos);
+      if (pos >= 0) {
+        ++n;
+        pos += step;
+      } else break;
+    }
+    return n;
   }
   validForm() {
     return (
