@@ -29,6 +29,13 @@ import { AdminFieldCreateComponent } from './admin-field-create/admin-field-crea
 import { AdminFieldEditComponent } from './admin-field-edit/admin-field-edit.component';
 import { AdminFieldDeleteComponent } from './admin-field-delete/admin-field-delete.component';
 
+
+import { AdminRoleListComponent } from "./admin-role-list/admin-role-list.component";
+import { AdminRoleCreateComponent } from './admin-role-create/admin-role-create.component';
+import { AdminRoleEditComponent } from './admin-role-edit/admin-role-edit.component';
+import { AdminRoleDeleteComponent } from './admin-role-delete/admin-role-delete.component';
+
+
 import { AdminTypeListComponent } from "./admin-type-list/admin-type-list.component";
 import { AdminTypeCreateComponent } from './admin-type-create/admin-type-create.component';
 import { AdminTypeEditComponent } from './admin-type-edit/admin-type-edit.component';
@@ -60,7 +67,7 @@ export const adminRoutes: Routes = [
   { path: '', component: AdminDashboardComponent },
   { path: 'courses', component: AdminCourseListComponent },
   { path: 'courses/create', component: AdminCourseCreateComponent },
-  { path: 'courses/edit/:id', component: AdminCourseEditComponent }, 
+  { path: 'courses/edit/:id', component: AdminCourseEditComponent },
   { path: 'tracks', component: AdminTrackListComponent },
   { path: 'tracks/create', component: AdminTrackCreateComponent },
   { path: 'tracks/edit/:id', component: AdminTrackEditComponent },
@@ -79,6 +86,11 @@ export const adminRoutes: Routes = [
   { path: 'fields/create', component: AdminFieldCreateComponent },
   { path: 'fields/edit/:id', component: AdminFieldEditComponent },
   { path: 'fields/delete/:id', component: AdminFieldDeleteComponent },
+
+  { path: 'roles', component: AdminRoleListComponent },
+  { path: 'roles/create', component: AdminRoleCreateComponent },
+  { path: 'roles/edit/:id', component: AdminRoleEditComponent },
+  { path: 'roles/delete/:id', component: AdminRoleDeleteComponent },
 
   { path: 'types', component: AdminTypeListComponent },
   { path: 'types/create', component: AdminTypeCreateComponent },
