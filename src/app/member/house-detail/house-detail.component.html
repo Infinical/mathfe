@@ -126,6 +126,11 @@
                             </th>
                             <th>
                               <mfDefaultSorter by="description">Description</mfDefaultSorter>
+                              <a data-toggle="tooltip" title="Track Description">
+                                  <sup>
+                                    <i class="icon_target"></i>
+                                  </sup>
+                                </a>
                             </th>
                             <th>
                               <mfDefaultSorter by="skill_maxile">My Score</mfDefaultSorter>
@@ -141,7 +146,7 @@
                         <tbody>
                           <tr *ngFor="let skill of mf.data" [class]="getSkillClass(skill,track)">
                             <td>{{skill.skill}}</td>
-                            <td>{{skill.description}}
+                            <td>{{track?.description}}
                               <br>
                               {{ skill?.skill_maxile?.skill_maxile}}
                               <br>

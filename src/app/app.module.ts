@@ -17,6 +17,7 @@ import { UserService } from './services/user.service';
 import { DashboardService } from './services/dashboard.service';
 import { HouseService } from './services/house.service';
 import { FieldService } from './services/field.service';
+import { RoleService } from './services/role.service';
 import { TypeService } from './services/type.service';
 import { UnitService } from './services/unit.service';
 import { LevelService } from './services/level.service';
@@ -116,7 +117,10 @@ import { AdminPermissionCreateComponent } from './admin/admin-permission-create/
 import { AdminPermissionEditComponent } from './admin/admin-permission-edit/admin-permission-edit.component';
 import { AdminPermissionDeleteComponent } from './admin/admin-permission-delete/admin-permission-delete.component';
 
-
+import { AdminRoleListComponent } from "./admin/admin-role-list/admin-role-list.component";
+import { AdminRoleCreateComponent } from './admin/admin-role-create/admin-role-create.component';
+import { AdminRoleEditComponent } from './admin/admin-role-edit/admin-role-edit.component';
+import { AdminRoleDeleteComponent } from './admin/admin-role-delete/admin-role-delete.component';
 
 import { AdminDifficultyListComponent } from "./admin/admin-difficulty-list/admin-difficulty-list.component";
 import { AdminDifficultyCreateComponent } from './admin/admin-difficulty-create/admin-difficulty-create.component';
@@ -221,7 +225,7 @@ export function tokenGetter() {
     AdminQuestionListComponent,
     AdminSkillDeleteComponent,
     AdminTrackDeleteComponent,
-    AdminQuestionFormComponent, 
+    AdminQuestionFormComponent,
     AdminQuestionDeleteComponent,
 
     AdminHouseListComponent,
@@ -248,6 +252,11 @@ export function tokenGetter() {
     AdminLevelEditComponent,
     AdminLevelCreateComponent,
     AdminLevelDeleteComponent,
+
+    AdminRoleListComponent,
+    AdminRoleCreateComponent,
+    AdminRoleEditComponent,
+    AdminRoleDeleteComponent,
 
     AdminPermissionListComponent,
     AdminPermissionEditComponent,
@@ -313,7 +322,7 @@ export function tokenGetter() {
     AdminHouseSkillsTrackListComponent, AdminAddSkillComponent],
   providers: [TrackService, CourseService, QuestionService, DashboardService,
     HouseService, FieldService, TypeService, UnitService, PermissionService, LevelService,
-    DifficultyService,
+    DifficultyService,RoleService,
     UserService, AuthService, AuthGuardService, HouseTrackService,
     SkillService, SkillTrackService, ModalService, HelperService],
   bootstrap: [AppComponent]
