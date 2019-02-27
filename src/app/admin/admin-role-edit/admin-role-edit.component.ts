@@ -44,7 +44,7 @@ export class AdminRoleEditComponent implements OnInit {
   updateRole(role: Role) {
     this.roleService.updateRole(role)
       .subscribe(
-        field => {
+        role => {
           this.status = 'success';
           this.message = role['message'];
           this.roleService.updateStatus = this.message = role['message'];

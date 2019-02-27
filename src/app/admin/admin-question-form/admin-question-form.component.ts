@@ -21,6 +21,7 @@ export class AdminQuestionFormComponent implements OnInit {
 
   QuestionForm: FormGroup;
   questionTypeNumberRequirMsg = "Please select at least one answer.";
+  questionTypeMCQRequirMsg = "";
   selectedFile: File = null;
   imgURL: string = "images/upload.png";
   img0URL: string = "";
@@ -141,18 +142,6 @@ export class AdminQuestionFormComponent implements OnInit {
     }
 
     this.numericTextBxCount = indexes.length;
-
-    // for (var i = 0; i < 4; i++) { 
-    //   if (!indexes[i]) {
-    //     this.QuestionForm.controls['answer' + i.toString()].disable();
-    //     this.QuestionForm.controls['answer' + i.toString() + '_image'].disable();
-    //   }
-    //   else {
-    //     this.QuestionForm.controls['answer' + i.toString()].enable();
-    //     this.QuestionForm.controls['answer' + i.toString() + '_image'].enable();
-    //   }
-    // }
-
     if (this.numericTextBxCount >= 4) this.disableAddNumTxtBx = true;
     else this.disableAddNumTxtBx = false;
   }
@@ -393,44 +382,74 @@ export class AdminQuestionFormComponent implements OnInit {
     if (this.question.type_id == 1) {
       let isExist = true;
       let noExistCount = 0;
-      if (!this.question.answer0 || !this.img0URL) {
-        noExistCount++;
+      if (this.question.answer0) {
+        if (!this.img0URL) {
+          noExistCount++;
+        }
       }
-      if (!this.question.answer1 || !this.img1URL) {
-        noExistCount++;
+      if (this.question.answer1) {
+        if (!this.img1URL) {
+          noExistCount++;
+        }
       }
-      if (!this.question.answer2 || !this.img2URL) {
-        noExistCount++;
+      if (noExistCount == 1) {
+        if (!this.img0URL && this.question.answer0) {
+          this.questionTypeMCQRequirMsg = "Please select First Answer image.";
+        } else {
+          this.questionTypeMCQRequirMsg = "Please select Second Answer image.";
+        }
       }
-      if (!this.question.answer3 || !this.img3URL) {
-        noExistCount++;
+      if (noExistCount == 2) {
+        this.questionTypeMCQRequirMsg = "Please select answer First & Second Answer image.";
       }
-
-      if (noExistCount > 3) {
+      if (noExistCount > 0) {
         isExist = false;
       }
       return isExist;
-      // if (
-      //   (!this.question.answer0) ||
-      //   (!this.question.answer1) ||
-      //   (!this.question.answer2) ||
-      //   (!this.question.answer3) ||
-      //   (!this.img0URL) ||
-      //   (!this.img1URL) ||
-      //   (!this.img2URL) ||
-      //   (!this.img3URL)
-      // ) {
-      //   return false;
-      // }
+    }
+    return true;
+  }
+
+  totalTextBoxInQuestionHtml() {
+    const searchHTML = '<input min="0" type="number"';
+    let count = 0;
+    if (this.question.question.indexOf(searchHTML) != -1) {
+      count = this.occurrences(this.question.question, searchHTML);
+    }
+    return count;
+  }
+  show2nAns() {
+    if (this.question.type_id == 2) {
+      let requiredAns = this.totalTextBoxInQuestionHtml();
+      if (requiredAns < 2) {
+        return false;
+      }
+    }
+    return true;
+  }
+  show3edAns() {
+    if (this.question.type_id == 2) {
+      let requiredAns = this.totalTextBoxInQuestionHtml();
+      if (requiredAns < 3) {
+        return false;
+      }
+    }
+    return true;
+  }
+  show4thAns() {
+    if (this.question.type_id == 2) {
+      let requiredAns = this.totalTextBoxInQuestionHtml();
+      if (requiredAns < 4) {
+        return false;
+      }
     }
     return true;
   }
   isOneAnsExistIfNUMBER() {
     if (this.question.type_id == 2) {
-      const searchHTML = '<input min="0" type="number"';
       let requiredAns = 1;
-      if (this.question.question.indexOf(searchHTML) != -1) {
-        requiredAns = this.occurrences(this.question.question, searchHTML);
+      if (this.totalTextBoxInQuestionHtml() != 0) {
+        requiredAns = this.totalTextBoxInQuestionHtml();
       }
       let isExist = true;
       let noExistCount = 0;

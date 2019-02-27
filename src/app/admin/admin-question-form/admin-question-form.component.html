@@ -36,22 +36,34 @@
             <div class="form-group">
               <label for="question" class="col-lg-1 control-label">Question</label>
               <div class="col-lg-12">
-                <button (click)="addNumericTextBox($event)" [disabled]="disableAddNumTxtBx" class="btn btn-primary">Add
+                <button *ngIf="!disableAddNumTxtBx" (click)="addNumericTextBox($event)" [disabled]="disableAddNumTxtBx"
+                  class="btn btn-primary">Add
                   numeric text box</button>
-                <angular-editor formControlName="question" [config]="editorConfig" name="question" [(ngModel)]="question.question"
-                  (ngModelChange)="questionChange($event)" required style="text-align: left!important;">
+                <p *ngIf="disableAddNumTxtBx" class="text-danger">Maximum 4 Textboxs allowed!!</p>
+              </div>
+              <div class="col-lg-12">
+                <angular-editor formControlName="question" [config]="editorConfig" name="question"
+                  [(ngModel)]="question.question" (ngModelChange)="questionChange($event)" required
+                  style="text-align: left!important;">
                 </angular-editor>
                 <div style="width: 100%;background-color: white;padding: 1rem;display: none;" id="katex"></div>
-                <div *ngIf="question.question.length <= 0 && QuestionForm['controls'].question.touched" class="alert alert-danger">
+                <div *ngIf="question.question.length <= 0 && QuestionForm['controls'].question.touched"
+                  class="alert alert-danger">
                   Question is required
                 </div>
               </div>
+
+
+            </div>
+            <div class="row">
               <label for="question_image" class="col-lg-2 control-label">Question Image</label>
               <div class="row">
                 <div class="col-lg-4">
-                  <input type="file" class="form-control" id="question_image" name="question_image" formControlName="question_image"
-                    minlength="3" accept="image/*" (change)="onFileSelected($event.target.files)" placeholder="Question Image">
-                  <div *ngIf="QuestionForm['controls'].question_image.errors?.minlength && QuestionForm['controls'].question_image.touched"
+                  <input type="file" class="form-control" id="question_image" name="question_image"
+                    formControlName="question_image" minlength="3" accept="image/*"
+                    (change)="onFileSelected($event.target.files)" placeholder="Question Image">
+                  <div
+                    *ngIf="QuestionForm['controls'].question_image.errors?.minlength && QuestionForm['controls'].question_image.touched"
                     class="alert alert-danger">
                     Minimum of 3 characters
                   </div>
@@ -70,20 +82,22 @@
                     <input type="text" class="form-control" id="answer0" name="answer0" placeholder="First Answer"
                       aria-describedby="firstAnswer_help" formControlName="answer0" [(ngModel)]="question.answer0"
                       (ngModelChange)="parseKatex($event, 'katex_answer0')">
-                    <div *ngIf="QuestionForm['controls'].answer0.touched && question.type_id == 2 && !isNumeric(question.answer1)"
+                    <div
+                      *ngIf="QuestionForm['controls'].answer0.touched && question.type_id == 2 && !isNumeric(question.answer1)"
                       class="alert alert-danger">
                       For type 'Number' all answers must be numeric
                     </div>
                     <input type="file" class="form-control" id="answer0_image" name="answer0_image" minlength="3"
-                      accept="image/*" (change)="answerOneImageSelected($event.target.files)" placeholder="First Answer Image"
-                      formControlName="answer0_image">
-                    <div style="width: 100%;background-color: white;padding: 1rem;display: none;" id="katex_answer0"></div>
+                      accept="image/*" (change)="answerOneImageSelected($event.target.files)"
+                      placeholder="First Answer Image" formControlName="answer0_image">
+                    <div style="width: 100%;background-color: white;padding: 1rem;display: none;" id="katex_answer0">
+                    </div>
                   </div>
                   <div *ngIf="img0URL" class="col-sm-4 answer-row">
                     <img [src]="img0URL" alt="" style="width:100px;" />
                   </div>
                 </div>
-                <div class="col-sm-6">
+                <div *ngIf="show2nAns()" class="col-sm-6">
                   <div class="col-sm-8">
                     <small id="secondAnswer_help" class="form-text text-muted text-success">
                       Second Answer
@@ -91,14 +105,16 @@
                     <input type="text" class="form-control" id="answer1" name="answer1" placeholder="Second Answer"
                       aria-describedby="secondAnswer_help" formControlName="answer1" [(ngModel)]="question.answer1"
                       (ngModelChange)="parseKatex($event, 'katex_answer1')">
-                    <div *ngIf="QuestionForm['controls'].answer1.touched && question.type_id == 2 && !isNumeric(question.answer1)"
+                    <div
+                      *ngIf="QuestionForm['controls'].answer1.touched && question.type_id == 2 && !isNumeric(question.answer1)"
                       class="alert alert-danger">
                       For type 'Number' all answers must be numeric
                     </div>
                     <input type="file" class="form-control" id="answer1_image" name="answer1_image" minlength="3"
-                      accept="image/*" (change)="answerTwoImageSelected($event.target.files)" placeholder="Second Answer Image"
-                      formControlName="answer1_image">
-                    <div style="width: 100%;background-color: white;padding: 1rem;display: none;" id="katex_answer1"></div>
+                      accept="image/*" (change)="answerTwoImageSelected($event.target.files)"
+                      placeholder="Second Answer Image" formControlName="answer1_image">
+                    <div style="width: 100%;background-color: white;padding: 1rem;display: none;" id="katex_answer1">
+                    </div>
                   </div>
                   <div *ngIf="img1URL" class="col-sm-4 answer-row">
                     <img [src]="img1URL" alt="" style="width:100px;" />
@@ -110,7 +126,7 @@
 
             <div class="row">
               <div class="form-group col-sm-12">
-                <div class="col-sm-6">
+                <div class="col-sm-6" *ngIf="show3edAns()">
                   <div class="col-sm-8">
                     <small id="thirdAnswer_help" class="form-text text-muted text-success">
                       Third Answer
@@ -118,20 +134,22 @@
                     <input type="text" class="form-control" id="answer2" name="answer2" placeholder="Third Answer"
                       aria-describedby="thirdAnswer_help" formControlName="answer2" [(ngModel)]="question.answer2"
                       (ngModelChange)="parseKatex($event, 'katex_answer2')">
-                    <div *ngIf="QuestionForm['controls'].answer2.touched && question.type_id == 2 && !isNumeric(question.answer2)"
+                    <div
+                      *ngIf="QuestionForm['controls'].answer2.touched && question.type_id == 2 && !isNumeric(question.answer2)"
                       class="alert alert-danger">
                       For type 'Number' all answers must be numeric
                     </div>
                     <input type="file" class="form-control" id="answer2_image" name="answer2_image" minlength="3"
-                      accept="image/*" (change)="answerThreeImageSelected($event.target.files)" placeholder="Third Answer Image"
-                      formControlName="answer2_image">
-                    <div style="width: 100%;background-color: white;padding: 1rem;display: none;" id="katex_answer2"></div>
+                      accept="image/*" (change)="answerThreeImageSelected($event.target.files)"
+                      placeholder="Third Answer Image" formControlName="answer2_image">
+                    <div style="width: 100%;background-color: white;padding: 1rem;display: none;" id="katex_answer2">
+                    </div>
                   </div>
                   <div *ngIf="img2URL" class="col-sm-4 answer-row">
                     <img [src]="img2URL" alt="" style="width:100px;" />
                   </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-6" *ngIf="show4thAns()">
                   <div class="col-sm-8">
                     <small id="fourthAnswer_help" class="form-text text-muted text-success">
                       Fourth Answer
@@ -139,14 +157,16 @@
                     <input type="text" class="form-control" id="answer3" name="answer3" placeholder="Fourth Answer"
                       aria-describedby="fourthAnswer_help" formControlName="answer3" [(ngModel)]="question.answer3"
                       (ngModelChange)="parseKatex($event, 'katex_answer3')">
-                    <div *ngIf="QuestionForm['controls'].answer3.touched && question.type_id == 2 && !isNumeric(question.answer3)"
+                    <div
+                      *ngIf="QuestionForm['controls'].answer3.touched && question.type_id == 2 && !isNumeric(question.answer3)"
                       class="alert alert-danger">
                       For type 'Number' all answers must be numeric
                     </div>
                     <input type="file" class="form-control" id="answer3_image" name="answer3_image" minlength="3"
-                      accept="image/*" (change)="answerFourImageSelected($event.target.files)" placeholder="Fourth Answer Image"
-                      formControlName="answer3_image">
-                    <div style="width: 100%;background-color: white;padding: 1rem;display: none;" id="katex_answer3"></div>
+                      accept="image/*" (change)="answerFourImageSelected($event.target.files)"
+                      placeholder="Fourth Answer Image" formControlName="answer3_image">
+                    <div style="width: 100%;background-color: white;padding: 1rem;display: none;" id="katex_answer3">
+                    </div>
 
                   </div>
                   <div *ngIf="img3URL" class="col-sm-4 answer-row">
@@ -156,14 +176,15 @@
               </div>
             </div>
             <p *ngIf="!isOneAnsExistIfNUMBER()" style="color: red;">{{questionTypeNumberRequirMsg}}</p>
-            <p *ngIf="!isAllAnsExistIfMCQ()" style="color: red;">Please select at least one answer with image.</p>
+            <p *ngIf="!isAllAnsExistIfMCQ()" style="color: red;">{{questionTypeMCQRequirMsg}}</p>
             <br>
             <div class="form-group">
               <label for="correctAnwer" class="col-sm-2 control-label">Correct Answer</label>
               <div class="col-sm-4">
                 <input question.type_id type="number" class="form-control" id="correct_answer" name="correct_answer"
                   placeholder="Correct Answer" formControlName="correct_answer" [(ngModel)]="question.correct_answer">
-                <div *ngIf="QuestionForm['controls'].correct_answer.touched && question.type_id == 1 && question.correct_answer === null"
+                <div
+                  *ngIf="QuestionForm['controls'].correct_answer.touched && question.type_id == 1 && question.correct_answer === null"
                   class="alert alert-danger">
                   Correct Answer is required
                 </div>
@@ -181,7 +202,8 @@
                         {{type.type}}
                       </mat-option>
                     </mat-select>
-                    <div *ngIf="QuestionForm['controls'].type_id.errors?.required && QuestionForm['controls'].type_id.touched"
+                    <div
+                      *ngIf="QuestionForm['controls'].type_id.errors?.required && QuestionForm['controls'].type_id.touched"
                       class="alert alert-danger">
                       Type is required
                     </div>
@@ -189,13 +211,14 @@
                 </div>
                 <div class="col-sm-4">
                   <mat-form-field>
-                    <mat-select required id="status_id" name="status_id" placeholder="Status" formControlName="status_id"
-                      [(ngModel)]="question.status_id">
+                    <mat-select required id="status_id" name="status_id" placeholder="Status"
+                      formControlName="status_id" [(ngModel)]="question.status_id">
                       <mat-option *ngFor="let status of statuses" [value]="status.id">
                         {{status.status}}
                       </mat-option>
                     </mat-select>
-                    <div *ngIf="QuestionForm['controls'].status_id.errors?.required && QuestionForm['controls'].status_id.touched"
+                    <div
+                      *ngIf="QuestionForm['controls'].status_id.errors?.required && QuestionForm['controls'].status_id.touched"
                       class="alert alert-danger">
                       Status is required
                     </div>
@@ -209,7 +232,8 @@
                         {{difficulty.difficulty}} - {{difficulty.description}}
                       </mat-option>
                     </mat-select>
-                    <div *ngIf="QuestionForm['controls'].difficulty_id.errors?.required && QuestionForm['controls'].difficulty_id.touched"
+                    <div
+                      *ngIf="QuestionForm['controls'].difficulty_id.errors?.required && QuestionForm['controls'].difficulty_id.touched"
                       class="alert alert-danger">
                       Difficulty is required
                     </div>
@@ -221,8 +245,8 @@
             <div class="row">
               <div class="form-group col-sm-4">
                 <mat-form-field>
-                  <mat-select aria-describedby="level_help" [(value)]="selectedLevel" (selectionChange)="levelChange($event)"
-                    required id="level" name="level" placeholder="Level">
+                  <mat-select aria-describedby="level_help" [(value)]="selectedLevel"
+                    (selectionChange)="levelChange($event)" required id="level" name="level" placeholder="Level">
                     <mat-option *ngFor="let level of levels" [value]="level">
                       {{level.level}} ~ {{level.description}}
                     </mat-option>
@@ -247,7 +271,8 @@
                         {{skill.id}} ~ {{skill.skill}}
                       </mat-option>
                     </mat-select>
-                    <div *ngIf="QuestionForm['controls'].skill_id.errors?.required && QuestionForm['controls'].skill_id.touched"
+                    <div
+                      *ngIf="QuestionForm['controls'].skill_id.errors?.required && QuestionForm['controls'].skill_id.touched"
                       class="alert alert-danger">
                       Skill is required
                     </div>
