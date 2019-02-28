@@ -48,8 +48,6 @@ export class AdminTrackListComponent implements OnInit {
           elmnt.scrollIntoView({ block: 'end', behavior: 'smooth' });
           localStorage.removeItem('last_track_edit_id');
         }, 1000)
-
-
       }
     })
   }
