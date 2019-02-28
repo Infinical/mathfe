@@ -3,7 +3,6 @@ import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { QuestionService } from '../../services/question.service';
-import { ActivatedRoute } from '@angular/router';
 import { Question } from '../../models/question';
 import { FormControl, FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
@@ -11,6 +10,7 @@ import { KatexOptions } from 'ng-katex';
 import katex from 'katex';
 import { HelperService } from '../../services/helper.service';
 import { retryWhen } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'ag-admin-question-form',
   templateUrl: './admin-question-form.component.html',
@@ -200,6 +200,7 @@ export class AdminQuestionFormComponent implements OnInit {
   constructor(private http: HttpClient,
     private questionService: QuestionService,
     private route: ActivatedRoute,
+    private router: Router,
     private formBuilder: FormBuilder,
     private helperService: HelperService) {
 
@@ -366,7 +367,18 @@ export class AdminQuestionFormComponent implements OnInit {
         status: 'success',
         message: res["message"]
       };
+      //localStorage.setItem("last_question_edit_id", this.currentPage + "");
       this.loading = false;
+
+      localStorage.setItem("last_question_edit_id", this.question.id + "")
+
+      setTimeout(() => {
+        this.router.navigate(['/admin/questions']);
+      }
+        , 2000);
+
+      setTimeout(() => window.scrollTo(0, 0), 0);
+
     }, error => {
       this.formResponse = {
         status: 'error',
@@ -382,25 +394,21 @@ export class AdminQuestionFormComponent implements OnInit {
     if (this.question.type_id == 1) {
       let isExist = true;
       let noExistCount = 0;
-      if (this.question.answer0) {
-        if (!this.img0URL) {
-          noExistCount++;
-        }
+      if (!this.question.answer0 && !this.img0URL) {
+        noExistCount++;
       }
-      if (this.question.answer1) {
-        if (!this.img1URL) {
-          noExistCount++;
-        }
+      if (!this.question.answer1 && !this.img1URL) {
+        noExistCount++;
       }
       if (noExistCount == 1) {
-        if (!this.img0URL && this.question.answer0) {
-          this.questionTypeMCQRequirMsg = "Please select First Answer image.";
+        if (!this.question.answer0 && !this.img0URL) {
+          this.questionTypeMCQRequirMsg = "Please enter First answer or select First Answer image.";
         } else {
-          this.questionTypeMCQRequirMsg = "Please select Second Answer image.";
+          this.questionTypeMCQRequirMsg = "Please enter Second answer or select Second Answer image.";
         }
       }
       if (noExistCount == 2) {
-        this.questionTypeMCQRequirMsg = "Please select answer First & Second Answer image.";
+        this.questionTypeMCQRequirMsg = "Please enter First & Second Answer or select image.";
       }
       if (noExistCount > 0) {
         isExist = false;

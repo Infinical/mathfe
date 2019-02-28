@@ -6,7 +6,7 @@ import { QuestionService } from '../../services/question.service';
 import { MatPaginator, MatTableDataSource, MatSort, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { KatexOptions } from 'ng-katex';
 import katex from 'katex';
-
+import { ActivatedRoute, Router } from '@angular/router';
 export interface DialogData { id: string }
 
 @Component({
@@ -57,8 +57,16 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
   constructor(private http: HttpClient,
     private questionService: QuestionService,
     public dialog: MatDialog,
+    private router: Router,
     private cdr: ChangeDetectorRef) {
-    this.onPaginateChange(1);
+    if (localStorage.getItem("last_question_edit_id") && localStorage.getItem("last_question_edit_page_index")) {
+      this.onPaginateChange(parseInt(localStorage.getItem("last_question_edit_page_index")));
+    } else {
+      localStorage.removeItem('last_question_edit_page_index');
+      localStorage.removeItem('last_question_edit_id');
+      this.onPaginateChange(1);
+    }
+
 
     this.questionService.getSearchOptions().subscribe(res => {
       this.searchOptions = res;
@@ -123,7 +131,7 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     this.searchBy = "1";
     this.dataSource = new MatTableDataSource<any>(this.gridData.questions);
   }
-  
+
   displayKatex(string: string, id?: number, parseHtml?: boolean, elementId?: string) {
 
     if (!string) return true;
@@ -165,7 +173,10 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     katexDiv.style.display = "";
     return true;
   }
-
+  editQuestion(id) { 
+    localStorage.setItem("last_question_edit_page_index", this.currentPage + "");
+    this.router.navigate(['/admin/questions/edit/' + id]);
+  }
   onPaginateChange(pageIndex) {
 
     this.loading = true;
@@ -181,8 +192,19 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
       }
       this.dataSource = new MatTableDataSource<any>(this.gridData.questions);
       this.dataSource.sort = this.sort;
+
+      if (localStorage.getItem("last_question_edit_id") && localStorage.getItem("last_question_edit_page_index")) {
+        setTimeout(() => {
+          let id = localStorage.getItem("last_question_edit_id");
+          var elmnt = document.getElementById("question_" + id);
+          elmnt.scrollIntoView({ block: 'end', behavior: 'smooth' });
+          localStorage.removeItem('last_question_edit_id');
+          localStorage.removeItem('last_question_edit_page_index');
+        }, 1000)
+      }
       //this.updatePaginator(origin);
       this.loading = false;
+
     });
   }
 

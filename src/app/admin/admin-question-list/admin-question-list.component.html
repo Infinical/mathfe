@@ -285,9 +285,9 @@
           </ng-container>
           <ng-container matColumnDef="action">
             <th [hidden]="!ShowColumns.Action" mat-header-cell *matHeaderCellDef>Action</th>
-            <td [hidden]="!ShowColumns.Action" mat-cell *matCellDef="let question">
+            <td id="question_{{question.id}}" [hidden]="!ShowColumns.Action" mat-cell *matCellDef="let question">
               <div class="btn-group" role="group" aria-label="First group">
-                <a matTooltip="Edit" [routerLink]="['/admin/questions/edit', question.id]" class="btn btn-info"><i
+                <a matTooltip="Edit" (click)="editQuestion( question.id)" class="btn btn-info"><i
                     class="icon_pencil"></i></a>
                 <a matTooltip="Delete" (click)="confirmDelete(question)" class="btn btn-danger"><i class="icon_minus_alt2"></i></a>
               </div>
