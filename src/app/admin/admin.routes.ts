@@ -62,6 +62,10 @@ import { AdminDifficultyEditComponent } from './admin-difficulty-edit/admin-diff
 import { AdminDifficultyDeleteComponent } from './admin-difficulty-delete/admin-difficulty-delete.component';
 
 
+import { AdminEnrolmentListComponent } from "./admin-enrolment-list/admin-enrolment-list.component";
+import { AdminEnrolmentCreateComponent } from './admin-enrolment-create/admin-enrolment-create.component';
+import { AdminEnrolmentEditComponent } from './admin-enrolment-edit/admin-enrolment-edit.component';
+import { AdminEnrolmentDeleteComponent } from './admin-enrolment-delete/admin-enrolment-delete.component';
 
 export const adminRoutes: Routes = [
   { path: '', component: AdminDashboardComponent },
@@ -101,6 +105,11 @@ export const adminRoutes: Routes = [
   { path: 'units/create', component: AdminUnitCreateComponent },
   { path: 'units/edit/:id', component: AdminUnitEditComponent },
   { path: 'units/delete/:id', component: AdminUnitDeleteComponent },
+
+  { path: 'enrolments', component: AdminEnrolmentListComponent },
+  { path: 'enrolments/create', component: AdminEnrolmentCreateComponent },
+  { path: 'enrolments/edit/:id', component: AdminEnrolmentEditComponent },
+  { path: 'enrolments/delete/:id', component: AdminEnrolmentDeleteComponent },
 
   { path: 'levels', component: AdminLevelListComponent },
   { path: 'levels/create', component: AdminLevelCreateComponent },
