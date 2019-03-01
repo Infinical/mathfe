@@ -122,6 +122,11 @@ import { AdminRoleCreateComponent } from './admin/admin-role-create/admin-role-c
 import { AdminRoleEditComponent } from './admin/admin-role-edit/admin-role-edit.component';
 import { AdminRoleDeleteComponent } from './admin/admin-role-delete/admin-role-delete.component';
 
+import { AdminEnrolmentListComponent } from "./admin/admin-enrolment-list/admin-enrolment-list.component";
+import { AdminEnrolmentCreateComponent } from "./admin/admin-enrolment-create/admin-enrolment-create.component";
+import { AdminEnrolmentEditComponent } from "./admin/admin-enrolment-edit/admin-enrolment-edit.component";
+import { AdminEnrolmentDeleteComponent } from "./admin/admin-enrolment-delete/admin-enrolment-delete.component";
+
 import { AdminDifficultyListComponent } from "./admin/admin-difficulty-list/admin-difficulty-list.component";
 import { AdminDifficultyCreateComponent } from './admin/admin-difficulty-create/admin-difficulty-create.component';
 import { AdminDifficultyEditComponent } from './admin/admin-difficulty-edit/admin-difficulty-edit.component';
@@ -161,7 +166,7 @@ import { DataTableModule } from "angular-6-datatable";
 
 import { KatexModule } from 'ng-katex';
 import { PermissionService } from './services/permission.service';
-
+import { EnrolmentService } from './services/enrolment.service';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -227,7 +232,10 @@ export function tokenGetter() {
     AdminTrackDeleteComponent,
     AdminQuestionFormComponent,
     AdminQuestionDeleteComponent,
-
+    AdminEnrolmentListComponent,
+    AdminEnrolmentCreateComponent,
+    AdminEnrolmentEditComponent,
+    AdminEnrolmentDeleteComponent,
     AdminHouseListComponent,
     AdminHouseEditComponent,
     AdminHouseCreateComponent,
@@ -322,9 +330,9 @@ export function tokenGetter() {
     AdminHouseSkillsTrackListComponent, AdminAddSkillComponent],
   providers: [TrackService, CourseService, QuestionService, DashboardService,
     HouseService, FieldService, TypeService, UnitService, PermissionService, LevelService,
-    DifficultyService,RoleService,
+    DifficultyService, RoleService,
     UserService, AuthService, AuthGuardService, HouseTrackService,
-    SkillService, SkillTrackService, ModalService, HelperService],
+    SkillService, SkillTrackService, ModalService, HelperService, EnrolmentService],
   bootstrap: [AppComponent]
 })
 

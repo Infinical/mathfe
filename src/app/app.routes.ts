@@ -15,6 +15,7 @@ import { VideoComponent } from './member/video/video.component';
 import { PageNotFoundComponent } from './pagenotfound.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 
+
 const appRoutes: Routes = [
   { path: '', redirectTo:'/', pathMatch: 'full'},
   { path: '', component: DashboardComponent},
