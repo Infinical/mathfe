@@ -344,4 +344,8 @@ tr {
   top: 0;
   border: 0;
   cursor: progress;
-} 
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
