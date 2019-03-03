@@ -5,6 +5,8 @@ import { environment } from '../../../environments/environment';
 import { EnrolmentService } from '../../services/enrolment.service';
 import { Enrolment } from '../../models/enrolment';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { AdminEnrollmentUserDetailModalComponent } from './modal/admin-enrollment-user-detail-modal/admin-enrollment-user-detail-modal.component'
+import { AdminEnrollmentHouseDetailModalComponent } from './modal/admin-enrollment-house-detail-modal/admin-enrollment-house-detail-modal.component';
 @Component({
   selector: 'ag-admin-enrolment-list',
   templateUrl: './admin-enrolment-list.component.html',
@@ -105,6 +107,16 @@ export class AdminEnrolmentListComponent implements OnInit {
           //rejected
         }
       });
+  }
+
+  public openUserDetailDialog(userId) {
+    this.dialog.open(AdminEnrollmentUserDetailModalComponent, { data: { userId: userId } });
+  }
+  public openHouseDetailDialog(houseId) {
+    this.dialog.open(AdminEnrollmentHouseDetailModalComponent, { data: { houseId: houseId } });
+  }
+  handleImageLoadError = (event) => {
+    event.target.src = "/assets/images/noImage.png";
   }
   public doSearch(query) {
     let filtered = [];

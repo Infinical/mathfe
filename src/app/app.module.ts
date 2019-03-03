@@ -154,6 +154,8 @@ import { TeachDetailCourseComponent } from './member/teach-list/teach-detail-cou
 import { RecommendedCoursesComponent } from './member/recommended-courses/recommended-courses.component';
 import { ClassManagementSharedComponent } from './member/class-management-shared/class-management-shared.component';
 import { EnrolledClassComponent } from './member/enrolled-class/enrolled-class.component'
+import { AdminEnrollmentUserDetailModalComponent } from './admin/admin-enrolment-list/modal/admin-enrollment-user-detail-modal/admin-enrollment-user-detail-modal.component';
+import { AdminEnrollmentHouseDetailModalComponent } from './admin/admin-enrolment-list/modal/admin-enrollment-house-detail-modal/admin-enrollment-house-detail-modal.component';
 
 //Angular Material
 import { AngularMaterialModule } from './angularmaterial.module';
@@ -276,6 +278,8 @@ export function tokenGetter() {
     AdminDifficultyCreateComponent,
     AdminDifficultyDeleteComponent,
     AdminHouseTracksListComponent,
+    AdminEnrollmentUserDetailModalComponent,
+    AdminEnrollmentHouseDetailModalComponent,
     AdminAddTrackListComponent,
     DynamicContentComponent,
 
@@ -326,7 +330,8 @@ export function tokenGetter() {
     KatexModule
   ],
   entryComponents: [DialogDeleteQuestion, AdminHouseDeleteComponent, AdminCourseDeleteComponent,
-    ConfirmDialogComponent, NotifyDialogComponent, AdminHouseTracksListComponent, AdminAddTrackListComponent,
+    ConfirmDialogComponent, NotifyDialogComponent, AdminHouseTracksListComponent,
+    AdminEnrollmentUserDetailModalComponent, AdminEnrollmentHouseDetailModalComponent, AdminAddTrackListComponent,
     AdminHouseSkillsTrackListComponent, AdminAddSkillComponent],
   providers: [TrackService, CourseService, QuestionService, DashboardService,
     HouseService, FieldService, TypeService, UnitService, PermissionService, LevelService,
