@@ -24,7 +24,7 @@ export class EnrolmentService {
       );
   }
   addEnrolment(role: Object): Observable<Enrolment[]> {
-    return this.http.post<Enrolment[]>(`${environment.apiURL}/enrolments`, role)
+    return this.http.post<any[]>(`${environment.apiURL}/enrolments`, role)
       .map((response) => response)
       .catch((error: any) => throwError(error || { message: 'Server Error' }));
   }
@@ -39,7 +39,7 @@ export class EnrolmentService {
     return this.http.put<any>(url, enrolment)
       .map((response) => response)
       .catch((error: any) => throwError(error.error || { message: 'Server Error' }));
-  }
+  } 
   deleteEnrolment(id: String): Observable<Enrolment[]> {
     const apiUrl = `${environment.apiURL}/enrolments`;
     const url = `${apiUrl}/${id}`;

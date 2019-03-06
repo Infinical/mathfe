@@ -20,7 +20,7 @@ export class AdminEnrolmentDeleteComponent implements OnInit {
       data => {
         this.enrolmentService.updateStatus = data['message'];
         setTimeout(() => this.enrolmentService.updateStatus = '', 2000);
-        this.router.navigate(['/admin/fields']);
+        this.router.navigate(['/admin/enrolments']);
         setTimeout(() => window.scrollTo(0, 0), 0);
       },
       error => {

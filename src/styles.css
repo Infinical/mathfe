@@ -349,3 +349,6 @@ tr {
 .cursor-pointer {
   cursor: pointer;
 }
+.question-answer-img {
+  max-width: 150px;
+}
