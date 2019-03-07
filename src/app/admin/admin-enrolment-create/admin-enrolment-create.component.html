@@ -19,16 +19,17 @@
     <div class="col-md-10 col-md-offset-1">
       <div class="well well bs-component">
         <form novalidate class="form-horizontal" (ngSubmit)="createEnrolment(createEnrolmentForm.value)"
-              #createEnrolmentForm="ngForm">
+          #createEnrolmentForm="ngForm">
           <fieldset>
 
             <div class="form-group">
               <label for="user" class="col-lg-2 control-label">User </label>
               <div class="col-lg-10">
-                <input matInput (input)="onSearchChange($event.target.value)" placeholder="User Name" aria-label="User" [matAutocomplete]="auto" class="form-control" id="name" name="name" ngModel
-                       #name="ngModel" required>
+                <input matInput (input)="onSearchChange($event.target.value)" placeholder="User Name" aria-label="User"
+                  [matAutocomplete]="auto" class="form-control" id="name" name="name" ngModel #name="ngModel" required>
                 <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option (onSelectionChange)="selectedUser=user" *ngFor="let user of filteredUsers" [value]="user.name">
+                  <mat-option (onSelectionChange)="selectedUser=user" *ngFor="let user of filteredUsers"
+                    [value]="user.name">
                     {{user.name}}
                   </mat-option>
                 </mat-autocomplete>
@@ -41,8 +42,8 @@
               <label for="role" class="col-lg-2 control-label">Role</label>
               <div class="col-lg-10">
                 <!--<input type="text" class="form-control" rows="3" id="role" name="role" ngModel #role="ngModel" required>-->
-                <select class="form-control" #role="ngModel" ngModel id="role" required
-                        name="role" placeholder="House's couse">
+                <select class="form-control" #role="ngModel" ngModel id="role" required name="role"
+                  placeholder="House's couse">
                   <option value="" disabled selected>Select Role</option>
                   <option *ngFor="let role of roles" [value]="role.role">
                     {{role.role}}
@@ -58,7 +59,7 @@
               <label for="description" class="col-lg-2 control-label">Currency</label>
               <div class="col-lg-10">
                 <select class="form-control" #currency="ngModel" [(ngModel)]="house.currency" id="currency" required
-                        name="currency" placeholder="House's couse">
+                  name="currency" placeholder="House's couse">
                   <option value="" disabled selected>Select Currency</option>
                   <option *ngFor="let currency of currencies" [value]="currency">
                     {{currency}}
@@ -69,14 +70,12 @@
                 </div>
               </div>
             </div>
-           
+
             <div class="form-group">
               <label for="house" class="col-lg-2 control-label">Class Title</label>
-              <div class="col-lg-10">
-                <!--<input type="text" class="form-control" id="house" name="house" placeholder="House Title" ngModel
-      #house="ngModel" required>-->
-                <select (ngModelChange)="onChangeObj($event)" class="form-control" #house="ngModel" ngModel id="house" required
-                        name="house" placeholder="House's couse">
+              <div class="col-lg-10"> 
+                <select (ngModelChange)="onChangeObj($event)" class="form-control" #house="ngModel" ngModel id="house"
+                  required name="house" placeholder="House's couse">
                   <option value="" disabled selected>Select Class</option>
                   <option *ngFor="let house of houses" [value]="house.id">
                     {{house.house}}
@@ -88,46 +87,47 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="price" class="col-lg-2 control-label">Price</label>
+              <label for="price" class="col-lg-2 control-label">Class Price</label>
               <div class="col-lg-10">
-                <input type="text" class="form-control" rows="3" id="price" name="price"  [(ngModel)]="selectedHouse.price"
-                       #price="ngModel" required disabled>
-              </div>
-              <div *ngIf="price.errors?.required && price.dirty" class="alert alert-danger">
-                Price is required
+                <input type="text" class="form-control" rows="3" id="price" name="price"
+                  [(ngModel)]="selectedHouse.price" disabled>
               </div>
             </div>
-            <!--<div class="form-group">
+            <div class="form-group">
+              <label for="price" class="col-lg-2 control-label">Amount Paid</label>
+              <div class="col-lg-10">
+                <input type="number" min="0" value="0" class="form-control" rows="3" id="amount_paid" name="amount_paid"
+                  ngModel #amount_paid="ngModel">
+              </div> 
+            </div> 
+            <div class="form-group">
               <label for="transaction_id" class="col-lg-2 control-label">Transaction ID</label>
               <div class="col-lg-10">
-                <input type="text" class="form-control" rows="3" id="transaction_id" name="transaction_id" ngModel #transaction_id="ngModel"
-                       required>
+                <input type="text" value="9999" class="form-control" rows="3" id="transaction_id" name="transaction_id" ngModel
+                  #transaction_id="ngModel">
               </div>
-              <div *ngIf="transaction_id.errors?.required && transaction_id.dirty" class="alert alert-danger">
-                Transaction ID is required
-              </div>
-            </div>-->
+            </div>
             <div>
               <div class="form-group col-md-6">
                 <label for="start_date" class="col-lg-4 control-label">Start Date</label>
                 <div class="col-lg-8">
                   <input type="date" ngModel="start_date" class="form-control" id="start_date" name="start_date"
-                         placeholder="Start Date" />
+                    placeholder="Start Date" />
                 </div>
               </div>
               <div class="form-group col-md-6">
                 <label for="expiry_date" class="col-lg-4 control-label">Expiry Date</label>
                 <div class="col-lg-8">
                   <input type="date" ngModel="expiry_date" class=" form-control" id="expiry_date" name="expiry_date"
-                         placeholder="Expiry Date" />
+                    placeholder="Expiry Date" />
                 </div>
               </div>
             </div>
             <div class="form-group">
               <label for="places_alloted" class="col-lg-2 control-label">Places</label>
               <div class="col-lg-10">
-                <input type="text" class="form-control" rows="3" id="places_alloted" name="places_alloted" ngModel #places_alloted="ngModel"
-                       required>
+                <input type="text" class="form-control" rows="3" id="places_alloted" name="places_alloted" ngModel
+                  #places_alloted="ngModel" required>
               </div>
               <div *ngIf="places_alloted.errors?.required && places_alloted.dirty" class="alert alert-danger">
                 Places is required

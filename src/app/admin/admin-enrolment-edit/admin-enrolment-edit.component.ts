@@ -23,9 +23,9 @@ export class AdminEnrolmentEditComponent implements OnInit {
   selectedHouse = { price: '0' };
   formData: FormData = new FormData();
   id: any;
-  params: any; 
+  params: any;
 
-  enrolment = new EnrolmentEdit('','','','','','','','','','','','','','','','','');
+  enrolment = new EnrolmentEdit('', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
 
   constructor(private enrolmentService: EnrolmentService, private activatedRoute: ActivatedRoute,
     private router: Router, private helperService: HelperService) { }
@@ -48,6 +48,7 @@ export class AdminEnrolmentEditComponent implements OnInit {
                 this.enrolment.user_name = u.name;
               }
             });
+            this.onChangeObj(this.enrolment.house_id);
             this.loading = false;
           },
           error => {
@@ -101,26 +102,22 @@ export class AdminEnrolmentEditComponent implements OnInit {
 
   updateEnrolment(enrolment) {
     this.loading = true;
-    //this.formData.append('_method', 'PATCH');
-    //this.formData.append('user', enrolment.name);
-    //this.formData.append('role', enrolment.role);
-    //this.formData.append('currency_code', enrolment.currency);
-    //this.formData.append('house_id', enrolment.house);
-    //this.formData.append('start_date', enrolment.start_date);
-    //this.formData.append('expiry_date', enrolment.expiry_date);
-    //this.formData.append('amount_paid', this.selectedHouse.price);
-    //this.formData.append('places_alloted', enrolment.places_alloted);
+    this.roles.forEach((r) => {
+      if (r.id == enrolment.role_id) {
+        enrolment.role = r.role;
+      }
+    });
     var d = {
       id: this.id,
-      user: enrolment.name,
+      user: enrolment.user_name,
       role: enrolment.role,
-      'currency_code': enrolment.currency,
-      'house_id': enrolment.house,
-      'transaction_id': '9999',
-      'start_date': enrolment.start_date,
-      'expiry_date': enrolment.expiry_date,
-      'amount_paid': this.selectedHouse.price,
-      'places_alloted': enrolment.places_alloted
+      currency_code: enrolment.currency_code,
+      house_id: enrolment.house_id,
+      transaction_id: enrolment.transaction_id || '9999',
+      start_date: enrolment.start_date,
+      expiry_date: enrolment.expiry_date,
+      amount_paid: enrolment.amount_paid || "0",
+      places_alloted: enrolment.places_alloted
     };
     this.enrolmentService.updateEnrolment(d)
       .subscribe(
