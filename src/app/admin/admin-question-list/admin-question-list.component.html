@@ -165,7 +165,7 @@
                 {{question.question}}
               </span>
               <img *ngIf="!question.calculator && question.question_image && !displayKatex(question.question)" style="margin-top: 0.25rem; margin-bottom: 0.25rem;"
-                src="{{beURL}}{{question.question_image}}" width="150" />
+                src="{{beURL}}{{question.question_image}}" class="question-answer-img" />
               <!-- <img *ngIf="!question.calculator && question.question_image && question.question.indexOf('<') < 0 && !displayKatex(question.question)"
                 style="margin-top: 0.25rem; margin-bottom: 0.25rem;" src="{{beURL}}{{question.question_image}}" width="150" /> -->
               <dynamic-content *ngIf="((question.question.indexOf('<') >= 0) && (!displayKatex(question.question)) )"
@@ -190,7 +190,7 @@
                   {{displayKatex(question.answer0, question.id, true, 'katexDiv_answer0' + question.id)}}
                 </div>
                 <div class="col-sm-12">
-                  <img *ngIf="question.answer0_image" src="{{beURL}}{{question.answer0_image}}" width="150" />
+                  <img *ngIf="question.answer0_image" src="{{beURL}}{{question.answer0_image}}" class="question-answer-img" />
                 </div>
               </div>
               <div [ngClass]="{'correct-answer': question.correct_answer === 1  && question.type_id == 1, 'row': true}">
@@ -201,7 +201,7 @@
                   {{displayKatex(question.answer1, question.id, true, 'katexDiv_answer1' + question.id)}}
                 </div>
                 <div class="col-sm-12">
-                  <img *ngIf="question.answer1_image" src="{{beURL}}{{question.answer1_image}}" width="150" />
+                  <img *ngIf="question.answer1_image" src="{{beURL}}{{question.answer1_image}}" class="question-answer-img" />
                 </div>
               </div>
               <div [ngClass]="{'correct-answer': question.correct_answer === 2  && question.type_id == 1, 'row': true}">
@@ -212,7 +212,7 @@
                   {{displayKatex(question.answer2, question.id, true, 'katexDiv_answer2' + question.id)}}
                 </div>
                 <div class="col-sm-12">
-                  <img *ngIf="question.answer2_image" src="{{beURL}}{{question.answer2_image}}" width="150" />
+                  <img *ngIf="question.answer2_image" src="{{beURL}}{{question.answer2_image}}" class="question-answer-img" />
                 </div>
               </div>
               <div [ngClass]="{'correct-answer': question.correct_answer === 3  && question.type_id == 1, 'row': true}">
@@ -223,7 +223,7 @@
                   {{displayKatex(question.answer3, question.id, true, 'katexDiv_answer3' + question.id)}}
                 </div>
                 <div class="col-sm-12">
-                  <img *ngIf="question.answer3_image" src="{{beURL}}{{question.answer3_image}}" width="150" />
+                  <img *ngIf="question.answer3_image" src="{{beURL}}{{question.answer3_image}}" class="question-answer-img" />
                 </div>
               </div>
             </td>

@@ -1,26 +1,34 @@
 th.mat-sort-header-sorted {
-  color: black;
+	color: black;
 }
 
-.correct-answer{
+.correct-answer {
 	border-width: 2px;
 	border-style: solid;
 	border-color: green;
 	margin: 0.5rem;
 }
 
-.mat-row:nth-child(even){
-	background-color:#f2f2f2;
+.mat-row:nth-child(even) {
+	background-color: #f2f2f2;
 }
 
-.mat-table{
+.mat-table {
 	font-family: 'Raleway', sans-serif;
 }
 
-.mat-expansion-indicator{
+.mat-expansion-indicator {
 	color: white!important;
 }
 
-td.mat-cell{
+td.mat-cell {
 	text-align: left;
+}
+
+mat-expansion-panel-header, mat-expansion-panel-header:hover {
+	background-color: #fff!important;
+}
+
+.mat-expansion-panel-body {
+	padding: 10px !important;
 }
