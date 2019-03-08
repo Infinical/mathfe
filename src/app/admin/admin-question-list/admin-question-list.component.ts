@@ -7,6 +7,7 @@ import { MatPaginator, MatTableDataSource, MatSort, MatDialog, MatDialogRef, MAT
 import { KatexOptions } from 'ng-katex';
 import katex from 'katex';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HelperService } from '../../services/helper.service';
 export interface DialogData { id: string }
 
 @Component({
@@ -173,7 +174,7 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     katexDiv.style.display = "";
     return true;
   }
-  editQuestion(id) { 
+  editQuestion(id) {
     localStorage.setItem("last_question_edit_page_index", this.currentPage + "");
     this.router.navigate(['/admin/questions/edit/' + id]);
   }
@@ -247,6 +248,7 @@ export class DialogDeleteQuestion {
   deleteResult: any;
 
   constructor(
+    private helperService: HelperService,
     private questionService: QuestionService,
     public dialogRef: MatDialogRef<DialogDeleteQuestion>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
@@ -273,9 +275,10 @@ export class DialogDeleteQuestion {
         dom.style.display = 'none';
 
       }, error => {
+
         this.deleteResult = {
           status: 'error',
-          message: 'Server Error'
+          message: this.helperService.ParseErrorMsg(error)
         };
       });
   }
