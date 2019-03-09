@@ -32,3 +32,8 @@ mat-expansion-panel-header, mat-expansion-panel-header:hover {
 .mat-expansion-panel-body {
 	padding: 10px !important;
 }
+
+.page-nav-select {
+    text-align: left;
+    margin-top: 10px;
+}

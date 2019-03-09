@@ -178,8 +178,13 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     localStorage.setItem("last_question_edit_page_index", this.currentPage + "");
     this.router.navigate(['/admin/questions/edit/' + id]);
   }
+  gotToPage(e) {
+    if (e.value != this.currentPage) {
+      this.onPaginateChange(e.value);
+    }
+  }
   onPaginateChange(pageIndex) {
-
+    //debugger;
     this.loading = true;
     this.currentPage = pageIndex;
     this.questionService.getQuestions(this.currentPage).subscribe((data) => {
@@ -187,8 +192,9 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
       this.allPages = [];
       for (let i = 1; i <= data.num_pages; i++) {
         this.allPages.push({
-          pageIndex: i,
-          active: i == this.currentPage
+          id: i,
+          text: i
+          //active: i == this.currentPage
         });
       }
       this.dataSource = new MatTableDataSource<any>(this.gridData.questions);

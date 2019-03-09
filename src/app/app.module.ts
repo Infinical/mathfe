@@ -169,7 +169,7 @@ import { DataTableModule } from "angular-6-datatable";
 import { KatexModule } from 'ng-katex';
 import { PermissionService } from './services/permission.service';
 import { EnrolmentService } from './services/enrolment.service';
-
+import { Select2Module } from 'ng2-select2';
 export function tokenGetter() {
   return localStorage.getItem("token");
 }
@@ -306,6 +306,7 @@ export function tokenGetter() {
     HttpModule,
     ChartsModule,
     NgxPayPalModule,
+    Select2Module,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
