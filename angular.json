@@ -32,6 +32,7 @@
               "src/css/owl.theme.css",
               "src/assets/elegant-icons/style.css",
               "src/css/responsive.css",
+              "node_modules/select2/dist/css/select2.css",
               "src/css/styles.css"
             ],
             "scripts": [
@@ -51,7 +52,8 @@
               "src/js/wow.min.js",
               "src/js/jquery.ajaxchimp.js",
               "src/js/custom.js",
-              "src/js/charts.js"
+              "src/js/charts.js", 
+              "node_modules/select2/dist/js/select2.full.js"
             ]
           },
           "configurations": {
