@@ -158,7 +158,7 @@
           </thead>
           <tbody align="left">
             <tr *ngFor="let user of users">
-              <td [hidden]="!ShowColumns.User"><img src="{{user.image}}" width="75" /></td>
+              <td [hidden]="!ShowColumns.User"><img (error)="handleImageLoadError($event)"  src="{{user.image}}" width="75" /></td>
               <td [hidden]="!ShowColumns.Email">{{user.email}} </td>
               <td [hidden]="!ShowColumns.First_Name">{{user.firstname}}</td>
               <td [hidden]="!ShowColumns.Last_Name">{{user.lastname}}</td>

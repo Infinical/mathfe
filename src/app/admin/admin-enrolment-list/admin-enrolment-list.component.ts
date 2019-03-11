@@ -116,7 +116,7 @@ export class AdminEnrolmentListComponent implements OnInit {
     this.dialog.open(AdminEnrollmentHouseDetailModalComponent, { data: { houseId: houseId } });
   }
   handleImageLoadError = (event) => {
-    event.target.src = "/assets/images/noImage.png";
+    event.target.src = "/assets/images/no_user.png";
   }
   public doSearch(query) {
     let filtered = [];
