@@ -104,8 +104,8 @@
             <div class="form-group">
               <label for="transaction_id" class="col-lg-2 control-label">Transaction ID</label>
               <div class="col-lg-10">
-                <input type="text" class="form-control" rows="3" id="transaction_id" name="transaction_id" ngModel
-                  #transaction_id="ngModel">
+                <input type="text" class="form-control" rows="3" id="transaction_id" name="transaction_id"
+                  [(ngModel)]="enrolment.transaction_id" #transaction_id="ngModel">
               </div>
             </div>
             <div>
@@ -127,7 +127,7 @@
             <div class="form-group">
               <label for="places_alloted" class="col-lg-2 control-label">Places</label>
               <div class="col-lg-10">
-                <input type="text" class="form-control" rows="3" id="places_alloted" name="places_alloted"
+                <input type="number" min="0" step="1" class="form-control" id="places_alloted" name="places_alloted"
                   [(ngModel)]="enrolment.places_alloted" #places_alloted="ngModel" required>
               </div>
               <div style="clear: both" *ngIf="places_alloted.errors?.required && places_alloted.dirty"
