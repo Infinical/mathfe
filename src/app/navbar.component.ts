@@ -23,7 +23,10 @@ export class NavbarComponent implements OnInit {
 
 
   isHomeActive = false;
-  profilePic = "/assets/images/user.png";
+  profilePic = "/assets/images/no_user.png";
+  handleImageLoadError = (event) => {
+    event.target.src = "/assets/images/no_user.png";
+  }
   ngOnInit() {
     if (this.authService.isAuthenticated()) {
       this.authService.triggerUpdateProfileImageObservable();

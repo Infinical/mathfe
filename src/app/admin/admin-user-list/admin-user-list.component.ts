@@ -208,7 +208,9 @@ export class AdminUserListComponent implements OnInit {
       }
     }
   }
-
+  handleImageLoadError = (event) => {
+    event.target.src = "/assets/images/no_user.png";
+  }
   private _sortById(a: User, b: User): number {
     if (a.id < b.id) {
       return -1;
