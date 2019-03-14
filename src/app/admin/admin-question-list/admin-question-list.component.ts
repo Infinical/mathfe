@@ -23,7 +23,7 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
   searchBy = "1";
   allPages = [];
   gridData: any;
-  dataModel = { id: 1, description: 1 };
+  dataModel;
   displayedColumns: string[] = ['id', 'question', 'answer', 'skill', 'track', 'field', 'level', 'difficulty', 'status', 'source', 'author', 'action'];
   dataSource = new MatTableDataSource<any>();
   beURL = environment.apiURL;
@@ -190,7 +190,7 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     }
   }
   onPaginateChange(pageIndex) {
-    //debugger;
+    this.dataModel = pageIndex;
     this.loading = true;
     this.currentPage = pageIndex;
 
@@ -203,9 +203,6 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
           description: i
         };
         this.allPages.push(d);
-        if (i == this.currentPage) {
-          this.dataModel = d;
-        }
       }
       this.dataSource = new MatTableDataSource<any>(this.gridData.questions);
       this.dataSource.sort = this.sort;
