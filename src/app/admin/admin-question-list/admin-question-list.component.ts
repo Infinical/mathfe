@@ -23,6 +23,7 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
   searchBy = "1";
   allPages = [];
   gridData: any;
+  dataModel;
   displayedColumns: string[] = ['id', 'question', 'answer', 'skill', 'track', 'field', 'level', 'difficulty', 'status', 'source', 'author', 'action'];
   dataSource = new MatTableDataSource<any>();
   beURL = environment.apiURL;
@@ -54,7 +55,12 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     Author: true,
     Action: true
   }
-
+  config = {
+    search: true,
+    searchPlaceholder: "Type Page No.",
+    limitTo: this.allPages.length,
+    height: '250px'
+  };
   constructor(private http: HttpClient,
     private questionService: QuestionService,
     public dialog: MatDialog,
@@ -178,24 +184,25 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     localStorage.setItem("last_question_edit_page_index", this.currentPage + "");
     this.router.navigate(['/admin/questions/edit/' + id]);
   }
-  gotToPage(e) {
-    if (e.value != this.currentPage) {
-      this.onPaginateChange(e.value);
+  gotToPage() {
+    if (this.dataModel) {
+      this.onPaginateChange(this.dataModel['id']);
     }
   }
   onPaginateChange(pageIndex) {
-    //debugger;
+    this.dataModel = pageIndex;
     this.loading = true;
     this.currentPage = pageIndex;
+
     this.questionService.getQuestions(this.currentPage).subscribe((data) => {
       this.gridData = data;
       this.allPages = [];
       for (let i = 1; i <= data.num_pages; i++) {
-        this.allPages.push({
+        let d = {
           id: i,
-          text: i
-          //active: i == this.currentPage
-        });
+          description: i
+        };
+        this.allPages.push(d);
       }
       this.dataSource = new MatTableDataSource<any>(this.gridData.questions);
       this.dataSource.sort = this.sort;

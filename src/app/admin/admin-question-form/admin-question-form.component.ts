@@ -340,7 +340,12 @@ export class AdminQuestionFormComponent implements OnInit {
     this.question.question = (this.question.question.indexOf('&lt;') >= 0) ?
       this.question.question.replace(/&lt;/g, '<').replace(/&gt;/g, '>') :
       this.question.question;
-
+    if (this.question.type_id == 2) {
+      this.question.answer0 = this.question.answer0 || null;
+      this.question.answer1 = this.question.answer1 || null;
+      this.question.answer2 = this.question.answer2 || null;
+      this.question.answer3 = this.question.answer3 || null;
+    }
     var form = new FormData();
     form.append('_method', 'PATCH');
     form.append('answer0', this.question.answer0);

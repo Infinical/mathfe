@@ -16,8 +16,10 @@
     <div class="col-md-12">
       <div>
         <a [routerLink]="['/admin/']" class="btn btn-default"> Back</a>
-        <a [routerLink]="['/admin/questions/create']" style="margin-left: 0.5rem;" class="btn btn-success"> New
-          Question</a>
+        <a [routerLink]="['/admin/questions/create']" style="margin-left: 0.5rem;" class="btn btn-success">
+          New
+          Question
+        </a>
       </div>
     </div>
     <div class="col-sm-12" style="margin-bottom: 1rem; margin-top: 1rem;">
@@ -130,12 +132,12 @@
             </mat-slide-toggle>
           </section>
           <div class="row page-nav-select">
-            <div class="col-sm-12"> 
-                <label>Go To Page:&nbsp;&nbsp;</label> 
-              <select2 [width]="150" [options]="{ theme: 'classic',closeOnSelect: true}"
-                (valueChanged)="gotToPage($event)" [data]="allPages" [value]="currentPage"></select2>
-                <span>&nbsp;&nbsp; <b>/ {{allPages.length}}</b></span>
+            <div class="col-sm-2" style="margin-right: -15px;">
+              <label>Go To Page:&nbsp;&nbsp;</label>
+              <ngx-select-dropdown [multiple]="false" (change)="gotToPage()" [(ngModel)]="dataModel"
+                [config]="config" [options]="allPages"></ngx-select-dropdown>
             </div>
+            <div class="col-sm-2" style="top: 35px;"><b>/ {{allPages.length}}</b></div>
           </div>
         </mat-card-content>
       </mat-card>
@@ -166,6 +168,7 @@
                 style="margin-top: 0.25rem; margin-bottom: 0.25rem;" src="{{beURL}}{{question.question_image}}" width="150" /> -->
               <dynamic-content *ngIf="((question.question.indexOf('<') >= 0) && (!displayKatex(question.question)) )"
                 [question]="question">
+                [q
               </dynamic-content>
               <svg *ngIf="question.calculator && !displayKatex(question.question)" style="width: 3rem"
                 aria-hidden="true" data-prefix="fas" data-icon="calculator" class="svg-inline--fa fa-calculator fa-w-14"
@@ -247,15 +250,19 @@
           <ng-container matColumnDef="field">
             <th [hidden]="!ShowColumns.Field" mat-header-cell *matHeaderCellDef mat-sort-header>Field</th>
             <td [hidden]="!ShowColumns.Field" mat-cell *matCellDef="let question">
-              {{ (question.skill.tracks && question.skill.tracks.length > 0) ? question.skill.tracks[0].field.field :
-              ''}}
+              {{
+ (question.skill.tracks && question.skill.tracks.length > 0) ? question.skill.tracks[0].field.field :
+              ''
+              }}
             </td>
           </ng-container>
           <ng-container matColumnDef="level">
             <th [hidden]="!ShowColumns.Level" mat-header-cell *matHeaderCellDef mat-sort-header>Level</th>
             <td [hidden]="!ShowColumns.Level" mat-cell *matCellDef="let question">
-              {{ (question.skill.tracks && question.skill.tracks.length > 0) ? question.skill.tracks[0].level.level :
-              ''}}
+              {{
+ (question.skill.tracks && question.skill.tracks.length > 0) ? question.skill.tracks[0].level.level :
+              ''
+              }}
             </td>
           </ng-container>
           <ng-container matColumnDef="difficulty">
@@ -282,17 +289,23 @@
           </ng-container>
           <ng-container matColumnDef="author">
             <th [hidden]="!ShowColumns.Author" mat-header-cell *matHeaderCellDef mat-sort-header>Author</th>
-            <td [hidden]="!ShowColumns.Author" mat-cell *matCellDef="let question"> {{question.author.firstname + ' ' +
-              question.author.lastname}} </td>
+            <td [hidden]="!ShowColumns.Author" mat-cell *matCellDef="let question">
+              {{
+question.author.firstname + ' ' +
+              question.author.lastname
+              }}
+            </td>
           </ng-container>
           <ng-container matColumnDef="action">
             <th [hidden]="!ShowColumns.Action" mat-header-cell *matHeaderCellDef>Action</th>
             <td id="question_{{question.id}}" [hidden]="!ShowColumns.Action" mat-cell *matCellDef="let question">
               <div class="btn-group" role="group" aria-label="First group">
-                <a matTooltip="Edit" (click)="editQuestion( question.id)" class="btn btn-info"><i
-                    class="icon_pencil"></i></a>
-                <a matTooltip="Delete" (click)="confirmDelete(question)" class="btn btn-danger"><i
-                    class="icon_minus_alt2"></i></a>
+                <a matTooltip="Edit" (click)="editQuestion( question.id)" class="btn btn-info">
+                  <i class="icon_pencil"></i>
+                </a>
+                <a matTooltip="Delete" (click)="confirmDelete(question)" class="btn btn-danger">
+                  <i class="icon_minus_alt2"></i>
+                </a>
               </div>
             </td>
           </ng-container>
