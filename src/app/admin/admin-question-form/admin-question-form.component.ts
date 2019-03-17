@@ -340,21 +340,32 @@ export class AdminQuestionFormComponent implements OnInit {
     this.question.question = (this.question.question.indexOf('&lt;') >= 0) ?
       this.question.question.replace(/&lt;/g, '<').replace(/&gt;/g, '>') :
       this.question.question;
-    if (this.question.type_id == 2) {
-      this.question.answer0 = this.question.answer0 || null;
-      this.question.answer1 = this.question.answer1 || null;
-      this.question.answer2 = this.question.answer2 || null;
-      this.question.answer3 = this.question.answer3 || null;
-    }
     var form = new FormData();
     form.append('_method', 'PATCH');
-    form.append('answer0', this.question.answer0);
+    if (this.question.type_id == 2) {
+      if (this.question.answer0) {
+        form.append('answer0', this.question.answer0);
+      }
+      if (this.question.answer1) {
+        form.append('answer1', this.question.answer1);
+      }
+      if (this.question.answer2) {
+        form.append('answer2', this.question.answer2);
+      }
+      if (this.question.answer3) {
+        form.append('answer3', this.question.answer3);
+      }
+    }else{
+      form.append('answer0', this.question.answer0);
+      form.append('answer1', this.question.answer1);
+      form.append('answer2', this.question.answer2);
+      form.append('answer3', this.question.answer3);
+    }
+
     form.append('answer0_image', (this.answerOneImg) ? this.answerOneImg : '');
-    form.append('answer1', this.question.answer1);
-    form.append('answer1_image', (this.answerTwoImg) ? this.answerTwoImg : '');
-    form.append('answer2', this.question.answer2);
-    form.append('answer2_image', (this.answerThreeImg) ? this.answerThreeImg : '');
-    form.append('answer3', this.question.answer3);
+
+    form.append('answer1_image', (this.answerTwoImg) ? this.answerTwoImg : ''); 
+    form.append('answer2_image', (this.answerThreeImg) ? this.answerThreeImg : ''); 
     form.append('answer3_image', (this.answerFourImg) ? this.answerFourImg : '');
     form.append('correct_answer', this.question.correct_answer);
     form.append('difficulty_id', String(this.question.difficulty_id));
