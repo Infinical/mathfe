@@ -18,5 +18,20 @@ export class TeachComponent implements OnInit {
   handleImageLoadError = (event) => {
     event.target.src = "/assets/images/noImage.png";
   }
+  getRolesSring(d) {
+    var roles = d.roles;
+    if (!roles) return "N/A";
+    let h = "";
+    roles.forEach((v, i) => {
+      if (h) {
+        h += ", ";
+      }
+      h += v.role.trim();
+    })
+    if (!h) {
+      return "N/A";
+    }
+    return h;
+  }
 
 }
