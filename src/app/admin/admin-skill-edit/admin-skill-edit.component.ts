@@ -5,7 +5,7 @@ import { SkillService } from '../../services/skill.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HelperService } from '../../services/helper.service';
 import { TrackService } from '../../services/track.service';
-
+declare var $: any;
 @Component({
   selector: 'ag-admin-skill-edit',
   templateUrl: './admin-skill-edit.component.html',
@@ -13,6 +13,7 @@ import { TrackService } from '../../services/track.service';
 })
 export class AdminSkillEditComponent implements OnInit, OnDestroy {
   beURL = environment.apiURL + '/';
+  showMaxLimitMsg = false;
   status: string;
   message: string;
   id: any;
@@ -50,7 +51,7 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
           });
           this.loading = false;
         })
-      
+
         if (this.skill.lesson_link) {
           this.lesson_link = this.beURL + this.skill.lesson_link;
           this.lesson_preview_link = (this.lesson_link);
@@ -112,6 +113,13 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
 
   onFileSelected(files: FileList) {
     this.selectedFile = files.item(0);
+    this.showMaxLimitMsg = false;
+    if (this.selectedFile.size > 100000000) {
+      files = null;
+      $("#video").val('')
+      this.showMaxLimitMsg = true;
+      return;
+    }
     var reader = new FileReader();
     reader.onload = (event: any) => {
       this.lesson_link = event.target.result;

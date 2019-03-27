@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { SkillService } from '../../services/skill.service';
 import { HelperService } from '../../services/helper.service';
 import { DomSanitizer } from '@angular/platform-browser';
+declare var $: any;
 @Component({
   selector: 'ag-admin-skill-create',
   templateUrl: './admin-skill-create.component.html',
@@ -13,7 +14,8 @@ export class AdminSkillCreateComponent implements OnInit {
   public message: string;
   public selectedFile: File = null;
   public lesson_link: string = 'images/upload.png';
-  lesson_preview_link: any;  
+  lesson_preview_link: any;
+  showMaxLimitMsg = false;
   statuses: any;
   my_tracks = [];
   public_tracks = [];
@@ -67,7 +69,13 @@ export class AdminSkillCreateComponent implements OnInit {
 
   public onFileSelected(files: FileList): void {
     this.selectedFile = files.item(0);
-
+    this.showMaxLimitMsg = false;
+    if (this.selectedFile.size > 100000000) {
+      files = null;
+      $("#video").val('')
+      this.showMaxLimitMsg = true;
+      return;
+    }
     this.lesson_preview_link = "";
 
 
@@ -80,5 +88,5 @@ export class AdminSkillCreateComponent implements OnInit {
   }
   sanitize(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
-  } 
+  }
 }

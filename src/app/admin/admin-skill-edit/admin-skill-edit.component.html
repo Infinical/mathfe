@@ -34,13 +34,12 @@
               <label for="video" class="col-lg-2 control-label">Video</label>
               <div class="col-lg-10">
                 <input type="file" class="form-control" id="video" name="video" ngModel #video="ngModel" minlength="3"
-                  accept="video/mp4,video/x-m4v,video/*" (change)="onFileSelected($event.target.files)" placeholder="Skill Video">
-                <!-- <div *ngIf="video.errors?.required && video.dirty" class="alert alert-danger">
-        Image is required
-      </div>
-      <div *ngIf="video.errors?.minlength && video.touched" class="alert alert-danger">
-        Minimum of 3 characters
-      </div> -->
+                  accept="video/mp4,video/x-m4v,video/*" (change)="onFileSelected($event.target.files)"
+                  placeholder="Skill Video">
+                <span *ngIf="showMaxLimitMsg" style="float: left;padding-top: 5px;color:red">Max 100 MB allowed!!</span>
+                <div *ngIf="video.errors?.required && video.touched" class="alert alert-danger">
+                  Your video should be in HD format and of maximum 2 minutes long
+                </div>
               </div>
             </div>
 
@@ -57,8 +56,8 @@
             <div class="form-group">
               <label for="description" class="col-lg-2 control-label">Description</label>
               <div class="col-lg-10">
-                <textarea class="form-control" rows="3" id="description" name="description" [(ngModel)]="skill.description"
-                  #description="ngModel" required></textarea>
+                <textarea class="form-control" rows="3" id="description" name="description"
+                  [(ngModel)]="skill.description" #description="ngModel" required></textarea>
                 <div *ngIf="description.errors?.required && description.dirty" class="alert alert-danger">
                   Description is required
                 </div>
@@ -79,8 +78,8 @@
             <div class="form-group">
               <label for="skill" class="col-lg-2 control-label">Track</label>
               <div class="col-lg-10">
-                <mat-select multiple="multiple" class="form-control" #track_ids="ngModel" [(ngModel)]="selected_track_ids"
-                  id="track_ids" required name="track_ids">
+                <mat-select multiple="multiple" class="form-control" #track_ids="ngModel"
+                  [(ngModel)]="selected_track_ids" id="track_ids" required name="track_ids">
                   <mat-option *ngFor="let track of my_tracks" [value]="track.id">{{track.track}}</mat-option>
                   <mat-option disabled *ngIf="(my_tracks)?.length>0">-----------------</mat-option>
                   <mat-option *ngFor="let track of public_tracks" [value]="track.id">{{track.track}}</mat-option>
