@@ -37,6 +37,7 @@
                 <!--<div *ngIf="video.errors?.required && video.dirty" class="alert alert-danger">
                   Image is required
                 </div>-->
+                <span *ngIf="showMaxLimitMsg" style="float: left;padding-top: 5px;color:red">Max 100 MB allowed!!</span>
                 <div *ngIf="video.errors?.required && video.touched" class="alert alert-danger">
                   Your video should be in HD format and of maximum 2 minutes long
                 </div>
