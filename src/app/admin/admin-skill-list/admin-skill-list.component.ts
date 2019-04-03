@@ -34,6 +34,7 @@ export class AdminSkillListComponent implements OnInit {
   public reversedByAuthor: boolean = false;
 
   ShowColumns = {
+    ID: true,
     Skill: true,
     Title: true,
     Description: true,
