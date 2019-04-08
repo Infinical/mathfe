@@ -17,7 +17,7 @@ declare var $: any;
 })
 export class AdminSkillListComponent implements OnInit {
 
-  private _beURL = environment.apiURL + '/';
+  public beURL = environment.apiURL + '/';
   public allSkill = [];
   public skills: Skill[] = [];
   public loading: boolean = true;
@@ -76,9 +76,9 @@ export class AdminSkillListComponent implements OnInit {
   public videoUrl(skill): string {
     let url = skill.lesson_link;
     if (url) { 
-        return this._beURL + url;       
+        return this.beURL + url;       
     }
-    else return this._beURL + "/videos/skills/logo.mp4"
+    else return this.beURL + "/videos/skills/logo.mp4"
   }
 
   public editSkill(id: number): void {
