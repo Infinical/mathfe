@@ -12,3 +12,10 @@
 .bg-light-grey {
     background-color: #f3f3f3 !important;
 }
+
+.correct-answer {
+  border-width: 2px;
+  border-style: solid;
+  border-color: green;
+  margin: 0.5rem;
+}
