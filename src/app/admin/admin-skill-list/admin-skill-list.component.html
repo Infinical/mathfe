@@ -158,6 +158,7 @@
                         <thead>
                           <tr class="bg-light-grey">
                             <th class="mat-table-th">ID</th>
+                            <th class="mat-table-th">Difficulty</th>
                             <th class="mat-table-th">Question</th>
                             <th class="mat-table-th">Answer</th>
                           </tr>
@@ -165,6 +166,7 @@
                         <tbody>
                           <tr class="bg-light-grey" *ngFor="let question of skill.questions">
                             <td>{{question.id}}</td>
+                            <td>{{question.difficulty_id}}</td>
                             <td>
                               <div style="display:none;" [id]="'katexDiv' + question.id">
                                 {{displayKatex(question.question, question.id, true, 'katexDiv' + question.id)}}
