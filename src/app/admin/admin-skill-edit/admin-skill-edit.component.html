@@ -3,12 +3,20 @@
     <!-- SECTION HEADER -->
     <div class="section-header wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
       <div>
-        <img *ngIf="!lesson_preview_link" style="height:142px;" src="/assets/images/play_video.png" />
-        <video *ngIf="lesson_preview_link" width="250" controls>
-          <source [src]="lesson_preview_link" type="video/mp4" />
-          Your browser does not support HTML5 video.
-        </video>
-
+        <!--<img *ngIf="!lesson_preview_link" style="height:142px;" src="/assets/images/play_video.png" />
+  <video *ngIf="lesson_preview_link" width="250" controls>
+    <source [src]="lesson_preview_link" type="video/mp4" />
+    Your browser does not support HTML5 video.
+  </video>-->
+        <div *ngFor="let v of skill.videos">
+          <img *ngIf="!v.play" style="height:142px;" (click)="v.play=true" src="/assets/images/play_video.png" />
+          <div *ngIf="v.play">
+            <video width="250" controls autoplay>
+              <source [src]="v.link" type="video/mp4" />
+              Your browser does not support HTML5 video.
+            </video>
+          </div>
+        </div>
       </div>
       <h2 class="dark-text">Updating Skill: {{skill.skill}}</h2>
       <div class="colored-line">
@@ -35,7 +43,7 @@
               <div class="col-lg-10">
                 <input type="file" class="form-control" id="video" name="video" ngModel #video="ngModel" minlength="3"
                   accept="video/mp4,video/x-m4v,video/*" (change)="onFileSelected($event.target.files)"
-                  placeholder="Skill Video">
+                  placeholder="Skill Videos" multiple>
                 <span *ngIf="showMaxLimitMsg" style="float: left;padding-top: 5px;color:red">Max 100 MB allowed!!</span>
                 <div *ngIf="video.errors?.required && video.touched" class="alert alert-danger">
                   Your video should be in HD format and of maximum 2 minutes long

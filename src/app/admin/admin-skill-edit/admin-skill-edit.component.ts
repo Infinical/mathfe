@@ -18,9 +18,9 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
   message: string;
   id: any;
   params: any;
-  selectedFile: File = null;
+  selectedFile = [];
   lesson_link: string = "";
-  lesson_preview_link: any;
+  lesson_preview_link = [];
   loading = true;
   formData: FormData = new FormData();
   statuses: any;
@@ -43,6 +43,28 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
     this.params = this.activatedRoute.params.subscribe(params => this.id = params['id']);
     this.skillService.getSkill(this.id).subscribe(
       data => {
+        var videos = [];
+        if (!data.links) {
+          if (data.lesson_link) {
+            videos.push(data.lesson_link)
+          }
+        } else {
+          videos = data.links;
+        }
+        if (videos.length == 0) {
+          // //Default Video
+          videos.push({
+            id: -1,
+            link: "/videos/skills/logo.mp4"
+          });
+        }
+        data.videos = [];
+        videos.forEach((url, ii) => {
+          data.videos.push({
+            play: false,
+            link: this.beURL + url.link
+          });
+        });
         this.skill = data;
         this.trackService.getTracksBySkillId(data.id).subscribe((result) => {
           this.selected_track_ids = [];
@@ -51,11 +73,6 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
           });
           this.loading = false;
         })
-
-        if (this.skill.lesson_link) {
-          this.lesson_link = this.beURL + this.skill.lesson_link;
-          this.lesson_preview_link = (this.lesson_link);
-        }
       },
       error => {
         this.loading = false;
@@ -81,11 +98,13 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
     this.params.unsubscribe();
   }
   updateSkill(skill) {
-    this.formData.append('_method', 'PATCH');
-    if (this.selectedFile) {
-      this.formData.append('lesson_link', this.selectedFile);
-    }
+    this.formData.append('_method', 'PUT');
+    if (skill.video) {
+      this.selectedFile.forEach((file, i) => {
+        this.formData.append('links[' + i + ']', file);
+      })
 
+    }
     this.formData.append('description', skill.description);
     this.formData.append('skill', skill.skill);
     this.formData.append('status_id', skill.status_id);
@@ -111,21 +130,25 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
       );
   }
 
-  onFileSelected(files: FileList) {
-    this.selectedFile = files.item(0);
-    this.showMaxLimitMsg = false;
-    if (this.selectedFile.size > 100000000) {
-      files = null;
-      $("#video").val('')
-      this.showMaxLimitMsg = true;
-      return;
+  public onFileSelected(files: FileList): void {
+    this.lesson_preview_link = [];
+    this.selectedFile = [];
+    for (let i = 0; i < files.length; i++) {
+      this.selectedFile.push(files.item(i));
+      this.showMaxLimitMsg = false;
+      if (this.selectedFile[i].size > 100000000) {
+        files = null;
+        $("#video").val('')
+        this.showMaxLimitMsg = true;
+        return;
+      }
+      let reader = new FileReader();
+      reader.onload = (event: any) => {
+        let lesson_link = event.target.result;
+        this.lesson_preview_link.push(this.sanitize(lesson_link));
+      }
+      reader.readAsDataURL(this.selectedFile[i]);
     }
-    var reader = new FileReader();
-    reader.onload = (event: any) => {
-      this.lesson_link = event.target.result;
-      this.lesson_preview_link = this.sanitize(URL.createObjectURL(this.selectedFile));
-    }
-    reader.readAsDataURL(this.selectedFile);
   }
 
 }

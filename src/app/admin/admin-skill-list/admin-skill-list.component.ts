@@ -56,6 +56,30 @@ export class AdminSkillListComponent implements OnInit {
     this._updateloading(true);
     this.skillService.getSkills()
       .subscribe(items => {
+        items.forEach((v, i) => {
+          var videos = [];
+          if (!v.links) {
+            if (v.lesson_link) {
+              videos.push(v.lesson_link)
+            }
+          } else {
+            videos = v.links;
+          }
+          if (videos.length == 0) {
+            // //Default Video
+            videos.push({
+              id: -1,
+              link: "/videos/skills/logo.mp4"
+            });
+          } 
+          v.videos = [];
+          videos.forEach((url, ii) => {
+            v.videos.push({
+              play: false,
+              link: this.beURL + url.link
+            });
+          });
+        });
         this.allSkill = items.sort(this._sortById);
         this.skills = items.sort(this._sortById);
         this._updateloading(false);
@@ -75,8 +99,8 @@ export class AdminSkillListComponent implements OnInit {
 
   public videoUrl(skill): string {
     let url = skill.lesson_link;
-    if (url) { 
-        return this.beURL + url;       
+    if (url) {
+      return this.beURL + url;
     }
     else return this.beURL + "/videos/skills/logo.mp4"
   }
@@ -311,5 +335,5 @@ export class AdminSkillListComponent implements OnInit {
         console.error(err);
       })
     }
-  } 
+  }
 }
