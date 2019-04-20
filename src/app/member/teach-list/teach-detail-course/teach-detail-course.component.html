@@ -105,25 +105,44 @@
                                   <div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
                                     <div class="btn-group" role="group" aria-label="First group">
                                       <button type="button" class="m-btn btn btn-edit" data-toggle="modal" data-target="#editSkill"
-                                        (click)="editSelectedSkill(skill)"><i class="icon_pencil-edit"></i></button>
+                                              (click)="editSelectedSkill(skill)">
+                                        <i class="icon_pencil-edit"></i>
+                                      </button>
                                       <button type="button" class="m-btn btn btn-delete" (click)="deleteSelectedSkill(skill,track)"
-                                        data-toggle="modal" data-target="#deleteSkill"><i class="icon_minus_alt2"></i></button>
+                                              data-toggle="modal" data-target="#deleteSkill">
+                                        <i class="icon_minus_alt2"></i>
+                                      </button>
 
 
                                       <button type="button" class="m-btn btn btn-question"><i class="icon_question"></i></button>
                                       <span *ngIf=" skill.checkProcess" class="lds-dual-ring"></span>
-                                      <button type="button" (click)="toggelSkillCheck(skill,track.id)" class="m-btn btn btn-edit"><i [class.icon_box-empty]="skill.check==0"
-                                          [class.icon_check_alt2]="skill.check==1"></i></button>
+                                      <button type="button" (click)="toggelSkillCheck(skill,track.id)" class="m-btn btn btn-edit">
+                                        <i [class.icon_box-empty]="skill.check==0"
+                                           [class.icon_check_alt2]="skill.check==1"></i>
+                                      </button>
                                       <button (click)="selectedStudent=skill.user" data-toggle="modal" data-target="#studentModal"
-                                        title="Target" type="button" class="m-btn btn {{getTargetClass(skill,selectedTeach)}}"><i
-                                          class="icon_target"></i></button>
-                                      <a [routerLink]="['/member/video/'+skill.lesson_link]" data-toggle="tooltip"
-                                        title="Click to watch video on {{skill.skill}}">
-                                        <button type="button" class="m-btn btn btn-video" data-toggle="modal"
-                                          data-target="#videoModal">
-                                          <i class="arrow_triangle-right_alt2"></i>
-                                        </button>
-                                      </a>
+                                              title="Target" type="button" class="m-btn btn {{getTargetClass(skill,selectedTeach)}}">
+                                        <i class="icon_target"></i>
+                                      </button>
+                                     
+                                      <div *ngFor="let v of skill.links">                                        
+                                        <a [routerLink]="['/member/video/'+v.link]" data-toggle="tooltip"
+                                           title="Click to watch video on {{skill.skill}}">
+                                          <button type="button" class="m-btn btn btn-video" data-toggle="modal"
+                                                  data-target="#videoModal">
+                                            <i class="arrow_triangle-right_alt2"></i>
+                                          </button>
+                                        </a>
+                                      </div>
+                                      <div *ngIf="skill.links.length==0">
+                                        <a [routerLink]="['/member/video/'+skill.lesson_link]" data-toggle="tooltip"
+                                           title="Click to watch video on {{skill.skill}}">
+                                          <button type="button" class="m-btn btn btn-video" data-toggle="modal"
+                                                  data-target="#videoModal">
+                                            <i class="arrow_triangle-right_alt2"></i>
+                                          </button>
+                                        </a>
+                                      </div>
                                     </div>
                                   </div>
                                 </td>

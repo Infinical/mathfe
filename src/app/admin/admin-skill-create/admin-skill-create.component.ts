@@ -12,8 +12,7 @@ declare var $: any;
 export class AdminSkillCreateComponent implements OnInit {
   public status: string;
   public message: string;
-  public selectedFile = [];
-  public lesson_link: string = 'images/upload.png';
+  public selectedFile = []; 
   lesson_preview_link = [];
   showMaxLimitMsg = false;
   statuses: any;
