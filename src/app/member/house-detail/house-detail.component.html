@@ -170,15 +170,15 @@ skill.skill_maxile.skill_maxile | number
                                       <button type="button" class="m-btn btn btn-quiz"><i class="icon_puzzle"></i>
                                   </button>
                                 </a-->
-                                <div *ngFor="let v of skill.links">
-                                  <a [routerLink]="['/member/video/'+v.link]" data-toggle="tooltip" title="Click to watch video on {{skill.skill}}">
+                                <div *ngFor="let v of skill?.links">
+                                  <a (click)="setVideoUrl(v.link)" [routerLink]="['/member/video/']" data-toggle="tooltip" title="Click to watch video on {{skill.skill}}">
                                     <button type="button" class="m-btn btn btn-video" data-toggle="modal" data-target="#videoModal">
                                       <i class="arrow_triangle-right_alt2"></i>
                                     </button>
                                   </a>
                                 </div>
-                                <div *ngIf="skill.links.length==0">
-                                  <a [routerLink]="['/member/video/'+skill.lesson_link]" data-toggle="tooltip" title="Click to watch video on {{skill.skill}}">
+                                <div *ngIf="skill?.links?.length==0">
+                                  <a (click)="setVideoUrl(skill.lesson_link)" [routerLink]="['/member/video/']" data-toggle="tooltip" title="Click to watch video on {{skill.skill}}">
                                     <button type="button" class="m-btn btn btn-video" data-toggle="modal" data-target="#videoModal">
                                       <i class="arrow_triangle-right_alt2"></i>
                                     </button>

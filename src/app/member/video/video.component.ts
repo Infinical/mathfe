@@ -15,12 +15,16 @@ export class VideoComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute, private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-    this.params = this.activatedRoute.params.subscribe(params =>
-      this.id = params['id']);
+    this.params = this.activatedRoute.params.subscribe(params => {
+      this.id = params['id'];
+      if (!this.id) {
+        this.id = localStorage.getItem('VideoUrl');
+      }
+    });
   }
 
   ngOnDestroy() {
-    this.params.unsubscribe();
+    this.params.unsubscribe();    
     $('video').first().attr('src', '');
   }
 }

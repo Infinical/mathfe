@@ -125,8 +125,8 @@
                                         <i class="icon_target"></i>
                                       </button>
                                      
-                                      <div *ngFor="let v of skill.links">                                        
-                                        <a [routerLink]="['/member/video/'+v.link]" data-toggle="tooltip"
+                                      <div *ngFor="let v of skill?.links">                                        
+                                        <a (click)="setVideoUrl(v.link)" [routerLink]="['/member/video/']" data-toggle="tooltip"
                                            title="Click to watch video on {{skill.skill}}">
                                           <button type="button" class="m-btn btn btn-video" data-toggle="modal"
                                                   data-target="#videoModal">
@@ -134,8 +134,8 @@
                                           </button>
                                         </a>
                                       </div>
-                                      <div *ngIf="skill.links.length==0">
-                                        <a [routerLink]="['/member/video/'+skill.lesson_link]" data-toggle="tooltip"
+                                      <div *ngIf="skill?.links?.length==0">
+                                        <a (click)="setVideoUrl(skill.lesson_link)" [routerLink]="['/member/video/']" data-toggle="tooltip"
                                            title="Click to watch video on {{skill.skill}}">
                                           <button type="button" class="m-btn btn btn-video" data-toggle="modal"
                                                   data-target="#videoModal">
