@@ -99,7 +99,7 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
   }
   updateSkill(skill) {
     this.formData.append('_method', 'PUT');
-    if (skill.video) {
+    if (this.selectedFile) {
       this.selectedFile.forEach((file, i) => {
         this.formData.append('links[' + i + ']', file);
       })
