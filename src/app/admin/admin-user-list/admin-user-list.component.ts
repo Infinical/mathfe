@@ -18,6 +18,7 @@ export class AdminUserListComponent implements OnInit {
   // sort block
 
   public sortedByEmail: boolean = false;
+  public sortedByID: boolean = false;
   public sortedByFirst_Name: boolean = false;
   public sortedByLast_Name: boolean = false;
   public sortedByName: boolean = false;
@@ -28,6 +29,7 @@ export class AdminUserListComponent implements OnInit {
   public sortedByLast_Test_Date: boolean = false;
 
   public reversedByEmail: boolean = false;
+  public reversedByID: boolean = false;
   public reversedByFirst_Name: boolean = false;
   public reversedByLast_Name: boolean = false;
   public reversedByName: boolean = false;
@@ -48,7 +50,8 @@ export class AdminUserListComponent implements OnInit {
     Game_Level: true,
     Date_of_Birth: true,
     Last_Test_Date: true,
-    Edit: true
+    Edit: true,
+    ID: true
   }
 
   constructor(private userService: UserService, public dialog: MatDialog, private helperService: HelperService) { }
@@ -97,6 +100,18 @@ export class AdminUserListComponent implements OnInit {
   public sortBy(str: string): void {
     if (this.users && this.users.length) {
       switch (str) {
+        case 'id':
+          if (this.sortedByID) {
+            this.users.reverse();
+            this._resetSort();
+            this.reversedByID = true;
+          }
+          else {
+            this.users.sort(this._sortById);
+            this._resetSort();
+            this.sortedByID = true;
+          }
+          break;
         case 'email':
           if (this.sortedByEmail) {
             this.users.reverse();
@@ -212,10 +227,10 @@ export class AdminUserListComponent implements OnInit {
     event.target.src = "/assets/images/no_user.png";
   }
   private _sortById(a: User, b: User): number {
-    if (a.id < b.id) {
+    if (parseInt(a.id) < parseInt(b.id)) {
       return -1;
     }
-    else if (a.id > b.id) {
+    else if (parseInt(a.id) > parseInt(b.id)) {
       return 1;
     }
     else {
@@ -349,6 +364,7 @@ export class AdminUserListComponent implements OnInit {
 
   private _resetSort(): void {
     this.sortedByEmail = false;
+    this.sortedByID = false;
     this.sortedByFirst_Name = false;
     this.sortedByLast_Name = false;
     this.sortedByName = false;
@@ -359,6 +375,7 @@ export class AdminUserListComponent implements OnInit {
     this.sortedByLast_Test_Date = false;
 
     this.reversedByEmail = false;
+    this.reversedByID = false;
     this.reversedByFirst_Name = false;
     this.reversedByLast_Name = false;
     this.reversedByName = false;
