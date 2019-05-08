@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import { SkillService } from '../../services/skill.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { HelperService } from '../../services/helper.service';
+import { SkillService } from '../../services/skill.service';
 import { TrackService } from '../../services/track.service';
 declare var $: any;
 @Component({
@@ -62,7 +62,9 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
         videos.forEach((url, ii) => {
           data.videos.push({
             play: false,
-            link: this.beURL + url.link
+            link: this.beURL + url.link,
+            id: url.id,
+            dbLink: url.link
           });
         });
         this.skill = data;
@@ -104,6 +106,15 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
         this.formData.append('links[' + i + ']', file);
       })
 
+    }
+    if (skill.videos) {
+      let index = 0;
+      skill.videos.forEach((v, i) => {
+        if (v.isDelete == true) {
+          this.formData.append('remove_link[' + index + ']', v.id);
+          index++;
+        }
+      });
     }
     this.formData.append('description', skill.description);
     this.formData.append('skill', skill.skill);

@@ -16,7 +16,11 @@
               Your browser does not support HTML5 video.
             </video>
           </div>
-          
+          <div>
+            <mat-slide-toggle [(ngModel)]="v.isDelete" color="primary">
+              Remove This Link
+            </mat-slide-toggle>
+          </div>
         </div>
       </div>
       <h2 class="dark-text">Updating Skill: {{skill.skill}}</h2>
