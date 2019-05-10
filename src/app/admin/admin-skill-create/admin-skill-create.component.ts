@@ -12,9 +12,8 @@ declare var $: any;
 export class AdminSkillCreateComponent implements OnInit {
   public status: string;
   public message: string;
-  public selectedFile: File = null;
-  public lesson_link: string = 'images/upload.png';
-  lesson_preview_link: any;
+  public selectedFile = []; 
+  lesson_preview_link = [];
   showMaxLimitMsg = false;
   statuses: any;
   my_tracks = [];
@@ -40,10 +39,9 @@ export class AdminSkillCreateComponent implements OnInit {
     const formData: FormData = new FormData();
 
     if (skill.video) {
-      if (!this.lesson_link.includes(skill.video)) {
-        formData.append('lesson_link', this.selectedFile);
-      }
-
+      this.selectedFile.forEach((file, i) => {
+        formData.append('links[' + i + ']', file);
+      }) 
     }
     formData.append('skill', skill.skill);
     formData.append('description', skill.description);
@@ -68,23 +66,24 @@ export class AdminSkillCreateComponent implements OnInit {
   }
 
   public onFileSelected(files: FileList): void {
-    this.selectedFile = files.item(0);
-    this.showMaxLimitMsg = false;
-    if (this.selectedFile.size > 100000000) {
-      files = null;
-      $("#video").val('')
-      this.showMaxLimitMsg = true;
-      return;
+    this.lesson_preview_link = [];
+    this.selectedFile = [];
+    for (let i = 0; i < files.length; i++) {
+      this.selectedFile.push(files.item(i));
+      this.showMaxLimitMsg = false;
+      if (this.selectedFile[i].size > 100000000) {
+        files = null;
+        $("#video").val('')
+        this.showMaxLimitMsg = true;
+        return;
+      }
+      let reader = new FileReader();
+      reader.onload = (event: any) => {
+        let lesson_link = event.target.result;
+        this.lesson_preview_link.push(this.sanitize(lesson_link));
+      }
+      reader.readAsDataURL(this.selectedFile[i]);
     }
-    this.lesson_preview_link = "";
-
-
-    let reader = new FileReader();
-    reader.onload = (event: any) => {
-      this.lesson_link = event.target.result;
-      this.lesson_preview_link = this.sanitize(URL.createObjectURL(this.selectedFile));
-    }
-    reader.readAsDataURL(this.selectedFile);
   }
   sanitize(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { House } from '../../models/house';
 import { Skill } from '../../models/skill';
+import { environment } from 'environments/environment';
 declare var jQuery: any;
 declare var $: any;
 
@@ -16,7 +17,7 @@ export class HouseDetailComponent implements OnInit {
   @Output() selectedVideo: EventEmitter<Skill> = new EventEmitter<Skill>();
   rowgreen = "row-green";
   rowyellow = "row-yellow";
-
+  _beURL = environment.apiURL + '/';
   constructor() {
 
   }
@@ -90,5 +91,8 @@ Otherwise, the track is yellow. */
   }
   culculateTrackPassPercentageValue(tracks_passed, total_tracks) {
     return tracks_passed / total_tracks * 100;
+  }
+  setVideoUrl(url) {
+    localStorage.setItem('VideoUrl', this._beURL + url);
   }
 }

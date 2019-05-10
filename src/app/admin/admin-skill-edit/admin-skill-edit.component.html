@@ -2,13 +2,26 @@
   <div class="container">
     <!-- SECTION HEADER -->
     <div class="section-header wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
-      <div>
-        <img *ngIf="!lesson_preview_link" style="height:142px;" src="/assets/images/play_video.png" />
+      <div class="row">
+        <!--<img *ngIf="!lesson_preview_link" style="height:142px;" src="/assets/images/play_video.png" />
         <video *ngIf="lesson_preview_link" width="250" controls>
           <source [src]="lesson_preview_link" type="video/mp4" />
           Your browser does not support HTML5 video.
-        </video>
-
+        </video>-->
+        <div class="col-md-3" *ngFor="let v of skill.videos">
+          <img *ngIf="!v.play" style="height:142px;" (click)="v.play=true" src="/assets/images/play_video.png" />
+          <div *ngIf="v.play">
+            <video width="250" controls autoplay>
+              <source [src]="v.link" type="video/mp4" />
+              Your browser does not support HTML5 video.
+            </video>
+          </div>
+          <div>
+            <mat-slide-toggle [(ngModel)]="v.isDelete" color="primary">
+              Remove This Link
+            </mat-slide-toggle>
+          </div>
+        </div>
       </div>
       <h2 class="dark-text">Updating Skill: {{skill.skill}}</h2>
       <div class="colored-line">
@@ -34,8 +47,8 @@
               <label for="video" class="col-lg-2 control-label">Video</label>
               <div class="col-lg-10">
                 <input type="file" class="form-control" id="video" name="video" ngModel #video="ngModel" minlength="3"
-                  accept="video/mp4,video/x-m4v,video/*" (change)="onFileSelected($event.target.files)"
-                  placeholder="Skill Video">
+                       accept="video/mp4,video/x-m4v,video/*" (change)="onFileSelected($event.target.files)"
+                       placeholder="Skill Videos" multiple>
                 <span *ngIf="showMaxLimitMsg" style="float: left;padding-top: 5px;color:red">Max 100 MB allowed!!</span>
                 <div *ngIf="video.errors?.required && video.touched" class="alert alert-danger">
                   Your video should be in HD format and of maximum 2 minutes long
@@ -47,7 +60,7 @@
               <label for="skill" class="col-lg-2 control-label">Skill</label>
               <div class="col-lg-10">
                 <input type="text" class="form-control" id="skill_name" name="skill_name" placeholder="Skill Name"
-                  [(ngModel)]="skill.skill" #skill_name="ngModel" required>
+                       [(ngModel)]="skill.skill" #skill_name="ngModel" required>
                 <div *ngIf="skill_name.errors?.required && skill_name.dirty" class="alert alert-danger">
                   Skill Name is required
                 </div>
@@ -57,7 +70,7 @@
               <label for="description" class="col-lg-2 control-label">Description</label>
               <div class="col-lg-10">
                 <textarea class="form-control" rows="3" id="description" name="description"
-                  [(ngModel)]="skill.description" #description="ngModel" required></textarea>
+                          [(ngModel)]="skill.description" #description="ngModel" required></textarea>
                 <div *ngIf="description.errors?.required && description.dirty" class="alert alert-danger">
                   Description is required
                 </div>
@@ -67,7 +80,7 @@
               <label for="description" class="col-lg-2 control-label">Status</label>
               <div class="col-lg-10">
                 <select class="form-control" #status_id="ngModel" [(ngModel)]="skill.status_id" id="status_id" required
-                  name="status_id" placeholder="Skill's status">
+                        name="status_id" placeholder="Skill's status">
                   <option value="" disabled selected>Select Status</option>
                   <option *ngFor="let status of statuses" [value]="status.id">
                     {{status.status}} - {{status.description}}
@@ -79,7 +92,7 @@
               <label for="skill" class="col-lg-2 control-label">Track</label>
               <div class="col-lg-10">
                 <mat-select multiple="multiple" class="form-control" #track_ids="ngModel"
-                  [(ngModel)]="selected_track_ids" id="track_ids" required name="track_ids">
+                            [(ngModel)]="selected_track_ids" id="track_ids" required name="track_ids">
                   <mat-option *ngFor="let track of my_tracks" [value]="track.id">{{track.track}}</mat-option>
                   <mat-option disabled *ngIf="(my_tracks)?.length>0">-----------------</mat-option>
                   <mat-option *ngFor="let track of public_tracks" [value]="track.id">{{track.track}}</mat-option>

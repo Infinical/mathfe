@@ -32,6 +32,10 @@
             <h5 class="example-h2">Toggle Columns</h5>
 
             <section class="toggle-columns-section">
+              <mat-slide-toggle [(ngModel)]="ShowColumns.ID" color="primary">
+                ID
+              </mat-slide-toggle>
+
               <mat-slide-toggle [(ngModel)]="ShowColumns.User" color="primary">
                 User
               </mat-slide-toggle>
@@ -82,6 +86,12 @@
         <table class="table">
           <thead>
             <tr>
+              <th [hidden]="!ShowColumns.ID" class="mat-table-th mat-table-th_clickable" [ngClass]="{
+                'mat-table-th_active': sortedByID,
+                'mat-table-th_reversed': reversedByID,
+                'mat-table-th_inactive': !reversedByID && !sortedByID
+              }"
+                  (click)="sortBy('id')">ID</th>
               <th [hidden]="!ShowColumns.User">User</th>
               <th [hidden]="!ShowColumns.Email" class="mat-table-th mat-table-th_clickable" [ngClass]="{
                 'mat-table-th_active': sortedByEmail,
@@ -158,6 +168,7 @@
           </thead>
           <tbody align="left">
             <tr *ngFor="let user of users">
+              <td [hidden]="!ShowColumns.ID">{{user.id}} </td>
               <td [hidden]="!ShowColumns.User"><img (error)="handleImageLoadError($event)"  src="{{user.image}}" width="75" /></td>
               <td [hidden]="!ShowColumns.Email">{{user.email}} </td>
               <td [hidden]="!ShowColumns.First_Name">{{user.firstname}}</td>

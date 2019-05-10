@@ -6,6 +6,7 @@ declare var jQuery: any;
 declare var $: any;
 import { TrackService } from '../../../services/track.service';
 import { SkillService } from '../../../services/skill.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'ag-teach-detail-course',
@@ -18,6 +19,7 @@ export class TeachDetailCourseComponent implements OnInit {
   @Output() selectedVideo: EventEmitter<Skill> = new EventEmitter<Skill>();
   @Input() selectedTeach: any;
   @Input() user: any;
+  _beURL = environment.apiURL + '/';
   chartdata: any;
   addTrackOn: boolean = false;
   editTrackOn: boolean = false;
@@ -137,13 +139,17 @@ export class TeachDetailCourseComponent implements OnInit {
             }
           })
         }
-      }) 
+      })
       localStorage.setItem('EnrolledTeachers', JSON.stringify(EnrolledTeachers));
 
     }, (error) => {
       console.error(error);
       skill.checkProcess = false;
     });
+  }
+
+  setVideoUrl(url) {
+    localStorage.setItem('VideoUrl', this._beURL + url);
   }
 
 }
