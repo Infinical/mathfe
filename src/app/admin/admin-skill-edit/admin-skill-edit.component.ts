@@ -111,7 +111,7 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
       let index = 0;
       skill.videos.forEach((v, i) => {
         if (v.isDelete == true) {
-          this.formData.append('remove_link[' + index + ']', v.id);
+          this.formData.append('remove_links[' + index + ']', v.id);
           index++;
         }
       });
