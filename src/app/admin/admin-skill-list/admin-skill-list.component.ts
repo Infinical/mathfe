@@ -65,13 +65,13 @@ export class AdminSkillListComponent implements OnInit {
           } else {
             videos = v.links;
           }
-          if (videos.length == 0) {
-            // //Default Video
-            videos.push({
-              id: -1,
-              link: "/videos/skills/logo.mp4"
-            });
-          } 
+          //if (videos.length == 0) {
+          //  // //Default Video
+          //  videos.push({
+          //    id: -1,
+          //    link: "/videos/skills/logo.mp4"
+          //  });
+          //} 
           v.videos = [];
           videos.forEach((url, ii) => {
             v.videos.push({
