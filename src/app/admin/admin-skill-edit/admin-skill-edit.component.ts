@@ -51,13 +51,13 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
         } else {
           videos = data.links;
         }
-        if (videos.length == 0) {
-          // //Default Video
-          videos.push({
-            id: -1,
-            link: "/videos/skills/logo.mp4"
-          });
-        }
+        //if (videos.length == 0) {
+        //  // //Default Video
+        //  videos.push({
+        //    id: -1,
+        //    link: "/videos/skills/logo.mp4"
+        //  });
+        //}
         data.videos = [];
         videos.forEach((url, ii) => {
           data.videos.push({
@@ -111,8 +111,10 @@ export class AdminSkillEditComponent implements OnInit, OnDestroy {
       let index = 0;
       skill.videos.forEach((v, i) => {
         if (v.isDelete == true) {
-          this.formData.append('remove_links[' + index + ']', v.id);
-          index++;
+          if (v.id > 0) {
+            this.formData.append('remove_links[' + index + ']', v.id);
+            index++;
+          }
         }
       });
     }
