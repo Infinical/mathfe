@@ -35,6 +35,7 @@ import { AdminCourseCreateComponent } from './admin/admin-course-create/admin-co
 import { AdminCourseEditComponent } from './admin/admin-course-edit/admin-course-edit.component';
 import { AdminCourseDeleteComponent } from './admin/admin-course-list/modal/admin-course-delete/admin-course-delete.component';
 import { AdminUserListComponent } from './admin/admin-user-list/admin-user-list.component';
+import { AdminUserReportComponent } from './admin/admin-user-report/admin-user-report.component';
 import { AuthService } from './services/auth.service';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthGuardService } from './services/auth-guard.service';
@@ -168,7 +169,7 @@ import { DataTableModule } from "angular-6-datatable";
 
 import { KatexModule } from 'ng-katex';
 import { PermissionService } from './services/permission.service';
-import { EnrolmentService } from './services/enrolment.service'; 
+import { EnrolmentService } from './services/enrolment.service';
 import { SelectDropDownModule } from 'ngx-select-dropdown'
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -285,6 +286,7 @@ export function tokenGetter() {
 
     DialogDeleteQuestion,
     ConfirmDialogComponent,
+    AdminUserReportComponent,
     NotifyDialogComponent,
     ModalComponent,
     LandingPageComponent,
@@ -331,7 +333,7 @@ export function tokenGetter() {
     KatexModule
   ],
   entryComponents: [DialogDeleteQuestion, AdminHouseDeleteComponent, AdminCourseDeleteComponent,
-    ConfirmDialogComponent, NotifyDialogComponent, AdminHouseTracksListComponent,
+    ConfirmDialogComponent, AdminUserReportComponent, NotifyDialogComponent, AdminHouseTracksListComponent,
     AdminEnrollmentUserDetailModalComponent, AdminEnrollmentHouseDetailModalComponent, AdminAddTrackListComponent,
     AdminHouseSkillsTrackListComponent, AdminAddSkillComponent],
   providers: [TrackService, CourseService, QuestionService, DashboardService,

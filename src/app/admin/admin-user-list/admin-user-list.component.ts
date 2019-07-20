@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { AdminUserReportComponent } from '../admin-user-report/admin-user-report.component'
 import { MatDialog } from '@angular/material';
 import { HelperService } from '../../services/helper.service';
 @Component({
@@ -14,7 +15,7 @@ export class AdminUserListComponent implements OnInit {
   users = [];
   status: string;
   message: string;
-
+  loading = true;
   // sort block
 
   public sortedByEmail: boolean = false;
@@ -63,8 +64,12 @@ export class AdminUserListComponent implements OnInit {
     this.userService.getUsers().subscribe(
       data => {
         this.users = data;
+        this.loading = false;
       },
-      error => console.error(<any>error));
+      error => {
+        console.error(<any>error);
+        this.loading = false;
+      });
 
   }
   resetUpdateStatus() {
@@ -95,7 +100,46 @@ export class AdminUserListComponent implements OnInit {
         }
       });
   }
+  public confirmReset(id: Number, user): void {
+    this.dialog.open(ConfirmDialogComponent, { data: { message: "Are you sure?", title: "Reset User" } }).afterClosed().
+      subscribe(ifYes => {
+        if (ifYes) {
+          this.loading = true;
+          this.userService.resetUser(id).subscribe(
+            data => {
+              this.loading = false;
+              this.userService.updateStatus = data['message'];
 
+              user.game_level = data["data"].game_level;
+              user.maxile_level = data["data"].maxile_level;
+              window.scrollTo(0, 0);
+              setTimeout(() => this.userService.updateStatus = '', 2000);
+
+            },
+            error => {
+              this.loading = false;
+              window.scrollTo(0, 0);
+              this.userService.updateStatus = this.helperService.ParseErrorMsg(error);
+            });
+        } else {
+          //rejected
+        }
+      });
+  }
+  public genrateReport(id: Number): void {
+    this.loading = true;
+    this.userService.getUserReport(id).subscribe(
+      data => {
+        this.loading = false;
+        this.dialog.open(AdminUserReportComponent, { data: { message: data['message'] } })
+      },
+      error => {
+        this.loading = false;
+        window.scrollTo(0, 0);
+        this.userService.updateStatus = this.helperService.ParseErrorMsg(error);
+      });
+
+  }
   // sort block
   public sortBy(str: string): void {
     if (this.users && this.users.length) {

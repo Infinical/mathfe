@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
 import { throwError } from 'rxjs';
@@ -33,6 +33,20 @@ export class UserService {
     const url = `${apiUrl}/${id}`;
     return this.http.delete<User[]>(url)
       .map((response) => response)
+      .catch((error: any) => throwError(error || { message: 'Server Error' }));
+  }
+  resetUser(userId: Number): Observable<any> {
+    return this.http.get(`${environment.apiURL}/users/` + userId + '/reset')
+      .map((response) => {
+        return response;//['user'];
+      })
+      .catch((error: any) => throwError(error || { message: 'Server Error' }));
+  }
+  getUserReport(userId: Number): Observable<any> {
+    return this.http.get(`${environment.apiURL}/users/` + userId + '/report', { observe: 'response' })
+      .map((response) => {
+        return response.body;
+      })
       .catch((error: any) => throwError(error || { message: 'Server Error' }));
   }
 }
