@@ -19,18 +19,18 @@ export class HouseListComponent implements OnInit {
     this.houses = this.dashboardService.getHouses();
     this.houses
       .subscribe(
-      houses => {
-        localStorage.setItem("EnrolledClassess", JSON.stringify(houses));
-      },
-      error => {
-        console.error(<any>error);
-      }
+        houses => {
+          localStorage.setItem("EnrolledClassess", JSON.stringify(houses));
+        },
+        error => {
+          console.error(<any>error);
+        }
       );
   }
 
   onSelect(house: House) {
-  	//this.selectedEvent.emit(house);
-    this.router.navigate(["/member/enrolled-class", house.id]); 
+    //this.selectedEvent.emit(house);
+    this.router.navigate(["/member/enrolled-class", house.id]);
   }
 
 }

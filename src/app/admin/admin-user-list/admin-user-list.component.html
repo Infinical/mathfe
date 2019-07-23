@@ -27,6 +27,9 @@
     </div>
     <div class="col-md-12">
       <div class="table-responsive">
+        <div *ngIf="loading" class="mat-on-screen-loader mat-table-spinner-wrapper" align="center">
+          <mat-spinner color="#960000"></mat-spinner>
+        </div>
         <mat-card id="ToggleGridColumnsContainer" class="result">
           <mat-card-content>
             <h5 class="example-h2">Toggle Columns</h5>
@@ -169,7 +172,7 @@
           <tbody align="left">
             <tr *ngFor="let user of users">
               <td [hidden]="!ShowColumns.ID">{{user.id}} </td>
-              <td [hidden]="!ShowColumns.User"><img (error)="handleImageLoadError($event)"  src="{{user.image}}" width="75" /></td>
+              <td [hidden]="!ShowColumns.User"><img (error)="handleImageLoadError($event)" src="{{user.image}}" width="75" /></td>
               <td [hidden]="!ShowColumns.Email">{{user.email}} </td>
               <td [hidden]="!ShowColumns.First_Name">{{user.firstname}}</td>
               <td [hidden]="!ShowColumns.Last_Name">{{user.lastname}}</td>
@@ -184,7 +187,10 @@
                   <a [routerLink]="['/admin/users/edit', user.id]" class="btn btn-info"><i class="icon_pencil"></i></a>
                   <a (click)="openDialog(user.id)" class="btn btn-danger"><i class="icon_minus_alt2"></i></a>
                 </div>
-
+                <div style="width: 145px;margin: 4px 0px;">
+                  <a (click)="confirmReset(user.id,user)" class="btn btn-danger" title="This will reset the user, keeping only the game level. When user logs in again, they will do the diagnostic test again.">Reset</a>
+                  <a (click)="genrateReport(user.id)" class="btn btn-info" title="This will generate a report to the administrator.">Report</a>
+                </div>
               </td>
             </tr>
           </tbody>
