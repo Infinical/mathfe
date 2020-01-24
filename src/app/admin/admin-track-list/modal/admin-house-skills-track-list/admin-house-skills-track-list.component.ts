@@ -25,6 +25,31 @@ export class AdminHouseSkillsTrackListComponent implements OnInit {
     private sanitizer: DomSanitizer) {
     this.loading = true;
     this.skillService.getSkillsByTrack(this.data.trackid).subscribe(x => {
+
+      x.skill.forEach((v, i) => {
+        var videos = [];
+        if (!v.links) {
+          if (v.lesson_link) {
+            videos.push(v.lesson_link)
+          }
+        } else {
+          videos = v.links;
+        }
+        //if (videos.length == 0) {
+        //  // //Default Video
+        //  videos.push({
+        //    id: -1,
+        //    link: "/videos/skills/logo.mp4"
+        //  });
+        //} 
+        v.videos = [];
+        videos.forEach((url, ii) => {
+          v.videos.push({
+            play: false,
+            link: this._beURL + url.link
+          });
+        });
+      });
       this.skills = x.skill;
       this.loading = false;
     })
@@ -35,7 +60,7 @@ export class AdminHouseSkillsTrackListComponent implements OnInit {
       return this._beURL + url;
     }
     else return this._beURL + "/videos/skills/logo.mp4"
-  } 
+  }
   ngOnInit() {
   }
 

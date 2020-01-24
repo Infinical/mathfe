@@ -117,6 +117,7 @@ export class LandingPageComponent implements OnInit {
   }
 
   selectHouse(house: House) {
+    debugger;
     this.selectedHouse = house;
     this.selectedTeach = null;
     this.selectedCourse = null;
