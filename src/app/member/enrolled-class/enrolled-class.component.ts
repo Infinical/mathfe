@@ -22,6 +22,7 @@ export class EnrolledClassComponent implements OnInit {
     $('.spinner-footer-envelope').hide();
   }
   selectHouse(house: House) {
+    debugger;
     this.selectedHouse = house; 
   }
   selectSkill(skill: Skill) {
