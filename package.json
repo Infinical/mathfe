@@ -36,7 +36,7 @@
     "angular-material-expansion-panel": "^0.7.2",
     "angular-messages": "^1.7.2",
     "angular-modal-service": "^0.14.2",
-    "auth0-js": "^9.8.0",
+    "auth0-js": "^9.13.2",
     "chart.js": "^2.7.1",
     "core-js": "^2.4.1",
     "imagesloaded": "^4.1.4",
