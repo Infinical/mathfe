@@ -53,6 +53,7 @@ window.onload = function() {
 			'icon_close' : '&#x4d;',
 			'icon_check' : '&#x4e;',
 			'icon_minus_alt2' : '&#x4f;',
+			'icon_stethoscope' : '&#xf0f1;',
 			'icon_plus_alt2' : '&#x50;',
 			'icon_close_alt2' : '&#x51;',
 			'icon_check_alt2' : '&#x52;',

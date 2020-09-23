@@ -51,5 +51,13 @@ export class EnrolmentService {
 		return this.http.get(`${environment.apiURL}/enrolments/create`)
 			.map((response) => response)
 			.catch((error: any) => throwError(error || { message: 'Server Error' }));
+  }
+  
+// testing service
+  test(): Observable<any> {
+
+    return this.http.get(`${environment.apiURL}/quizzes`).map((response) => response)
+			.catch((error: any) => throwError(error || { message: 'Server Error' }));
 	}
+
 }

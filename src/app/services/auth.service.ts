@@ -62,6 +62,7 @@ export class AuthService {
   }
 
   public login(enrol): void {
+    debugger;
     if (enrol) {
       this.auth0.baseOptions.redirectUri = this.auth0.baseOptions.redirectUri + "?enrol=true";
     }

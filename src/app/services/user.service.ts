@@ -42,6 +42,18 @@ export class UserService {
       })
       .catch((error: any) => throwError(error || { message: 'Server Error' }));
   }
+
+  // /users/{user}/diagnostic
+
+  diagnostic(user, userId) {
+    return this.http.post(`${environment.apiURL}/users/` + userId + '/diagnostic', user)
+    .map((response) => {
+      return response;
+    })
+    .catch((error: any) => throwError(error || { message: 'Server Error' }));
+  }
+
+
   getUserReport(userId: Number): Observable<any> {
     return this.http.get(`${environment.apiURL}/users/` + userId + '/report', { observe: 'response' })
       .map((response) => {

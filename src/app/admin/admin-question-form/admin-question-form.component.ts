@@ -189,11 +189,12 @@ export class AdminQuestionFormComponent implements OnInit {
       answer3_image: [''],
       correct_answer: [''],
       difficulty_id: ['', Validators.required],
+      source:[''],
       question: ['', Validators.required],
       question_image: [''],
       skill_id: ['', Validators.required],
       status_id: ['', Validators.required],
-      type_id: ['', Validators.required],
+      type_id: ['', Validators.required]
     });
   }
 
@@ -205,13 +206,17 @@ export class AdminQuestionFormComponent implements OnInit {
     private helperService: HelperService) {
 
     questionService.getQuestionOptions().subscribe((data) => {
+
       this.difficulties = data.difficulties;
       this.levels = data.skills;
+      console.log("levels check");
+      console.log(this.levels);
+
       this.statuses = data.statuses;
       this.types = data.type;
 
-      if (this.editMode) {
 
+      if (this.editMode) {
         this.selectedLevel = this.levels.find((level) =>
           level.tracks.find((track) =>
             track.skills.find((skill) =>
@@ -230,6 +235,16 @@ export class AdminQuestionFormComponent implements OnInit {
         }
       }
     });
+  }
+
+  diagnostic_number(length: number): Array<any> {
+    if (length >= 0) {
+      return new Array(length);
+    }
+  }
+
+  sourceChange(){
+
   }
 
   levelChange(e: any) {
@@ -292,7 +307,7 @@ export class AdminQuestionFormComponent implements OnInit {
   }
 
   createQuestion() {
-
+    debugger;
     //const fileName = this.selectedFile.name.substring(0, this.selectedFile.name.indexOf('.'));
     const imageURL = '/images/questions/imp1_question_image/';
     const questionValue = (this.question.question.indexOf('&lt;') >= 0) ?
@@ -310,12 +325,15 @@ export class AdminQuestionFormComponent implements OnInit {
       answer3_image: (this.answerFourImg) ? this.answerFourImg : '',
       correct_answer: this.question.correct_answer,
       difficulty_id: this.question.difficulty_id,
+      source: this.question.source,
       question: questionValue,
       question_image: this.selectedFile,
-      skill_id: this.question.skill_id,
-      status_id: this.question.status_id,
-      type_id: this.question.type_id
+       // skill_id: this.question.skill_id,
+      // status_id: this.question.status_id,
+      // type_id: this.question.type_id
     };
+
+
     this.questionService.addQuestion(form).subscribe(res => {
       this.question = res.question;
       this.refreshImages(res.question);
@@ -324,6 +342,10 @@ export class AdminQuestionFormComponent implements OnInit {
         message: res["message"]
       };
       console.log(res.question);
+      setTimeout(() => {
+        this.router.navigate(['/admin/questions']);
+      }
+        , 2000);
       this.loading = false;
     }, error => {
       this.formResponse = {
@@ -364,11 +386,12 @@ export class AdminQuestionFormComponent implements OnInit {
 
     form.append('answer0_image', (this.answerOneImg) ? this.answerOneImg : '');
 
-    form.append('answer1_image', (this.answerTwoImg) ? this.answerTwoImg : ''); 
-    form.append('answer2_image', (this.answerThreeImg) ? this.answerThreeImg : ''); 
+    form.append('answer1_image', (this.answerTwoImg) ? this.answerTwoImg : '');
+    form.append('answer2_image', (this.answerThreeImg) ? this.answerThreeImg : '');
     form.append('answer3_image', (this.answerFourImg) ? this.answerFourImg : '');
     form.append('correct_answer', this.question.correct_answer);
     form.append('difficulty_id', String(this.question.difficulty_id));
+    form.append('source', String(this.question.source));
     form.append('question', this.question.question);
     form.append('question_image', this.selectedFile);
     form.append('skill_id', String(this.question.skill_id));
@@ -451,8 +474,9 @@ export class AdminQuestionFormComponent implements OnInit {
     }
     return true;
   }
+
   show3edAns() {
-    if (this.question.type_id == 2) {
+    if (this.question.type_id === 2) {
       let requiredAns = this.totalTextBoxInQuestionHtml();
       if (requiredAns < 3) {
         return false;

@@ -180,6 +180,7 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
     katexDiv.style.display = "";
     return true;
   }
+
   editQuestion(id) {
     localStorage.setItem("last_question_edit_page_index", this.currentPage + "");
     this.router.navigate(['/admin/questions/edit/' + id]);
@@ -189,6 +190,7 @@ export class AdminQuestionListComponent implements OnInit, OnChanges {
       this.onPaginateChange(this.dataModel['id']);
     }
   }
+
   onPaginateChange(pageIndex) {
     this.dataModel = pageIndex;
     this.loading = true;

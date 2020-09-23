@@ -31,7 +31,7 @@ export class CourseService {
 	addCourse(course: Object): Observable<Course[]> {
 		return this.http.post<Course[]>(`${environment.apiURL}/courses`, course)
 			.map((response) => response)
-			.catch((error: any) => throwError(error || { message: 'Server Error' }));
+			.catch((error: any) => throwError(error || { message: 'Server Error 123123' }));
 	}
 	getCourse(id: String): Observable<any> {
 		return this.http.get<any>(`${environment.apiURL}/courses/` + id)

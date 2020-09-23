@@ -33,6 +33,9 @@ export class AdminSkillListComponent implements OnInit {
   public reversedByDescription: boolean = false;
   public reversedByAuthor: boolean = false;
 
+  public copyMessage: string;
+  public copyMessageSuccess: boolean;
+
   ShowColumns = {
     ID: true,
     Skill: true,
@@ -71,7 +74,7 @@ export class AdminSkillListComponent implements OnInit {
           //    id: -1,
           //    link: "/videos/skills/logo.mp4"
           //  });
-          //} 
+          //}
           v.videos = [];
           videos.forEach((url, ii) => {
             v.videos.push({
@@ -103,6 +106,28 @@ export class AdminSkillListComponent implements OnInit {
       return this.beURL + url;
     }
     else return this.beURL + "/videos/skills/logo.mp4"
+  }
+
+  public copySkill(id: string): void {
+
+    this.skillService.copySkill(id).subscribe(result => {
+      if (result["code"] == 201) {
+        this.copyMessageSuccess = true;
+        this.copyMessage = result["message"];
+        let skill = result["skill"];
+        let cSkill = this.skills.find(x => x.id == id);
+        cSkill.id = skill.id;
+        this.skills.push(cSkill);
+      }
+      else {
+        this.copyMessageSuccess = false;
+        this.copyMessage = result["message"];
+      }
+      setTimeout(() => {
+        this.copyMessageSuccess = false;
+        this.copyMessage = null;
+      }, 3000);
+    });
   }
 
   public editSkill(id: number): void {

@@ -14,6 +14,9 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
+    <div *ngIf="copyMessage" class="alert alert-dismissible alert-absolute" [class.alert-success]="copyMessageSuccess" [class.alert-danger]="!copyMessageSuccess" role="alert">
+      {{ copyMessage }} 
+    </div>
     <div class="col-md-12">
       <div>
         <a [routerLink]="['/admin/']" class="btn btn-default"> Back</a>
@@ -136,7 +139,8 @@
                     </div>-->
 
                   </td>
-                  <td [hidden]="!ShowColumns.Title">{{ skill.skill }}</td>
+                  <td [hidden]="!ShowColumns.Title">{{ skill.skill }}
+                  </td>
                   <td [hidden]="!ShowColumns.Description">
                     <p>{{ skill.description }}</p>
                   </td>
@@ -149,9 +153,11 @@
                     <a data-toggle="collapse" (click)="loadQuestions(skill)" href="#collapse{{skill.id}}">Questions</a>
                   </td>
                   <td [hidden]="!ShowColumns.Action">
+
                     <div class="btn-group" role="group" aria-label="First group">
                       <a (click)="editSkill(skill.id)" class="btn btn-info"><i class="icon_pencil"></i></a>
                       <a (click)="openDialog(skill.id)" class="btn btn-danger"><i class="icon_minus_alt2"></i></a>
+                      <a (click)="copySkill(skill.id)" class="btn btn-success"><i class="fa fa-clone"></i></a>
                     </div>
                   </td>
                 </tr>
@@ -161,11 +167,12 @@
                       <div colspan="5" align="center" class="mat-table-spinner">
                         <mat-spinner color="#960000"></mat-spinner>
                       </div>
+
                     </div>
                     <div *ngIf="skill.questions?.length==0 && !skill.loadingQuestions">
                       <p>No data exist!!</p>
                     </div>
-                    <div *ngIf="skill.questions?.length>0">
+                    <div *ngIf="skill.questions?.length > 0">
                       <table class="table">
                         <thead>
                           <tr class="bg-light-grey">
@@ -310,13 +317,6 @@ displayKatex(question.answer3, question.id, true, 'katexDiv_answer3' +
                       <tr *ngFor="let track of currentTracks">
                         <td>{{track.track}}</td>
                         <td>{{track.description}}</td>
-
-
-
-
-
-
-
                         <!-- <td>{{track.level.level}}</td>
                         <td>{{track.level.age}}</td>
                         <td>{{track.level.start_maxile_level}}</td>

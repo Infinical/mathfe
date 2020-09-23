@@ -41,6 +41,7 @@ export class AdminUserEditComponent implements OnInit, OnDestroy {
       if (key != "image")
         fData.append(key, user[key]);
     }
+
     // if (this.fileToUplaod != null) {
     //   fData.append("image", this.fileToUplaod);
     // } else {
