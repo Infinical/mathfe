@@ -32,7 +32,6 @@
       <div class="well well bs-component">
         <form class="form-horizontal" (ngSubmit)="submitForm()" [formGroup]="QuestionForm">
           <fieldset>
-
             <div class="form-group">
               <label for="question" class="col-lg-1 control-label">Question</label>
               <div class="col-lg-12">
@@ -52,8 +51,6 @@
                   Question is required
                 </div>
               </div>
-
-
             </div>
             <div class="row">
               <label for="question_image" class="col-lg-2 control-label">Question Image</label>
@@ -82,11 +79,11 @@
                     <input type="text" class="form-control" id="answer0" name="answer0" placeholder="First Answer"
                       aria-describedby="firstAnswer_help" formControlName="answer0" [(ngModel)]="question.answer0"
                       (ngModelChange)="parseKatex($event, 'katex_answer0')">
-                    <div
-                      *ngIf="QuestionForm['controls'].answer0.touched && question.type_id == 2 && !isNumeric(question.answer1)"
-                      class="alert alert-danger">
-                      For type 'Number' all answers must be numeric
+
+                    <div *ngIf="QuestionForm['controls'].answer0.touched && question.type_id == 2 && !isNumeric(question.answer1)"
+                      class="alert alert-danger"> For type 'Number' all answers must be numeric
                     </div>
+
                     <input type="file" class="form-control" id="answer0_image" name="answer0_image" minlength="3"
                       accept="image/*" (change)="answerOneImageSelected($event.target.files)"
                       placeholder="First Answer Image" formControlName="answer0_image">
@@ -191,6 +188,19 @@
               </div>
             </div>
 
+            <div class="form-group">
+              <label for="source" class="col-sm-2 control-label">Source</label>
+              <div class="col-sm-4">
+                <input question.type_id type="text" class="form-control" id="source" name="source"
+                  placeholder="source" formControlName="source" [(ngModel)]="question.source">
+
+                <!-- <div *ngIf="QuestionForm['controls'].source.touched && question.type_id == 1 && question.source === null"
+                  class="alert alert-danger">
+                  Source is required
+                </div> -->
+              </div>
+            </div>
+
             <hr>
             <div class="row">
               <div class="form-group col-sm-12">
@@ -253,7 +263,8 @@
                   </mat-select>
                 </mat-form-field>
               </div>
-              <div *ngIf="selectedLevel && selectedLevel.tracks.length > 0" class="col-sm-8">
+
+              <div *ngIf="selectedLevel && selectedLevel.tracks.length > 0"  class="col-sm-8">
                 <div class="col-sm-6">
                   <mat-form-field>
                     <mat-select [(value)]="selectedTrack" required id="track" name="track" placeholder="Track">
@@ -263,7 +274,9 @@
                     </mat-select>
                   </mat-form-field>
                 </div>
-                <div *ngIf="((selectedTrack && selectedTrack.skills.length > 0))" class="col-sm-6">
+
+
+                <div *ngIf="selectedTrack && selectedTrack.skills.length > 0"  class="col-sm-6">
                   <mat-form-field>
                     <mat-select required id="skill_id" name="skill_id" placeholder="Skill" formControlName="skill_id"
                       [(ngModel)]="question.skill_id">
@@ -278,15 +291,20 @@
                     </div>
                   </mat-form-field>
                 </div>
+
               </div>
+
+
             </div>
             <div class="row">
+
             </div>
 
             <div class="form-group">
               <div class="col-lg-10 col-lg-offset-2">
                 <a [routerLink]="['/admin/questions']" class="btn btn-default"> Cancel</a>
-                <button style="margin-left: 0.5rem;" type="submit" class="btn btn-primary" [disabled]="validForm()">{{editMode?
+                <!-- [disabled]="validForm()" -->
+                <button style="margin-left: 0.5rem;" type="submit" class="btn btn-primary" >{{editMode?
                   'Update': 'Create'}}</button>
               </div>
             </div>

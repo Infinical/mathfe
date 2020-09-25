@@ -1,16 +1,16 @@
 <section class="screenshots grey-bg" id="courses">
 
 <div class="container">
-  
+
   <!-- SECTION HEADER -->
   <div class="section-header wow fadeIn animated" data-wow-offset="10" data-wow-duration="1.5s">
-    
+
     <!-- SECTION TITLE -->
     <h2 class="dark-text">Admin Dashboard</h2>
-    
+
     <div class="colored-line">
     </div>
-    
+
   </div>
   <div class="container">
     <div class="row banner">
@@ -28,12 +28,12 @@
               <!--a [routerLink]="['/admin/users/create']" class="btn btn-primary btn-raised">New User</a-->
               <a [routerLink]="['/admin/enrolments']" class="btn btn-default btn-raised">
                 <span class="glyphicon glyphicon-blackboard"></span>
-                <h4>Manage Enrolments</h4>              
+                <h4>Manage Enrolments</h4>
                 <a [routerLink]="['/admin/enrolments/create']" class="btn btn-primary btn-raised">New Enrolment</a>
               </a>
               <a [routerLink]="['/admin/houses']" class="btn btn-default btn-raised">
                 <span class="glyphicon glyphicon-book"></span>
-                <h4>Manage Classes</h4>              
+                <h4>Manage Classes</h4>
                 <a [routerLink]="['/admin/houses/create']" class="btn btn-primary btn-raised">New Class</a>
               </a>
             </div>
@@ -46,7 +46,7 @@
               <div class="row-content">
                 <a [routerLink]="['/admin/courses']" class="btn btn-default btn-raised">
                   <span class="glyphicon glyphicon-book"></span>
-                  <h4>Manage Courses</h4>              
+                  <h4>Manage Courses</h4>
                   <a [routerLink]="['/admin/courses/create']" class="btn btn-primary btn-raised">New Course</a>
                 </a>
                 <a [routerLink]="['/admin/tracks']" class="btn btn-default btn-raised">
@@ -64,6 +64,11 @@
                   <h4>Manage Questions</h4>
                   <a [routerLink]="['/admin/questions/create']" class="btn btn-primary btn-raised">New Question</a>
                 </a>
+                <a [routerLink]="['/admin/questions']" class="btn btn-default btn-raised">
+                  <span class="glyphicon glyphicon-question-sign"></span>
+                  <h4>Manage Quizzes</h4>
+                  <a [routerLink]="['/admin/quizzes']" class="btn btn-primary btn-raised">New Quiz</a>
+                </a>
               </div>
             </div>
           <div class="list-group-separator"></div>
@@ -74,7 +79,7 @@
               <div class="row-content">
                 <a [routerLink]="['/admin/difficulties']" class="btn btn-default btn-raised">
                   <span class="glyphicon glyphicon-scale"></span>
-                  <h4>Difficulty</h4>              
+                  <h4>Difficulty</h4>
                   <a [routerLink]="['/admin/difficulties/create']" class="btn btn-primary btn-raised">New Difficulty</a>
                 </a>
                 <a [routerLink]="['/admin/fields']" class="btn btn-default btn-raised">

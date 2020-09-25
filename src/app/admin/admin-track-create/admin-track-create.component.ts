@@ -26,6 +26,8 @@ export class AdminTrackCreateComponent implements OnInit {
   ngOnInit() {
     this.trackService.createTrack().subscribe(
       data => {
+        console.log('data');
+        console.log(data);
         this.levels = data['levels'];
         this.statuses = data['statuses'];
         this.fields = data['fields'];
@@ -35,9 +37,11 @@ export class AdminTrackCreateComponent implements OnInit {
   }
 
   public createTrack(track): void {
+    console.log(track);
     this.trackService.addTrack(track)
       .subscribe(
         track => {
+
           this.trackService.updateStatus = track['message'];
           setTimeout(() => this.trackService.updateStatus = '', 2000);
           this.router.navigate(['/admin/tracks']);

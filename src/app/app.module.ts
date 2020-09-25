@@ -170,7 +170,11 @@ import { DataTableModule } from "angular-6-datatable";
 import { KatexModule } from 'ng-katex';
 import { PermissionService } from './services/permission.service';
 import { EnrolmentService } from './services/enrolment.service';
-import { SelectDropDownModule } from 'ngx-select-dropdown'
+import { SelectDropDownModule } from 'ngx-select-dropdown';
+import { AdminQuizAddComponent } from './admin/admin-quiz-add/admin-quiz-add.component';
+import { AdminQuizListComponent } from './admin/admin-quiz-list/admin-quiz-list.component';
+import { AdminQuizDeleteComponent } from './admin/admin-quiz-delete/admin-quiz-delete.component';
+import { AdminQuizEditComponent } from './admin/admin-quiz-edit/admin-quiz-edit.component'
 export function tokenGetter() {
   return localStorage.getItem("token");
 }
@@ -297,7 +301,11 @@ export function tokenGetter() {
     TeachDetailCourseComponent,
     RecommendedCoursesComponent,
     ClassManagementSharedComponent,
-    EnrolledClassComponent
+    EnrolledClassComponent,
+    AdminQuizAddComponent,
+    AdminQuizListComponent,
+    AdminQuizDeleteComponent,
+    AdminQuizEditComponent
   ],
   imports: [
     routes,
@@ -321,7 +329,8 @@ export function tokenGetter() {
           'api.pamelalim.me',
           'math.pamelalim.me',
           'quiz.all-gifted.com',
-          'mathapi.pamelalim.me'
+          'mathapi.pamelalim.me',
+          'devapi.allgifted.com'
         ]
       }
     }),

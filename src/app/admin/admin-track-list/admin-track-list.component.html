@@ -89,6 +89,7 @@
                 <td [hidden]="!ShowColumns.Level">{{track.level.level}}</td>
                 <td [hidden]="!ShowColumns.Classes">
                   <ol *ngFor="let house of track.houses">
+
                     <li>{{house.house}}</li>
                   </ol>
                 </td>

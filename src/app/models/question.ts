@@ -15,7 +15,8 @@ export class Question {
 	public question_image: string;
 	public skill_id: number;
 	public status_id: number;
-	public type_id: number;
+  public type_id: number;
+  public source:string;
 
 	constructor() {
 		this.answer0 = '';

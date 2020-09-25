@@ -22,6 +22,7 @@ export class TrackService {
 			.catch((error: any) => throwError(error || { message: 'Server Error' }));
 	}
 	addTrack(track: Object): Observable<Track[]> {
+		
 		return this.http.post<Track[]>(`${environment.apiURL}/tracks`, track)
 			.map((response) => response)
 			.catch((error: any) => throwError(error || { message: 'Server Error' }));

@@ -66,6 +66,10 @@ import { AdminEnrolmentListComponent } from "./admin-enrolment-list/admin-enrolm
 import { AdminEnrolmentCreateComponent } from './admin-enrolment-create/admin-enrolment-create.component';
 import { AdminEnrolmentEditComponent } from './admin-enrolment-edit/admin-enrolment-edit.component';
 import { AdminEnrolmentDeleteComponent } from './admin-enrolment-delete/admin-enrolment-delete.component';
+import { AdminQuizAddComponent } from "./admin-quiz-add/admin-quiz-add.component";
+import { AdminQuizListComponent } from "./admin-quiz-list/admin-quiz-list.component";
+import { AdminQuizDeleteComponent } from "./admin-quiz-delete/admin-quiz-delete.component";
+import { AdminQuizEditComponent } from "./admin-quiz-edit/admin-quiz-edit.component";
 
 export const adminRoutes: Routes = [
   { path: '', component: AdminDashboardComponent },
@@ -132,4 +136,10 @@ export const adminRoutes: Routes = [
   { path: 'questions/delete/:id', component: AdminQuestionDeleteComponent },
   { path: 'users', component: AdminUserListComponent },
   { path: 'users/edit/:id', component: AdminUserEditComponent },
+
+  { path: 'quizzes', component: AdminQuizListComponent },
+  { path: 'quizzes/create', component: AdminQuizAddComponent },
+  { path: 'quizzes/edit/:id', component: AdminQuizEditComponent },
+  { path: 'quizzes/delete/:id', component: AdminQuizDeleteComponent }
+
 ];

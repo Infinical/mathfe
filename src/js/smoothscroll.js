@@ -98,6 +98,7 @@ function ssc_scrollArray(e, t, n, r) {
 }
 
 function ssc_wheel(e) {
+  // e.preventDefault();
     if (!ssc_initdone) {
         ssc_init()
     }
@@ -118,7 +119,7 @@ function ssc_wheel(e) {
         i *= ssc_stepsize / 120
     }
     ssc_scrollArray(n, -r, -i);
-    e.preventDefault()
+
 }
 
 function ssc_keydown(e) {

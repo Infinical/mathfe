@@ -60,10 +60,26 @@ export class AdminUserListComponent implements OnInit {
   ngOnInit() {
     this.bindUsers();
   }
+
+
+  add_RemoveAdmin(userId) {
+    let objIndex = this.users.findIndex((obj => obj.id === userId));
+    if (this.users[objIndex].is_admin === 1) {
+
+      this.users[objIndex].is_admin = 0;
+    } else if (this.users[objIndex].is_admin === 0) {
+
+      this.users[objIndex].is_admin = 1;
+    }
+
+  }
+
   private bindUsers() {
     this.userService.getUsers().subscribe(
       data => {
         this.users = data;
+        console.log("users data");
+        console.log(this.users);
         this.loading = false;
       },
       error => {
@@ -72,6 +88,7 @@ export class AdminUserListComponent implements OnInit {
       });
 
   }
+
   resetUpdateStatus() {
     this.userService.updateStatus = '';
   }
@@ -89,7 +106,6 @@ export class AdminUserListComponent implements OnInit {
               this.userService.updateStatus = data['message'];
               window.scrollTo(0, 0);
               setTimeout(() => this.userService.updateStatus = '', 2000);
-
             },
             error => {
               window.scrollTo(0, 0);
@@ -100,6 +116,38 @@ export class AdminUserListComponent implements OnInit {
         }
       });
   }
+
+
+  public diagnostic(id: Number, user): void {
+    this.dialog.open(ConfirmDialogComponent, { data: { message: "The next test this user will do is the diagnostic. Is that your intended " } }).afterClosed().
+      subscribe(ifYes => {
+        if (ifYes) {
+          this.loading = true;
+          this.userService.diagnostic(user, id).subscribe(
+            data => {
+              this.loading = false;
+              this.userService.updateStatus = data['message'];
+
+              user.game_level = data["data"].game_level;
+              user.maxile_level = data["data"].maxile_level;
+              window.scrollTo(0, 0);
+              setTimeout(() => this.userService.updateStatus = '', 2000);
+
+            },
+            error => {
+              this.loading = false;
+              window.scrollTo(0, 0);
+              this.userService.updateStatus = this.helperService.ParseErrorMsg(error);
+            });
+        } else {
+          //rejected
+        }
+      });
+  }
+
+
+
+
   public confirmReset(id: Number, user): void {
     this.dialog.open(ConfirmDialogComponent, { data: { message: "Are you sure?", title: "Reset User" } }).afterClosed().
       subscribe(ifYes => {
@@ -126,6 +174,9 @@ export class AdminUserListComponent implements OnInit {
         }
       });
   }
+
+
+
   public genrateReport(id: Number): void {
     this.loading = true;
     this.userService.getUserReport(id).subscribe(

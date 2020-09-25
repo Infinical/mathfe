@@ -40,7 +40,7 @@ export class AdminCourseCreateComponent implements OnInit {
           setTimeout(() => window.scrollTo(0, 0), 0);
         },
         error => {
-          this.status = 'success';
+          this.status = 'danger';
           this.message = this.helperService.ParseErrorMsg(error);
         }
       );

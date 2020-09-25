@@ -36,6 +36,7 @@ export class AdminTrackListComponent implements OnInit {
     private helperService: HelperService) { }
 
   ngOnInit() {
+
     this.loading = true;
     this.trackService.getTracks().subscribe(x => {
       this.tracks = x;
@@ -50,7 +51,11 @@ export class AdminTrackListComponent implements OnInit {
         }, 1000)
       }
     })
+
+    console.log("tracks array testing");
+    console.log(this.tracks);
   }
+
   public doSearch(query) {
     let filtered = [];
     this.allTrack.forEach((v, i) => {
@@ -76,6 +81,8 @@ export class AdminTrackListComponent implements OnInit {
     })
     this.tracks = filtered;
   }
+
+
   resetUpdateStatus() {
     this.trackService.updateStatus = '';
   }
