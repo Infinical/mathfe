@@ -16,10 +16,9 @@ export const environment = {
     }
   },
   */
-  //apiURL: 'http://devapi.pamelalim.me',
-  //apiURL: 'https://mathapi.pamelalim.me',
+  apiURL: 'https://mathapi.pamelalim.me',
 
-  apiURL: 'http://devapi.allgifted.com',
+  //apiURL: 'http://devapi.allgifted.com',
   //apiURL: 'http://localhost:8000',
 
   // webAuth: {
