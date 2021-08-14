@@ -328,9 +328,10 @@ export function tokenGetter() {
           'quiz.pamelalim.me',
           'api.pamelalim.me',
           'math.pamelalim.me',
-          'quiz.all-gifted.com',
+          'quiz.allgifted.com',
           'mathapi.pamelalim.me',
-          'devapi.allgifted.com'
+          'devapi.allgifted.com',
+          'math.allgifted.com'
         ]
       }
     }),

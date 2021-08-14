@@ -5,21 +5,9 @@
 import { PayPalEnvironment } from 'ngx-paypal';
 export const environment = {
   production: false,
-  /*apiURL: 'http://localhost:8000',
-  webAuth: {
-    domain: 'allgiftedllc.au.auth0.com',
-    clientID: 'bs3jSKz2Ewrye8dD2qRVrD0Tra2tOqHC',
-    audience: 'https://allgiftedllc.au.auth0.com/userinfo',
-    redirectUri: 'http://localhost:4200/home',
-    theme: {
-      logo: "http://school.all-gifted.com/pluginfile.php/1/theme_lambda/logo/1472088488/newlogo.png"
-    }
-  },
-  */
   apiURL: 'https://mathapi.pamelalim.me',
 
   //apiURL: 'http://devapi.allgifted.com',
-  //apiURL: 'http://localhost:8000',
 
   // webAuth: {
   //   clientID: 'eVJv6UFM9GVdukBWiURczRCxmb6iaUYG',
@@ -30,15 +18,19 @@ export const environment = {
   //     logo: "http://school.all-gifted.com/pluginfile.php/1/theme_lambda/logo/1472088488/newlogo.png"
   //   }
   // },
+  
   webAuth: {
     clientID: 'bs3jSKz2Ewrye8dD2qRVrD0Tra2tOqHC',
     domain: 'allgiftedllc.au.auth0.com',
     audience: 'https://allgiftedllc.au.auth0.com/userinfo',
-    redirectUri: 'http://localhost:4200/home',//http://math.all-gifted.com/home
+    redirectUri: 'https://math.allgifted.com/home',
+//    redirectUri: 'http://localhost:4200/home',
+
     theme: {
-      logo: "http://school.all-gifted.com/pluginfile.php/1/theme_lambda/logo/1472088488/newlogo.png"
+      logo: "https://www.allgifted.com/wp-content/uploads/2020/06/ags@2x-trans.png"
     }
   },
+  
   payPal: {
     payPalEnvironment: PayPalEnvironment.Sandbox,
     productionKey: "AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R",
