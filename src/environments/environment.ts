@@ -23,8 +23,8 @@ export const environment = {
     clientID: "bs3jSKz2Ewrye8dD2qRVrD0Tra2tOqHC",
     domain: "allgiftedllc.au.auth0.com",
     audience: "https://allgiftedllc.au.auth0.com/userinfo",
-    // redirectUri: "https://math.allgifted.com/home",
-    redirectUri: "http://localhost:4200/home",
+    redirectUri: "https://math.allgifted.com/home",
+    // redirectUri: "http://localhost:4200/home",
 
     theme: {
       logo: "https://www.allgifted.com/wp-content/uploads/2020/06/ags@2x-trans.png",
