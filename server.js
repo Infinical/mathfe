@@ -4,9 +4,9 @@ const path = require("path");
 
 const app = express();
 
-const port = process.env.PORT || 3001;
+const port = 3001;
 
-app.use(express.static(__dirname + "/math"));
+app.use(express.static("/math/"));
 
 app.get("/*", (req, res) => res.sendFile(path.join(__dirname)));
 
